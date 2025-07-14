@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Inglês: José do 0 ao 100</title>
+
+    <!-- Estilos do Bootstrap e Ícones -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Fonte do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Scripts para React e Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+          font-family: 'Unbounded', sans-serif;
+          background-color: #f8f9fa;
+        }
+        .sidebar {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 100;
+          padding: 48px 0 0;
+          box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        }
+        @media (max-width: 767.98px) {
+          .sidebar {
+            position: static;
+            height: auto;
+            padding-top: 0;
+          }
+        }
+        .sidebar-sticky {
+          position: relative;
+          top: 0;
+          height: calc(100vh - 48px);
+          padding-top: .5rem;
+          overflow-x: hidden;
+          overflow-y: auto;
+        }
+        .nav-link {
+          color: #333;
+          font-weight: 500;
+        }
+        .nav-link.active, .nav-link:hover {
+          color: #0d6efd;
+        }
+        .nav-link .bi {
+          margin-right: 8px;
+        }
+        .featured-box {
+            background-color: #0d6efd;
+        }
+        .cursor-pointer {
+            cursor: pointer;
+        }
+        .hover-shadow:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+            transform: translateY(-2px);
+        }
+        .transition-all {
+            transition: all .3s ease;
+        }
+        .bg-purple { background-color: #6f42c1 !important; }
+        .bg-pink { background-color: #d63384 !important; }
+        .bg-indigo { background-color: #6610f2 !important; }
+        .bg-success-subtle { background-color: #d1e7dd !important; }
+        .bg-danger-subtle { background-color: #f8d7da !important; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!-- Script do Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Código da Aplicação React -->
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useCallback } = React;
+
+        // --- MOCK REATIVO DAS BIBLIOTECAS FIREBASE ---
+        let mockDatabase = {};
+        let onSnapshotCallback = null;
+
+        const mockFirebase = {
+            initializeApp: () => ({}),
+            getAuth: () => ({
+                currentUser: { uid: 'test-user-123' }
+            }),
+            onAuthStateChanged: (auth, callback) => {
+                const mockUser = { uid: 'test-user-123' };
+                callback(mockUser);
+                return () => {};
+            },
+            getFirestore: () => ({}),
+            doc: () => ({}), // A referência do documento é simbólica no mock
+            getDoc: async (docRef) => {
+                const data = mockDatabase['test-user-123'];
+                return {
+                    exists: () => !!data,
+                    data: () => data
+                };
+            },
+            setDoc: async (docRef, data, options) => {
+                const userId = 'test-user-123';
+                if (options && options.merge) {
+                    mockDatabase[userId] = { ...mockDatabase[userId], ...data };
+                } else {
+                    mockDatabase[userId] = data;
+                }
+                if (onSnapshotCallback) {
+                    const updatedData = mockDatabase[userId];
+                    onSnapshotCallback({ exists: () => !!updatedData, data: () => updatedData });
+                }
+            },
+            onSnapshot: (docRef, callback) => {
+                onSnapshotCallback = callback;
+                const data = mockDatabase['test-user-123'];
+                // Chamar imediatamente com os dados iniciais (ou a ausência deles)
+                callback({ exists: () => !!data, data: () => data });
+                return () => { onSnapshotCallback = null; }; // Função de anulação de subscrição
+            },
+            updateDoc: async (docRef, dataToUpdate) => {
+                const userId = 'test-user-123';
+                let currentUserData = mockDatabase[userId];
+
+                Object.keys(dataToUpdate).forEach(key => {
+                    if (key.includes('.')) {
+                        const keys = key.split('.');
+                        let temp = currentUserData;
+                        for (let i = 0; i < keys.length - 1; i++) {
+                            temp[keys[i]] = temp[keys[i]] || {};
+                            temp = temp[keys[i]];
+                        }
+                        temp[keys[keys.length - 1]] = dataToUpdate[key];
+                    } else {
+                        currentUserData[key] = dataToUpdate[key];
+                    }
+                });
+
+                if (onSnapshotCallback) {
+                    const updatedData = mockDatabase[userId];
+                    onSnapshotCallback({ exists: () => !!updatedData, data: () => updatedData });
+                }
+            },
+            signInAnonymously: async () => ({ user: { uid: 'test-user-123' } }),
+            signInWithCustomToken: async () => ({ user: { uid: 'test-user-123' } })
+        };
+
+        const { initializeApp, getAuth, onAuthStateChanged, signInAnonymously, signInWithCustomToken, getFirestore, doc, getDoc, setDoc, onSnapshot, updateDoc } = mockFirebase;
+
+        // --- CONFIGURAÇÃO E INICIALIZAÇÃO DO FIREBASE ---
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        let app, auth, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+        } catch (error) {
+            console.error("Erro ao inicializar o Firebase:", error);
+        }
+
+        // --- DADOS DA APLICAÇÃO (CONTEÚDO DAS LIÇÕES COM IMAGENS) ---
+        const TOPICS = [
+            // NÍVEL BÁSICO (10 TÓPICOS)
+            { id: 1, level: 'Básico 1', title: 'O Começo: Saudações e o Verbo "To Be"', icon: 'bi-mortarboard-fill', color: 'bg-success', imageUrl: 'https://images.pexels.com/photos/3755755/pexels-photo-3755755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Saudações Comuns', content: 'Em inglês, usamos "Hello" (Olá) e "Hi" (Oi) como saudações universais. Para perguntar como alguém está, dizemos "How are you?".', imageUrl: 'https://images.pexels.com/photos/1438081/pexels-photo-1438081.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' }, { type: 'theory', title: 'Verbo "To Be": Afirmativa', content: 'O verbo "To Be" (Ser/Estar) é fundamental. Suas formas no presente são: I am (Eu sou/estou), You are (Você é/está), He/She/It is (Ele/Ela é/está).' }, { type: 'fill-in', question: 'Preencha a lacuna: I ___ happy.', answer: 'am', xp: 10 }, { type: 'mc', question: 'Qual a tradução de "How are you?"', options: ['Qual o seu nome?', 'Como você está?', 'De onde você é?'], answer: 'Como você está?', xp: 10 }, { type: 'theory', title: 'Verbo "To Be": Negativa e Interrogativa', content: 'Para negar, adicione "not" após o verbo (I am not). Para perguntar, inverta o verbo e o sujeito (Are you?).' }, { type: 'fill-in', question: 'Complete a frase: She ___ a doctor.', answer: 'is', xp: 10 }, { type: 'mc', question: 'Como se diz "Oi" em inglês?', options: ['Bye', 'Ok', 'Hi'], answer: 'Hi', xp: 10 }, { type: 'mc', question: 'Passe para a negativa: "They are friends."', options: ['They not are friends.', 'They are not friends.', 'They is not friends.'], answer: 'They are not friends.', xp: 15 } ] },
+            { id: 2, level: 'Básico 1', title: 'Artigos e Plurais', icon: 'bi-journal-text', color: 'bg-success', imageUrl: 'https://images.pexels.com/photos/256450/pexels-photo-256450.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Artigos Definidos e Indefinidos', content: 'Use "the" para substantivos específicos (the book - o livro) e "a/an" para substantivos não específicos (a book - um livro). "An" é usado antes de sons de vogal (an apple).' }, { type: 'mc', question: 'Qual artigo usar antes de "apple"?', options: ['a', 'the', 'an'], answer: 'an', xp: 10 }, { type: 'theory', title: 'Formando Plurais Regulares', content: 'A maioria dos plurais é formada adicionando -s (book -> books). Para palavras que terminam em s, x, ch, sh, adicionamos -es (box -> boxes).' }, { type: 'fill-in', question: 'O plural de "cat" é ___.', answer: 'cats', xp: 10 }, { type: 'theory', title: 'Plurais Irregulares', content: 'Algumas palavras têm plurais irregulares, como man -> men, woman -> women, child -> children, person -> people.' }, { type: 'mc', question: 'Qual o plural de "child"?', options: ['childs', 'childes', 'children'], answer: 'children', xp: 15 } ] },
+            { id: 3, level: 'Básico 2', title: 'Simple Present: Rotinas', icon: 'bi-book-half', color: 'bg-success', imageUrl: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Usando o Simple Present', content: 'Usamos o Simple Present para falar de hábitos e rotinas. Ex: "I work every day." (Eu trabalho todo dia).' }, { type: 'theory', title: 'Regra do "-s"', content: 'Para He, She e It, adicionamos "-s" ao final do verbo. Ex: "She works at a hospital."' }, { type: 'fill-in', question: 'Complete: They ___ (live) in New York.', answer: 'live', xp: 10 }, { type: 'theory', title: 'Negativas e Interrogativas com Do/Does', content: 'Use "do not" (don\'t) e "does not" (doesn\'t) para negar. Use "Do" e "Does" no início para perguntar. Ex: "She doesn\'t work here.", "Do you speak English?".' }, { type: 'fill-in', question: 'Complete: He ___ (play) soccer on weekends.', answer: 'plays', xp: 15 }, { type: 'mc', question: 'Qual frase está correta?', options: ['She play tennis.', 'She plays tennis.', 'She is play tennis.'], answer: 'She plays tennis.', xp: 20 }, { type: 'mc', question: 'Qual a pergunta correta?', options: ['He does like coffee?', 'Does he like coffee?', 'Do he like coffee?'], answer: 'Does he like coffee?', xp: 20 } ] },
+            { id: 4, level: 'Básico 2', title: 'Gostos e Preferências', icon: 'bi-chat-square-dots-fill', color: 'bg-success', imageUrl: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Verbos de Preferência', content: 'Usamos verbos como "like" (gostar), "love" (amar) e "hate" (odiar) para expressar preferências.' }, { type: 'mc', question: 'O que significa "I like pizza"?', options: ['Eu odeio pizza', 'Eu sou uma pizza', 'Eu gosto de pizza'], answer: 'Eu gosto de pizza', xp: 10 }, { type: 'fill-in', question: 'Complete: I ___ chocolate.', answer: 'love', xp: 10, hint: 'O verbo para "amar"' }, { type: 'theory', title: 'Perguntando sobre preferências', content: 'Para perguntar, usamos "Do you like...?". Ex: "Do you like rock music?".' }, { type: 'mc', question: 'Como perguntar se alguém gosta de cães?', options: ['You like dogs?', 'Are you like dogs?', 'Do you like dogs?'], answer: 'Do you like dogs?', xp: 15 } ] },
+            { id: 5, level: 'Básico 3', title: 'Present Continuous', icon: 'bi-hourglass-split', color: 'bg-info', imageUrl: 'https://images.pexels.com/photos/3807755/pexels-photo-3807755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Ações em Progresso', content: 'Usamos o Present Continuous para ações que estão a acontecer agora. Formação: verbo "to be" + verbo com -ing. Ex: "I am studying English."' }, { type: 'fill-in', question: 'Complete: You ___ (watch) a movie.', answer: 'are watching', xp: 15 }, { type: 'mc', question: 'O que ele está a fazer? He ___ (read) a book.', options: ['is reading', 'are reading', 'am reading'], answer: 'is reading', xp: 15 }, { type: 'theory', title: 'Perguntas no Present Continuous', content: 'Para perguntar, inverta o verbo "to be" e o sujeito. Ex: "Are you listening to me?".' }, { type: 'mc', question: 'Qual a pergunta correta?', options: ['What you are doing?', 'What are you doing?', 'What do you doing?'], answer: 'What are you doing?', xp: 20 } ] },
+            { id: 6, level: 'Básico 3', title: 'Simple Past: Verbos Regulares', icon: 'bi-film', color: 'bg-info', imageUrl: 'https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Falando sobre o Passado', content: 'Para verbos regulares, adicionamos "-ed" para formar o passado. Ex: "work" -> "worked". "I worked yesterday."' }, { type: 'fill-in', question: 'Ontem, eu ___ (play) video games.', answer: 'played', xp: 10 }, { type: 'fill-in', question: 'Ela ___ (watch) the movie last night.', answer: 'watched', xp: 15 }, { type: 'theory', title: 'Regras de Ortografia para "-ed"', content: 'Se o verbo termina em "e", adicione apenas "d" (live -> lived). Se termina em consoante + "y", troque "y" por "ied" (study -> studied).' }, { type: 'fill-in', question: 'Ele ___ (study) para o teste.', answer: 'studied', xp: 15 } ] },
+            { id: 7, level: 'Básico 4', title: 'Simple Past: Verbos Irregulares', icon: 'bi-exclamation-diamond-fill', color: 'bg-info', imageUrl: 'https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Exceções à Regra', content: 'Verbos irregulares têm formas próprias no passado. Ex: "go" -> "went", "see" -> "saw", "eat" -> "ate". É preciso memorizá-los.' }, { type: 'mc', question: 'Qual o passado de "go"?', options: ['goed', 'went', 'gone'], answer: 'went', xp: 15 }, { type: 'fill-in', question: 'Eu ___ (see) a great movie last week.', answer: 'saw', xp: 15 }, { type: 'mc', question: 'Qual o passado de "eat"?', options: ['eated', 'ate', 'eaten'], answer: 'ate', xp: 15 } ] },
+            { id: 8, level: 'Básico 4', title: 'Perguntas com "Did"', icon: 'bi-question-circle-fill', color: 'bg-info', imageUrl: 'https://images.pexels.com/photos/356079/pexels-photo-356079.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Fazendo Perguntas no Passado', content: 'Usamos "Did" para fazer perguntas no Simple Past. O verbo principal volta à sua forma base. Ex: "Did you work yesterday?"' }, { type: 'mc', question: 'Qual a forma correta?', options: ['Did you worked?', 'Did you work?', 'You worked?'], answer: 'Did you work?', xp: 20 }, { type: 'theory', title: 'Negativas com "Did not"', content: 'Para negar no passado, usamos "did not" (didn\'t) + a forma base do verbo. Ex: "I didn\'t go to the party."' }, { type: 'fill-in', question: 'Ela não ___ (see) o filme. She ___ see the movie.', answer: 'didn\'t', xp: 20 } ] },
+            { id: 9, level: 'Básico 5', title: 'Futuro com "Will" e "Going to"', icon: 'bi-briefcase-fill', color: 'bg-primary', imageUrl: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Futuro Simples', content: 'Use "will" para decisões espontâneas e previsões. Ex: "I think it will rain." Use "going to" para planos já decididos. Ex: "I am going to travel next month."' }, { type: 'mc', question: 'Para um plano já feito, usamos:', options: ['will', 'going to'], answer: 'going to', xp: 15 }, { type: 'mc', question: 'Para uma decisão no momento da fala, usamos:', options: ['will', 'going to'], answer: 'will', xp: 15 }, { type: 'fill-in', question: 'Look at the clouds! It is ___ rain.', answer: 'going to', xp: 20 } ] },
+            { id: 10, level: 'Básico 5', title: 'Objetos e Possessivos', icon: 'bi-person-badge-fill', color: 'bg-primary', imageUrl: 'https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Pronomes Objeto', content: 'Substituem o substantivo que recebe a ação. Me, you, him, her, it, us, them. Ex: "She called me."' }, { type: 'fill-in', question: 'I love you. Do you love ___?', answer: 'me', xp: 10 }, { type: 'theory', title: 'Adjetivos Possessivos', content: 'Indicam posse e vêm ANTES do substantivo. My, your, his, her, its, our, their. Ex: "This is my book."' }, { type: 'fill-in', question: 'That is ___ (dele) car.', answer: 'his', xp: 15 }, { type: 'theory', title: 'Pronomes Possessivos', content: 'Também indicam posse, mas substituem o substantivo. Mine, yours, his, hers, its, ours, theirs. Ex: "This book is mine."' }, { type: 'fill-in', question: 'This is her book. The book is ___.', answer: 'hers', xp: 20 } ] },
+
+            // NÍVEL INTERMEDIÁRIO (10 TÓPICOS)
+            { id: 11, level: 'Intermediário 1', title: 'Present Perfect: Experiências', icon: 'bi-award-fill', color: 'bg-primary', imageUrl: 'https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Conectando Passado e Presente', content: 'Usamos o Present Perfect (have/has + particípio) para falar de experiências de vida sem especificar quando. Ex: "I have been to Japan."' }, { type: 'mc', question: 'Qual frase indica uma experiência de vida?', options: ['I went to the store.', 'I have seen that movie.', 'I will go tomorrow.'], answer: 'I have seen that movie.', xp: 15 }, { type: 'fill-in', question: 'She has never ___ (eat) sushi.', answer: 'eaten', xp: 20 }, { type: 'theory', title: 'Ever e Never', content: '"Ever" é usado em perguntas sobre experiências (Have you ever been to Canada?). "Never" é usado em negativas para dizer que nunca teve a experiência (I have never been there).' }, { type: 'mc', question: 'Complete: Have you ___ seen a ghost?', options: ['never', 'ever'], answer: 'ever', xp: 20 } ] },
+            { id: 12, level: 'Intermediário 1', title: 'Present Perfect vs. Simple Past', icon: 'bi-calendar-range-fill', color: 'bg-primary', imageUrl: 'https://images.pexels.com/photos/5965949/pexels-photo-5965949.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Quando usar cada um?', content: 'Use Simple Past para ações concluídas em um tempo específico ("I saw the movie yesterday"). Use Present Perfect para ações em um tempo não específico ou que continuam até o presente ("I have seen the movie").' }, { type: 'mc', question: 'Complete: I ___ to Paris last year.', options: ['have been', 'went'], answer: 'went', xp: 20 }, { type: 'mc', question: 'Complete: She ___ three books so far.', options: ['wrote', 'has written'], answer: 'has written', xp: 20 }, { type: 'theory', title: 'Palavras-chave', content: 'Simple Past: yesterday, last week, in 2010. Present Perfect: ever, never, already, yet, so far.' }, { type: 'fill-in', question: 'I ___ (not finish) my homework yet.', answer: 'have not finished', xp: 25 } ] },
+            { id: 13, level: 'Intermediário 2', title: 'Adjetivos Comparativos e Superlativos', icon: 'bi-trophy-fill', color: 'bg-secondary', imageUrl: 'https://images.pexels.com/photos/220357/pexels-photo-220357.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Comparando Coisas', content: 'Comparativos: adjetivos curtos + "-er" (bigger), ou "more" + adjetivos longos (more beautiful). Superlativos: "the" + adjetivo curto + "-est" (the biggest), ou "the most" + adjetivo longo (the most beautiful).' }, { type: 'fill-in', question: 'A car is ___ (fast) than a bicycle.', answer: 'faster', xp: 15 }, { type: 'theory', title: 'Comparativos e Superlativos Irregulares', content: 'Alguns são irregulares: good -> better -> the best; bad -> worse -> the worst; far -> farther/further -> the farthest/furthest.' }, { type: 'fill-in', question: 'This is the ___ (interesting) book I have ever read.', answer: 'most interesting', xp: 20 }, { type: 'mc', question: 'Qual o superlativo de "good"?', options: ['goodest', 'better', 'the best'], answer: 'the best', xp: 20 } ] },
+            { id: 14, level: 'Intermediário 2', title: 'Verbos Modais: Habilidade e Permissão', icon: 'bi-check-circle-fill', color: 'bg-secondary', imageUrl: 'https://images.pexels.com/photos/1181345/pexels-photo-1181345.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Can, Could, May', content: '"Can" expressa habilidade no presente (I can swim). "Could" é o passado de "can" ou uma forma mais educada para pedidos (Could you help me?). "May" é usado para pedir permissão formalmente (May I help you?).' }, { type: 'mc', question: 'Para pedir permissão a um professor, qual é mais educado?', options: ['Can I go?', 'May I go?'], answer: 'May I go?', xp: 15 }, { type: 'fill-in', question: 'When I was a child, I ___ run very fast.', answer: 'could', xp: 20 } ] },
+            { id: 15, level: 'Intermediário 3', title: 'Verbos Modais: Obrigação e Proibição', icon: 'bi-sign-stop-fill', color: 'bg-dark', imageUrl: 'https://images.pexels.com/photos/265076/pexels-photo-265076.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Must, Have to, Mustn\'t', content: '"Must" e "have to" expressam obrigação (You must stop). "Must" é uma obrigação interna, "have to" é externa (regra). "Mustn\'t" expressa proibição (You mustn\'t smoke here).' }, { type: 'fill-in', question: 'You ___ wear a seatbelt in the car. It\'s the law.', answer: 'have to', xp: 20 }, { type: 'mc', question: 'O que significa "You mustn\'t be late"?', options: ['Você não precisa de se atrasar.', 'É proibido atrasar-se.', 'Você pode atrasar-se.'], answer: 'É proibido atrasar-se.', xp: 20 } ] },
+            { id: 16, level: 'Intermediário 3', title: 'Verbos Modais: Conselho e Sugestão', icon: 'bi-lightbulb-fill', color: 'bg-dark', imageUrl: 'https://images.pexels.com/photos/3184311/pexels-photo-3184311.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Should, Ought to, Had better', content: '"Should" é o mais comum para dar conselhos (You should study more). "Ought to" é similar, mas um pouco mais formal. "Had better" é um conselho forte, quase um aviso (You had better not be late!).' }, { type: 'mc', question: 'Qual verbo é melhor para dar um conselho a um amigo?', options: ['must', 'should', 'may'], answer: 'should', xp: 15 }, { type: 'fill-in', question: 'It\'s raining. You ___ take an umbrella.', answer: 'should', xp: 15 } ] },
+            { id: 17, level: 'Intermediário 4', title: 'Primeira Condicional: Causa e Efeito', icon: 'bi-diagram-2-fill', color: 'bg-dark', imageUrl: 'https://images.pexels.com/photos/7130560/pexels-photo-7130560.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Situações Reais no Futuro', content: 'Usamos a Primeira Condicional para falar de resultados prováveis no futuro. Estrutura: If + Simple Present, ... will + verbo. Ex: "If it rains, I will stay home."' }, { type: 'fill-in', question: 'If you ___ (study), you will pass the exam.', answer: 'study', xp: 20 }, { type: 'fill-in', question: 'I ___ (call) you if I have time.', answer: 'will call', xp: 20 } ] },
+            { id: 18, level: 'Intermediário 4', title: 'Segunda Condicional: Situações Hipotéticas', icon: 'bi-diagram-3-fill', color: 'bg-dark', imageUrl: 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'O Mundo do "E se..."', content: 'Usamos a Segunda Condicional para situações imaginárias ou improváveis no presente ou futuro. Estrutura: If + Simple Past, ... would + verbo. Ex: "If I won the lottery, I would travel the world."' }, { type: 'fill-in', question: 'If I ___ (be) you, I would accept the job.', answer: 'were', xp: 20 }, { type: 'fill-in', question: 'What ___ you do if you had a million dollars?', answer: 'would', xp: 25 } ] },
+            { id: 19, level: 'Intermediário 5', title: 'Gerúndios e Infinitivos', icon: 'bi-infinity', color: 'bg-danger', imageUrl: 'https://images.pexels.com/photos/11035471/pexels-photo-11035471.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Verbo como Substantivo', content: 'Alguns verbos pedem outro verbo no gerúndio (-ing), como "enjoy" (I enjoy reading). Outros pedem o infinitivo (to + verbo), como "want" (I want to read).' }, { type: 'mc', question: 'Complete: I want ___ (go) home.', options: ['going', 'to go', 'go'], answer: 'to go', xp: 15 }, { type: 'mc', question: 'Complete: He avoids ___ (eat) fast food.', options: ['eating', 'to eat', 'eat'], answer: 'eating', xp: 20 } ] },
+            { id: 20, level: 'Intermediário 5', title: 'Advérbios de Frequência', icon: 'bi-calendar-week-fill', color: 'bg-danger', imageUrl: 'https://images.pexels.com/photos/210620/pexels-photo-210620.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Com que frequência?', content: 'Always (sempre), usually (geralmente), sometimes (às vezes), never (nunca). Eles geralmente vêm antes do verbo principal. Ex: "I always drink coffee."' }, { type: 'fill-in', question: 'Eu nunca como carne. I ___ eat meat.', answer: 'never', xp: 15 }, { type: 'theory', title: 'Posição com o Verbo "To Be"', content: 'Com o verbo "to be", o advérbio vem DEPOIS. Ex: "She is always late."' }, { type: 'mc', question: 'Qual a frase correta?', options: ['He is often tired.', 'He often is tired.'], answer: 'He is often tired.', xp: 20 } ] },
+
+            // NÍVEL AVANÇADO (10 TÓPICOS)
+            { id: 21, level: 'Avançado 1', title: 'Voz Passiva', icon: 'bi-people-fill', color: 'bg-danger', imageUrl: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Foco na Ação', content: 'A voz passiva é usada quando o foco está na ação, não em quem a praticou. Estrutura: objeto + verbo "to be" + particípio. Ex: "The book was written by him."' }, { type: 'mc', question: 'Transforme para a voz passiva: "Someone stole my car."', options: ['My car was stolen.', 'My car is stolen.', 'I stole my car.'], answer: 'My car was stolen.', xp: 20 }, { type: 'theory', title: 'Voz Passiva em Diferentes Tempos', content: 'É possível usar a voz passiva em vários tempos. Present Perfect: "The work has been finished." Futuro: "The email will be sent."' }, { type: 'fill-in', question: 'Transforme para a passiva: "They are building a new house."', answer: 'A new house is being built.', xp: 30 } ] },
+            { id: 22, level: 'Avançado 1', title: 'Discurso Indireto (Reported Speech)', icon: 'bi-chat-right-quote-fill', color: 'bg-danger', imageUrl: 'https://images.pexels.com/photos/3184433/pexels-photo-3184433.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Contando o que os outros disseram', content: 'Ao reportar uma fala, os tempos verbais geralmente "voltam um tempo". Simple Present -> Simple Past. Ex: "I am tired." -> He said he was tired.' }, { type: 'fill-in', question: 'Reporte a frase: "I work here." -> She said that she ___ there.', answer: 'worked', xp: 25 }, { type: 'theory', title: 'Reportando Perguntas e Pedidos', content: 'Para perguntas, usamos "ask" e a ordem da frase muda (She asked me where I lived). Para pedidos, usamos "ask" + "to" + verbo (He asked me to help him).' }, { type: 'mc', question: 'Reporte a pergunta: "Are you coming?"', options: ['She asked if I was coming.', 'She asked am I coming.'], answer: 'She asked if I was coming.', xp: 30 } ] },
+            { id: 23, level: 'Avançado 2', title: 'Terceira Condicional', icon: 'bi-arrow-counterclockwise', color: 'bg-warning', imageUrl: 'https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Arrependimentos e hipóteses no passado', content: 'Usada para situações imaginárias no passado que não aconteceram. Estrutura: If + Past Perfect, ... would have + particípio. Ex: "If I had studied, I would have passed."' }, { type: 'fill-in', question: 'If she had known, she ___ (come).', answer: 'would have come', xp: 25 }, { type: 'fill-in', question: 'I would have helped if you ___ (ask) me.', answer: 'had asked', xp: 30 } ] },
+            { id: 24, level: 'Avançado 2', title: 'Phrasal Verbs Essenciais', icon: 'bi-puzzle-fill', color: 'bg-warning', imageUrl: 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Verbos com Preposições', content: 'Combinações de verbo + preposição que criam um novo significado. Ex: "give up" (desistir), "look forward to" (ansiar por), "get along with" (dar-se bem com).' }, { type: 'mc', question: 'O que significa "He gave up smoking"?', options: ['Ele começou a fumar.', 'Ele parou de fumar.', 'Ele gosta de fumar.'], answer: 'Ele parou de fumar.', xp: 20 }, { type: 'fill-in', question: 'I need to ___ (descobrir) what time the meeting starts.', answer: 'find out', xp: 25 } ] },
+            { id: 25, level: 'Avançado 3', title: 'Past Perfect e Past Perfect Continuous', icon: 'bi-skip-backward-fill', color: 'bg-warning', imageUrl: 'https://images.pexels.com/photos/2102416/pexels-photo-2102416.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'O Passado do Passado', content: 'Past Perfect (had + particípio) descreve uma ação que aconteceu antes de outra no passado. Ex: "The train had already left when I arrived." Past Perfect Continuous (had been + -ing) foca na duração da ação anterior.' }, { type: 'fill-in', question: 'By the time he arrived, we ___ (eat) dinner.', answer: 'had already eaten', xp: 25 }, { type: 'fill-in', question: 'He was tired because he ___ (work) all day.', answer: 'had been working', xp: 30 } ] },
+            { id: 26, level: 'Avançado 3', title: 'Artigos: Casos Especiais', icon: 'bi-front', color: 'bg-warning', imageUrl: 'https://images.pexels.com/photos/669610/pexels-photo-669610.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Uso de "The" e "Zero Article"', content: 'Não usamos "the" com nomes de países (exceto exceções como The USA), refeições, idiomas, ou conceitos abstratos em geral (love, happiness). Usamos "the" com rios, oceanos e nomes de jornais.' }, { type: 'mc', question: 'Qual está correto?', options: ['I speak the Portuguese.', 'I speak Portuguese.'], answer: 'I speak Portuguese.', xp: 20 }, { type: 'mc', question: 'Qual está correto?', options: ['The life is beautiful.', 'Life is beautiful.'], answer: 'Life is beautiful.', xp: 25 } ] },
+            { id: 27, level: 'Avançado 4', title: 'Inglês para o Trabalho: E-mails', icon: 'bi-envelope-fill', color: 'bg-indigo', imageUrl: 'https://images.pexels.com/photos/3184611/pexels-photo-3184611.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Linguagem Formal', content: 'Use saudações como "Dear Mr./Ms. [Sobrenome]," e despedidas como "Sincerely," ou "Best regards,". Evite gírias e abreviações.' }, { type: 'mc', question: 'Qual a melhor despedida para um e-mail formal?', options: ['Cheers', 'See ya', 'Sincerely'], answer: 'Sincerely', xp: 20 }, { type: 'theory', title: 'Frases Úteis', content: '"I am writing to inquire about..." (Estou a escrever para perguntar sobre...), "Please find attached..." (Por favor, encontre em anexo...), "I look forward to hearing from you." (Aguardo o seu contacto).' }, { type: 'mc', question: 'O que significa "Please find attached"?', options: ['Por favor, ataque.', 'Por favor, encontre em anexo.'], answer: 'Por favor, encontre em anexo.', xp: 25 } ] },
+            { id: 28, level: 'Avançado 4', title: 'Inglês para Debates: Argumentação', icon: 'bi-mic-fill', color: 'bg-indigo', imageUrl: 'https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Expressando Opinião', content: 'Use frases como "In my opinion...", "I believe that...", "From my point of view...". Para concordar, use "I agree with you". Para discordar educadamente, "I see your point, but..."' }, { type: 'mc', question: 'Como discordar de forma educada?', options: ['You are wrong.', 'I see your point, but I have a different perspective.'], answer: 'I see your point, but I have a different perspective.', xp: 25 }, { type: 'theory', title: 'Conectando Ideias', content: 'Use conectivos para fortalecer seus argumentos: "Furthermore," (Além disso), "However," (No entanto), "Therefore," (Portanto).' }, { type: 'fill-in', question: 'Ele é inteligente. ___, ele é preguiçoso. (Use "No entanto")', answer: 'However', xp: 25 } ] },
+            { id: 29, level: 'Avançado 5', title: 'Expressões Idiomáticas (Idioms)', icon: 'bi-lightbulb-fill', color: 'bg-indigo', imageUrl: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Linguagem Figurada', content: 'Idioms são expressões cujo significado não é literal. Ex: "break a leg" (boa sorte), "it\'s raining cats and dogs" (está a chover muito).' }, { type: 'mc', question: 'O que significa "it costs an arm and a leg"?', options: ['É muito barato.', 'É muito caro.', 'Não tem preço.'], answer: 'É muito caro.', xp: 25 }, { type: 'mc', question: 'Se alguém diz "bite the bullet", o que deve fazer?', options: ['Morder uma bala.', 'Enfrentar uma situação difícil com coragem.', 'Comer algo rapidamente.'], answer: 'Enfrentar uma situação difícil com coragem.', xp: 30 } ] },
+            { id: 30, level: 'Avançado 5', title: 'Gírias (Slang) e Reduções', icon: 'bi-phone-fill', color: 'bg-indigo', imageUrl: 'https://images.pexels.com/photos/4050303/pexels-photo-4050303.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', lessons: [ { type: 'theory', title: 'Linguagem Informal', content: 'Gírias comuns incluem "cool" (legal), "awesome" (incrível). Reduções como "gonna" (going to), "wanna" (want to) são muito usadas na fala.' }, { type: 'fill-in', question: 'O que você vai fazer? What are you ___ do?', answer: 'gonna', xp: 20 }, { type: 'theory', title: 'Mais Gírias', content: '"Bail" significa sair de um lugar (Let\'s bail). "Hang out" significa passar tempo com amigos (We should hang out this weekend).' }, { type: 'mc', question: 'O que significa "I\'m gonna bail"?', options: ['Eu vou pagar a fiança.', 'Eu vou sair daqui.', 'Eu vou dançar.'], answer: 'Eu vou sair daqui.', xp: 25 } ] },
+        ];
+
+        const LEVEL_TEST_QUESTIONS = [
+          { question: "Which sentence is correct?", options: ["He don't like coffee.", "He doesn't like coffee.", "He not like coffee.", "He doesnt likes coffee."], correctAnswer: "He doesn't like coffee.", difficulty: 1 },
+          { question: "What did you ___ yesterday?", options: ["do", "did", "done", "doing"], correctAnswer: "do", difficulty: 2 },
+          { question: "I have never ___ to Japan.", options: ["be", "was", "been", "being"], correctAnswer: "been", difficulty: 2 },
+          { question: "If I ___ more time, I would travel the world.", options: ["have", "had", "would have", "having"], correctAnswer: "had", difficulty: 3 },
+          { question: "The report ___ by the new intern.", options: ["was wrote", "is written", "was written", "written"], correctAnswer: "was written", difficulty: 3 }
+        ];
+
+        // --- HOOKS E FUNÇÕES DO FIREBASE (sem alterações na lógica) ---
+        function useAuth() {
+          const [user, setUser] = useState(null);
+          const [loading, setLoading] = useState(true);
+          useEffect(() => {
+            if (!auth) { setLoading(false); return; }
+            const authUser = async () => {
+              try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                  await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                  await signInAnonymously(auth);
+                }
+              } catch (error) { console.error("Auth Error:", error); }
+            };
+            authUser();
+            const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+              setUser(currentUser);
+              setLoading(false);
+            });
+            return () => unsubscribe();
+          }, []);
+          return { user, loading };
+        }
+
+        function useUserData(userId) {
+          const [userData, setUserData] = useState(null);
+          const [loading, setLoading] = useState(true);
+          useEffect(() => {
+            if (!userId || !db) { setLoading(false); return; }
+            const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/profile`, 'data');
+            const unsubscribe = onSnapshot(userDocRef, (docSnap) => {
+              if (docSnap.exists()) {
+                setUserData(docSnap.data());
+              } else {
+                setUserData(null);
+              }
+              setLoading(false);
+            }, (error) => { console.error("User Data Error:", error); setLoading(false); });
+            return () => unsubscribe();
+          }, [userId]);
+          return { userData, loading };
+        }
+
+        async function initializeUserData(userId, level) {
+          if (!db) return;
+          const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/profile`, 'data');
+          await setDoc(userDocRef, {
+            name: "Novo Aluno",
+            email: "aluno@email.com",
+            level: level,
+            xp: 0,
+            createdAt: new Date(),
+            lastStudied: new Date().toISOString().split('T')[0],
+            streak: 1,
+            topicProgress: {}
+          });
+        }
+
+        async function updateUserProgress(userId, topicId, lessonId, gainedXp) {
+            if (!db) return;
+            const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/profile`, 'data');
+            const docSnap = await getDoc(userDocRef);
+            if (!docSnap.exists()) return;
+            const userData = docSnap.data();
+            const newXp = (userData.xp || 0) + gainedXp;
+            const progressKey = `topicProgress.${topicId}.completed`;
+            const currentCompleted = userData.topicProgress?.[topicId]?.completed || [];
+            const newCompleted = [...new Set([...currentCompleted, lessonId])];
+            await updateDoc(userDocRef, { xp: newXp, [progressKey]: newCompleted });
+        }
+
+        async function completeTopic(userId, topicId) {
+            if (!db) return;
+            const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/profile`, 'data');
+            const docSnap = await getDoc(userDocRef);
+            if (!docSnap.exists()) return;
+            const userData = docSnap.data();
+            const currentLevel = userData.level || 1;
+            const newLevel = Math.max(currentLevel, topicId + 1);
+            await updateDoc(userDocRef, { level: newLevel, [`topicProgress.${topicId}.status`]: 'completed' });
+        }
+
+        // --- COMPONENTES DE LAYOUT ---
+
+        const AppHeader = ({ userData }) => (
+            <header className="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-white">
+                <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-dark fw-bold" href="#">
+                    <i className="bi bi-box-seam-fill me-2"></i>
+                    José 0-100 Inglês
+                </a>
+                <div className="navbar-nav me-lg-2 flex-row">
+                    <div className="nav-item text-nowrap d-flex align-items-center">
+                        <div className="dropdown ps-3">
+                            <a className="nav-link dropdown-toggle text-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i className="bi bi-bell-fill text-secondary"></i>
+                            </a>
+                        </div>
+                        <div className="dropdown px-3">
+                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src={`https://i.pravatar.cc/150?u=${auth?.currentUser?.uid}`} className="rounded-circle" width="32" height="32" alt="Avatar" />
+                            </a>
+                            <ul className="dropdown-menu dropdown-menu-end bg-white shadow">
+                                <li>
+                                    <div className="d-flex align-items-center p-2">
+                                        <img src={`https://i.pravatar.cc/150?u=${auth?.currentUser?.uid}`} className="rounded-circle me-3" width="48" height="48" alt="Avatar" />
+                                        <div className="d-flex flex-column">
+                                            <small className="fw-bold">{userData?.name}</small>
+                                            <span className="text-muted small">{userData?.email}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><hr className="dropdown-divider" /></li>
+                                <li><a className="dropdown-item d-flex align-items-center gap-2" href="#"><i className="bi bi-person-fill"></i> Perfil</a></li>
+                                <li><a className="dropdown-item d-flex align-items-center gap-2" href="#"><i className="bi bi-gear-fill"></i> Configurações</a></li>
+                                <li><a className="dropdown-item d-flex align-items-center gap-2" href="#"><i className="bi bi-question-circle-fill"></i> Ajuda</a></li>
+                                <li><hr className="dropdown-divider" /></li>
+                                <li><a className="dropdown-item d-flex align-items-center gap-2" href="#"><i className="bi bi-box-arrow-right"></i> Sair</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        );
+
+        const Sidebar = ({ currentView, setView }) => {
+            const navItems = [
+                { id: 'dashboard', icon: 'bi-house-fill', label: 'Painel de Aulas' },
+                { id: 'profile', icon: 'bi-person-fill', label: 'Perfil' },
+                { id: 'settings', icon: 'bi-gear-fill', label: 'Configurações' },
+                { id: 'help', icon: 'bi-question-circle-fill', label: 'Ajuda' },
+            ];
+            return (
+                <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <div className="position-sticky pt-3 sidebar-sticky">
+                        <ul className="nav flex-column">
+                            {navItems.map(item => (
+                                <li className="nav-item" key={item.id}>
+                                    <a className={`nav-link d-flex align-items-center gap-2 ${currentView === item.id ? 'active' : ''}`} href="#" onClick={() => setView(item.id)}>
+                                        <i className={`bi ${item.icon}`}></i>
+                                        {item.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                        <div className="nav-item featured-box mt-lg-5 mt-4 mb-4 mx-3 p-4 rounded-3 bg-primary text-white text-center">
+                            <i className="bi bi-lightning-charge-fill fs-1 mb-3"></i>
+                            <h5 className="text-white">Modo Turbo</h5>
+                            <p>Acelere seu aprendizado com lições extras!</p>
+                            <a className="btn btn-sm btn-light fw-bold" href="#">Upgrade</a>
+                        </div>
+                    </div>
+                </nav>
+            );
+        };
+
+        // --- COMPONENTES DE CONTEÚDO ---
+
+        const LoadingSpinner = () => (
+            <div className="d-flex flex-column align-items-center justify-content-center vh-100">
+                <div className="spinner-border text-primary" role="status" style={{width: '3rem', height: '3rem'}}>
+                    <span className="visually-hidden">A carregar...</span>
+                </div>
+                <p className="mt-3 text-muted">A carregar a sua jornada...</p>
+            </div>
+        );
+
+        const LevelTest = ({ onTestComplete }) => {
+          const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+          const [score, setScore] = useState(0);
+          const [selectedOption, setSelectedOption] = useState(null);
+          const [feedback, setFeedback] = useState(null);
+
+          const handleOptionClick = (option) => {
+            if (feedback) return;
+            setSelectedOption(option);
+            const isCorrect = option === LEVEL_TEST_QUESTIONS[currentQuestionIndex].correctAnswer;
+            if (isCorrect) {
+              setScore(score + LEVEL_TEST_QUESTIONS[currentQuestionIndex].difficulty);
+              setFeedback({ correct: true, message: 'Correto!' });
+            } else {
+              setFeedback({ correct: false, message: 'Ops, tente novamente.' });
+            }
+            setTimeout(() => {
+              setFeedback(null);
+              setSelectedOption(null);
+              if (currentQuestionIndex < LEVEL_TEST_QUESTIONS.length - 1) {
+                setCurrentQuestionIndex(currentQuestionIndex + 1);
+              } else {
+                let finalLevel = 1;
+                const finalScore = score + (isCorrect ? LEVEL_TEST_QUESTIONS[currentQuestionIndex].difficulty : 0);
+                if (finalScore >= 9) finalLevel = 21;
+                else if (finalScore >= 5) finalLevel = 11;
+                else if (finalScore >= 2) finalLevel = 5;
+                onTestComplete(finalLevel);
+              }
+            }, 1500);
+          };
+          
+          const question = LEVEL_TEST_QUESTIONS[currentQuestionIndex];
+          return (
+            <div className="d-flex align-items-center justify-content-center" style={{minHeight: '100vh', backgroundColor: '#f8f9fa'}}>
+                <div className="w-100" style={{maxWidth: '600px'}}>
+                    <div className="bg-white p-4 p-md-5 rounded-3 shadow-sm">
+                       <h1 className="h3 mb-4 fw-bold text-center text-primary">Teste de Nivelamento</h1>
+                       <div className="bg-light p-3 rounded-2 mb-4"><p className="h5 text-center text-dark mb-0">{question.question}</p></div>
+                       <div className="row g-3">
+                        {question.options.map((option, index) => (
+                            <div className="col-12 col-md-6" key={index}>
+                                <button onClick={() => handleOptionClick(option)} className={`btn btn-lg w-100 p-3 ${selectedOption === option ? (feedback.correct ? 'btn-success' : 'btn-danger') : 'btn-outline-secondary'}`}>
+                                  {option}
+                                </button>
+                            </div>
+                        ))}
+                       </div>
+                       {feedback && <div className={`mt-4 text-center h5 ${feedback.correct ? 'text-success' : 'text-danger'}`}>{feedback.message}</div>}
+                    </div>
+                </div>
+            </div>
+          );
+        };
+
+        const Dashboard = ({ userData, onTopicClick }) => {
+          const currentLevelInfo = useMemo(() => TOPICS.find(t => t.id === userData.level) || TOPICS[0], [userData.level]);
+          return (
+            <React.Fragment>
+              <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 className="h2">Painel de Aulas</h1>
+                <div className="btn-toolbar mb-2 mb-md-0">
+                  <div className="btn-group me-3">
+                    <div className="d-flex align-items-center gap-2" title="Sequência de estudos">
+                        <i className="bi bi-lightning-charge-fill text-warning"></i>
+                        <span className="fw-bold">{userData.streak || 1} dias</span>
+                    </div>
+                  </div>
+                   <div className="d-flex align-items-center gap-2" title="Pontos de Experiência">
+                        <i className="bi bi-star-fill text-primary"></i>
+                        <span className="fw-bold">{userData.xp} XP</span>
+                    </div>
+                </div>
+              </div>
+              <p className="text-muted">Olá {userData.name}, bem-vindo de volta! O seu nível atual é <span className={`fw-bold`}>{currentLevelInfo.level}</span>.</p>
+              
+              <div className="row g-4 mt-2">
+                {TOPICS.map(topic => {
+                  const progressData = userData.topicProgress?.[topic.id];
+                  const completedCount = progressData?.completed?.length || 0;
+                  const totalLessons = topic.lessons.filter(l => l.type !== 'theory').length;
+                  const progress = totalLessons > 0 ? (completedCount / totalLessons) * 100 : (progressData?.status === 'completed' ? 100 : 0);
+                  const isLocked = topic.id > userData.level;
+
+                  return (
+                    <div className="col-12 col-md-6 col-lg-4 col-xl-3" key={topic.id}>
+                        <div 
+                            onClick={!isLocked ? () => onTopicClick(topic) : undefined} 
+                            className={`card h-100 shadow-sm border-0 transition-all position-relative ${isLocked ? 'bg-light opacity-75' : 'cursor-pointer hover-shadow'}`}
+                        >
+                            <div 
+                                className="card-img-top"
+                                style={{
+                                    backgroundImage: `url(${topic.imageUrl})`, 
+                                    backgroundSize: 'cover', 
+                                    backgroundPosition: 'center',
+                                    height: '120px'
+                                }}
+                            >
+                                <div className="d-flex justify-content-end p-2" style={{backgroundColor: 'rgba(0,0,0,0.2)', height: '100%'}}>
+                                     <i className={`bi ${isLocked ? 'bi-lock-fill' : topic.icon} text-white fs-4`}></i>
+                                </div>
+                            </div>
+                            <div className="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 className="card-title h6 mb-1 text-dark fw-bold">{topic.title}</h5>
+                                    <small className="text-muted">{topic.level}</small>
+                                </div>
+                                <div className="mt-3">
+                                   {progress > 0 && (
+                                        <div className="progress" style={{height: '6px'}}>
+                                            <div className={`progress-bar ${topic.color}`} role="progressbar" style={{ width: `${progress}%`}} aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    )}
+                                    {progress === 100 && <div className="text-end small fw-bold text-success mt-1">Concluído!</div>}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </React.Fragment>
+          );
+        };
+
+        const LessonScreen = ({ topic, userData, onBack }) => {
+            const [currentIndex, setCurrentIndex] = useState(0);
+            const [inputValue, setInputValue] = useState('');
+            const [feedback, setFeedback] = useState(null); // null, 'correct', 'incorrect'
+            const [shuffledOptions, setShuffledOptions] = useState([]);
+            const userId = auth?.currentUser?.uid;
+
+            const currentCard = topic.lessons[currentIndex];
+            const exerciseLessons = useMemo(() => topic.lessons.filter(l => l.type !== 'theory'), [topic.lessons]);
+            const totalExercises = exerciseLessons.length;
+            const completedExercises = useMemo(() => {
+                const progress = userData.topicProgress?.[topic.id]?.completed || [];
+                return exerciseLessons.filter((_, index) => progress.includes(index)).length;
+            }, [userData, topic.id, exerciseLessons]);
+
+            useEffect(() => {
+                if (currentCard?.type === 'mc') {
+                    setShuffledOptions([...currentCard.options].sort(() => Math.random() - 0.5));
+                }
+            }, [currentCard]);
+
+            const handleAnswer = async () => {
+                if (!currentCard || feedback) return;
+                let isCorrect = false;
+                if (currentCard.type === 'fill-in') {
+                    isCorrect = inputValue.trim().toLowerCase() === currentCard.answer.toLowerCase();
+                }
+                setFeedback(isCorrect ? 'correct' : 'incorrect');
+                if (isCorrect) {
+                    const lessonIdentifier = currentIndex;
+                    const progress = userData.topicProgress?.[topic.id]?.completed || [];
+                    if (!progress.includes(lessonIdentifier)) {
+                         await updateUserProgress(userId, topic.id, lessonIdentifier, currentCard.xp);
+                    }
+                }
+                setTimeout(async () => {
+                    if (isCorrect) {
+                        if (currentIndex < topic.lessons.length - 1) {
+                            setCurrentIndex(currentIndex + 1); setInputValue('');
+                        } else {
+                            await completeTopic(userId, topic.id); onBack();
+                        }
+                    }
+                    setFeedback(null);
+                }, 1500);
+            };
+
+            const handleMcAnswer = async (option) => {
+                if (feedback) return;
+                const isCorrect = option === currentCard.answer;
+                setFeedback(isCorrect ? 'correct' : 'incorrect');
+                if (isCorrect) {
+                    const lessonIdentifier = currentIndex;
+                    const progress = userData.topicProgress?.[topic.id]?.completed || [];
+                    if (!progress.includes(lessonIdentifier)) {
+                        await updateUserProgress(userId, topic.id, lessonIdentifier, currentCard.xp);
+                    }
+                }
+                setTimeout(async () => {
+                    if (isCorrect) {
+                        if (currentIndex < topic.lessons.length - 1) {
+                            setCurrentIndex(currentIndex + 1);
+                        } else {
+                            await completeTopic(userId, topic.id); onBack();
+                        }
+                    }
+                    setFeedback(null);
+                }, 1500);
+            };
+            
+            const progressPercentage = totalExercises > 0 ? (completedExercises / totalExercises) * 100 : 0;
+
+            return (
+                <div className="w-100 mx-auto py-4" style={{maxWidth: '800px'}}>
+                    <header className="d-flex align-items-center justify-content-between mb-4">
+                        <button onClick={onBack} className="btn btn-sm btn-outline-secondary d-flex align-items-center gap-2"><i className="bi bi-house-fill"></i> Voltar</button>
+                        <h2 className="h4 mb-0 fw-bold">{topic.title}</h2>
+                        <div style={{width: '80px'}}></div>
+                    </header>
+                    <div className="progress mb-4" style={{height: '8px'}}>
+                        <div className="progress-bar bg-success" role="progressbar" style={{ width: `${progressPercentage}%` }}></div>
+                    </div>
+                    <div className={`p-4 p-md-5 rounded-3 shadow-sm transition-all ${feedback === 'correct' ? 'bg-success-subtle' : feedback === 'incorrect' ? 'bg-danger-subtle' : 'bg-white'}`}>
+                        
+                        {currentCard.type === 'theory' && (
+                            <div className="text-center">
+                                {currentCard.imageUrl && <img src={currentCard.imageUrl} alt={currentCard.title} className="img-fluid rounded-3 mb-4 shadow-sm" style={{maxHeight: '250px', objectFit: 'cover', width: '100%'}} />}
+                                <h3 className="h4 fw-bold text-primary mb-3">{currentCard.title}</h3>
+                                <p className="lead text-muted">{currentCard.content}</p>
+                            </div>
+                        )}
+
+                        {currentCard.type === 'fill-in' && (
+                            <div>
+                                <p className="h5 text-center text-dark mb-4">{currentCard.question}</p>
+                                <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} className="form-control form-control-lg text-center" placeholder="Sua resposta..." />
+                            </div>
+                        )}
+
+                        {currentCard.type === 'mc' && (
+                             <div>
+                                <p className="h5 text-center text-dark mb-4">{currentCard.question}</p>
+                                <div className="d-grid gap-3">
+                                    {shuffledOptions.map((opt, i) => (
+                                        <button key={i} onClick={() => handleMcAnswer(opt)} className={`btn btn-lg p-3 ${feedback ? (opt === currentCard.answer ? 'btn-success' : 'btn-danger') : 'btn-outline-secondary'}`}>{opt}</button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                    </div>
+                    {currentCard.type !== 'mc' && (
+                        <div className="mt-4 text-center">
+                            <button onClick={currentCard.type === 'theory' ? () => setCurrentIndex(currentIndex + 1) : handleAnswer} className="btn btn-primary btn-lg px-5">
+                                {currentCard.type === 'theory' ? 'Próximo' : 'Verificar'} <i className="bi bi-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const PlaceholderScreen = ({title}) => (
+            <div className="pt-3 pb-2 mb-3">
+                <h1 className="h2">{title}</h1>
+                <div className="bg-white p-5 rounded-3 text-center mt-4">
+                    <h2 className="text-muted">Em construção</h2>
+                    <p>Esta secção estará disponível em breve.</p>
+                </div>
+            </div>
+        );
+
+        // --- COMPONENTE PRINCIPAL ---
+        function App() {
+          const { user, loading: authLoading } = useAuth();
+          const { userData, loading: userDataLoading } = useUserData(user?.uid);
+          const [currentView, setCurrentView] = useState('loading'); // loading, levelTest, dashboard, lesson, profile, settings, help
+          const [activeTopic, setActiveTopic] = useState(null);
+
+          useEffect(() => {
+            if (authLoading || userDataLoading) {
+              setCurrentView('loading');
+            } else if (user && userData) {
+              if (currentView === 'levelTest' || currentView === 'loading') {
+                  setCurrentView('dashboard');
+              }
+            } else if (user && !userData) {
+              setCurrentView('levelTest');
+            } else if (!user && !authLoading) {
+                setCurrentView('error');
+            }
+          }, [user, userData, authLoading, userDataLoading]);
+
+          const handleTestComplete = async (level) => {
+            if (user) {
+              await initializeUserData(user.uid, level);
+            }
+          };
+          
+          const handleTopicClick = (topic) => {
+            if (topic.lessons && topic.lessons.length > 0) {
+                setActiveTopic(topic);
+                setCurrentView('lesson');
+            } else {
+                console.warn("Este tópico ainda não possui lições. Conteúdo em breve!");
+            }
+          };
+          
+          const handleBackToDashboard = () => {
+              setActiveTopic(null);
+              setCurrentView('dashboard');
+          }
+
+          const renderContent = () => {
+            if (currentView === 'loading') return <LoadingSpinner />;
+            if (currentView === 'error') return <div className="text-center text-danger">Ocorreu um erro de autenticação. Por favor, recarregue a página.</div>;
+            if (currentView === 'levelTest') return <LevelTest onTestComplete={handleTestComplete} />;
+            
+            let viewComponent;
+            switch (currentView) {
+              case 'dashboard':
+                viewComponent = <Dashboard userData={userData} onTopicClick={handleTopicClick} />;
+                break;
+              case 'lesson':
+                viewComponent = <LessonScreen topic={activeTopic} userData={userData} onBack={handleBackToDashboard} />;
+                break;
+              case 'profile':
+                viewComponent = <PlaceholderScreen title="Perfil"/>;
+                break;
+              case 'settings':
+                viewComponent = <PlaceholderScreen title="Configurações"/>;
+                break;
+              case 'help':
+                viewComponent = <PlaceholderScreen title="Central de Ajuda"/>;
+                break;
+              default:
+                viewComponent = <Dashboard userData={userData} onTopicClick={handleTopicClick} />;
+            }
+
+            return (
+                <React.Fragment>
+                    <AppHeader userData={userData} />
+                    <div className="container-fluid">
+                        <div className="row">
+                            <Sidebar currentView={currentView} setView={setCurrentView} />
+                            <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                                {viewComponent}
+                            </main>
+                        </div>
+                    </div>
+                </React.Fragment>
+            );
+          };
+
+          return renderContent();
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
