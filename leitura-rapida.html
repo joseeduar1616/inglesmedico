@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="escuro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitura Rápida</title>
+<meta name="description" content="Leitor RSVP: arraste um PDF e leia palavra por palavra, com pausa em imagens, tempo estimado e controles de vídeo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<style>
+:root{
+  --bg:#0f1117; --bg2:#161924; --card:#1c2030; --card2:#242a3d; --line:#2e3550;
+  --text:#e8eaf2; --muted:#8b92ab; --accent:#ff5470; --accent2:#7c5cff; --ok:#2ecc8f;
+  --word:#f4f5fa; --focal:#ff5470; --shadow:0 10px 40px rgba(0,0,0,.35);
+  --font-ui:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --font-read:'Inter',system-ui,sans-serif;
+  --size:56px;
+}
+html[data-theme="preto"]{--bg:#000;--bg2:#070707;--card:#101010;--card2:#181818;--line:#262626;--text:#eee;--muted:#888;--word:#fff}
+html[data-theme="claro"]{--bg:#eef1f7;--bg2:#e4e8f1;--card:#ffffff;--card2:#f3f5fa;--line:#d9deea;--text:#1d2233;--muted:#68708a;--word:#141824;--shadow:0 10px 30px rgba(30,40,80,.12)}
+html[data-theme="sepia"]{--bg:#efe4cf;--bg2:#e7d9bf;--card:#f8f0df;--card2:#f1e6d0;--line:#dccaa8;--text:#3e3222;--muted:#82705a;--word:#2e2416;--accent:#c4452c;--focal:#c4452c;--accent2:#8a5a2b;--shadow:0 10px 30px rgba(80,60,20,.15)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--font-ui);-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+button{font:inherit;color:inherit;cursor:pointer}
+.hidden{display:none!important}
+
+/* ---------- topo ---------- */
+header.top{display:flex;align-items:center;gap:12px;padding:14px 20px;max-width:1100px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.01em}
+.brand .logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#fff;font-size:18px;box-shadow:0 4px 14px rgba(255,84,112,.35)}
+.brand small{display:block;font-weight:500;font-size:11px;color:var(--muted);letter-spacing:.02em}
+.spacer{flex:1}
+.icon-btn{background:var(--card);border:1px solid var(--line);border-radius:10px;height:38px;min-width:38px;padding:0 10px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px;transition:.15s}
+.icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+.icon-btn svg{width:18px;height:18px}
+
+main{max-width:1100px;margin:0 auto;padding:0 20px 40px}
+
+/* ---------- tela de envio ---------- */
+.hero{text-align:center;margin:28px auto 26px;max-width:640px}
+.hero h1{font-size:clamp(28px,4.4vw,42px);line-height:1.1;margin:0 0 12px;letter-spacing:-.025em}
+.hero h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);margin:0;font-size:16px;line-height:1.5}
+.drop{border:2px dashed var(--line);background:var(--card);border-radius:22px;padding:48px 20px;text-align:center;cursor:pointer;transition:.2s;box-shadow:var(--shadow);position:relative}
+.drop:hover,.drop.over{border-color:var(--accent);transform:translateY(-2px)}
+.drop .big{width:70px;height:70px;margin:0 auto 14px;border-radius:20px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.drop .big svg{width:34px;height:34px}
+.drop h2{margin:0 0 6px;font-size:20px}
+.drop p{margin:0;color:var(--muted)}
+.btn{border:none;border-radius:12px;padding:11px 18px;font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:8px;transition:.15s}
+.btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 6px 18px rgba(255,84,112,.3)}
+.btn.primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn.ghost{background:var(--card2);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--accent)}
+.or{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:13px;margin:22px 0}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.paste{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+.paste textarea{width:100%;min-height:150px;resize:vertical;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font:15px/1.5 var(--font-ui);outline:none}
+.paste textarea:focus{border-color:var(--accent)}
+.paste .row{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:26px}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+.feat b{display:block;margin-bottom:4px;font-size:14px}
+.feat span{color:var(--muted);font-size:13px;line-height:1.45}
+.loading{margin-top:18px;text-align:center}
+.bar{height:8px;background:var(--card2);border-radius:99px;overflow:hidden;max-width:420px;margin:10px auto 0}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .2s}
+
+/* ---------- leitor ---------- */
+.docbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:6px 0 14px}
+.docname{font-weight:700;font-size:17px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:13px;color:var(--muted);white-space:nowrap}
+.chip b{color:var(--text);font-weight:600}
+.reader{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.reader:fullscreen{border-radius:0;display:flex;flex-direction:column;justify-content:center;background:var(--bg)}
+.reader:fullscreen .stage{flex:1}
+.stage{position:relative;height:clamp(240px,42vh,420px);display:flex;align-items:center;justify-content:center;user-select:none;cursor:pointer;background:radial-gradient(ellipse at center,var(--card2),var(--card) 70%)}
+.reader:fullscreen .stage{background:var(--bg)}
+.guide{position:absolute;left:50%;width:2px;height:22px;background:var(--focal);opacity:.55;transform:translateX(-50%);border-radius:2px}
+.guide.t{top:calc(50% - var(--size)*.95 - 10px)} .guide.b{top:calc(50% + var(--size)*.95 - 12px)}
+.hline{position:absolute;left:12%;right:12%;height:1px;background:var(--line)}
+.hline.t{top:calc(50% - var(--size)*.95)} .hline.b{top:calc(50% + var(--size)*.95)}
+.word{font-family:var(--font-read);font-size:var(--size);color:var(--word);font-weight:500;letter-spacing:.005em;width:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:baseline;white-space:pre;line-height:1.2;padding:0 16px}
+.word .pre{text-align:right;overflow:hidden}
+.word .post{text-align:left;overflow:hidden}
+.word .f{color:var(--focal)}
+.word.multi{display:block;text-align:center;white-space:normal}
+.noorp .word .f{color:inherit}
+.noguide .guide,.noguide .hline{display:none}
+.stage-msg{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:var(--muted);font-size:13px;pointer-events:none;transition:opacity .3s}
+.playing .stage-msg{opacity:0}
+.big-play{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transition:opacity .2s}
+.big-play div{width:76px;height:76px;border-radius:50%;background:rgba(0,0,0,.45);display:grid;place-items:center;color:#fff;transform:scale(.8);transition:transform .2s}
+.big-play.flash{opacity:1}.big-play.flash div{transform:scale(1)}
+.big-play svg{width:34px;height:34px}
+
+.imgview{position:absolute;inset:0;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;z-index:5;cursor:default}
+.reader:fullscreen .imgview{background:var(--bg)}
+.imgview .imgwrap{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}
+.imgview img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.3);background:#fff;cursor:zoom-in}
+.imgview .cap{font-size:13px;color:var(--muted);display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+.imgview .badge{background:var(--accent);color:#fff;border-radius:99px;padding:3px 10px;font-weight:600;font-size:12px}
+.countdown{height:3px;width:160px;background:var(--line);border-radius:3px;overflow:hidden}
+.countdown i{display:block;height:100%;background:var(--accent);width:100%}
+.spinner{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.endview{position:absolute;inset:0;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;z-index:6;padding:20px;cursor:default}
+.endview h3{margin:0;font-size:26px}
+.endview p{margin:0;color:var(--muted)}
+
+/* ---------- controles estilo vídeo ---------- */
+.controls{padding:10px 16px 14px;border-top:1px solid var(--line);background:var(--card)}
+.reader:fullscreen .controls{background:var(--bg);border-top-color:transparent}
+.timeline{position:relative;height:22px;display:flex;align-items:center;cursor:pointer;touch-action:none}
+.track{position:relative;width:100%;height:5px;background:var(--card2);border-radius:99px;transition:height .15s}
+.timeline:hover .track,.timeline.drag .track{height:8px}
+.fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}
+.hoverfill{position:absolute;left:0;top:0;bottom:0;background:var(--line);border-radius:99px;opacity:0}
+.timeline:hover .hoverfill{opacity:.8}
+.knob{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--accent);transform:translate(-50%,-50%) scale(0);transition:transform .15s;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.timeline:hover .knob,.timeline.drag .knob{transform:translate(-50%,-50%) scale(1)}
+.mark{position:absolute;top:50%;width:9px;height:9px;border-radius:2px;background:#ffc94d;transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 0 2px var(--card);pointer-events:none}
+.ptick{position:absolute;top:0;bottom:0;width:2px;background:var(--card);opacity:.9;pointer-events:none}
+.tip{position:absolute;bottom:26px;transform:translateX(-50%);background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:12px;white-space:nowrap;pointer-events:none;box-shadow:var(--shadow);opacity:0;transition:opacity .12s;max-width:260px;overflow:hidden;text-overflow:ellipsis}
+.tip b{color:var(--accent)}
+.timeline:hover .tip,.timeline.drag .tip{opacity:1}
+.cbar{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
+.cbtn{background:transparent;border:none;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;color:var(--text);transition:.12s;position:relative}
+.cbtn:hover{background:var(--card2);color:var(--accent)}
+.cbtn svg{width:22px;height:22px}
+.cbtn.play{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 14px rgba(255,84,112,.35)}
+.cbtn.play:hover{color:#fff;filter:brightness(1.1)}
+.cbtn.play svg{width:24px;height:24px}
+.cbtn .n{position:absolute;font-size:8px;font-weight:700;bottom:9px;right:7px}
+.time{font-variant-numeric:tabular-nums;font-size:14px;margin-left:8px;white-space:nowrap}
+.time .dim{color:var(--muted)}
+.speed{display:flex;align-items:center;background:var(--card2);border:1px solid var(--line);border-radius:12px;height:40px;overflow:hidden}
+.speed button{background:none;border:none;width:34px;height:100%;font-size:18px;color:var(--muted)}
+.speed button:hover{color:var(--accent);background:var(--card)}
+.speed input{width:56px;background:none;border:none;color:var(--text);text-align:center;font:600 15px var(--font-ui);outline:none;-moz-appearance:textfield}
+.speed input::-webkit-outer-spin-button,.speed input::-webkit-inner-spin-button{-webkit-appearance:none}
+.speed span{font-size:11px;color:var(--muted);padding-right:4px}
+
+/* ---------- contexto ---------- */
+.context{border-top:1px solid var(--line);padding:16px 20px;max-height:200px;overflow-y:auto;line-height:1.75;font-size:15.5px;color:var(--muted);font-family:var(--font-read);scroll-behavior:smooth}
+.reader:fullscreen .context{display:none}
+.context .w{cursor:pointer;border-radius:4px;padding:1px 0;transition:background .1s}
+.context .w:hover{background:var(--card2);color:var(--text)}
+.context .w.done{color:var(--text);opacity:.75}
+.context .w.cur{background:var(--accent);color:#fff;padding:1px 3px;opacity:1}
+.context .imgchip{display:inline-flex;align-items:center;gap:4px;background:#ffc94d22;color:#d9a21b;border:1px solid #ffc94d55;border-radius:6px;padding:0 6px;font-size:12px;cursor:pointer;font-family:var(--font-ui);vertical-align:1px}
+.context .pb{display:block;height:10px}
+.context .pg{display:block;font-family:var(--font-ui);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);opacity:.7;margin:6px 0 2px}
+
+/* ---------- painéis ---------- */
+.panel{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px;backdrop-filter:blur(3px)}
+.panel .box{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);width:100%;max-width:520px;max-height:90vh;overflow:auto;padding:20px}
+.panel h3{margin:0 0 14px;font-size:18px;display:flex;align-items:center}
+.panel h3 button{margin-left:auto}
+.set{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.set:last-child{border-bottom:none}
+.set label{font-size:14px}
+.set label small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.seg{display:flex;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{background:none;border:none;border-radius:7px;padding:6px 10px;font-size:13px;color:var(--muted)}
+.seg button.on{background:var(--accent);color:#fff}
+.switch{position:relative;width:44px;height:24px;flex:none}
+.switch input{opacity:0;width:0;height:0}
+.switch i{position:absolute;inset:0;background:var(--line);border-radius:99px;transition:.2s;cursor:pointer}
+.switch i::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.switch input:checked+i{background:var(--accent)}
+.switch input:checked+i::after{transform:translateX(20px)}
+input[type=range]{accent-color:var(--accent);width:160px}
+.keys{display:grid;grid-template-columns:auto 1fr;gap:9px 14px;font-size:14px;align-items:center}
+kbd{background:var(--card2);border:1px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:2px 7px;font:600 12px var(--font-ui);white-space:nowrap}
+.fullpage img{max-width:100%;border-radius:8px;background:#fff}
+.panel .box.wide{max-width:900px}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);background:var(--card2);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:12px 16px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center;z-index:60;opacity:0;transition:.25s;font-size:14px;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast button{background:none;border:none;color:var(--accent);font-weight:600;white-space:nowrap}
+
+@media (max-width:640px){
+  header.top{padding:12px 16px}
+  main{padding:0 16px 30px}
+  .brand small{display:none}
+  .cbar{gap:2px}
+  .cbtn{width:36px;height:36px}
+  .hide-sm{display:none!important}
+  .time{order:10;width:100%;margin:4px 0 0;text-align:center}
+  .speed{margin-left:auto}
+  .context{max-height:160px;font-size:15px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="logo">⚡</div>
+    <div>Leitura Rápida<small>Leia PDFs palavra por palavra</small></div>
+  </div>
+  <div class="spacer"></div>
+  <button class="icon-btn hidden" id="btnNew" title="Abrir outro documento">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg><span class="hide-sm">Novo</span>
+  </button>
+  <button class="icon-btn" id="btnKeys" title="Atalhos de teclado (?)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg>
+  </button>
+  <button class="icon-btn" id="btnTheme" title="Trocar tema">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+  </button>
+</header>
+
+<main>
+  <!-- ======= TELA DE ENVIO ======= -->
+  <section id="upload">
+    <div class="hero">
+      <h1>Jogue o PDF e <span>leia 3× mais rápido</span></h1>
+      <p>Palavra por palavra no centro da tela, com pausa automática nas imagens, tempo estimado de leitura e controles como os de um vídeo.</p>
+    </div>
+    <div class="drop" id="drop" tabindex="0">
+      <div class="big"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 18v-6M9 15l3-3 3 3"/></svg></div>
+      <h2>Arraste seu PDF aqui</h2>
+      <p>ou clique para escolher o arquivo · o PDF não sai do seu computador</p>
+      <input type="file" id="file" accept="application/pdf,.pdf,.txt" hidden>
+    </div>
+    <div class="loading hidden" id="loading">
+      <div id="loadingText">Lendo PDF…</div>
+      <div class="bar"><i id="loadingBar"></i></div>
+    </div>
+    <div class="or">ou cole um texto</div>
+    <div class="paste">
+      <textarea id="pasteText" placeholder="Cole aqui seu texto (resumos, artigos, anotações)…"></textarea>
+      <div class="row">
+        <button class="btn primary" id="btnPaste"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Ler rápido</button>
+        <span class="chip" id="pasteInfo">0 palavras</span>
+      </div>
+    </div>
+    <div class="features">
+      <div class="feat"><b>🖼️ Pausa nas imagens</b><span>Quando o texto chega numa figura do PDF, a leitura para e mostra a imagem.</span></div>
+      <div class="feat"><b>⏱️ Tempo de leitura</b><span>Veja quanto falta, a hora em que termina e ajuste a velocidade na hora.</span></div>
+      <div class="feat"><b>⏪ Volta como vídeo</b><span>Barra de progresso arrastável, voltar frase, ±10 palavras e atalhos.</span></div>
+      <div class="feat"><b>💾 Continua de onde parou</b><span>Abriu o mesmo PDF de novo? A leitura retoma do ponto em que você estava.</span></div>
+    </div>
+  </section>
+
+  <!-- ======= LEITOR ======= -->
+  <section id="readerScreen" class="hidden">
+    <div class="docbar">
+      <div class="docname" id="docName">documento.pdf</div>
+      <div class="chips">
+        <span class="chip">Página <b id="pageNow">1</b> de <b id="pageTotal">1</b></span>
+        <span class="chip"><b id="wordCount">0</b> palavras</span>
+        <span class="chip">⏱ <b id="totalTime">0 min</b> a <b id="wpmChip">300</b> PPM</span>
+        <span class="chip" id="imgChip">🖼 <b id="imgCount">0</b> imagens</span>
+        <span class="chip">Termina às <b id="eta">--:--</b></span>
+      </div>
+    </div>
+
+    <div class="reader" id="reader">
+      <div class="stage" id="stage">
+        <div class="hline t"></div><div class="hline b"></div>
+        <div class="guide t"></div><div class="guide b"></div>
+        <div class="word" id="word"></div>
+        <div class="stage-msg" id="stageMsg">Clique ou aperte <kbd>Espaço</kbd> para começar</div>
+        <div class="big-play" id="bigPlay"><div id="bigPlayIcon"></div></div>
+
+        <div class="imgview hidden" id="imgView">
+          <div class="imgwrap" id="imgWrap"></div>
+          <div class="cap">
+            <span class="badge">Imagem</span><span id="imgCap">Página 1</span>
+            <div class="countdown hidden" id="countdown"><i id="countdownBar"></i></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+            <button class="btn primary" id="btnContinue"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Continuar <kbd style="margin-left:4px">Espaço</kbd></button>
+            <button class="btn ghost" id="btnFullPage">Ver página inteira</button>
+          </div>
+        </div>
+
+        <div class="endview hidden" id="endView">
+          <div style="font-size:44px">🎉</div>
+          <h3>Leitura concluída!</h3>
+          <p id="endStats"></p>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;justify-content:center">
+            <button class="btn primary" id="btnRestart">Ler de novo</button>
+            <button class="btn ghost" id="btnNew2">Outro documento</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="timeline" id="timeline">
+          <div class="track" id="track">
+            <div class="hoverfill" id="hoverFill"></div>
+            <div class="fill" id="fill"></div>
+            <div id="marks"></div>
+            <div class="knob" id="knob"></div>
+          </div>
+          <div class="tip" id="tip"></div>
+        </div>
+        <div class="cbar">
+          <button class="cbtn hide-sm" id="btnStart" title="Voltar ao início (Home)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+          <button class="cbtn" id="btnPrevSent" title="Frase anterior (Shift+←)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"/></svg></button>
+          <button class="cbtn" id="btnBack" title="Voltar 10 palavras (←)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><span class="n">10</span></button>
+          <button class="cbtn play" id="btnPlay" title="Ler / Pausar (Espaço)"></button>
+          <button class="cbtn" id="btnFwd" title="Avançar 10 palavras (→)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg><span class="n">10</span></button>
+          <button class="cbtn" id="btnNextSent" title="Próxima frase (Shift+→)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17l5-5-5-5M6 17l5-5-5-5"/></svg></button>
+          <div class="time"><span id="tNow">0:00</span> <span class="dim">/ <span id="tTotal">0:00</span> · faltam <span id="tLeft">0:00</span></span></div>
+          <div class="spacer"></div>
+          <div class="speed" title="Palavras por minuto (↑ ↓)">
+            <button id="spDown">−</button>
+            <input type="number" id="wpm" min="50" max="1500" step="25" value="300">
+            <span>PPM</span>
+            <button id="spUp">+</button>
+          </div>
+          <button class="cbtn" id="btnContext" title="Mostrar/ocultar texto (C)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 10h16M4 14h10M4 18h7"/></svg></button>
+          <button class="cbtn" id="btnSettings" title="Configurações"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+          <button class="cbtn" id="btnFull" title="Tela cheia (F)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
+        </div>
+      </div>
+
+      <div class="context" id="context"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ======= CONFIGURAÇÕES ======= -->
+<div class="panel hidden" id="settingsPanel">
+  <div class="box">
+    <h3>Configurações <button class="icon-btn" data-close>✕</button></h3>
+    <div class="set"><label>Tamanho da fonte<small id="sizeLbl">56 px</small></label><input type="range" id="setSize" min="28" max="110" step="2"></div>
+    <div class="set"><label>Fonte</label>
+      <div class="seg" id="setFont">
+        <button data-v="Inter">Sans</button><button data-v="Literata">Serifa</button><button data-v="Atkinson Hyperlegible">Legível</button><button data-v="JetBrains Mono">Mono</button>
+      </div></div>
+    <div class="set"><label>Palavras por vez</label>
+      <div class="seg" id="setChunk"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button></div></div>
+    <div class="set"><label>Tema</label>
+      <div class="seg" id="setTheme"><button data-v="escuro">Escuro</button><button data-v="preto">Preto</button><button data-v="claro">Claro</button><button data-v="sepia">Sépia</button></div></div>
+    <div class="set"><label>Pausar nas imagens<small>Para e espera você apertar “Continuar”. Desligado: mostra por 4 s.</small></label><label class="switch"><input type="checkbox" id="setPauseImg"><i></i></label></div>
+    <div class="set"><label>Pausa na pontuação<small>Mais tempo em vírgulas, pontos e fim de parágrafo</small></label><label class="switch"><input type="checkbox" id="setPunct"><i></i></label></div>
+    <div class="set"><label>Destacar letra de foco<small>A letra vermelha fica sempre no mesmo lugar</small></label><label class="switch"><input type="checkbox" id="setOrp"><i></i></label></div>
+    <div class="set"><label>Linhas-guia</label><label class="switch"><input type="checkbox" id="setGuide"><i></i></label></div>
+    <div class="set"><label>Arrancada suave<small>Começa mais devagar ao dar play</small></label><label class="switch"><input type="checkbox" id="setRamp"><i></i></label></div>
+    <div class="set"><label>Remover citações [1]<small>Ignora marcações como [1], [2,3] e **negrito**</small></label><label class="switch"><input type="checkbox" id="setCite"><i></i></label></div>
+  </div>
+</div>
+
+<!-- ======= ATALHOS ======= -->
+<div class="panel hidden" id="keysPanel">
+  <div class="box">
+    <h3>Atalhos de teclado <button class="icon-btn" data-close>✕</button></h3>
+    <div class="keys">
+      <span><kbd>Espaço</kbd> <kbd>K</kbd></span><span>Ler / pausar (e continuar após imagem)</span>
+      <span><kbd>←</kbd> <kbd>→</kbd></span><span>Voltar / avançar 10 palavras</span>
+      <span><kbd>Shift</kbd>+<kbd>←</kbd> <kbd>→</kbd></span><span>Frase anterior / próxima</span>
+      <span><kbd>J</kbd> <kbd>L</kbd></span><span>Voltar / avançar 10 segundos</span>
+      <span><kbd>↑</kbd> <kbd>↓</kbd></span><span>Velocidade ±25 PPM</span>
+      <span><kbd>Home</kbd></span><span>Voltar ao início</span>
+      <span><kbd>F</kbd></span><span>Tela cheia</span>
+      <span><kbd>C</kbd></span><span>Mostrar / ocultar texto de contexto</span>
+      <span><kbd>?</kbd></span><span>Esta janela</span>
+    </div>
+    <p style="color:var(--muted);font-size:13px;margin:16px 0 0">Dica: clique em qualquer palavra do texto abaixo do leitor para pular direto para ela.</p>
+  </div>
+</div>
+
+<!-- ======= PÁGINA INTEIRA ======= -->
+<div class="panel hidden" id="pagePanel">
+  <div class="box wide">
+    <h3><span id="pagePanelTitle">Página</span> <button class="icon-btn" data-close>✕</button></h3>
+    <div class="fullpage" id="pagePanelBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toastText"></span><button id="toastBtn"></button></div>
+
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const IMG_SECONDS = 4;            // tempo estimado (e de exibição automática) por imagem
+const MIN_IMG_PT = 48;            // imagens menores que isso (em pontos) são ignoradas (ícones, enfeites)
+
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+/* ================= CONFIGURAÇÕES ================= */
+const DEFAULTS = { wpm: 300, size: 56, font: 'Inter', chunk: 1, theme: 'escuro', pauseImg: true, punct: true, orp: true, guide: true, ramp: true, cite: true, context: true };
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+const S = Object.assign({}, DEFAULTS, store.get('lr:settings', {}));
+const saveSettings = () => store.set('lr:settings', S);
+
+/* ================= ESTADO ================= */
+let doc = null;        // { name, key, pdf, numPages, words:[], images:[] }
+let frames = [];       // [{type:'w', s, e, m} | {type:'img', img, s}]
+let cum = [];          // tempo acumulado (ms a 1 PPM-base unit) — veja timeAt
+let cumImg = [];
+let pos = 0;           // índice do frame atual
+let playing = false;
+let timer = null, imgTimer = null, rampLeft = 0;
+let readMs = 0, playStart = 0;
+const pageCanvasCache = new Map();
+const cropCache = new Map();
+
+/* ================= UTIL ================= */
+const baseMs = () => 60000 / S.wpm;
+function fmt(ms) {
+  const s = Math.max(0, Math.round(ms / 1000));
+  const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60;
+  return h ? `${h}:${String(m).padStart(2, '0')}:${String(ss).padStart(2, '0')}` : `${m}:${String(ss).padStart(2, '0')}`;
+}
+function fmtLong(ms) {
+  const m = Math.round(ms / 60000);
+  if (m < 1) return `${Math.max(1, Math.round(ms / 1000))} s`;
+  if (m < 60) return `${m} min`;
+  return `${Math.floor(m / 60)} h ${m % 60} min`;
+}
+let toastT;
+function toast(text, btnText, onBtn, ms = 6000) {
+  $('toastText').textContent = text;
+  const b = $('toastBtn');
+  b.textContent = btnText || ''; b.classList.toggle('hidden', !btnText);
+  b.onclick = () => { $('toast').classList.remove('show'); onBtn && onBtn(); };
+  $('toast').classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => $('toast').classList.remove('show'), ms);
+}
+
+/* ================= TOKENIZAÇÃO ================= */
+function cleanText(t) {
+  t = t.replace(/­/g, '').replace(/[​﻿]/g, '');
+  if (S.cite) t = t.replace(/\[\s*\d+(?:\s*[-–,]\s*\d+)*\s*\]/g, '').replace(/\*\*|__/g, '').replace(/^#{1,6}\s+/gm, '');
+  return t;
+}
+function endType(w) {
+  const c = w.replace(/["'”’»)\]]+$/, '').slice(-1);
+  if (/[.!?…]/.test(c)) return 2;
+  if (/[,;:—–]/.test(c)) return 1;
+  return 0;
+}
+// adiciona um bloco de texto (um parágrafo) à lista de palavras
+function pushPara(words, text, page) {
+  const parts = cleanText(text).split(/\s+/).filter(Boolean);
+  if (!parts.length) return;
+  for (const p of parts) words.push({ w: p, page, end: endType(p) });
+  words[words.length - 1].end = 3;
+}
+
+/* ================= TEXTO COLADO ================= */
+function buildFromText(text, name) {
+  const words = [];
+  text.replace(/\r/g, '').split(/\n/).forEach(line => {
+    line = line.replace(/^\s*[*\-•]\s+/, '').trim();
+    if (line) pushPara(words, line, 1);
+  });
+  return { name, key: 'txt:' + text.length + ':' + hash(text.slice(0, 2000)), pdf: null, numPages: 1, words, images: [] };
+}
+function hash(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
+
+/* ================= PDF ================= */
+const M = (a, b) => [a[0]*b[0]+a[2]*b[1], a[1]*b[0]+a[3]*b[1], a[0]*b[2]+a[2]*b[3], a[1]*b[2]+a[3]*b[3], a[0]*b[4]+a[2]*b[5]+a[4], a[1]*b[4]+a[3]*b[5]+a[5]];
+
+async function findImages(page) {
+  const OPS = pdfjsLib.OPS;
+  const imgOps = new Set([OPS.paintImageXObject, OPS.paintInlineImageXObject, OPS.paintJpegXObject, OPS.paintImageMaskXObject, OPS.paintImageXObjectRepeat].filter(v => v != null));
+  let list;
+  try { list = await page.getOperatorList(); } catch { return []; }
+  let ctm = [1, 0, 0, 1, 0, 0];
+  const stack = [];
+  const out = [];
+  const view = page.view; // [x1,y1,x2,y2]
+  const pageW = view[2] - view[0], pageH = view[3] - view[1];
+  for (let i = 0; i < list.fnArray.length; i++) {
+    const fn = list.fnArray[i], args = list.argsArray[i];
+    if (fn === OPS.save) stack.push(ctm);
+    else if (fn === OPS.restore) ctm = stack.pop() || [1, 0, 0, 1, 0, 0];
+    else if (fn === OPS.transform) ctm = M(ctm, args);
+    else if (fn === OPS.paintFormXObjectBegin) { stack.push(ctm); if (args && args[0] && args[0].length === 6) ctm = M(ctm, args[0]); }
+    else if (fn === OPS.paintFormXObjectEnd) ctm = stack.pop() || [1, 0, 0, 1, 0, 0];
+    else if (imgOps.has(fn)) {
+      const pts = [[0, 0], [1, 0], [0, 1], [1, 1]].map(([x, y]) => [ctm[0]*x + ctm[2]*y + ctm[4], ctm[1]*x + ctm[3]*y + ctm[5]]);
+      let x1 = Math.min(...pts.map(p => p[0])), x2 = Math.max(...pts.map(p => p[0]));
+      let y1 = Math.min(...pts.map(p => p[1])), y2 = Math.max(...pts.map(p => p[1]));
+      x1 = Math.max(x1, view[0]); y1 = Math.max(y1, view[1]); x2 = Math.min(x2, view[2]); y2 = Math.min(y2, view[3]);
+      const w = x2 - x1, h = y2 - y1;
+      if (w < MIN_IMG_PT || h < MIN_IMG_PT || w * h < 4000) continue;
+      if (w > pageW * 0.97 && h > pageH * 0.97 && out.length) continue; // fundo de página repetido
+      out.push([x1, y1, x2, y2]);
+    }
+  }
+  // junta imagens sobrepostas (figuras feitas de vários pedaços)
+  const merged = [];
+  for (const r of out) {
+    const hit = merged.find(m => !(r[2] < m[0] - 4 || r[0] > m[2] + 4 || r[3] < m[1] - 4 || r[1] > m[3] + 4));
+    if (hit) { hit[0] = Math.min(hit[0], r[0]); hit[1] = Math.min(hit[1], r[1]); hit[2] = Math.max(hit[2], r[2]); hit[3] = Math.max(hit[3], r[3]); }
+    else merged.push(r.slice());
+  }
+  return merged;
+}
+
+// transforma o textContent de uma página em linhas (com y) e depois em parágrafos
+function pageLines(tc) {
+  const lines = [];
+  let cur = null;
+  for (const it of tc.items) {
+    if (it.str == null) continue;
+    const x = it.transform[4], y = it.transform[5];
+    const h = Math.abs(it.transform[3]) || Math.abs(it.height) || 10;
+    if (!cur || Math.abs(y - cur.y) > h * 0.6) {
+      if (cur && cur.text.trim()) lines.push(cur);
+      cur = { y, h, text: '', xEnd: x, x0: x };
+    }
+    const gap = x - cur.xEnd;
+    if (cur.text && !/\s$/.test(cur.text) && !/^\s/.test(it.str) && gap > h * 0.12) cur.text += ' ';
+    cur.text += it.str;
+    cur.xEnd = x + (it.width || 0);
+    cur.h = Math.max(cur.h, h);
+    if (it.hasEOL) { if (cur.text.trim()) lines.push(cur); cur = null; }
+  }
+  if (cur && cur.text.trim()) lines.push(cur);
+  return lines;
+}
+
+async function buildFromPdf(file) {
+  const data = new Uint8Array(await file.arrayBuffer());
+  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const words = [], images = [];
+  let para = '';
+  let paraPage = 1;
+  const flush = () => { if (para.trim()) pushPara(words, para, paraPage); para = ''; };
+
+  for (let p = 1; p <= pdf.numPages; p++) {
+    setLoading(`Processando página ${p} de ${pdf.numPages}…`, p / pdf.numPages);
+    const page = await pdf.getPage(p);
+    const [tc, imgs] = await Promise.all([page.getTextContent(), findImages(page)]);
+    const lines = pageLines(tc);
+
+    // filtra cabeçalho/rodapé simples: número de página isolado
+    const filtered = lines.filter(l => !/^\s*(p(á|a)g(ina)?\.?\s*)?\d{1,4}\s*(de|of|\/)?\s*\d{0,4}\s*$/i.test(l.text));
+
+    // posição de cada imagem no fluxo: antes da primeira linha abaixo do centro da imagem
+    const imgAt = imgs.map(r => {
+      const cy = (r[1] + r[3]) / 2;
+      let idx = filtered.findIndex(l => l.y < cy);
+      if (idx < 0) idx = filtered.length;
+      return { idx, rect: r };
+    }).sort((a, b) => a.idx - b.idx || b.rect[3] - a.rect[3]);
+
+    // começo de página: novo parágrafo se o anterior terminou com pontuação final
+    if (p > 1 && /[.!?:…]["”)]?\s*$/.test(para)) flush();
+    if (!para) paraPage = p;
+
+    let k = 0;
+    let prev = null;
+    const medianGap = (() => {
+      const g = [];
+      for (let i = 1; i < filtered.length; i++) { const d = filtered[i - 1].y - filtered[i].y; if (d > 0) g.push(d); }
+      g.sort((a, b) => a - b);
+      return g.length ? g[Math.floor(g.length / 2)] : 14;
+    })();
+
+    for (let i = 0; i <= filtered.length; i++) {
+      while (k < imgAt.length && imgAt[k].idx === i) {
+        flush(); paraPage = p;
+        images.push({ page: p, rect: imgAt[k].rect, at: words.length });
+        k++;
+      }
+      if (i === filtered.length) break;
+      const l = filtered[i];
+      const t = l.text.replace(/\s+/g, ' ').trim();
+      if (prev) {
+        const gap = prev.y - l.y;
+        const bigGap = gap > Math.max(medianGap * 1.45, l.h * 1.9) || gap < -l.h; // espaço grande ou nova coluna
+        const endsSentence = /[.!?:…]["”)]?$/.test(para.trim());
+        const shortPrev = prev.text.trim().length < 0.6 * (prev.lenRef || 60) && endsSentence;
+        const bullet = /^([•▪●◦\-–*]|\d+[.)]|[a-z][.)])\s/.test(t);
+        if (bigGap || shortPrev || bullet) { flush(); paraPage = p; }
+      }
+      if (/-$/.test(para) && /^[a-zà-ú]/.test(t)) para = para.slice(0, -1) + t;     // hifenização
+      else para += (para ? ' ' : '') + t;
+      l.lenRef = Math.max(...filtered.slice(Math.max(0, i - 5), i + 5).map(x => x.text.length));
+      prev = l;
+    }
+  }
+  flush();
+  return { name: file.name, key: 'pdf:' + file.name + ':' + file.size, pdf, numPages: pdf.numPages, words, images };
+}
+
+async function renderPage(pageNum, scale = 2) {
+  const key = pageNum + '@' + scale;
+  if (pageCanvasCache.has(key)) return pageCanvasCache.get(key);
+  const pr = (async () => {
+    const page = await doc.pdf.getPage(pageNum);
+    const viewport = page.getViewport({ scale });
+    const c = document.createElement('canvas');
+    c.width = Math.ceil(viewport.width); c.height = Math.ceil(viewport.height);
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+    await page.render({ canvasContext: ctx, viewport }).promise;
+    return { canvas: c, viewport };
+  })();
+  pageCanvasCache.set(key, pr);
+  if (pageCanvasCache.size > 8) pageCanvasCache.delete(pageCanvasCache.keys().next().value);
+  return pr;
+}
+async function cropImage(img) {
+  const key = img.page + ':' + img.rect.join(',');
+  if (cropCache.has(key)) return cropCache.get(key);
+  const pr = (async () => {
+    const { canvas, viewport } = await renderPage(img.page);
+    const [a, b, c, d] = viewport.convertToViewportRectangle(img.rect);
+    const pad = 6;
+    const x = Math.max(0, Math.min(a, c) - pad), y = Math.max(0, Math.min(b, d) - pad);
+    const w = Math.min(canvas.width - x, Math.abs(c - a) + pad * 2), h = Math.min(canvas.height - y, Math.abs(d - b) + pad * 2);
+    const out = document.createElement('canvas');
+    out.width = Math.max(1, w); out.height = Math.max(1, h);
+    out.getContext('2d').drawImage(canvas, x, y, w, h, 0, 0, w, h);
+    return out.toDataURL('image/png');
+  })();
+  cropCache.set(key, pr);
+  return pr;
+}
+
+/* ================= FRAMES E TEMPO ================= */
+function wordMult(w) {
+  let m = 1;
+  const len = w.w.length;
+  if (len > 7) m += Math.min(0.7, (len - 7) * 0.09);
+  if (/\d/.test(w.w)) m += 0.25;
+  if (S.punct) m += [0, 0.5, 1.1, 1.8][w.end];
+  return m;
+}
+function buildFrames() {
+  const keepWord = frames[pos] ? frames[pos].s : 0;
+  frames = [];
+  const { words, images } = doc;
+  let ii = 0, i = 0;
+  while (i < words.length || ii < images.length) {
+    while (ii < images.length && images[ii].at <= i) { frames.push({ type: 'img', img: images[ii], s: i }); ii++; }
+    if (i >= words.length) { if (ii < images.length) continue; break; }
+    let e = i, m = 0;
+    const nextImg = ii < images.length ? images[ii].at : Infinity;
+    while (e < words.length && e - i < S.chunk && e < nextImg) {
+      m += wordMult(words[e]); e++;
+      if (words[e - 1].end) break;
+    }
+    if (e === i) { e = i + 1; m = wordMult(words[i]); }
+    frames.push({ type: 'w', s: i, e, m });
+    i = e;
+  }
+  cum = new Float64Array(frames.length + 1);
+  cumImg = new Uint32Array(frames.length + 1);
+  for (let f = 0; f < frames.length; f++) {
+    cum[f + 1] = cum[f] + (frames[f].type === 'w' ? frames[f].m : 0);
+    cumImg[f + 1] = cumImg[f] + (frames[f].type === 'img' ? 1 : 0);
+  }
+  pos = frameForWord(keepWord);
+  drawMarks();
+}
+const timeAt = f => cum[f] * baseMs() + cumImg[f] * IMG_SECONDS * 1000;
+const totalTime = () => timeAt(frames.length);
+function frameForWord(w) {
+  let lo = 0, hi = frames.length - 1, ans = 0;
+  while (lo <= hi) { const mid = (lo + hi) >> 1; if (frames[mid].s <= w) { ans = mid; lo = mid + 1; } else hi = mid - 1; }
+  // imagens com o mesmo índice vêm antes da palavra, então a busca já cai no frame da palavra
+  return ans;
+}
+function frameForTime(t) {
+  let lo = 0, hi = frames.length - 1, ans = 0;
+  while (lo <= hi) { const mid = (lo + hi) >> 1; if (timeAt(mid) <= t) { ans = mid; lo = mid + 1; } else hi = mid - 1; }
+  return ans;
+}
+const curWord = () => frames[pos] ? Math.min(frames[pos].s, doc.words.length - 1) : 0;
+
+/* ================= EXIBIÇÃO ================= */
+function orpIndex(w) {
+  const L = w.replace(/[^\p{L}\p{N}]/gu, '').length;
+  const lead = w.length - w.replace(/^[^\p{L}\p{N}]+/u, '').length;
+  const k = L <= 1 ? 0 : L <= 5 ? 1 : L <= 9 ? 2 : L <= 13 ? 3 : 4;
+  return Math.min(w.length - 1, lead + k);
+}
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function showFrame() {
+  const f = frames[pos];
+  $('endView').classList.add('hidden');
+  if (!f) return;
+  if (f.type === 'img') { showImage(f.img); }
+  else {
+    $('imgView').classList.add('hidden');
+    const el = $('word');
+    if (f.e - f.s === 1) {
+      const w = doc.words[f.s].w, k = orpIndex(w);
+      el.className = 'word';
+      el.innerHTML = `<span class="pre">${esc(w.slice(0, k))}</span><span class="f">${esc(w[k] || '')}</span><span class="post">${esc(w.slice(k + 1))}</span>`;
+      // palavras longas encolhem para caber (a letra de foco fica centralizada)
+      const avail = $('stage').clientWidth - 40, side = Math.max(k, w.length - k - 1) * 2 + 1;
+      el.style.fontSize = Math.min(S.size, avail / (side * 0.6)) + 'px';
+    } else {
+      el.className = 'word multi';
+      el.style.fontSize = '';
+      el.textContent = doc.words.slice(f.s, f.e).map(x => x.w).join(' ');
+    }
+  }
+  updateUI();
+}
+
+let imgToken = 0;
+async function showImage(img) {
+  const v = $('imgView');
+  v.classList.remove('hidden');
+  $('imgCap').textContent = `Página ${img.page}`;
+  const wrap = $('imgWrap');
+  wrap.innerHTML = '<div class="spinner"></div>';
+  const my = ++imgToken;
+  try {
+    const url = await cropImage(img);
+    if (my !== imgToken) return;
+    wrap.innerHTML = '';
+    const im = new Image(); im.src = url; im.alt = 'Imagem da página ' + img.page; im.title = 'Clique para ver a página inteira';
+    im.onclick = () => openFullPage(img.page);
+    wrap.appendChild(im);
+  } catch (e) { if (my === imgToken) wrap.innerHTML = '<p style="color:var(--muted)">Não foi possível mostrar a imagem.</p>'; }
+}
+function prefetchImages() {
+  for (let f = pos; f < Math.min(frames.length, pos + 60); f++) if (frames[f].type === 'img') { cropImage(frames[f].img).catch(() => {}); break; }
+}
+
+/* ================= PLAYBACK ================= */
+function play() {
+  if (!frames.length) return;
+  if (pos >= frames.length) pos = 0;
+  playing = true; playStart = performance.now();
+  rampLeft = S.ramp ? 6 : 0;
+  document.body.classList.add('playing');
+  setPlayIcon();
+  // se estamos parados numa imagem, "continuar" passa para a próxima
+  if (frames[pos].type === 'img' && !$('imgView').classList.contains('hidden') && imgPausedHere) { imgPausedHere = false; pos++; }
+  tick();
+}
+function pause(save = true) {
+  if (playing) readMs += performance.now() - playStart;
+  playing = false;
+  clearTimeout(timer); clearTimeout(imgTimer);
+  $('countdown').classList.add('hidden');
+  document.body.classList.remove('playing');
+  setPlayIcon();
+  if (save) saveProgress();
+}
+const toggle = () => playing ? pause() : play();
+let imgPausedHere = false;
+function tick() {
+  clearTimeout(timer); clearTimeout(imgTimer);
+  if (!playing) return;
+  if (pos >= frames.length) { finish(); return; }
+  const f = frames[pos];
+  showFrame();
+  prefetchImages();
+  if (f.type === 'img') {
+    if (S.pauseImg) { pause(); imgPausedHere = true; return; }
+    const cd = $('countdown'), bar = $('countdownBar');
+    cd.classList.remove('hidden');
+    bar.style.transition = 'none'; bar.style.width = '100%';
+    requestAnimationFrame(() => { bar.style.transition = `width ${IMG_SECONDS}s linear`; bar.style.width = '0%'; });
+    imgTimer = setTimeout(() => { cd.classList.add('hidden'); pos++; tick(); }, IMG_SECONDS * 1000);
+    return;
+  }
+  let d = f.m * baseMs();
+  if (rampLeft > 0) { d *= 1 + rampLeft * 0.12; rampLeft--; }
+  timer = setTimeout(() => { pos++; if (pos % 25 === 0) saveProgress(); tick(); }, d);
+}
+function finish() {
+  pause(false);
+  pos = frames.length;
+  store.set('lr:p:' + doc.key, 0);
+  $('endStats').textContent = `${doc.words.length.toLocaleString('pt-BR')} palavras em ${fmtLong(readMs)} de leitura.`;
+  $('endView').classList.remove('hidden');
+  updateUI();
+}
+function seek(f, keepPlaying = playing) {
+  const was = keepPlaying;
+  pause(false);
+  imgPausedHere = false;
+  pos = Math.max(0, Math.min(frames.length - 1, f));
+  showFrame();
+  if (frames[pos].type === 'img') imgPausedHere = true;
+  if (was && frames[pos].type !== 'img') play();
+  saveProgress();
+}
+function seekWord(w, keep) { seek(frameForWord(Math.max(0, Math.min(doc.words.length - 1, w))), keep); }
+function sentenceStart(w) { let i = Math.max(0, w); while (i > 0 && doc.words[i - 1].end < 2) i--; return i; }
+function prevSentence() {
+  const w = curWord(); let s = sentenceStart(w);
+  if (w - s < 3 && s > 0) s = sentenceStart(s - 1);   // já no começo da frase → frase anterior
+  seekWord(s);
+}
+function nextSentence() {
+  let i = curWord(); while (i < doc.words.length - 1 && doc.words[i].end < 2) i++;
+  seekWord(i + 1);
+}
+
+/* ================= UI ================= */
+const ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
+function setPlayIcon() { $('btnPlay').innerHTML = playing ? ICON_PAUSE : ICON_PLAY; }
+function flashBig() {
+  $('bigPlayIcon').innerHTML = playing ? ICON_PLAY : ICON_PAUSE;
+  const b = $('bigPlay'); b.classList.add('flash'); setTimeout(() => b.classList.remove('flash'), 350);
+}
+function updateUI() {
+  if (!doc) return;
+  const total = totalTime(), now = timeAt(Math.min(pos, frames.length));
+  const frac = total ? now / total : 0;
+  $('fill').style.width = (frac * 100) + '%';
+  $('knob').style.left = (frac * 100) + '%';
+  $('tNow').textContent = fmt(now);
+  $('tTotal').textContent = fmt(total);
+  $('tLeft').textContent = fmt(total - now);
+  $('stageMsg').innerHTML = pos > 0 ? 'Pausado · <kbd>Espaço</kbd> para continuar' : 'Clique ou aperte <kbd>Espaço</kbd> para começar';
+  const end = new Date(Date.now() + (total - now));
+  $('eta').textContent = end.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  $('totalTime').textContent = fmtLong(total);
+  $('wpmChip').textContent = S.wpm;
+  const f = frames[Math.min(pos, frames.length - 1)];
+  if (f) $('pageNow').textContent = f.type === 'img' ? f.img.page : doc.words[Math.min(f.s, doc.words.length - 1)]?.page || 1;
+  renderContext();
+}
+function drawMarks() {
+  const total = totalTime();
+  const marks = $('marks'); marks.innerHTML = '';
+  if (!total) return;
+  // divisões de página
+  if (doc.numPages > 1 && doc.numPages <= 300) {
+    let last = doc.words[0]?.page;
+    for (let f = 0; f < frames.length; f++) {
+      if (frames[f].type !== 'w') continue;
+      const pg = doc.words[frames[f].s].page;
+      if (pg !== last) { const d = document.createElement('div'); d.className = 'ptick'; d.style.left = (timeAt(f) / total * 100) + '%'; marks.appendChild(d); last = pg; }
+    }
+  }
+  frames.forEach((fr, f) => {
+    if (fr.type !== 'img') return;
+    const d = document.createElement('div'); d.className = 'mark'; d.style.left = (timeAt(f) / total * 100) + '%'; marks.appendChild(d);
+  });
+}
+
+// texto de contexto embaixo do leitor
+let ctxRange = [-1, -1];
+function renderContext() {
+  const box = $('context');
+  if (!S.context || !doc.words.length) { box.classList.add('hidden'); return; }
+  box.classList.remove('hidden');
+  const f = frames[Math.min(pos, frames.length - 1)];
+  const w = f ? Math.min(f.s, doc.words.length - 1) : 0;
+  const words = doc.words;
+  if (w < ctxRange[0] || w >= ctxRange[1] - 30 && ctxRange[1] < words.length || ctxRange[0] < 0) {
+    // janela: ~ do início do parágrafo anterior até ~400 palavras à frente
+    let a = Math.max(0, w - 150);
+    while (a > 0 && words[a - 1].end !== 3 && w - a < 260) a--;
+    const b = Math.min(words.length, Math.max(w + 400, a + 500));
+    const imgsByAt = new Map();
+    for (const im of doc.images) if (im.at >= a && im.at < b + 1) { if (!imgsByAt.has(im.at)) imgsByAt.set(im.at, []); imgsByAt.get(im.at).push(im); }
+    let html = '', lastPage = a > 0 ? words[a - 1].page : 0;
+    for (let i = a; i < b; i++) {
+      if (doc.numPages > 1 && words[i].page !== lastPage) { html += `<span class="pg">Página ${words[i].page}</span>`; lastPage = words[i].page; }
+      (imgsByAt.get(i) || []).forEach(im => { html += `<span class="imgchip" data-img="${doc.images.indexOf(im)}">🖼 imagem</span> `; });
+      html += `<span class="w" data-i="${i}">${esc(words[i].w)}</span> `;
+      if (words[i].end === 3) html += '<span class="pb"></span>';
+    }
+    box.innerHTML = html;
+    ctxRange = [a, b];
+    box.dataset.cur = '';
+  }
+  // destaque
+  box.querySelectorAll('.w.cur').forEach(e => e.classList.remove('cur'));
+  const fs = f ? f.s : 0, fe = f ? (f.type === 'w' ? f.e : f.s) : 0;
+  const els = box.children;
+  let first = null;
+  for (const el of els) {
+    const i = el.dataset.i;
+    if (i == null) continue;
+    const n = +i;
+    el.classList.toggle('done', n < fs);
+    if (n >= fs && n < fe) { el.classList.add('cur'); first = first || el; }
+  }
+  if (first) {
+    const top = first.offsetTop - box.offsetTop;
+    if (top < box.scrollTop + 20 || top > box.scrollTop + box.clientHeight - 50) box.scrollTop = top - box.clientHeight / 3;
+  }
+}
+
+/* ================= PROGRESSO ================= */
+function saveProgress() { if (doc) store.set('lr:p:' + doc.key, curWord()); }
+
+/* ================= CARREGAR DOCUMENTO ================= */
+function setLoading(text, frac) {
+  $('loading').classList.remove('hidden');
+  $('loadingText').textContent = text;
+  $('loadingBar').style.width = Math.round(frac * 100) + '%';
+}
+function openDoc(d) {
+  if (!d.words.length && !d.images.length) {
+    $('loading').classList.add('hidden');
+    toast('Não encontrei texto nesse PDF (pode ser uma imagem escaneada).');
+    return;
+  }
+  pause(false);
+  doc = d; pos = 0; readMs = 0; ctxRange = [-1, -1];
+  pageCanvasCache.clear(); cropCache.clear();
+  buildFrames();
+  $('docName').textContent = (d.pdf ? '📄 ' : '📝 ') + d.name;
+  $('docName').title = d.name;
+  $('pageTotal').textContent = d.numPages;
+  $('wordCount').textContent = d.words.length.toLocaleString('pt-BR');
+  $('imgCount').textContent = d.images.length;
+  $('imgChip').classList.toggle('hidden', !d.pdf);
+  $('upload').classList.add('hidden');
+  $('loading').classList.add('hidden');
+  $('readerScreen').classList.remove('hidden');
+  $('btnNew').classList.remove('hidden');
+  const saved = store.get('lr:p:' + d.key, 0);
+  if (saved > 5 && saved < d.words.length - 5) {
+    pos = frameForWord(saved);
+    toast(`Retomando de onde você parou (${Math.round(saved / d.words.length * 100)}%).`, 'Começar do início', () => seek(0, false));
+  }
+  showFrame();
+  if (frames[pos] && frames[pos].type === 'img') imgPausedHere = true;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+async function handleFile(file) {
+  if (!file) return;
+  try {
+    if (/\.txt$/i.test(file.name) || file.type === 'text/plain') { openDoc(buildFromText(await file.text(), file.name)); return; }
+    if (!window.pdfjsLib) { toast('Não consegui carregar o leitor de PDF. Verifique sua conexão.'); return; }
+    setLoading('Abrindo PDF…', 0);
+    openDoc(await buildFromPdf(file));
+  } catch (e) {
+    console.error(e);
+    $('loading').classList.add('hidden');
+    toast(e && e.name === 'PasswordException' ? 'Esse PDF tem senha.' : 'Não consegui ler esse arquivo. É mesmo um PDF?');
+  }
+}
+function backToUpload() {
+  pause();
+  $('readerScreen').classList.add('hidden');
+  $('upload').classList.remove('hidden');
+  $('btnNew').classList.add('hidden');
+  $('file').value = '';
+}
+
+/* ================= EVENTOS ================= */
+const drop = $('drop');
+drop.onclick = () => $('file').click();
+drop.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('file').click(); } };
+$('file').onchange = e => handleFile(e.target.files[0]);
+['dragenter', 'dragover'].forEach(ev => window.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave', 'drop'].forEach(ev => window.addEventListener(ev, e => { e.preventDefault(); if (ev === 'drop' || e.target === document.documentElement || !e.relatedTarget) drop.classList.remove('over'); }));
+window.addEventListener('drop', e => { const f = e.dataTransfer?.files?.[0]; if (f) handleFile(f); });
+
+const pt = $('pasteText');
+pt.oninput = () => { const n = (pt.value.match(/\S+/g) || []).length; $('pasteInfo').textContent = n ? `${n.toLocaleString('pt-BR')} palavras · ~${fmtLong(n / S.wpm * 60000)} a ${S.wpm} PPM` : 'Cole um texto para ver o tempo de leitura'; };
+$('btnPaste').onclick = () => {
+  if (!pt.value.trim()) { pt.focus(); toast('Cole um texto primeiro.'); return; }
+  const first = pt.value.trim().split(/\n/)[0].replace(/[*#]/g, '').trim();
+  openDoc(buildFromText(pt.value, first.length > 50 ? first.slice(0, 50) + '…' : first || 'Texto colado'));
+};
+
+$('btnNew').onclick = backToUpload;
+$('btnNew2').onclick = backToUpload;
+$('btnRestart').onclick = () => { readMs = 0; seek(0, true); };
+$('btnPlay').onclick = toggle;
+$('stage').onclick = e => { if (e.target.closest('.imgview,.endview')) return; toggle(); flashBig(); };
+$('btnContinue').onclick = e => { e.stopPropagation(); play(); };
+$('btnFullPage').onclick = e => { e.stopPropagation(); const f = frames[pos]; if (f && f.type === 'img') openFullPage(f.img.page); };
+$('btnBack').onclick = () => seekWord(curWord() - 10);
+$('btnFwd').onclick = () => seekWord(curWord() + 10);
+$('btnPrevSent').onclick = prevSentence;
+$('btnNextSent').onclick = nextSentence;
+$('btnStart').onclick = () => seek(0);
+
+function setWpm(v) {
+  S.wpm = Math.max(50, Math.min(1500, Math.round(v)));
+  $('wpm').value = S.wpm; saveSettings(); drawMarks(); updateUI(); pt.oninput();
+}
+$('spUp').onclick = () => setWpm(S.wpm + 25);
+$('spDown').onclick = () => setWpm(S.wpm - 25);
+$('wpm').onchange = e => setWpm(+e.target.value || 300);
+
+$('btnContext').onclick = () => { S.context = !S.context; saveSettings(); ctxRange = [-1, -1]; renderContext(); };
+$('context').onclick = e => {
+  const w = e.target.closest('.w'); if (w) { seekWord(+w.dataset.i); return; }
+  const im = e.target.closest('.imgchip'); if (im) { const img = doc.images[+im.dataset.img]; seek(frames.findIndex(f => f.img === img), false); }
+};
+$('btnFull').onclick = toggleFull;
+function toggleFull() {
+  const r = $('reader');
+  if (document.fullscreenElement) document.exitFullscreen();
+  else (r.requestFullscreen || r.webkitRequestFullscreen)?.call(r);
+}
+
+// barra de tempo (arrastar como vídeo)
+const tl = $('timeline');
+let dragging = false, wasPlaying = false;
+function tlFrac(e) { const r = $('track').getBoundingClientRect(); return Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)); }
+function tlHover(e) {
+  if (!doc) return;
+  const fr = tlFrac(e), t = fr * totalTime(), f = frameForTime(t), fo = frames[f];
+  $('hoverFill').style.width = (fr * 100) + '%';
+  const tip = $('tip');
+  let snippet = '';
+  if (fo) snippet = fo.type === 'img' ? '🖼 imagem' : doc.words.slice(fo.s, fo.s + 4).map(x => x.w).join(' ');
+  const pg = fo ? (fo.type === 'img' ? fo.img.page : doc.words[fo.s].page) : 1;
+  tip.innerHTML = `<b>${fmt(t)}</b> · pág. ${pg} · ${esc(snippet)}`;
+  const r = tl.getBoundingClientRect();
+  const x = Math.max(70, Math.min(r.width - 70, e.clientX - r.left));
+  tip.style.left = x + 'px';
+  return f;
+}
+tl.addEventListener('pointermove', e => { const f = tlHover(e); if (dragging && f != null) { pos = f; showFrame(); } });
+tl.addEventListener('pointerdown', e => {
+  if (!doc) return;
+  dragging = true; wasPlaying = playing; pause(false);
+  tl.classList.add('drag'); tl.setPointerCapture(e.pointerId);
+  const f = tlHover(e); pos = f; showFrame();
+});
+tl.addEventListener('pointerup', e => {
+  if (!dragging) return;
+  dragging = false; tl.classList.remove('drag');
+  seek(pos, wasPlaying);
+});
+
+// painéis
+function openPanel(id) { $(id).classList.remove('hidden'); }
+document.querySelectorAll('.panel').forEach(p => p.addEventListener('click', e => { if (e.target === p || e.target.closest('[data-close]')) p.classList.add('hidden'); }));
+$('btnSettings').onclick = () => openPanel('settingsPanel');
+$('btnKeys').onclick = () => openPanel('keysPanel');
+$('btnTheme').onclick = () => { const t = ['escuro', 'preto', 'claro', 'sepia']; S.theme = t[(t.indexOf(S.theme) + 1) % t.length]; applySettings(); saveSettings(); };
+async function openFullPage(n) {
+  if (!doc.pdf) return;
+  pause();
+  $('pagePanelTitle').textContent = `Página ${n}`;
+  $('pagePanelBody').innerHTML = '<div class="spinner" style="margin:30px auto"></div>';
+  openPanel('pagePanel');
+  const { canvas } = await renderPage(n);
+  const im = new Image(); im.src = canvas.toDataURL('image/png');
+  $('pagePanelBody').innerHTML = ''; $('pagePanelBody').appendChild(im);
+}
+
+// controles das configurações
+function applySettings() {
+  const root = document.documentElement;
+  root.dataset.theme = S.theme;
+  root.style.setProperty('--size', S.size + 'px');
+  root.style.setProperty('--font-read', `'${S.font}', system-ui, sans-serif`);
+  $('reader').classList.toggle('noorp', !S.orp);
+  $('reader').classList.toggle('noguide', !S.guide);
+  $('setSize').value = S.size; $('sizeLbl').textContent = S.size + ' px';
+  $('wpm').value = S.wpm;
+  [['setFont', S.font], ['setChunk', String(S.chunk)], ['setTheme', S.theme]].forEach(([id, v]) =>
+    $(id).querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.v === v)));
+  ['pauseImg', 'punct', 'orp', 'guide', 'ramp', 'cite'].forEach(k => $('set' + k[0].toUpperCase() + k.slice(1)).checked = S[k]);
+}
+$('setSize').oninput = e => { S.size = +e.target.value; applySettings(); saveSettings(); };
+$('setFont').onclick = e => { const b = e.target.closest('button'); if (b) { S.font = b.dataset.v; applySettings(); saveSettings(); } };
+$('setTheme').onclick = e => { const b = e.target.closest('button'); if (b) { S.theme = b.dataset.v; applySettings(); saveSettings(); } };
+$('setChunk').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  S.chunk = +b.dataset.v; applySettings(); saveSettings();
+  if (doc) { const was = playing; pause(false); buildFrames(); showFrame(); if (was) play(); }
+};
+['pauseImg', 'punct', 'orp', 'guide', 'ramp', 'cite'].forEach(k => {
+  $('set' + k[0].toUpperCase() + k.slice(1)).onchange = e => {
+    S[k] = e.target.checked; applySettings(); saveSettings();
+    if (k === 'punct' && doc) { const was = playing; pause(false); buildFrames(); showFrame(); if (was) play(); }
+    if (k === 'cite' && doc) toast('Vale para o próximo documento que você abrir.');
+  };
+});
+
+// teclado
+document.addEventListener('keydown', e => {
+  if (e.target.matches('input, textarea')) return;
+  const openP = document.querySelector('.panel:not(.hidden)');
+  if (e.key === 'Escape') { if (openP) openP.classList.add('hidden'); return; }
+  if (e.key === '?') { openPanel('keysPanel'); return; }
+  if (!doc || $('readerScreen').classList.contains('hidden') || openP) return;
+  const k = e.key.toLowerCase();
+  if (e.key === ' ' || k === 'k') { e.preventDefault(); if (!$('endView').classList.contains('hidden')) { readMs = 0; seek(0, true); } else { toggle(); flashBig(); } }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); e.shiftKey ? prevSentence() : seekWord(curWord() - 10); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); e.shiftKey ? nextSentence() : seekWord(curWord() + 10); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); setWpm(S.wpm + 25); }
+  else if (e.key === 'ArrowDown') { e.preventDefault(); setWpm(S.wpm - 25); }
+  else if (k === 'j') seek(frameForTime(timeAt(pos) - 10000));
+  else if (k === 'l') seek(frameForTime(timeAt(pos) + 10000));
+  else if (e.key === 'Home') { e.preventDefault(); seek(0); }
+  else if (k === 'f') toggleFull();
+  else if (k === 'c') $('btnContext').click();
+});
+document.addEventListener('visibilitychange', () => { if (document.hidden && playing) pause(); });
+window.addEventListener('beforeunload', saveProgress);
+
+applySettings();
+setPlayIcon();
+pt.oninput();
+})();
+</script>
+</body>
+</html>
