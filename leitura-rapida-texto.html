@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leitura Rápida</title>
-<meta name="description" content="Leitor RSVP: arraste um PDF e leia palavra por palavra, com pausa em imagens, tempo estimado e controles de vídeo.">
+<title>Leitura Rápida — Texto</title>
+<meta name="description" content="Leitor RSVP: cole um texto e leia palavra por palavra, com tempo estimado e controles de vídeo. Funciona offline.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
 :root{
   --bg:#0f1117; --bg2:#161924; --card:#1c2030; --card2:#242a3d; --line:#2e3550;
@@ -204,7 +203,7 @@ kbd{background:var(--card2);border:1px solid var(--line);border-bottom-width:3px
 <header class="top">
   <div class="brand">
     <div class="logo">⚡</div>
-    <div>Leitura Rápida<small>Leia PDFs palavra por palavra</small></div>
+    <div>Leitura Rápida<small>Cole o texto e leia palavra por palavra</small></div>
   </div>
   <div class="spacer"></div>
   <button class="icon-btn hidden" id="btnNew" title="Abrir outro documento">
@@ -222,32 +221,22 @@ kbd{background:var(--card2);border:1px solid var(--line);border-bottom-width:3px
   <!-- ======= TELA DE ENVIO ======= -->
   <section id="upload">
     <div class="hero">
-      <h1>Jogue o PDF e <span>leia 3× mais rápido</span></h1>
-      <p>Palavra por palavra no centro da tela, com pausa automática nas imagens, tempo estimado de leitura e controles como os de um vídeo.</p>
+      <h1>Cole o texto e <span>leia 3× mais rápido</span></h1>
+      <p>Palavra por palavra no centro da tela, com tempo estimado de leitura e controles como os de um vídeo. Funciona até sem internet.</p>
     </div>
-    <div class="drop" id="drop" tabindex="0">
-      <div class="big"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 18v-6M9 15l3-3 3 3"/></svg></div>
-      <h2>Arraste seu PDF aqui</h2>
-      <p>ou clique para escolher o arquivo · o PDF não sai do seu computador</p>
-      <input type="file" id="file" accept="application/pdf,.pdf,.txt" hidden>
-    </div>
-    <div class="loading hidden" id="loading">
-      <div id="loadingText">Lendo PDF…</div>
-      <div class="bar"><i id="loadingBar"></i></div>
-    </div>
-    <div class="or">ou cole um texto</div>
+        <div class="hidden" id="loading"><span id="loadingText"></span><i id="loadingBar"></i></div>
     <div class="paste">
-      <textarea id="pasteText" placeholder="Cole aqui seu texto (resumos, artigos, anotações)…"></textarea>
+      <textarea id="pasteText" style="min-height:260px" placeholder="Cole aqui seu texto (resumos, artigos, anotações)…" autofocus></textarea>
       <div class="row">
         <button class="btn primary" id="btnPaste"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Ler rápido</button>
         <span class="chip" id="pasteInfo">0 palavras</span>
       </div>
     </div>
     <div class="features">
-      <div class="feat"><b>🖼️ Pausa nas imagens</b><span>Quando o texto chega numa figura do PDF, a leitura para e mostra a imagem.</span></div>
+      
       <div class="feat"><b>⏱️ Tempo de leitura</b><span>Veja quanto falta, a hora em que termina e ajuste a velocidade na hora.</span></div>
       <div class="feat"><b>⏪ Volta como vídeo</b><span>Barra de progresso arrastável, voltar frase, ±10 palavras e atalhos.</span></div>
-      <div class="feat"><b>💾 Continua de onde parou</b><span>Abriu o mesmo PDF de novo? A leitura retoma do ponto em que você estava.</span></div>
+      <div class="feat"><b>💾 Continua de onde parou</b><span>Colou o mesmo texto de novo? A leitura retoma do ponto em que você estava.</span></div>
     </div>
   </section>
 
@@ -256,7 +245,7 @@ kbd{background:var(--card2);border:1px solid var(--line);border-bottom-width:3px
     <div class="docbar">
       <div class="docname" id="docName">documento.pdf</div>
       <div class="chips">
-        <span class="chip">Página <b id="pageNow">1</b> de <b id="pageTotal">1</b></span>
+        <span class="hidden">Página <b id="pageNow">1</b> de <b id="pageTotal">1</b></span>
         <span class="chip"><b id="wordCount">0</b> palavras</span>
         <span class="chip">⏱ <b id="totalTime">0 min</b> a <b id="wpmChip">300</b> PPM</span>
         <span class="chip" id="imgChip">🖼 <b id="imgCount">0</b> imagens</span>
@@ -344,8 +333,7 @@ kbd{background:var(--card2);border:1px solid var(--line);border-bottom-width:3px
       <div class="seg" id="setChunk"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button></div></div>
     <div class="set"><label>Tema</label>
       <div class="seg" id="setTheme"><button data-v="escuro">Escuro</button><button data-v="preto">Preto</button><button data-v="claro">Claro</button><button data-v="sepia">Sépia</button></div></div>
-    <div class="set"><label>Pausar nas imagens<small>Para e espera você apertar “Continuar”. Desligado: mostra por 4 s.</small></label><label class="switch"><input type="checkbox" id="setPauseImg"><i></i></label></div>
-    <div class="set"><label>Pausa na pontuação<small>Mais tempo em vírgulas, pontos e fim de parágrafo</small></label><label class="switch"><input type="checkbox" id="setPunct"><i></i></label></div>
+        <div class="set"><label>Pausa na pontuação<small>Mais tempo em vírgulas, pontos e fim de parágrafo</small></label><label class="switch"><input type="checkbox" id="setPunct"><i></i></label></div>
     <div class="set"><label>Destacar letra de foco<small>A letra vermelha fica sempre no mesmo lugar</small></label><label class="switch"><input type="checkbox" id="setOrp"><i></i></label></div>
     <div class="set"><label>Linhas-guia</label><label class="switch"><input type="checkbox" id="setGuide"><i></i></label></div>
     <div class="set"><label>Arrancada suave<small>Começa mais devagar ao dar play</small></label><label class="switch"><input type="checkbox" id="setRamp"><i></i></label></div>
