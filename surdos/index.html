@@ -222,6 +222,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 .ln-ctrls.mic { padding: 10px 12px; border: 1px dashed var(--brass); border-radius: 10px; }
 .ln-meter { width: 90px; height: 8px; border-radius: 4px; background: var(--stage); border: 1px solid var(--line); overflow: hidden; }
 .ln-meter i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .05s; }
+.ln-out { text-decoration: none; color: var(--brass); border-color: var(--brass); }
 .ln-micst { flex-basis: 100%; font-size: 12.5px; color: var(--fg); }
 .rc { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px dashed var(--line); border-radius: 10px; }
 .bar-row.ln-range .cells { outline: 2px solid var(--brass); outline-offset: 1px; }
@@ -488,6 +489,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
       <label for="lnMic"><input type="checkbox" id="lnMic"> 🎙 Ouvir o meu surdo ao vivo (microfone)</label>
       <label for="lnPhones"><input type="checkbox" id="lnPhones"> Estou de fones</label>
       <button class="chip" id="lnCal" type="button"><span>Calibrar</span></button>
+      <a class="chip ln-out" href="https://joseeduar1616.github.io/inglesmedico/surdos/" target="_blank" rel="noopener">Abrir versão com microfone ↗</a>
       <span class="ln-meter"><i id="lnMeter"></i></span>
       <span class="ln-micst" id="lnMicSt">Com o microfone ligado, faça "2 · Tocar" e toque no surdo de verdade: cada batida é ouvida e avaliada na hora.</span>
     </div>
@@ -2183,7 +2185,7 @@ To`;
       } catch (e) {
         lnMic.checked = false; micStop();
         const blocked = e && (e.name === "NotAllowedError" || e.name === "SecurityError");
-        lnMicSt.textContent = blocked ? "O microfone foi bloqueado. Dentro do Claude as páginas não podem usar o microfone: abra a versão do simulador fora do Claude, no navegador do telemóvel." : `Não foi possível ligar o microfone (${e && e.message ? e.message : "erro"}).`;
+        lnMicSt.textContent = blocked ? "Dentro do app do Claude o microfone fica sempre bloqueado. Toque em \"Abrir versão com microfone ↗\": abre o simulador no navegador do telemóvel, onde a escuta ao vivo funciona." : `Não foi possível ligar o microfone (${e && e.message ? e.message : "erro"}).`;
       }
     } else { micStop(); lnMicSt.textContent = "Microfone desligado."; }
   });
