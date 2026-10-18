@@ -22,6 +22,7 @@
 html, body { margin: 0; height: 100%; }
 body { background: radial-gradient(ellipse at 50% 25%, var(--stage-2), var(--stage) 70%) fixed, var(--stage); color: var(--fg); font-family: var(--f-body); font-size: 15px; line-height: 1.45; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }
 [hidden] { display: none !important; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .wrap { max-width: 1120px; margin: 0 auto; padding: 18px 16px 36px; display: flex; flex-direction: column; gap: 20px; }
 header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; }
 h1 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(28px, 5vw, 44px); letter-spacing: .02em; margin: 0; line-height: 1; }
@@ -119,6 +120,66 @@ kbd { font-family: var(--f-mono); font-size: 11px; padding: 1px 6px; border: 1px
 .timeline .head { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--hit); left: 0; display: none; }
 .timeline .empty { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; color: var(--muted); padding: 0 12px; text-align: center; }
 .note { font-size: 12.5px; color: var(--muted); max-width: 80ch; }
+/* Rufada */
+.roll-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; width: 100%; max-width: 560px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--stage-2); }
+.roll-pad { font: inherit; flex: 1 1 180px; border: 2px solid var(--line); border-radius: 12px; background: var(--stage); color: var(--fg); padding: 12px 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; touch-action: none; user-select: none; -webkit-user-select: none; }
+.roll-pad b { font-family: var(--f-display); font-size: 26px; line-height: 1; color: var(--brass); letter-spacing: .04em; }
+.roll-pad small { font-size: 11px; color: var(--muted); }
+.roll-pad.on { border-color: var(--hit); box-shadow: 0 0 0 1px var(--hit), 0 0 16px rgba(255,181,71,.35); }
+.roll-bar label { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
+.roll-bar input[type=range] { width: 90px; accent-color: var(--brass); }
+.sel { font: inherit; font-size: 13px; color: var(--fg); background: var(--stage-2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 28px 6px 10px; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c9a24a'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+.sel.sm { font-size: 12px; padding: 4px 24px 4px 8px; }
+input[type=text], input[type=number] { font: inherit; font-size: 13px; color: var(--fg); background: var(--stage); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
+textarea { font: 500 13px/1.6 var(--f-mono); color: var(--fg); background: var(--stage); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; width: 100%; resize: vertical; }
+
+/* Breques */
+.bq { display: flex; flex-direction: column; gap: 12px; }
+.bq-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.bq-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 14px; }
+.bq-title { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: 28px; letter-spacing: .03em; margin: 0; line-height: 1; color: var(--brass); }
+.bq-meta { font-size: 12.5px; color: var(--muted); }
+.count-in { font-family: var(--f-display); font-weight: 800; font-size: 44px; color: var(--hit); line-height: 1; min-width: 44px; text-align: center; }
+.editor { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border: 1px dashed var(--brass); border-radius: 12px; }
+.editor .row label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+.ed-help { font-size: 12.5px; color: var(--muted); max-width: 90ch; }
+.ed-help code { font-family: var(--f-mono); font-size: 12px; color: var(--fg); background: var(--stage); padding: 1px 5px; border-radius: 4px; }
+.ed-err { font-size: 13px; color: var(--rec); }
+.score { display: flex; flex-direction: column; gap: 10px; }
+.sec { display: flex; flex-direction: column; gap: 5px; }
+.sec-lbl { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; display: flex; align-items: center; gap: 8px; }
+.sec-lbl::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.bars { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+@media (max-width: 700px) { .bars { grid-template-columns: 1fr; } }
+.sbar { display: grid; grid-template-columns: 26px repeat(4, 1fr); gap: 4px; align-items: stretch; padding: 5px 6px; border: 1px solid var(--line); border-radius: 10px; background: var(--stage); cursor: pointer; min-height: 44px; }
+.sbar:hover { border-color: var(--brass); }
+.sbar.cur { border-color: var(--hit); box-shadow: 0 0 0 1px var(--hit); }
+.sbar.inchunk { background: color-mix(in srgb, var(--brass) 9%, var(--stage)); }
+.sbar.dim { opacity: .45; }
+.sbar .bn { font-family: var(--f-mono); font-size: 11px; color: var(--muted); display: flex; align-items: center; }
+.sbar .beat { display: flex; gap: 2px; align-items: center; border-left: 1px solid var(--line); padding-left: 4px; min-width: 0; }
+.tk { flex: 1; min-width: 0; text-align: center; font-family: var(--f-display); font-weight: 800; font-size: clamp(13px, 1.9vw, 19px); line-height: 1.15; border-radius: 5px; padding: 3px 0; letter-spacing: .02em; position: relative; }
+.tk.L { color: #ffd37a; } .tk.M { color: #9fd6ff; } .tk.H { color: #ff8e6e; }
+.tk.rest, .tk.cnt { color: var(--muted); font-weight: 600; font-family: var(--f-body); font-size: 12px; }
+.tk.tdot { color: var(--line); font-size: 11px; }
+.tk.cur { background: rgba(255,181,71,.22); box-shadow: inset 0 0 0 1px var(--hit); }
+.tk.good { background: color-mix(in srgb, var(--ok) 40%, transparent); color: #fff; }
+.tk.ok { background: color-mix(in srgb, var(--warn) 40%, transparent); color: #fff; }
+.tk.miss { background: color-mix(in srgb, var(--rec) 45%, transparent); color: #fff; }
+.tk small { position: absolute; left: 0; right: 0; bottom: -2px; font: 500 8px var(--f-mono); color: var(--fg); opacity: .9; }
+.legend2 { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--muted); }
+.legend2 b { font-family: var(--f-display); font-size: 16px; margin-right: 3px; }
+.chunks { display: flex; flex-wrap: wrap; gap: 6px; }
+.result { font-size: 14px; }
+.result b { color: var(--brass); }
+.result.pass b { color: var(--ok); }
+.result.fail b { color: var(--rec); }
+.pads { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 420px; }
+.pad { font: inherit; border: 2px solid var(--line); border-radius: 14px; background: var(--stage); color: var(--fg); padding: 14px 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; touch-action: manipulation; user-select: none; }
+.pad b { font-family: var(--f-display); font-size: 28px; line-height: 1; color: var(--brass); }
+.pad small { font-size: 11px; color: var(--muted); }
+.pad:active, .pad.hit { border-color: var(--hit); transform: scale(.97); }
+
 .status .chip { margin-left: 6px; font-size: 11.5px; padding: 3px 9px; color: var(--muted); }
 .status .chip.on { color: var(--hit); border-color: var(--hit); }
 .smp-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
@@ -169,6 +230,13 @@ kbd { font-family: var(--f-mono); font-size: 11px; padding: 1px 6px; border: 1px
       </svg>
       <p class="mode-desc" id="modeDesc"></p>
       <div class="legend" id="legend"></div>
+      <div class="roll-bar" id="rollBar">
+        <button class="roll-pad" id="rollPad" type="button"><b>RUFADA</b><small>segure aqui ou a tecla Espaço</small></button>
+        <label for="rollType" id="rollTypeLbl">Tipo <select id="rollType" class="sel sm"><option value="press">Pressão (baqueta rebatendo)</option><option value="alt">Aberta (baqueta e mão)</option></select></label>
+        <label for="rollRate">Velocidade <input type="range" id="rollRate" min="8" max="32" step="1" value="18"><output id="rollRateOut">18/s</output></label>
+        <label for="rollCresc"><input type="checkbox" id="rollCresc" checked> Crescendo</label>
+        <label for="rollClose"><input type="checkbox" id="rollClose" checked> Fechar com Tá</label>
+      </div>
     </div>
 
     <aside class="side">
@@ -182,7 +250,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; padding: 1px 6px; border: 1px
         </div>
         <div class="lp-info"><span>Tempo <b id="lpTime">0,00 s</b></span><span>Toques <b id="lpHits">0</b></span></div>
         <div class="timeline" id="timeline" aria-hidden="true"><div class="empty" id="tlEmpty">Clique em Gravar, toque a levada e clique em Parar/Salvar exatamente no tempo em que o ciclo deve recomeçar.</div><div class="head" id="tlHead"></div></div>
-        <p class="note">Teclado: <kbd>R</kbd> gravar/parar · <kbd>P</kbd> tocar/pausar loop · <kbd>Shift</kbd>+tecla = toque mais fraco · <kbd>M</kbd> troca o modo</p>
+        <p class="note">Teclado: <kbd>R</kbd> gravar/parar · <kbd>P</kbd> tocar/pausar loop · <kbd>Shift</kbd>+tecla = toque mais fraco · <kbd>M</kbd> troca o modo · <kbd>Espaço</kbd> rufada · <kbd>B</kbd> breque · <kbd>Esc</kbd> parar</p>
       </div>
 
       <div class="card">
@@ -197,6 +265,85 @@ kbd { font-family: var(--f-mono); font-size: 11px; padding: 1px 6px; border: 1px
     </aside>
   </div>
 
+
+  <section class="card bq" id="breques" aria-label="Breques">
+    <div class="bq-head">
+      <div class="bq-name">
+        <label class="sr" for="bqSel">Breque</label>
+        <select id="bqSel" class="sel"></select>
+        <h2 class="bq-title" id="bqTitle">WuKong</h2>
+        <span class="bq-meta" id="bqMeta"></span>
+      </div>
+      <div class="row">
+        <button class="btn" id="bqPlay" type="button"><svg viewBox="0 0 14 14" aria-hidden="true"><path id="bqIcon" d="M3 1.5v11l9.5-5.5z" fill="currentColor"/></svg><span id="bqLbl">Tocar breque</span></button>
+        <span class="count-in" id="bqCount"></span>
+      </div>
+    </div>
+    <div class="row">
+      <button class="chip" id="bqNew" type="button">+ Novo breque</button>
+      <button class="chip" id="bqEdit" type="button">Editar</button>
+      <button class="chip" id="bqDup" type="button">Duplicar</button>
+      <button class="chip" id="bqDel" type="button">Apagar</button>
+      <span class="note" id="bqStore"></span>
+    </div>
+    <div class="editor" id="editor" hidden>
+      <div class="row">
+        <label for="edName">Nome <input id="edName" type="text" maxlength="60"></label>
+        <label for="edBpm">Andamento <input id="edBpm" type="number" min="40" max="240" step="1"> bpm</label>
+      </div>
+      <textarea id="edText" rows="12" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+      <p class="ed-help">Uma linha por compasso, quatro tempos separados por espaço. Dentro do tempo, emende as sílabas: <code>Tucalaca</code> são quatro semicolcheias, <code>Tucu</code> duas colcheias, <code>Tu</code> ocupa o tempo inteiro. Use <code>.</code> para uma subdivisão sem toque: <code>Tu..cu</code> é Tu na cabeça e cu na última semicolcheia. <code>E</code> é pausa falada e <code>1</code>–<code>9</code> contagem sem toque. Sons: <b>Tu/tu</b> = grave da baqueta (maiúscula forte), <b>cu</b> = rebote leve, <b>Ta/ta</b> = rimshot (forte/fraco), <b>ca</b> e <b>la</b> = rimshot leve (o <code>ca</code> depois de <code>la</code> vira rebote, como no Tucalaca). Linha em branco começa uma nova seção. Para intensidade, junte a porcentagem: <code>Ta[60]</code>.</p>
+      <p class="ed-err" id="edErr" hidden></p>
+      <div class="row">
+        <button class="btn" id="edSave" type="button">Guardar breque</button>
+        <button class="chip" id="edCancel" type="button">Cancelar</button>
+      </div>
+    </div>
+    <div class="row">
+      <label for="bqBpm">Andamento <input type="range" id="bqBpm" min="60" max="200" step="1" value="130"><output id="bqBpmOut">130 bpm</output></label>
+      <label for="bqMetro"><input type="checkbox" id="bqMetro" checked> Metrônomo</label>
+      <label for="bqCountIn"><input type="checkbox" id="bqCountIn" checked> Contagem de entrada</label>
+      <label for="bqRepeat"><input type="checkbox" id="bqRepeat"> Repetir</label>
+      <span class="note" id="bqPos">Começa no compasso 1</span>
+    </div>
+    <div class="legend2">
+      <span><b class="L" style="color:#ffd37a">Tu</b>grave da baqueta (centro)</span>
+      <span><b style="color:#9fd6ff">cu</b>rebote leve</span>
+      <span><b style="color:#ff8e6e">Ta ca la</b>rimshot (Ta forte, ca/la leve)</span>
+      <span><b style="color:var(--muted);font-size:13px">E · 1 2 3 4</b>pausa e contagem, sem toque</span>
+      <span>Clique num compasso para começar dali.</span>
+    </div>
+    <div class="score" id="score"></div>
+
+    <div class="bq-head">
+      <h2>Aprender<small>trecho a trecho, com avaliação</small></h2>
+      <div class="row">
+        <label for="lnSize">Dividir <select id="lnSize" class="sel sm"><option value="sec" selected>Por seção</option><option value="1">1 compasso</option><option value="2">2 compassos</option><option value="4">4 compassos</option><option value="all">Breque inteiro</option></select></label>
+      </div>
+    </div>
+    <div class="chunks" id="lnChunks"></div>
+    <div class="row">
+      <button class="btn" id="lnListen" type="button">1 · Ouvir</button>
+      <button class="btn" id="lnPlay" type="button">2 · Tocar</button>
+      <button class="btn" id="lnAuto" type="button">Treino automático</button>
+      <button class="chip" id="lnPrev" type="button">‹ Trecho anterior</button>
+      <button class="chip" id="lnNext" type="button">Próximo trecho ›</button>
+      <button class="btn" id="lnStop" type="button" hidden>Parar</button>
+    </div>
+    <div class="row">
+      <label for="lnBpm">Andamento do treino <input type="range" id="lnBpm" min="50" max="200" step="1" value="90"><output id="lnBpmOut">90 bpm</output></label>
+      <label for="lnUp"><input type="checkbox" id="lnUp" checked> Subir o andamento quando acertar</label>
+      <label for="lnMetro"><input type="checkbox" id="lnMetro" checked> Metrônomo ao tocar</label>
+      <label for="lnSound"><input type="checkbox" id="lnSound" checked> Ouvir meus toques</label>
+    </div>
+    <div class="pads" id="lnPads">
+      <button class="pad" id="padHead" type="button"><b id="padHeadLbl">Tu · cu</b><small id="padHeadKey">pele · J</small></button>
+      <button class="pad" id="padRim" type="button"><b id="padRimLbl">Ta · ca · la</b><small id="padRimKey">rimshot · K</small></button>
+    </div>
+    <p class="result" id="lnMsg">Escolha um trecho. Carregue em <b>1 · Ouvir</b> para ouvir como é, depois em <b>2 · Tocar</b> e faça a sua parte no tambor, nos botões ou no teclado.</p>
+    <p class="note">Verde = no tempo · amarelo = um pouco adiantado ou atrasado, ou no som errado (pele em vez de aro) · vermelho = faltou. Passa com 85% de acertos. O treino automático começa em 70% do andamento e sobe 6 bpm a cada acerto até chegar ao do breque.</p>
+  </section>
+
   <div class="row" style="justify-content:space-between">
     <label style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)" for="vol">Volume geral <input type="range" id="vol" min="0" max="1" step="0.01" value="0.8" style="accent-color:var(--brass)"></label>
     <span class="hint">O repique é agudo, metálico e sem esteira. Os sons são modelagem física: modos inarmônicos de membrana (1 · 1,59 · 2,14 × a base) com afinação fixa, transientes de ruído branco filtrado para o impacto e soft clipping no rimshot, tudo por um compressor na saída, então nunca estouram mesmo em rolos rápidos. Os toques são agendados no relógio de áudio para latência mínima.</span>
@@ -209,152 +356,251 @@ const $ = id => document.getElementById(id);
 const NS = "http://www.w3.org/2000/svg";
 const el = (tag, attrs = {}, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; };
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem("repique." + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem("repique." + k, JSON.stringify(v)); return true; } catch (e) { return false; } },
+};
 
 // ---------- Sons ----------
-// Cada som: nome, sílaba, tecla(s), ferramenta da animação e a receita de síntese.
 const SOUNDS = {
-  // Modo 1: baqueta de madeira + mão
-  grave:   { mode: "trad", name: "Grave da baqueta", syl: "tu",  keys: ["j"], tool: "stick", side: 1 },
-  rim:     { mode: "trad", name: "Rimshot",          syl: "tá",  keys: ["k"], tool: "stick", side: 1 },
-  open:    { mode: "trad", name: "Mão aberta",       syl: "tu",  keys: ["s"], tool: "hand",  side: -1 },
-  slap:    { mode: "trad", name: "Tapa (abafado)",   syl: "la",  keys: ["d"], tool: "hand",  side: -1 },
-  // Modo 2: duas bacurinhas
-  left:    { mode: "two",  name: "Bacurinha esquerda", syl: "ca", keys: ["d", "f"], tool: "rod", side: -1 },
-  right:   { mode: "two",  name: "Bacurinha direita",  syl: "tu", keys: ["j", "k"], tool: "rod", side: 1 },
-  aro:     { mode: "two",  name: "Aro / casco",        syl: "la", keys: ["s", "l"], tool: "rod", side: 0 },
+  grave:   { mode: "trad", name: "Grave da baqueta", syl: "tu",  keys: ["j"], tool: "stick", side: 1, cls: "head" },
+  rim:     { mode: "trad", name: "Rimshot",          syl: "tá",  keys: ["k"], tool: "stick", side: 1, cls: "rim" },
+  open:    { mode: "trad", name: "Mão aberta",       syl: "tu",  keys: ["s"], tool: "hand",  side: -1, cls: "head" },
+  slap:    { mode: "trad", name: "Tapa (abafado)",   syl: "la",  keys: ["d"], tool: "hand",  side: -1, cls: "head" },
+  press:   { mode: "trad", name: "Rebote (rufo)",    syl: "ru",  keys: [], tool: "stick", side: 1, cls: "head", hidden: true },
+  left:    { mode: "two",  name: "Bacurinha esquerda", syl: "ca", keys: ["d", "f"], tool: "rod", side: -1, cls: "left" },
+  right:   { mode: "two",  name: "Bacurinha direita",  syl: "tu", keys: ["j", "k"], tool: "rod", side: 1, cls: "right" },
+  aro:     { mode: "two",  name: "Aro / casco",        syl: "la", keys: ["s", "l"], tool: "rod", side: 0, cls: "left" },
 };
 const MODES = {
-  trad: { label: "Tradicional", desc: "Uma baqueta de madeira na mão direita e a mão esquerda na pele. Centro = grave (tu), aro inferior = rimshot (tá/ca), metade de cima = mão aberta, canto de baixo à esquerda = tapa." },
-  two:  { label: "Duas bacurinhas", desc: "Repique laranja tocado com duas varetas flexíveis de plástico. Centro esquerdo e direito = cada bacurinha (afinações levemente diferentes para o rolo soar vivo); borda metálica = toque no aro/casco." },
+  trad: { label: "Tradicional", desc: "Uma baqueta de madeira na mão direita e a mão esquerda na pele. Centro = grave (tu), aro inferior = rimshot (tá/ca), metade de cima = mão aberta, canto de baixo à esquerda = tapa. Segure a rufada para o rufo." },
+  two:  { label: "Duas bacurinhas", desc: "Repique laranja tocado com duas varetas flexíveis de plástico. Centro esquerdo e direito = cada bacurinha (afinações levemente diferentes para o rolo soar vivo); borda metálica = toque no aro/casco. A rufada alterna as duas varetas." },
 };
 let mode = "trad";
 
-let ctx = null, master = null, comp = null, noiseBuf = null;
+// ---------- Áudio: contexto, saída e ruído ----------
+let ctx = null, master = null, comp = null, noiseBuf = null, dry = null;
 const vol = $("vol");
 function updateStatus() {
   const on = ctx && ctx.state === "running";
   $("ctxDot").classList.toggle("on", !!on);
-  $("ctxText").textContent = on ? "Áudio ligado · latência " + Math.round((ctx.baseLatency || 0) * 1000) + " ms" : "Áudio em espera · toque no tambor para ativar";
+  const pend = memPending ? ` · modelando peles ${memDone}/${memTotal}` : "";
+  $("ctxText").textContent = on ? "Áudio ligado · latência " + Math.round((ctx.baseLatency || 0) * 1000) + " ms" + pend : "Áudio em espera · toque no tambor para ativar" + pend;
+}
+function createCtx() {
+  if (ctx) return ctx;
+  ctx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: "interactive" });
+  master = ctx.createGain(); master.gain.value = +vol.value;
+  dry = ctx.createGain(); dry.gain.value = +vol.value;
+  comp = ctx.createDynamicsCompressor();
+  comp.threshold.value = -12; comp.knee.value = 16; comp.ratio.value = 5; comp.attack.value = 0.002; comp.release.value = 0.12;
+  master.connect(comp); dry.connect(comp); comp.connect(ctx.destination);
+  noiseBuf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 1.0), ctx.sampleRate);
+  const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  ctx.onstatechange = updateStatus;
+  requestAnimationFrame(uiLoop);
+  startMembranes();
+  return ctx;
 }
 function ensureCtx() {
-  if (!ctx) {
-    ctx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: "interactive" });
-    master = ctx.createGain(); master.gain.value = +vol.value;
-    // Compressor na saída: segura os picos de rolos rápidos e rimshots sem deixar o som estourar.
-    comp = ctx.createDynamicsCompressor();
-    comp.threshold.value = -14; comp.knee.value = 18; comp.ratio.value = 6; comp.attack.value = 0.002; comp.release.value = 0.12;
-    master.connect(comp); comp.connect(ctx.destination);
-    noiseBuf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 1.0), ctx.sampleRate);
-    const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    ctx.onstatechange = updateStatus;
-    requestAnimationFrame(tlLoop);
-  }
+  createCtx();
   if (ctx.state === "suspended") ctx.resume().then(updateStatus);
   updateStatus();
   return ctx;
 }
-vol.addEventListener("input", () => { if (master) master.gain.value = +vol.value; });
+vol.addEventListener("input", () => { if (master) { master.gain.value = +vol.value; dry.gain.value = +vol.value; } });
 
-// ---------- Motor de som: modelagem física percussiva ----------
-// Cada toque = modos inarmônicos de membrana (proporções 1 · 1,59 · 2,14 · 2,65 da frequência base) com afinação FIXA,
-// mais um transiente de ruído branco filtrado nos primeiros milissegundos (impacto na pele e no alumínio).
-// O único envelope de frequência permitido é o "punch": no máximo 8 ms de descida no ataque, depois a nota não se mexe.
-const PUNCH_T = 0.008;
+// ---------- Pele simulada: membrana circular por diferenças finitas ----------
+// Resolve a equação da onda numa grade circular (modos inarmônicos reais da pele, dependência do ponto de toque),
+// com perda fixa (s0) e perda que cresce com a frequência (s1). O "glide" é a tensão extra do impacto: só nos
+// primeiros milissegundos. Roda num Web Worker para não travar a página; até ficar pronta, toca a síntese rápida.
+function membraneRender(o) {
+  const N = o.N || 40, sr = o.sr, cx = (N - 1) / 2, R = cx - 1.2;
+  const idx = [];
+  for (let y = 1; y < N - 1; y++) for (let x = 1; x < N - 1; x++) if ((x - cx) * (x - cx) + (y - cx) * (y - cx) <= R * R) idx.push(y * N + x);
+  const c0 = o.f1 * 2 * Math.PI * R / (2.405 * sr);
+  const s0 = 6.91 / (o.t60 * sr), s1 = o.hf;
+  let u0 = new Float32Array(N * N), u1 = new Float32Array(N * N), u2 = new Float32Array(N * N);
+  const sx = cx + o.strikeR * R * Math.cos(o.strikeAng), sy = cx + o.strikeR * R * Math.sin(o.strikeAng);
+  for (const i of idx) { const x = i % N, y = (i - x) / N; const d = Math.hypot(x - sx, y - sy); if (d < o.rad) u1[i] = 0.5 * (1 + Math.cos(Math.PI * d / o.rad)); }
+  const px = Math.round(cx + o.pickR * R * Math.cos(o.pickAng)), py = Math.round(cx + o.pickR * R * Math.sin(o.pickAng));
+  const p1 = py * N + px, p2 = Math.round(cx + 0.3 * R) * N + Math.round(cx - 0.2 * R);
+  const len = Math.ceil(sr * o.dur), out = new Float32Array(len);
+  const n1 = idx.length;
+  for (let n = 0; n < len; n++) {
+    const c = c0 * (1 + (o.glide || 0) * Math.exp(-n / (sr * 0.0025)));
+    const l2 = c * c, a = 1 / (1 + s0), b = 1 - s0;
+    for (let k = 0; k < n1; k++) {
+      const i = idx[k];
+      const L1 = u1[i - 1] + u1[i + 1] + u1[i - N] + u1[i + N] - 4 * u1[i];
+      const L0 = u0[i - 1] + u0[i + 1] + u0[i - N] + u0[i + N] - 4 * u0[i];
+      u2[i] = (2 * u1[i] - b * u0[i] + l2 * L1 + s1 * (L1 - L0)) * a;
+    }
+    out[n] = u2[p1] + 0.6 * u2[p2];
+    const t = u0; u0 = u1; u1 = u2; u2 = t;
+  }
+  let mx = 1e-9; for (let n = 0; n < len; n++) mx = Math.max(mx, Math.abs(out[n]));
+  const fade = Math.min(len, Math.round(sr * 0.01));
+  for (let n = 0; n < len; n++) { out[n] /= mx; if (n > len - fade) out[n] *= (len - n) / fade; }
+  return out;
+}
+// Receitas de pele por som (f1 = modo fundamental; a pele do repique é muito tensa e "pinga" alto)
+const MEM = {
+  grave: { f1: 420, t60: 0.25, hf: 0.0008, strikeR: 0.6, strikeAng: 0.4, rad: 1.0, pickR: 0.85, pickAng: 2.1, glide: 0.07, dur: 0.34, N: 48 },
+  rim:   { f1: 420, t60: 0.2, hf: 0.0008, strikeR: 0.84, strikeAng: 0.9, rad: 1.2, pickR: 0.8, pickAng: 2.6, glide: 0.09, dur: 0.28, N: 48 },
+  open:  { f1: 420, t60: 0.12, hf: 0.006, strikeR: 0.5, strikeAng: 3.4, rad: 5.0, pickR: 0.6, pickAng: 1.2, glide: 0.03, dur: 0.22, N: 48 },
+  slap:  { f1: 420, t60: 0.05, hf: 0.01, strikeR: 0.7, strikeAng: 3.9, rad: 3.0, pickR: 0.7, pickAng: 0.7, glide: 0.05, dur: 0.12, N: 48 },
+  press: { f1: 420, t60: 0.05, hf: 0.004, strikeR: 0.5, strikeAng: 1.0, rad: 1.4, pickR: 0.8, pickAng: 2.1, glide: 0.05, dur: 0.1, N: 48 },
+  left:  { f1: 452, t60: 0.18, hf: 0.0012, strikeR: 0.5, strikeAng: Math.PI, rad: 1.0, pickR: 0.8, pickAng: 2.0, glide: 0.08, dur: 0.26, N: 48 },
+  right: { f1: 464, t60: 0.18, hf: 0.0012, strikeR: 0.5, strikeAng: 0, rad: 1.0, pickR: 0.8, pickAng: 1.0, glide: 0.08, dur: 0.26, N: 48 },
+};
+const memBuf = {};          // id -> [AudioBuffer, ...] (variações para não soar metralhadora)
+let memPending = false, memDone = 0, memTotal = 0, memWorker = null, memRR = {};
+function startMembranes() {
+  const jobs = [];
+  for (const id in MEM) for (let v = 0; v < 2; v++) jobs.push({ id, v, o: { ...MEM[id], sr: ctx.sampleRate, strikeAng: MEM[id].strikeAng + v * 0.9, f1: MEM[id].f1 * (1 + v * 0.012) } });
+  memTotal = jobs.length; memDone = 0; memPending = true; updateStatus();
+  const done = (id, out) => {
+    const b = ctx.createBuffer(1, out.length, ctx.sampleRate); b.getChannelData(0).set(out);
+    (memBuf[id] ||= []).push(b); memDone++; if (memDone >= memTotal) memPending = false; updateStatus();
+  };
+  try {
+    const src = `${membraneRender.toString()}\nself.onmessage = e => { const out = membraneRender(e.data.o); self.postMessage({ id: e.data.id, out }, [out.buffer]); };`;
+    memWorker = new Worker(URL.createObjectURL(new Blob([src], { type: "application/javascript" })));
+    let k = 0;
+    memWorker.onmessage = e => { done(e.data.id, e.data.out); if (k < jobs.length) memWorker.postMessage(jobs[k++]); };
+    memWorker.onerror = () => { memWorker = null; runInline(); };
+    memWorker.postMessage(jobs[k++]);
+  } catch (e) { runInline(); }
+  function runInline() { // sem worker: uma pele por vez, cedendo a vez à interface entre elas
+    let k = memDone;
+    const step = () => { if (k >= jobs.length) return; const j = jobs[k++]; done(j.id, membraneRender(j.o)); setTimeout(step, 30); };
+    setTimeout(step, 30);
+  }
+}
+
+// ---------- Blocos de síntese ----------
 let softClip = null;
-function getSoftClip() { // curva de soft clipping (tanh) para o estalo do rimshot
+function getSoftClip() {
   if (softClip) return softClip;
   const n = 2048, curve = new Float32Array(n), k = 3.2;
   for (let i = 0; i < n; i++) { const x = (i / (n - 1)) * 2 - 1; curve[i] = Math.tanh(k * x) / Math.tanh(k); }
-  softClip = ctx.createWaveShaper(); softClip.curve = curve; softClip.oversample = "2x";
-  softClip.connect(master);
+  softClip = ctx.createWaveShaper(); softClip.curve = curve; softClip.oversample = "2x"; softClip.connect(master);
   return softClip;
 }
-// Modo de vibração: oscilador em frequência fixa com decaimento exponencial. punch = quanto acima da nota o ataque começa (8 ms).
-function modeOsc(t, o, dest) {
+function modeOsc(t, o, dest) { // oscilador de afinação fixa (punch de no máximo 8 ms), só na síntese rápida de reserva
   const osc = ctx.createOscillator(); osc.type = o.type || "sine";
-  if (o.punch) { osc.frequency.setValueAtTime(o.f * o.punch, t); osc.frequency.exponentialRampToValueAtTime(o.f, t + PUNCH_T); }
-  else osc.frequency.setValueAtTime(o.f, t);
-  const g = ctx.createGain();
-  g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(o.gain, t + 0.0012);
-  g.gain.exponentialRampToValueAtTime(0.0004, t + 0.0012 + o.dec);
-  osc.connect(g); g.connect(dest);
-  osc.start(t); osc.stop(t + o.dec + 0.03);
+  if (o.punch) { osc.frequency.setValueAtTime(o.f * o.punch, t); osc.frequency.exponentialRampToValueAtTime(o.f, t + 0.008); } else osc.frequency.setValueAtTime(o.f, t);
+  const g = ctx.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(o.gain, t + 0.0012); g.gain.exponentialRampToValueAtTime(0.0004, t + 0.0012 + o.dec);
+  osc.connect(g); g.connect(dest); osc.start(t); osc.stop(t + o.dec + 0.03);
 }
-// Transiente de impacto: ruído branco do buffer global por um filtro, com decaimento curtíssimo.
-function burst(t, o, dest) {
-  const src = ctx.createBufferSource(); src.buffer = noiseBuf;
+function burst(t, o, dest) { // transiente de impacto: ruído branco do buffer global por um filtro, decaimento curtíssimo
+  const src = ctx.createBufferSource(); src.buffer = noiseBuf; src.loop = true; src.loopStart = Math.random() * 0.8;
   const f = ctx.createBiquadFilter(); f.type = o.type || "bandpass"; f.frequency.value = o.f; f.Q.value = o.Q || 1;
-  const g = ctx.createGain();
-  g.gain.setValueAtTime(o.gain, t);
-  g.gain.exponentialRampToValueAtTime(0.0004, t + o.dec);
-  src.connect(f); f.connect(g); g.connect(dest);
-  src.start(t); src.stop(t + o.dec + 0.02);
+  const g = ctx.createGain(); g.gain.setValueAtTime(o.gain, t); g.gain.exponentialRampToValueAtTime(0.0004, t + o.dec);
+  src.connect(f); f.connect(g); g.connect(dest); src.start(t, src.loopStart); src.stop(t + o.dec + 0.02);
+}
+function ring(t, freqs, q, gain, dec, dest) { // ressonadores de metal (aro/casco) excitados por um estalo de ruído
+  const src = ctx.createBufferSource(); src.buffer = noiseBuf; src.loop = true; src.loopStart = Math.random() * 0.8;
+  const ex = ctx.createGain(); ex.gain.setValueAtTime(1, t); ex.gain.exponentialRampToValueAtTime(0.001, t + 0.004);
+  src.connect(ex);
+  const out = ctx.createGain(); out.gain.setValueAtTime(gain, t); out.gain.exponentialRampToValueAtTime(0.0004, t + dec); out.connect(dest);
+  for (const f of freqs) { const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = f; bp.Q.value = q; ex.connect(bp); bp.connect(out); }
+  src.start(t, src.loopStart); src.stop(t + dec + 0.02);
+}
+function skin(id, t, v, dest, opts = {}) { // a pele simulada (ou a reserva por osciladores enquanto ela não existe)
+  const list = memBuf[id];
+  if (list && list.length) {
+    const b = list[(memRR[id] = ((memRR[id] || 0) + 1) % list.length)];
+    const src = ctx.createBufferSource(); src.buffer = b; src.playbackRate.value = 1 + (Math.random() - 0.5) * 0.02 + (opts.pitch || 0);
+    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1800 + 7000 * v; lp.Q.value = 0.5;
+    const g = ctx.createGain(); g.gain.value = (opts.gain || 1) * v;
+    src.connect(lp); lp.connect(g); g.connect(dest); src.start(t);
+    return;
+  }
+  const m = MEM[id], out = ctx.createGain(); out.gain.value = (opts.gain || 1) * v; out.connect(dest);
+  modeOsc(t, { f: m.f1, type: "triangle", gain: 0.55, dec: m.t60 * 0.9, punch: 1.05 }, out);
+  modeOsc(t, { f: m.f1 * 1.59, gain: 0.35, dec: m.t60 * 0.6 }, out);
+  modeOsc(t, { f: m.f1 * 2.14, gain: 0.25, dec: m.t60 * 0.45 }, out);
+  modeOsc(t, { f: m.f1 * 2.65, gain: 0.18, dec: m.t60 * 0.35 }, out);
 }
 function voiceOut(v) { const g = ctx.createGain(); g.gain.value = v; g.connect(master); return g; }
 const RECIPES = {
-  grave: (t, v) => { // "tu": corpo em 285 Hz + modos 453 e 610; madeira = ruído em 1800 Hz por 12 ms
-    const out = voiceOut(v);
-    modeOsc(t, { f: 285, type: "triangle", gain: 0.7, dec: 0.22, punch: 1.05 }, out);
-    modeOsc(t, { f: 453, gain: 0.25, dec: 0.12 }, out);
-    modeOsc(t, { f: 610, gain: 0.12, dec: 0.18 }, out);
-    burst(t, { f: 1800, Q: 2.0, gain: 0.5, dec: 0.012 }, out);
+  grave: (t, v) => { // "tu": baqueta no centro. Pele + clique da madeira + um pouco da caixa de alumínio
+    const out = voiceOut(1);
+    skin("grave", t, v, out, { gain: 0.9 });
+    burst(t, { f: 1900, Q: 1.6, gain: 0.45 * v, dec: 0.012 }, out);
+    ring(t, [2460, 3380], 18, 0.12 * v, 0.06, out);
+    modeOsc(t, { f: 185, gain: 0.16 * v, dec: 0.09 }, out);
   },
-  rim: (t, v) => { // "tá/ca": estalo de ruído com soft clipping + canto agudo do aro/pele
+  rim: (t, v) => { // "tá/ca": baqueta na pele e no aro ao mesmo tempo: estalo com soft clipping + metal do aro
     const atk = ctx.createGain(); atk.gain.value = v; atk.connect(getSoftClip());
     burst(t, { f: 2600, Q: 3.5, gain: 1.0, dec: 0.035 }, atk);
-    burst(t, { type: "highpass", f: 4500, Q: 0.7, gain: 1.0, dec: 0.015 }, atk);
-    const out = voiceOut(v);
-    modeOsc(t, { f: 340, gain: 0.4, dec: 0.09, punch: 1.04 }, out);
-    modeOsc(t, { f: 780, type: "triangle", gain: 0.5, dec: 0.16 }, out);
-    modeOsc(t, { f: 1240, gain: 0.35, dec: 0.14 }, out);
+    burst(t, { type: "highpass", f: 4500, Q: 0.7, gain: 0.9, dec: 0.015 }, atk);
+    const out = voiceOut(1);
+    skin("rim", t, v, out, { gain: 0.75 });
+    ring(t, [2330, 3150, 4620], 28, 0.5 * v, 0.14, out);
   },
-  open: (t, v) => { // mão aberta: corpo quente passando por passa-baixa em 900 Hz + impacto da palma
-    const out = voiceOut(v);
-    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 900; lp.Q.value = 0.7; lp.connect(out);
-    modeOsc(t, { f: 280, gain: 0.8, dec: 0.20, punch: 1.04 }, lp);
-    modeOsc(t, { f: 445, gain: 0.2, dec: 0.08 }, lp);
-    burst(t, { f: 800, Q: 1.5, gain: 0.35, dec: 0.018 }, out);
+  open: (t, v) => { // mão aberta: pele amortecida pela palma, impacto macio
+    const out = voiceOut(1);
+    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1400; lp.Q.value = 0.7; lp.connect(out);
+    skin("open", t, v, lp, { gain: 1.0 });
+    burst(t, { f: 800, Q: 1.5, gain: 0.35 * v, dec: 0.018 }, out);
+    modeOsc(t, { f: 185, gain: 0.22 * v, dec: 0.1 }, out);
   },
-  slap: (t, v) => { // tapa: pele presa, quase sem grave
-    const out = voiceOut(v);
-    burst(t, { f: 2200, Q: 2.5, gain: 0.9, dec: 0.025 }, out);
-    modeOsc(t, { f: 520, gain: 0.35, dec: 0.03 }, out);
-    modeOsc(t, { f: 980, gain: 0.25, dec: 0.03 }, out);
+  slap: (t, v) => { // tapa: estalo seco de pele presa, quase sem grave
+    const out = voiceOut(1);
+    burst(t, { f: 2200, Q: 2.5, gain: 0.9 * v, dec: 0.025 }, out);
+    burst(t, { type: "highpass", f: 3500, Q: 0.7, gain: 0.4 * v, dec: 0.012 }, out);
+    skin("slap", t, v, out, { gain: 0.6 });
   },
-  left: (t, v) => rodHit(t, v, 350),
-  right: (t, v) => rodHit(t, v, 362),
-  aro: (t, v) => { // só ferragem: ruído em 3200 Hz + três parciais metálicas por passa-banda em 2000 Hz
-    const out = voiceOut(v);
-    burst(t, { f: 3200, Q: 1.5, gain: 0.8, dec: 0.01 }, out);
-    const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 2000; bp.Q.value = 0.9; bp.connect(out);
-    modeOsc(t, { f: 1150, type: "square", gain: 0.3, dec: 0.025 }, bp);
-    modeOsc(t, { f: 1720, type: "triangle", gain: 0.35, dec: 0.025 }, bp);
-    modeOsc(t, { f: 2480, type: "square", gain: 0.22, dec: 0.025 }, bp);
+  press: (t, v) => { // rebote do rufo de pressão: baqueta encostada, som curto e seco
+    const out = voiceOut(1);
+    skin("press", t, v, out, { gain: 0.8 });
+    burst(t, { f: 1900, Q: 1.6, gain: 0.3 * v, dec: 0.008 }, out);
+  },
+  left: (t, v) => rodHit(t, v, "left"),
+  right: (t, v) => rodHit(t, v, "right"),
+  aro: (t, v) => { // só ferragem: estalo + parciais metálicas
+    const out = voiceOut(1);
+    burst(t, { f: 3200, Q: 1.5, gain: 0.8 * v, dec: 0.01 }, out);
+    ring(t, [1150, 1720, 2480, 3900], 24, 0.55 * v, 0.05, out);
   },
 };
-function rodHit(t, v, f) { // bacurinha: chicote de plástico (ruído brilhante) + pele de alta tensão com modos metálicos
-  const out = voiceOut(v);
-  burst(t, { f: 3800, Q: 3.0, gain: 0.95, dec: 0.012 }, out);
-  modeOsc(t, { f, type: "triangle", gain: 0.65, dec: 0.13, punch: 1.05 }, out);
-  modeOsc(t, { f: 560, gain: 0.3, dec: 0.11 }, out);
-  modeOsc(t, { f: 890, gain: 0.18, dec: 0.11 }, out);
+function rodHit(t, v, id) { // bacurinha: chicote de plástico (ruído brilhante) + pele de alta tensão
+  const out = voiceOut(1);
+  burst(t, { f: 3800, Q: 3.0, gain: 0.95 * v, dec: 0.012 }, out);
+  skin(id, t, v, out, { gain: 0.85 });
+  ring(t, [2600, 3700], 20, 0.15 * v, 0.05, out);
 }
 // Amostras reais: quando um som tem arquivo carregado, ele substitui a síntese.
 const samples = {};
 function playSample(id, t, v) {
   const src = ctx.createBufferSource(); src.buffer = samples[id];
-  const g = ctx.createGain(); g.gain.value = v;
-  src.connect(g); g.connect(master); src.start(t);
+  const g = ctx.createGain(); g.gain.value = v; src.connect(g); g.connect(master); src.start(t);
 }
-function play(id, t, vel = 1, origin) {
+function click(t, accent) {
+  const o = ctx.createOscillator(); o.type = "triangle"; o.frequency.value = accent ? 1760 : 1175;
+  const g = ctx.createGain(); g.gain.setValueAtTime(accent ? 0.45 : 0.28, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.045);
+  o.connect(g); g.connect(dry); o.start(t); o.stop(t + 0.06);
+}
+// Toque: id do som, tempo no relógio de áudio, intensidade, origem (ponto na pele) e se veio do usuário (para o treino)
+function play(id, t, vel = 1, origin, user = false) {
   ensureCtx();
   if (t == null) t = ctx.currentTime;
-  const v = clamp(vel, 0.15, 1);
+  const v = clamp(vel, 0.12, 1);
   if (samples[id]) playSample(id, t, v); else RECIPES[id](t, v);
-  const delay = Math.max(0, (t - ctx.currentTime) * 1000);
-  if (delay < 5) animate(id, origin, v); else setTimeout(() => animate(id, origin, v), delay);
-  if (loop.rec) loop.events.push({ t: ctx.currentTime - loop.start + Math.max(0, t - ctx.currentTime), id, vel: v, mode: SOUNDS[id].mode });
+  uiAt(t, () => animate(id, origin, v));
+  if (loop.rec) loop.events.push({ t: Math.max(0, t - loop.start), id, vel: v, mode: SOUNDS[id].mode });
+  if (user && train.on) tap(SOUNDS[id].cls, t);
+}
+// Fila de efeitos visuais agendados no relógio de áudio
+const uiQ = [];
+function uiAt(t, fn) { if (!ctx || t <= ctx.currentTime + 0.004) { fn(); return; } uiQ.push({ t, fn }); }
+function uiLoop() {
+  if (ctx) { const now = ctx.currentTime + 0.012; for (let i = 0; i < uiQ.length; i++) if (uiQ[i].t <= now) { const e = uiQ[i]; uiQ.splice(i, 1); i--; try { e.fn(); } catch (err) { console.error(err); } } }
+  if (loop.playing && loop.len > 0) { const pos = ((ctx.currentTime - loop.cycleStart) % loop.len + loop.len) % loop.len; $("tlHead").style.left = (pos / loop.len * 100) + "%"; }
+  requestAnimationFrame(uiLoop);
 }
 
 // ---------- Tambor ----------
@@ -362,14 +608,12 @@ const drum = $("drum"), zonesG = $("zones"), fx = $("fx"), head = $("head"), rin
 const R_HEAD = 172, R_RIM = 190;
 for (let i = 0; i < 8; i++) { const a = i * 45 - 22.5; lugsG.append(el("rect", { class: "lug", x: -6, y: -204, width: 12, height: 22, rx: 3, transform: `rotate(${a})` })); }
 const P = (r, a) => `${(r * Math.cos(a)).toFixed(1)},${(r * Math.sin(a)).toFixed(1)}`;
-// Setor de anel entre r0 e r1, dos ângulos a0 a a1 (radianos, sentido horário no SVG)
 function sector(r0, r1, a0, a1) {
   const large = a1 - a0 > Math.PI ? 1 : 0;
   if (r0 === 0) return `M0,0 L${P(r1, a0)} A${r1},${r1} 0 ${large} 1 ${P(r1, a1)} Z`;
   return `M${P(r0, a0)} L${P(r1, a0)} A${r1},${r1} 0 ${large} 1 ${P(r1, a1)} L${P(r0, a1)} A${r0},${r0} 0 ${large} 0 ${P(r0, a0)} Z`;
 }
 const D = Math.PI / 180;
-// Zonas por modo: path para desenhar, rótulo, posição do rótulo e função que decide o toque pelo ponto (x, y, r)
 const ZONES = {
   trad: [
     { id: "grave", d: sector(0, 72, 0, 359.99 * D), lx: 0, ly: -4, test: (x, y, r) => r <= 72 },
@@ -394,78 +638,69 @@ function buildDrum() {
     zonesG.append(el("path", { class: "zone", d: z.d, "data-id": z.id }));
     const t1 = el("text", { class: "zlabel", x: z.lx, y: z.ly }, s.name);
     const t2 = el("text", { class: "zkey", x: z.lx, y: z.ly + 15 }, s.keys.map(k => k.toUpperCase()).join(" · "));
-    if (dark) { // na pele laranja, uma etiqueta escura atrás do texto para ficar legível sobre os círculos pretos
-      zonesG.append(t1);
-      const bb = t1.getBBox();
-      t1.remove();
-      zonesG.append(el("rect", { class: "ztag", x: bb.x - 8, y: bb.y - 4, width: bb.width + 16, height: bb.height + 24, rx: 9 }));
-    }
+    if (dark) { zonesG.append(t1); const bb = t1.getBBox(); t1.remove(); zonesG.append(el("rect", { class: "ztag", x: bb.x - 8, y: bb.y - 4, width: bb.width + 16, height: bb.height + 24, rx: 9 })); }
     zonesG.append(t1, t2);
   }
   $("modeDesc").textContent = MODES[mode].desc;
-  renderLegend();
+  $("rollTypeLbl").hidden = mode === "two";
+  renderLegend(); renderPadLabels();
 }
-function zoneAt(x, y) {
-  const r = Math.hypot(x, y);
-  if (r > R_RIM + 14) return null;
-  for (const z of ZONES[mode]) if (z.test(x, y, r)) return z.id;
-  return null;
-}
+function zoneAt(x, y) { const r = Math.hypot(x, y); if (r > R_RIM + 14) return null; for (const z of ZONES[mode]) if (z.test(x, y, r)) return z.id; return null; }
+let lastSprite = 0, lastAroKey = "l";
 function animate(id, origin, v) {
   const s = SOUNDS[id];
-  const z = ZONES[mode].find(z => z.id === id);
+  if (s.mode !== mode) return;
+  const z = ZONES[mode].find(z => z.id === (id === "press" ? "grave" : id));
   let x, y, side = s.side;
   if (origin) { x = origin.x; y = origin.y; if (id === "aro") side = x < 0 ? -1 : 1; }
   else {
-    // ponto padrão de cada som; o aro alterna o lado conforme a tecla
-    if (id === "aro") { side = origin === undefined && lastAroKey === "s" ? -1 : 1; x = side * 152; y = -40; }
-    else if (z) { x = z.lx; y = z.ly + (id === "grave" ? 8 : id === "left" || id === "right" ? 20 : -10); }
+    if (id === "aro") { side = lastAroKey === "s" ? -1 : 1; x = side * 152; y = -40; }
+    else if (z) { x = z.lx; y = z.ly + (id === "grave" || id === "press" ? 8 : id === "left" || id === "right" ? 20 : -10); }
     else { x = 0; y = 0; }
     if (id === "open") { x = -40; y = -90; }
     if (id === "slap") { x = -95; y = 80; }
     if (id === "rim") { x = 120; y = 110; }
+    x += (Math.random() - 0.5) * 16; y += (Math.random() - 0.5) * 16;
   }
-  // rebote na região exata
   const rp = el("circle", { class: "ripple" + (s.tool === "rod" ? " b" : ""), cx: x, cy: y, r: 6 });
-  rp.append(el("animate", { attributeName: "r", from: 6, to: 62, dur: "0.42s", fill: "freeze" }), el("animate", { attributeName: "opacity", from: 0.95, to: 0, dur: "0.42s", fill: "freeze" }), el("animate", { attributeName: "stroke-width", from: 6, to: 1, dur: "0.42s", fill: "freeze" }));
+  rp.append(el("animate", { attributeName: "r", from: 6, to: 40 + 30 * v, dur: "0.42s", fill: "freeze" }), el("animate", { attributeName: "opacity", from: 0.95, to: 0, dur: "0.42s", fill: "freeze" }), el("animate", { attributeName: "stroke-width", from: 6, to: 1, dur: "0.42s", fill: "freeze" }));
   fx.append(rp); setTimeout(() => rp.remove(), 450);
-  const zEl = zonesG.querySelector(`.zone[data-id="${id}"]`);
-  if (zEl) { zEl.classList.remove("hit"); void zEl.getBBox(); zEl.classList.add("hit"); setTimeout(() => zEl.classList.remove("hit"), 120); }
+  const zEl = zonesG.querySelector(`.zone[data-id="${id === "press" ? "grave" : id}"]`);
+  if (zEl) { zEl.classList.add("hit"); setTimeout(() => zEl.classList.remove("hit"), 110); }
   if (id === "rim" || id === "aro") { const rim = $("rim"); rim.classList.add("hit"); setTimeout(() => rim.classList.remove("hit"), 110); }
-  // baqueta, mão ou vareta vindo do lado
-  const shape = s.tool === "stick" ? "#stickShape" : s.tool === "hand" ? "#handShape" : "#rodShape";
-  const rot = s.tool === "hand" ? (side < 0 ? 150 : -150) : (side < 0 ? 140 : -140);
-  const g = el("g", { class: "tool" });
-  g.style.setProperty("--tx", x + "px"); g.style.setProperty("--ty", y + "px"); g.style.setProperty("--rot", rot + "deg");
-  g.append(el("use", { href: shape }));
-  fx.append(g); setTimeout(() => g.remove(), 260);
-  if (id === "grave" || id === "open" || id === "right" || id === "left") { drum.classList.remove("thump"); void drum.getBBox(); drum.classList.add("thump"); }
+  const now = performance.now();
+  if (now - lastSprite > 55) { // em rolos rápidos a baqueta não precisa ser desenhada a cada toque
+    lastSprite = now;
+    const shape = s.tool === "stick" ? "#stickShape" : s.tool === "hand" ? "#handShape" : "#rodShape";
+    const rot = s.tool === "hand" ? (side < 0 ? 150 : -150) : (side < 0 ? 140 : -140);
+    const g = el("g", { class: "tool" });
+    g.style.setProperty("--tx", x + "px"); g.style.setProperty("--ty", y + "px"); g.style.setProperty("--rot", rot + "deg");
+    g.append(el("use", { href: shape })); fx.append(g); setTimeout(() => g.remove(), 260);
+  }
+  if ((id === "grave" || id === "open" || id === "right" || id === "left") && v > 0.6) { drum.classList.remove("thump"); void drum.getBBox(); drum.classList.add("thump"); }
   flashKey(id);
 }
-let lastAroKey = "l";
 function svgPoint(e) { const pt = drum.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const p = pt.matrixTransform(drum.getScreenCTM().inverse()); return { x: p.x, y: p.y }; }
 drum.addEventListener("pointerdown", e => {
   e.preventDefault();
-  const p = svgPoint(e);
-  const id = zoneAt(p.x, p.y);
+  const p = svgPoint(e), id = zoneAt(p.x, p.y);
   if (!id) return;
   const vel = e.shiftKey ? 0.55 : (e.pointerType === "pen" && e.pressure > 0 ? clamp(e.pressure * 1.3, 0.3, 1) : 1);
-  play(id, null, vel, p);
+  play(id, null, vel, p, true);
 });
 drum.addEventListener("contextmenu", e => e.preventDefault());
 
 // ---------- Modo e legenda ----------
 document.querySelectorAll(".modes button").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
 function setMode(m) {
-  mode = m;
+  mode = m; rollStop(false);
   document.querySelectorAll(".modes button").forEach(b => { const on = b.dataset.mode === m; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
-  buildDrum();
-  tlRender();
+  buildDrum(); tlRender();
 }
 function renderLegend() {
   const lg = $("legend"); lg.innerHTML = "";
   for (const id in SOUNDS) {
-    const s = SOUNDS[id]; if (s.mode !== mode) continue;
+    const s = SOUNDS[id]; if (s.mode !== mode || s.hidden) continue;
     const sp = document.createElement("span"); sp.dataset.id = id;
     sp.innerHTML = s.keys.map(k => `<kbd>${k.toUpperCase()}</kbd>`).join(" ") + " " + s.name + ` <em style="color:var(--brass);font-style:normal">${s.syl}</em>`;
     lg.append(sp);
@@ -474,28 +709,66 @@ function renderLegend() {
 function flashKey(id) { const sp = $("legend").querySelector(`[data-id="${id}"]`); if (!sp) return; sp.classList.add("hot"); setTimeout(() => sp.classList.remove("hot"), 120); }
 const KEYMAP = {};
 for (const id in SOUNDS) for (const k of SOUNDS[id].keys) (KEYMAP[SOUNDS[id].mode] ||= {})[k] = id;
+
+// ---------- Rufada ----------
+const roll = { on: false, timer: null, next: 0, k: 0, t0: 0 };
+$("rollRate").addEventListener("input", () => $("rollRateOut").textContent = $("rollRate").value + "/s");
+function rollStart() {
+  ensureCtx();
+  if (roll.on) return;
+  roll.on = true; roll.k = 0; roll.t0 = ctx.currentTime + 0.01; roll.next = roll.t0;
+  $("rollPad").classList.add("on");
+  roll.timer = setInterval(rollTick, 20); rollTick();
+}
+function rollTick() {
+  if (!roll.on) return;
+  const rate = +$("rollRate").value, period = 1 / rate, cresc = $("rollCresc").checked, type = $("rollType").value;
+  while (roll.next < ctx.currentTime + 0.12) {
+    const k = roll.k++, tt = roll.next + (Math.random() - 0.5) * 0.004;
+    let v = cresc ? 0.3 + 0.7 * Math.min(1, (tt - roll.t0) / 1.4) : 0.8;
+    v *= (k % 4 === 0 ? 1.12 : 0.92) * (0.95 + Math.random() * 0.1);
+    if (mode === "two") play(k % 2 ? "left" : "right", tt, v);
+    else if (type === "alt") play(k % 2 ? "open" : "grave", tt, v * (k % 2 ? 0.8 : 1));
+    else { // rufo de pressão: cada golpe rebate duas vezes com força decrescente
+      play("grave", tt, v); play("press", tt + period * 0.34, v * 0.55); play("press", tt + period * 0.67, v * 0.32);
+    }
+    roll.next += period;
+  }
+}
+function rollStop(close = true) {
+  if (!roll.on) return;
+  roll.on = false; clearInterval(roll.timer); $("rollPad").classList.remove("on");
+  if (close && $("rollClose").checked) play(mode === "two" ? "right" : "rim", ctx.currentTime + 0.03, 1);
+}
+const rollPad = $("rollPad");
+rollPad.addEventListener("pointerdown", e => { e.preventDefault(); rollPad.setPointerCapture(e.pointerId); rollStart(); });
+rollPad.addEventListener("pointerup", () => rollStop()); rollPad.addEventListener("pointercancel", () => rollStop());
+
+// ---------- Teclado ----------
 document.addEventListener("keydown", e => {
   const tag = (e.target.tagName || "").toLowerCase();
   if (tag === "input" || tag === "select" || tag === "textarea" || e.metaKey || e.ctrlKey || e.altKey) return;
   const k = e.key.toLowerCase();
+  if (k === " ") { e.preventDefault(); if (!e.repeat) rollStart(); return; }
   if (e.repeat) { if (KEYMAP[mode][k]) e.preventDefault(); return; }
   if (k === "m") { setMode(mode === "trad" ? "two" : "trad"); return; }
   if (k === "r") { e.preventDefault(); loop.rec ? recStop() : recStart(); return; }
   if (k === "p") { e.preventDefault(); if (loop.events.length) loopToggle(); return; }
-  if (k === "escape") { levStop(); return; }
+  if (k === "b") { e.preventDefault(); Seq.mode === "bq" ? Seq.stop() : bqPlay(); return; }
+  if (k === "escape") { Seq.stop(); levStop(); rollStop(false); train.auto = false; return; }
   const id = KEYMAP[mode][k];
   if (!id) return;
   e.preventDefault();
   if (id === "aro") lastAroKey = k;
-  play(id, null, e.shiftKey ? 0.55 : 1);
+  play(id, null, e.shiftKey ? 0.55 : 1, null, true);
 });
+document.addEventListener("keyup", e => { if (e.key === " ") rollStop(); });
 
 // ---------- Looper ----------
-const loop = { rec: false, start: 0, events: [], len: 0, playing: false, timer: null, cycleStart: 0, cycle: 0, idx: 0 };
+const loop = { rec: false, start: 0, events: [], len: 0, playing: false, timer: null, cycleStart: 0, idx: 0 };
 const btnRec = $("btnRec"), btnStop = $("btnStop"), btnPlay = $("btnPlay"), btnClear = $("btnClear");
 function recStart() {
-  ensureCtx();
-  if (loop.playing) loopStop();
+  ensureCtx(); if (loop.playing) loopStop();
   loop.rec = true; loop.start = ctx.currentTime; loop.events = []; loop.len = 0;
   btnRec.classList.add("recording"); btnRec.querySelector("span").textContent = "Gravando…"; btnStop.disabled = false; btnPlay.disabled = true; btnClear.disabled = true;
   $("tlEmpty").textContent = "Gravando: toque a levada e clique em Parar/Salvar no tempo em que o ciclo recomeça.";
@@ -505,12 +778,10 @@ function recStop() {
   loop.rec = false; loop.len = ctx.currentTime - loop.start;
   btnRec.classList.remove("recording"); btnRec.querySelector("span").textContent = "Gravar"; btnStop.disabled = true;
   if (!loop.events.length || loop.len < 0.25) { loop.events = []; loop.len = 0; tlRender(); return; }
-  btnPlay.disabled = false; btnClear.disabled = false;
-  tlRender(); loopStart();
+  btnPlay.disabled = false; btnClear.disabled = false; tlRender(); loopStart();
 }
 function loopStart() {
-  ensureCtx();
-  loop.playing = true; loop.cycle = 0; loop.idx = 0; loop.cycleStart = ctx.currentTime + 0.05;
+  ensureCtx(); loop.playing = true; loop.idx = 0; loop.cycleStart = ctx.currentTime + 0.05;
   btnPlay.classList.add("on"); $("playLbl").textContent = "Pausar loop"; $("playIcon").setAttribute("d", "M3 2h3v10H3zM8 2h3v10H8z"); $("tlHead").style.display = "block";
   loop.timer = setInterval(loopTick, 25); loopTick();
 }
@@ -518,21 +789,17 @@ function loopTick() {
   if (!loop.playing) return;
   const horizon = ctx.currentTime + 0.15;
   for (;;) {
-    if (loop.idx >= loop.events.length) { loop.idx = 0; loop.cycle++; loop.cycleStart += loop.len; }
-    const ev = loop.events[loop.idx]; const t = loop.cycleStart + ev.t;
+    if (loop.idx >= loop.events.length) { loop.idx = 0; loop.cycleStart += loop.len; }
+    const ev = loop.events[loop.idx], t = loop.cycleStart + ev.t;
     if (t >= horizon) break;
     if (t >= ctx.currentTime - 0.01) play(ev.id, t, ev.vel);
     loop.idx++;
   }
 }
-function loopStop() {
-  loop.playing = false; clearInterval(loop.timer);
-  btnPlay.classList.remove("on"); $("playLbl").textContent = "Tocar loop"; $("playIcon").setAttribute("d", "M3 1.5v11l9.5-5.5z"); $("tlHead").style.display = "none";
-}
+function loopStop() { loop.playing = false; clearInterval(loop.timer); btnPlay.classList.remove("on"); $("playLbl").textContent = "Tocar loop"; $("playIcon").setAttribute("d", "M3 1.5v11l9.5-5.5z"); $("tlHead").style.display = "none"; }
 function loopToggle() { loop.playing ? loopStop() : loopStart(); }
 btnRec.addEventListener("click", () => loop.rec ? recStop() : recStart());
-btnStop.addEventListener("click", recStop);
-btnPlay.addEventListener("click", loopToggle);
+btnStop.addEventListener("click", recStop); btnPlay.addEventListener("click", loopToggle);
 btnClear.addEventListener("click", () => { loopStop(); loop.events = []; loop.len = 0; btnPlay.disabled = true; btnClear.disabled = true; tlRender(); });
 function tlRender() {
   const tl = $("timeline"); tl.querySelectorAll(".mark").forEach(m => m.remove());
@@ -542,66 +809,328 @@ function tlRender() {
   if (!n) $("tlEmpty").textContent = "Clique em Gravar, toque a levada e clique em Parar/Salvar exatamente no tempo em que o ciclo deve recomeçar.";
   for (const ev of loop.events) { const m = document.createElement("div"); m.className = "mark" + (ev.mode === "two" ? " m2" : ""); m.style.left = (ev.t / loop.len * 100) + "%"; m.style.opacity = 0.4 + 0.6 * ev.vel; tl.append(m); }
 }
-function tlLoop() {
-  if (loop.playing && loop.len > 0) { const pos = ((ctx.currentTime - loop.cycleStart) % loop.len + loop.len) % loop.len; $("tlHead").style.left = (pos / loop.len * 100) + "%"; }
-  requestAnimationFrame(tlLoop);
+
+// ---------- Sequenciador (breques e levadas) ----------
+const Seq = {
+  on: false, timer: null, gen: null, next: null, onStop: null, endTimer: null, mode: null,
+  start(gen, opts = {}) {
+    this.stop(); ensureCtx();
+    this.gen = gen; this.on = true; this.onStop = opts.onStop || null; this.mode = opts.mode || null; this.next = gen();
+    this.timer = setInterval(() => this.tick(), 25); this.tick();
+  },
+  tick() {
+    if (!this.on) return;
+    const now = ctx.currentTime; let lastT = now;
+    while (this.next && this.next.t < now + 0.18) { const ev = this.next; lastT = ev.t; if (ev.audio) ev.audio(ev.t); if (ev.ui) uiAt(ev.t, ev.ui); this.next = this.gen(); }
+    if (!this.next && !this.endTimer) this.endTimer = setTimeout(() => this.stop(), Math.max(0, (lastT - ctx.currentTime + 0.5) * 1000));
+  },
+  stop() {
+    if (!this.on) return;
+    this.on = false; clearInterval(this.timer); this.timer = null; clearTimeout(this.endTimer); this.endTimer = null;
+    uiQ.length = 0;
+    const f = this.onStop; this.onStop = null; this.mode = null; if (f) f();
+  },
+};
+function makeGen(intro, introDur, body, bodyDur, loopIt) {
+  const t0 = ctx.currentTime + 0.1;
+  let i = 0, phase = intro.length ? 0 : 1, off = 0, cycle = 0;
+  return () => {
+    for (;;) {
+      const list = phase === 0 ? intro : body;
+      if (i < list.length) { const ev = list[i++]; return { t: t0 + off + ev.t, audio: ev.audio, ui: ev.ui && (() => ev.ui(cycle)) }; }
+      if (phase === 0) { phase = 1; i = 0; off += introDur; continue; }
+      if (!loopIt) return null;
+      off += bodyDur; i = 0; cycle++;
+    }
+  };
 }
 
 // ---------- Levadas de referência ----------
-// Cada sílaba: [texto, som no modo tradicional, intensidade, posição em semicolcheias]. No modo de bacurinhas o som é traduzido.
 const LEVADAS = [
   { id: "base", name: "Levada base de escola de samba", count: "(1 toque forte no grave da baqueta, 2 rimshots mais fracos e 1 toque de mão)", len: 8,
     syl: [["Tu", "grave", 1, 0], ["ca", "rim", 0.55, 1], ["la", "open", 0.85, 2], ["ca", "rim", 0.55, 3], ["tu", "grave", 0.9, 4]] },
   { id: "sub1", name: "Subida tradicional básica", count: "Tum tá tum tá tum tá tá", len: 8,
     syl: [["Tum", "grave", 1, 0], ["tá", "rim", 0.7, 1], ["tum", "grave", 1, 2], ["tá", "rim", 0.7, 3], ["tum", "grave", 1, 4], ["tá", "rim", 0.7, 5], ["tá", "rim", 0.8, 6]] },
   { id: "sub2", name: "Subida: turucutuca lacatuca lacatu", count: "(1, 2, 3, 4)", len: 16,
-    syl: [["Tu", "grave", 1, 0], ["ru", "open", 0.5, 1], ["cu", "rim", 0.5, 2], ["tu", "grave", 0.95, 3], ["ca", "rim", 0.6, 4],
-          ["la", "slap", 0.85, 5], ["ca", "rim", 0.6, 6], ["tu", "grave", 0.95, 7], ["ca", "rim", 0.6, 8],
-          ["la", "slap", 0.85, 9], ["ca", "rim", 0.6, 10], ["tu", "grave", 1, 11]] },
+    syl: [["Tu", "grave", 1, 0], ["ru", "press", 0.5, 1], ["cu", "rim", 0.5, 2], ["tu", "grave", 0.95, 3], ["ca", "rim", 0.6, 4], ["la", "slap", 0.85, 5], ["ca", "rim", 0.6, 6], ["tu", "grave", 0.95, 7], ["ca", "rim", 0.6, 8], ["la", "slap", 0.85, 9], ["ca", "rim", 0.6, 10], ["tu", "grave", 1, 11]] },
+  { id: "chamada", name: "Chamada do mestre: rufo e tá tá", count: "rufada crescendo num compasso, fecha com dois rimshots", len: 24,
+    syl: [["rrrrr", "roll", 1, 0, 16], ["Tá", "rim", 1, 16], ["Tá", "rim", 1, 20]] },
 ];
-const TRANSLATE = { grave: "right", rim: "left", open: "left", slap: "aro" };
-const lev = { timer: null, cur: null, cycleStart: 0, idx: 0 };
+const TRANSLATE = { grave: "right", rim: "right", open: "left", slap: "aro", press: "left" };
+let levCur = null;
 function renderLevadas() {
   const box = $("levadas"); box.innerHTML = "";
   for (const L of LEVADAS) {
     const d = document.createElement("div"); d.className = "lev"; d.dataset.id = L.id;
     d.innerHTML = `<h3><span>${L.name}</span><button class="chip" type="button" data-lev="${L.id}">▶ Ouvir</button></h3>
-      <div class="syl">${L.syl.map((s, i) => `<span data-i="${i}" class="${s[2] >= 0.95 ? "strong" : ""}">${s[0]}</span>`).join("")}</div>
-      <div class="exp">${L.count}</div>`;
+      <div class="syl">${L.syl.map((s, i) => `<span data-i="${i}" class="${s[2] >= 0.95 && s[1] !== "roll" ? "strong" : ""}">${s[0]}</span>`).join("")}</div><div class="exp">${L.count}</div>`;
     box.append(d);
   }
-  box.querySelectorAll("[data-lev]").forEach(b => b.addEventListener("click", () => lev.cur && lev.cur.id === b.dataset.lev ? levStop() : levStart(LEVADAS.find(L => L.id === b.dataset.lev))));
+  box.querySelectorAll("[data-lev]").forEach(b => b.addEventListener("click", () => levCur && levCur.id === b.dataset.lev ? levStop() : levStart(LEVADAS.find(L => L.id === b.dataset.lev))));
 }
 $("bpm").addEventListener("input", () => $("bpmOut").textContent = $("bpm").value + " bpm");
 function levStart(L) {
-  ensureCtx(); levStop();
-  lev.cur = L; lev.idx = 0; lev.cycleStart = ctx.currentTime + 0.08;
+  ensureCtx(); levStop(); Seq.stop();
+  const sx = 60 / +$("bpm").value / 4, body = [];
+  L.syl.forEach((s, i) => {
+    const t0 = s[3] * sx;
+    if (s[1] === "roll") { // rufo: 2 toques por semicolcheia, crescendo, alternando baqueta/rebote (ou as duas varetas)
+      const n = s[4] * 2;
+      for (let k = 0; k < n; k++) { const t = t0 + k * sx / 2, v = 0.3 + 0.7 * k / n; body.push({ t, audio: tt => play(mode === "two" ? (k % 2 ? "left" : "right") : (k % 2 ? "press" : "grave"), tt, v * (k % 4 === 0 ? 1.1 : 0.9)), ui: () => highlightSyl(L.id, i) }); }
+    } else body.push({ t: t0, audio: tt => play(mode === "two" ? TRANSLATE[s[1]] : s[1], tt, s[2]), ui: () => highlightSyl(L.id, i) });
+  });
+  body.push({ t: L.len * sx - 0.001, ui: () => {} });
+  levCur = L;
   $("levadas").querySelectorAll("[data-lev]").forEach(b => { const on = b.dataset.lev === L.id; b.classList.toggle("on", on); b.textContent = on ? "■ Parar" : "▶ Ouvir"; });
-  lev.timer = setInterval(levTick, 25); levTick();
-}
-function levTick() {
-  const L = lev.cur; if (!L) return;
-  const sx = 60 / +$("bpm").value / 4;            // semicolcheia (4 por tempo)
-  const horizon = ctx.currentTime + 0.15;
-  for (;;) {
-    if (lev.idx >= L.syl.length) {
-      if (!$("levRepeat").checked) { const end = lev.cycleStart + L.len * sx; if (ctx.currentTime > end) levStop(); return; }
-      lev.idx = 0; lev.cycleStart += L.len * sx;
-    }
-    const s = L.syl[lev.idx], t = lev.cycleStart + s[3] * sx;
-    if (t >= horizon) break;
-    const id = mode === "two" ? TRANSLATE[s[1]] : s[1];
-    if (t >= ctx.currentTime - 0.01) { play(id, t, s[2]); const i = lev.idx; setTimeout(() => highlightSyl(L.id, i), Math.max(0, (t - ctx.currentTime) * 1000)); }
-    lev.idx++;
-  }
+  Seq.start(makeGen([], 0, body, L.len * sx, $("levRepeat").checked), { mode: "lev", onStop: () => levStop(true) });
 }
 function highlightSyl(levId, i) { const box = $("levadas").querySelector(`.lev[data-id="${levId}"] .syl`); if (!box) return; box.querySelectorAll("span").forEach(s => s.classList.toggle("cur", +s.dataset.i === i)); }
-function levStop() {
-  clearInterval(lev.timer); lev.timer = null;
-  if (lev.cur) { const id = lev.cur.id; lev.cur = null; setTimeout(() => highlightSyl(id, -1), 150); }
+function levStop(fromSeq) {
+  if (!fromSeq && Seq.mode === "lev") { Seq.stop(); return; }
+  if (levCur) { const id = levCur.id; levCur = null; setTimeout(() => highlightSyl(id, -1), 150); }
   $("levadas").querySelectorAll("[data-lev]").forEach(b => { b.classList.remove("on"); b.textContent = "▶ Ouvir"; });
 }
-document.addEventListener("visibilitychange", () => { if (document.hidden) { levStop(); if (loop.playing) loopStop(); } });
+
+// ---------- Breques: notação, partitura, reprodução ----------
+const SYL = ["Tum", "tum", "Tu", "tu", "Ta", "ta", "Tá", "tá", "Cu", "cu", "ca", "la", "ru", "E", "ti"];
+const SYL_ROW = { tum: "L", tu: "L", ta: "H", "tá": "H", cu: "M", ca: "H", la: "H", ru: "M", e: null, ti: null };
+const SYL_VEL = { Tum: 1, tum: 0.7, Tu: 1, tu: 0.7, Ta: 1, ta: 0.6, "Tá": 1, "tá": 0.6, Cu: 0.6, cu: 0.45, ca: 0.5, la: 0.6, ru: 0.4 };
+// Texto -> { bars: [ { beats: [ [ {kind, text, row, vel} ] ], sec } ], secs: [...] }
+function parseBreque(text) {
+  const bars = [], secs = []; let sec = 0, secStart = 0;
+  const lines = text.replace(/\r/g, "").split("\n");
+  for (let li = 0; li < lines.length; li++) {
+    const line = lines[li].trim();
+    if (!line) { if (bars.length > secStart) { secs.push({ from: secStart, to: bars.length }); secStart = bars.length; sec++; } continue; }
+    const toks = line.split(/\s+/);
+    if (toks.length > 4) throw new Error(`Linha ${li + 1}: ${toks.length} tempos (o máximo é 4). Separe os tempos com espaço e junte as subdivisões.`);
+    const beats = [];
+    for (const tok of toks) {
+      const els = []; let i = 0, prev = null;
+      const src = tok.replace(/-/g, "");
+      while (i < src.length) {
+        const ch = src[i];
+        if (ch === ".") { els.push({ kind: "tdot", text: "·" }); i++; prev = null; continue; }
+        if (/[1-9]/.test(ch)) { els.push({ kind: "cnt", text: ch }); i++; prev = null; continue; }
+        let m = null;
+        for (const s of SYL) if (src.substr(i, s.length).toLowerCase() === s.toLowerCase()) { m = src.substr(i, s.length); break; }
+        if (!m) throw new Error(`Linha ${li + 1}: não entendi "${src.slice(i, i + 6)}". Use Tu, tu, cu, Ta, ta, ca, la, ru, E, ponto ou número.`);
+        i += m.length;
+        let vel = SYL_VEL[m] ?? SYL_VEL[m[0].toUpperCase() + m.slice(1).toLowerCase()] ?? 0.7;
+        const vm = src.slice(i).match(/^\[(\d{1,3})\]/); if (vm) { vel = clamp(+vm[1] / 100, 0.1, 1); i += vm[0].length; }
+        let row = SYL_ROW[m.toLowerCase()];
+        if (row === null) { els.push({ kind: "rest", text: m.toUpperCase() === "E" ? "E" : m }); prev = null; continue; }
+        if (m.toLowerCase() === "ca" && prev === "la") row = "M";          // o último "ca" do Tucalaca é um rebote
+        els.push({ kind: "note", text: m, row, vel }); prev = m.toLowerCase();
+      }
+      beats.push(els);
+    }
+    while (beats.length < 4) beats.push([{ kind: "tdot", text: "·" }]);
+    bars.push({ beats, sec });
+  }
+  if (bars.length > secStart) secs.push({ from: secStart, to: bars.length });
+  if (!bars.length) throw new Error("Escreva pelo menos um compasso.");
+  return { bars, secs };
+}
+// Som para uma linha (L/M/H) no modo atual
+function soundFor(row, vel) {
+  if (mode === "two") return row === "M" ? ["left", vel * 1.1] : row === "H" ? ["right", vel] : ["right", vel * 0.9];
+  return row === "L" ? ["grave", vel] : row === "M" ? ["press", vel * 1.3] : ["rim", vel];
+}
+const clsFor = row => mode === "two" ? (row === "M" ? "left" : "right") : (row === "H" ? "rim" : "head");
+// Lista de notas com tempo em tempos (beats) a partir do compasso 0
+function breqNotes(parsed) {
+  const notes = [];
+  parsed.bars.forEach((bar, b) => bar.beats.forEach((els, bi) => els.forEach((e, k) => { const beat = b * 4 + bi + k / els.length; if (e.kind === "note") notes.push({ beat, bar: b, el: e }); else if (e.kind === "cnt" || e.kind === "rest") notes.push({ beat, bar: b, el: e, silent: true }); })));
+  return notes;
+}
+const BUILTIN = [
+  { id: "wukong", name: "WuKong", bpm: 130, builtin: true, text: "Tu.cu. Tu..cu Tu.cu. Tu..cu\nE.cu. Tucalaca Tucalaca Tucalaca\nTu.cu. Tu..cu Tu.cu. Tu..cu\nE.cu. Tucalaca Tucalaca Tucalaca\nCu... 2... 3... 4...\n\n.... .... .... ....\n.... .... .... ....\n.... .... .... ....\nTu... 2... 3... 4...\n.... .... .... ....\n.... .... .... ....\n.... .... .... ....\n\nTu.cu. Ta.cu. Tucalaca Tucalaca\nE.ta. E.ta. 1... 2...\nTu.cu. Ta.cu. Tucalaca Tucalaca\nE.ta. E.ta. 1... 2...\nTu.cu. Ta.cu. Tucalaca Tucalaca\nE.tucu Ta.ta. 1... 2...\nTu.cu. Ta.cu. Tucalaca Tucalaca\nTucalaca Ta.ta. Ta.E. ....\n\nTa... Ta... Tucalaca Tucalaca\nTa[35]cu[20]tu[40]cu[30] Ta[55]cu[35]tu[65]cu[45] Ta[80]cu[50]tu[90]cu[55] Tacutucu\nTacutucu Tacutucu Tacutucu Tacutucu\nTacutucu Tacutucu Tacutucu Tacutucu\n\nTa.tucu Ta.tucu Ta.tucu Ta.tucu\nTacutucu Tacutucu Tacutucu TaE..\n..tacu Tacutucu Tacutucu Tacutucu\nTucalaca Tucalaca Tucalaca Ta...\nTa.tucu Ta.tucu Ta.tucu Tucalaca\nTa... .... .... ...." },
+  { id: "base", name: "Levada base (4 compassos)", bpm: 120, builtin: true, text: "Tucalaca tu.. Tucalaca tu..\nTucalaca tu.. Tucalaca tu..\nTucalaca tu.. Tucalaca tu..\nTucalaca tu.. Tucalaca Ta.ta." },
+];
+let userBreques = LS.get("breques", []);
+let breques = [], bq = null, bqParsed = null, bqStart = 0;
+function loadBreques() { breques = [...BUILTIN, ...userBreques]; }
+function renderBqSel() {
+  const sel = $("bqSel"); sel.innerHTML = breques.map(b => `<option value="${b.id}">${b.name}${b.builtin ? "" : " (meu)"}</option>`).join("");
+  if (bq) sel.value = bq.id;
+}
+function selectBreque(id) {
+  bq = breques.find(b => b.id === id) || breques[0];
+  try { bqParsed = parseBreque(bq.text); } catch (e) { bqParsed = { bars: [], secs: [] }; }
+  bqStart = 0;
+  $("bqSel").value = bq.id; $("bqTitle").textContent = bq.name;
+  const n = breqNotes(bqParsed).filter(x => !x.silent).length;
+  $("bqMeta").textContent = `${bqParsed.bars.length} compassos · ${n} toques · ${bq.bpm} bpm`;
+  $("bqBpm").value = bq.bpm; $("bqBpmOut").textContent = bq.bpm + " bpm";
+  $("bqDel").disabled = !!bq.builtin;
+  $("bqStore").textContent = bq.builtin ? "Breque de fábrica: duplique para editar." : "Guardado neste navegador.";
+  renderScore(); renderChunks(); updatePos();
+}
+function renderScore() {
+  const sc = $("score"); sc.innerHTML = "";
+  const secs = bqParsed.secs.length ? bqParsed.secs : [{ from: 0, to: bqParsed.bars.length }];
+  secs.forEach((s, si) => {
+    const sd = document.createElement("div"); sd.className = "sec";
+    sd.innerHTML = `<div class="sec-lbl">Seção ${si + 1} · compassos ${s.from + 1}–${s.to}</div>`;
+    const bd = document.createElement("div"); bd.className = "bars";
+    for (let b = s.from; b < s.to; b++) {
+      const bar = bqParsed.bars[b], d = document.createElement("div"); d.className = "sbar"; d.dataset.b = b;
+      d.innerHTML = `<span class="bn">${b + 1}</span>` + bar.beats.map((els, bi) => `<div class="beat">${els.map((e, k) => `<span class="tk ${e.kind === "note" ? e.row : e.kind}" data-b="${b}" data-bi="${bi}" data-k="${k}">${e.text}</span>`).join("")}</div>`).join("");
+      d.addEventListener("click", () => { bqStart = b; updatePos(); if (Seq.mode === "bq") bqPlay(); });
+      bd.append(d);
+    }
+    sd.append(bd); sc.append(sd);
+  });
+}
+function updatePos() { $("bqPos").textContent = "Começa no compasso " + (bqStart + 1); document.querySelectorAll(".sbar").forEach(d => d.classList.toggle("cur", +d.dataset.b === bqStart && Seq.mode !== "bq")); }
+const tkEl = (b, bi, k) => document.querySelector(`.tk[data-b="${b}"][data-bi="${bi}"][data-k="${k}"]`);
+function clearScoreMarks() { document.querySelectorAll(".tk").forEach(t => { t.classList.remove("cur", "good", "ok", "miss"); const s = t.querySelector("small"); if (s) s.remove(); }); document.querySelectorAll(".sbar").forEach(d => d.classList.remove("cur", "inchunk", "dim")); }
+$("bqSel").addEventListener("change", () => selectBreque($("bqSel").value));
+$("bqBpm").addEventListener("input", () => $("bqBpmOut").textContent = $("bqBpm").value + " bpm");
+// Eventos de um trecho [fromBar, toBar) com as opções dadas; devolve {intro, introDur, body, bodyDur, expected}
+function breqEvents(fromBar, toBar, bpm, opts) {
+  const beat = 60 / bpm, intro = [], body = [], expected = [];
+  if (opts.countIn) { for (let k = 0; k < 4; k++) intro.push({ t: k * beat, audio: t => click(t, k === 0), ui: () => opts.count(String(k + 1)) }); intro.push({ t: 4 * beat - 0.02, ui: () => opts.count("") }); }
+  const notes = breqNotes(bqParsed).filter(n => n.bar >= fromBar && n.bar < toBar);
+  const t0 = fromBar * 4 * beat;
+  for (let b = fromBar; b < toBar; b++) for (let bi = 0; bi < 4; bi++) {
+    const t = (b * 4 + bi) * beat - t0;
+    if (opts.metro) body.push({ t, audio: tt => click(tt, bi === 0) });
+    body.push({ t, ui: () => opts.bar && opts.bar(b, bi) });
+  }
+  for (const n of notes) {
+    const t = n.beat * beat - t0;
+    const e = n.el, els = bqParsed.bars[n.bar].beats, bi = Math.floor(n.beat - n.bar * 4), k = els[bi].indexOf(e);
+    if (n.silent) { body.push({ t, ui: () => { opts.token(n.bar, bi, k); opts.count(e.text); } }); continue; }
+    body.push({ t, ui: () => { opts.token(n.bar, bi, k); opts.count(""); }, audio: opts.guitar ? tt => { const [id, v] = soundFor(e.row, e.vel); play(id, tt, v); } : null });
+    if (opts.expect) expected.push({ t, bar: n.bar, bi, k, cls: clsFor(e.row), hit: null });
+  }
+  const bodyDur = (toBar - fromBar) * 4 * beat;
+  body.push({ t: bodyDur - 0.005, ui: () => opts.end && opts.end() });
+  return { intro, introDur: opts.countIn ? 4 * beat : 0, body, bodyDur, expected };
+}
+function bqSetUI(running) { $("bqLbl").textContent = running ? "Parar" : "Tocar breque"; $("bqIcon").setAttribute("d", running ? "M2 2h10v10H2z" : "M3 1.5v11l9.5-5.5z"); if (!running) { $("bqCount").textContent = ""; clearScoreMarks(); updatePos(); } }
+function bqPlay() {
+  if (!bqParsed.bars.length) return;
+  ensureCtx(); clearScoreMarks(); train.on = false;
+  const ev = breqEvents(bqStart, bqParsed.bars.length, +$("bqBpm").value, {
+    countIn: $("bqCountIn").checked, metro: $("bqMetro").checked, guitar: true,
+    count: s => $("bqCount").textContent = s,
+    bar: (b, bi) => { if (bi === 0) document.querySelectorAll(".sbar").forEach(d => d.classList.toggle("cur", +d.dataset.b === b)); },
+    token: (b, bi, k) => { document.querySelectorAll(".tk.cur").forEach(t => t.classList.remove("cur")); const t = tkEl(b, bi, k); if (t) { t.classList.add("cur"); } },
+  });
+  bqSetUI(true);
+  Seq.start(makeGen(ev.intro, ev.introDur, ev.body, ev.bodyDur, $("bqRepeat").checked), { mode: "bq", onStop: () => bqSetUI(false) });
+}
+$("bqPlay").addEventListener("click", () => Seq.mode === "bq" ? Seq.stop() : bqPlay());
+
+// ---------- Editor ----------
+const editor = $("editor");
+let edMode = null; // "new" | "edit" | "dup"
+function openEditor(m) {
+  edMode = m; editor.hidden = false; $("edErr").hidden = true;
+  const base = m === "new" ? { name: "Meu breque", bpm: 130, text: "Tu.cu. Tu..cu Tu.cu. Tu..cu\nE.cu. Tucalaca Tucalaca Tucalaca" } : bq;
+  $("edName").value = m === "dup" ? base.name + " (cópia)" : base.name; $("edBpm").value = base.bpm; $("edText").value = base.text;
+  $("edText").focus();
+}
+$("bqNew").addEventListener("click", () => openEditor("new"));
+$("bqEdit").addEventListener("click", () => openEditor(bq.builtin ? "dup" : "edit"));
+$("bqDup").addEventListener("click", () => openEditor("dup"));
+$("bqDel").addEventListener("click", () => { if (bq.builtin) return; if (!confirm(`Apagar "${bq.name}"?`)) return; userBreques = userBreques.filter(b => b.id !== bq.id); LS.set("breques", userBreques); loadBreques(); bq = null; renderBqSel(); selectBreque(breques[0].id); });
+$("edCancel").addEventListener("click", () => { editor.hidden = true; });
+$("edText").addEventListener("input", () => { try { parseBreque($("edText").value); $("edErr").hidden = true; } catch (e) { $("edErr").textContent = e.message; $("edErr").hidden = false; } });
+$("edSave").addEventListener("click", () => {
+  let parsed; try { parsed = parseBreque($("edText").value); } catch (e) { $("edErr").textContent = e.message; $("edErr").hidden = false; return; }
+  const rec = { id: edMode === "edit" ? bq.id : "u" + Date.now().toString(36), name: $("edName").value.trim() || "Meu breque", bpm: clamp(+$("edBpm").value || 130, 40, 240), text: $("edText").value.trim() };
+  if (edMode === "edit") userBreques = userBreques.map(b => b.id === bq.id ? rec : b); else userBreques.push(rec);
+  if (!LS.set("breques", userBreques)) alert("Não consegui guardar neste navegador (armazenamento bloqueado).");
+  loadBreques(); renderBqSel(); editor.hidden = true; selectBreque(rec.id);
+});
+
+// ---------- Aprender: trechos, avaliação, treino automático ----------
+const train = { on: false, expected: [], extras: 0, auto: false, target: 0, chunk: 0 };
+function chunks() {
+  const n = bqParsed.bars.length, size = $("lnSize").value, out = [];
+  if (size === "all") out.push({ from: 0, to: n, label: "Inteiro" });
+  else if (size === "sec") (bqParsed.secs.length ? bqParsed.secs : [{ from: 0, to: n }]).forEach((s, i) => out.push({ from: s.from, to: s.to, label: `Seção ${i + 1}` }));
+  else { const k = +size; for (let b = 0; b < n; b += k) out.push({ from: b, to: Math.min(n, b + k), label: k === 1 ? `C. ${b + 1}` : `C. ${b + 1}–${Math.min(n, b + k)}` }); }
+  return out;
+}
+function renderChunks() {
+  const box = $("lnChunks"); box.innerHTML = "";
+  const cs = chunks(); if (train.chunk >= cs.length) train.chunk = 0;
+  cs.forEach((c, i) => { const b = document.createElement("button"); b.type = "button"; b.className = "chip" + (i === train.chunk ? " on" : ""); b.textContent = c.label; b.addEventListener("click", () => { train.chunk = i; renderChunks(); markChunk(); }); box.append(b); });
+  markChunk();
+}
+function markChunk() { const c = chunks()[train.chunk]; document.querySelectorAll(".sbar").forEach(d => { const b = +d.dataset.b; d.classList.toggle("inchunk", c && b >= c.from && b < c.to); d.classList.toggle("dim", c && !(b >= c.from && b < c.to)); }); }
+$("lnSize").addEventListener("change", () => { train.chunk = 0; renderChunks(); });
+$("lnPrev").addEventListener("click", () => { train.chunk = Math.max(0, train.chunk - 1); renderChunks(); });
+$("lnNext").addEventListener("click", () => { train.chunk = Math.min(chunks().length - 1, train.chunk + 1); renderChunks(); });
+$("lnBpm").addEventListener("input", () => $("lnBpmOut").textContent = $("lnBpm").value + " bpm");
+function lnSetUI(running) { ["lnListen", "lnPlay", "lnAuto", "bqPlay"].forEach(id => $(id).disabled = running); $("lnStop").hidden = !running; if (!running) { $("bqCount").textContent = ""; document.querySelectorAll(".tk.cur").forEach(t => t.classList.remove("cur")); } }
+function markTk(e, cls, label) { const t = tkEl(e.bar, e.bi, e.k); if (!t) return; t.classList.remove("good", "ok", "miss"); t.classList.add(cls); let s = t.querySelector("small"); if (!s) { s = document.createElement("small"); t.append(s); } s.textContent = label || ""; }
+function runChunk(modeLn) {
+  const c = chunks()[train.chunk]; if (!c) return;
+  ensureCtx(); clearScoreMarks(); markChunk();
+  const play_ = modeLn === "play", bpm = +$("lnBpm").value;
+  const ev = breqEvents(c.from, c.to, bpm, {
+    countIn: true, metro: play_ ? $("lnMetro").checked : true, guitar: !play_, expect: play_,
+    count: s => $("bqCount").textContent = s,
+    bar: (b, bi) => { if (bi === 0) document.querySelectorAll(".sbar").forEach(d => d.classList.toggle("cur", +d.dataset.b === b)); if (play_) { const now = ctx.currentTime; for (const e of train.expected) if (!e.hit && now - e.t > 0.2) { e.hit = "miss"; markTk(e, "miss", "faltou"); } } },
+    token: (b, bi, k) => { document.querySelectorAll(".tk.cur").forEach(t => t.classList.remove("cur")); const t = tkEl(b, bi, k); if (t) t.classList.add("cur"); },
+    end: () => { if (play_) finishTrain(); },
+  });
+  const t0 = ctx.currentTime + 0.1;
+  ev.expected.forEach(e => e.t = t0 + ev.introDur + e.t);
+  train.on = play_; train.expected = ev.expected; train.extras = 0;
+  lnSetUI(true);
+  $("lnMsg").className = "result";
+  $("lnMsg").innerHTML = play_ ? `Toque junto: <b>${c.label}</b> a ${bpm} bpm. Pele = J (ou S, D), rimshot = K; ou toque no tambor e nos botões.` : `Ouça <b>${c.label}</b> e repare nos sons: amarelo é pele, vermelho é aro.`;
+  Seq.start(makeGen(ev.intro, ev.introDur, ev.body, ev.bodyDur, false), { mode: "ln", onStop: () => { train.on = false; lnSetUI(false); } });
+}
+function tap(cls, now) {
+  if (!train.on) return;
+  let best = null, bd = 1;
+  for (const e of train.expected) { if (e.hit) continue; const d = Math.abs(e.t - now); if (d < bd) { bd = d; best = e; } }
+  if (!best || bd > 0.22) { train.extras++; return; }
+  const ok = best.cls === cls, early = now < best.t, ms = Math.round(bd * 1000);
+  if (bd <= 0.09 && ok) { best.hit = "good"; markTk(best, "good", ms < 30 ? "" : (early ? "−" : "+") + ms); }
+  else if (bd <= 0.17 || (bd <= 0.09 && !ok)) { best.hit = "ok"; best.wrong = !ok; markTk(best, "ok", !ok ? "som" : (early ? "−" : "+") + ms); }
+  else { best.hit = "miss"; markTk(best, "miss", "fora"); }
+}
+function finishTrain() {
+  train.on = false;
+  for (const e of train.expected) if (!e.hit) { e.hit = "miss"; markTk(e, "miss", "faltou"); }
+  const n = train.expected.length, good = train.expected.filter(e => e.hit === "good").length, ok = train.expected.filter(e => e.hit === "ok" && !e.wrong).length, wrong = train.expected.filter(e => e.wrong).length;
+  const pct = n ? Math.round((good + ok + 0.5 * wrong) / n * 100) : 100, pass = pct >= 85;
+  let msg = `<b>${pass ? "Passou!" : "Ainda não."}</b> ${good + ok + wrong} de ${n} toques no lugar (${pct}%)`;
+  if (ok) msg += ` · ${ok} um pouco fora do tempo`;
+  if (wrong) msg += ` · ${wrong} no som errado (pele × aro)`;
+  if (train.extras) msg += ` · ${train.extras} toque${train.extras > 1 ? "s" : ""} a mais`;
+  msg += ` · ${$("lnBpm").value} bpm.`;
+  $("lnMsg").className = "result " + (pass ? "pass" : "fail");
+  if (train.auto) {
+    const cs = chunks();
+    if (pass && $("lnUp").checked && +$("lnBpm").value < train.target) { $("lnBpm").value = Math.min(train.target, +$("lnBpm").value + 6); $("lnBpmOut").textContent = $("lnBpm").value + " bpm"; msg += ` Subindo para ${$("lnBpm").value} bpm…`; }
+    else if (pass && train.chunk < cs.length - 1) { train.chunk++; renderChunks(); $("lnBpm").value = Math.max(50, Math.round(train.target * 0.7)); $("lnBpmOut").textContent = $("lnBpm").value + " bpm"; msg += ` Próximo trecho: ${cs[train.chunk].label}…`; }
+    else if (pass) { msg += " Breque inteiro no andamento. Parabéns!"; train.auto = false; }
+    else msg += " De novo…";
+    $("lnMsg").innerHTML = msg;
+    if (train.auto) setTimeout(() => { if (train.auto) runChunk("play"); }, 1500);
+  } else $("lnMsg").innerHTML = msg;
+}
+$("lnListen").addEventListener("click", () => { train.auto = false; runChunk("listen"); });
+$("lnPlay").addEventListener("click", () => { train.auto = false; runChunk("play"); });
+$("lnAuto").addEventListener("click", () => { train.auto = true; train.target = +$("bqBpm").value; $("lnBpm").value = Math.max(50, Math.round(train.target * 0.7)); $("lnBpmOut").textContent = $("lnBpm").value + " bpm"; runChunk("play"); });
+$("lnStop").addEventListener("click", () => { train.auto = false; Seq.stop(); });
+function renderPadLabels() {
+  const two = mode === "two";
+  $("padHeadLbl").textContent = two ? "Tu · Ta" : "Tu · cu"; $("padHeadKey").textContent = two ? "vareta direita · J K" : "pele · J (S, D)";
+  $("padRimLbl").textContent = two ? "cu" : "Ta · ca · la"; $("padRimKey").textContent = two ? "vareta esquerda · D F" : "rimshot · K";
+}
+$("padHead").addEventListener("pointerdown", e => { e.preventDefault(); play(mode === "two" ? "right" : "grave", null, 1, null, true); });
+$("padRim").addEventListener("pointerdown", e => { e.preventDefault(); play(mode === "two" ? "left" : "rim", null, 1, null, true); });
 
 // ---------- Amostras reais ----------
 const smpPanel = $("smpPanel"), smpBtn = $("smpBtn");
@@ -609,9 +1138,9 @@ smpBtn.addEventListener("click", () => { smpPanel.hidden = !smpPanel.hidden; smp
 function renderSamples() {
   const box = $("smpList"); box.innerHTML = "";
   for (const id in SOUNDS) {
-    const s = SOUNDS[id];
+    const s = SOUNDS[id]; if (s.hidden) continue;
     const d = document.createElement("div"); d.className = "smp";
-    d.innerHTML = `<b>${s.name} <small>· ${MODES[s.mode].label}</small></b><small class="${samples[id] ? "ok" : ""}" data-st="${id}">${samples[id] ? "amostra carregada (" + samples[id].duration.toFixed(2) + " s)" : "som sintetizado"}</small>
+    d.innerHTML = `<b>${s.name} <small>· ${MODES[s.mode].label}</small></b><small class="${samples[id] ? "ok" : ""}" data-st="${id}">${samples[id] ? "amostra carregada (" + samples[id].duration.toFixed(2) + " s)" : "pele simulada"}</small>
       <div class="row"><label class="chip" for="smp-${id}">Carregar</label><input type="file" id="smp-${id}" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac" hidden><button class="chip" type="button" data-test="${id}">Ouvir</button><button class="chip" type="button" data-rm="${id}" ${samples[id] ? "" : "disabled"}>Remover</button></div>`;
     box.append(d);
     d.querySelector("input").addEventListener("change", e => loadSample(id, e.target.files[0]));
@@ -620,15 +1149,11 @@ function renderSamples() {
   }
 }
 async function loadSample(id, file) {
-  if (!file) return;
-  ensureCtx();
-  try {
-    const buf = await ctx.decodeAudioData(await file.arrayBuffer());
-    samples[id] = trimSilence(buf);
-    renderSamples(); play(id);
-  } catch (e) { alert("Não consegui ler esse arquivo: " + (e.message || e)); }
+  if (!file) return; ensureCtx();
+  try { const buf = await ctx.decodeAudioData(await file.arrayBuffer()); samples[id] = trimSilence(buf); renderSamples(); play(id); }
+  catch (e) { alert("Não consegui ler esse arquivo: " + (e.message || e)); }
 }
-function trimSilence(buf) { // corta o silêncio inicial para o ataque cair exatamente no toque
+function trimSilence(buf) {
   const ch = buf.getChannelData(0); let i = 0;
   while (i < ch.length && Math.abs(ch[i]) < 0.02) i++;
   i = Math.max(0, i - Math.round(buf.sampleRate * 0.002));
@@ -637,11 +1162,14 @@ function trimSilence(buf) { // corta o silêncio inicial para o ataque cair exat
   for (let c = 0; c < buf.numberOfChannels; c++) out.getChannelData(c).set(buf.getChannelData(c).subarray(i));
   return out;
 }
+document.addEventListener("visibilitychange", () => { if (document.hidden) { Seq.stop(); levStop(); rollStop(false); train.auto = false; if (loop.playing) loopStop(); } });
 
 // ---------- Início ----------
 renderLevadas();
 buildDrum();
+loadBreques(); renderBqSel(); selectBreque("wukong");
 updateStatus();
+try { createCtx(); } catch (e) {}   // cria o contexto já (fica suspenso) para começar a modelar as peles
 })();
 </script>
 </body>
