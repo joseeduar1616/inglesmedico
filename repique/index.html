@@ -119,6 +119,14 @@ kbd { font-family: var(--f-mono); font-size: 11px; padding: 1px 6px; border: 1px
 .timeline .head { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--hit); left: 0; display: none; }
 .timeline .empty { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; color: var(--muted); padding: 0 12px; text-align: center; }
 .note { font-size: 12.5px; color: var(--muted); max-width: 80ch; }
+.status .chip { margin-left: 6px; font-size: 11.5px; padding: 3px 9px; color: var(--muted); }
+.status .chip.on { color: var(--hit); border-color: var(--hit); }
+.smp-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+.smp { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--stage); font-size: 13px; }
+.smp b { font-weight: 600; }
+.smp small { color: var(--muted); font-size: 11.5px; }
+.smp .ok { color: var(--ok); }
+.smp .row { gap: 6px; }
 .hint { font-size: 12.5px; color: var(--muted); max-width: 95ch; }
 </style>
 </head>
@@ -130,8 +138,13 @@ kbd { font-family: var(--f-mono); font-size: 11px; padding: 1px 6px; border: 1px
       <button type="button" data-mode="trad" class="on" role="tab" aria-selected="true"><i></i>Tradicional: baqueta + mão</button>
       <button type="button" data-mode="two" role="tab" aria-selected="false"><i></i>Duas bacurinhas (repique laranja)</button>
     </div>
-    <div class="status"><i class="dot" id="ctxDot"></i><span id="ctxText">Áudio em espera · toque no tambor para ativar</span></div>
+    <div class="status"><i class="dot" id="ctxDot"></i><span id="ctxText">Áudio em espera · toque no tambor para ativar</span><button class="chip" id="smpBtn" type="button" title="Carregar gravações acústicas para substituir os toques">Usar amostras reais (MP3/WAV)</button></div>
   </header>
+  <div class="card" id="smpPanel" hidden>
+    <h2>Amostras reais<small>cada arquivo substitui o som sintetizado daquele toque</small></h2>
+    <div class="smp-list" id="smpList"></div>
+    <p class="note">Aceita MP3, WAV, M4A, OGG. Grave cada toque isolado, com silêncio curto antes e depois; a página corta o silêncio inicial sozinha. As amostras valem enquanto a página estiver aberta.</p>
+  </div>
 
   <div class="main">
     <div class="drum-box">
@@ -186,7 +199,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; padding: 1px 6px; border: 1px
 
   <div class="row" style="justify-content:space-between">
     <label style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)" for="vol">Volume geral <input type="range" id="vol" min="0" max="1" step="0.01" value="0.8" style="accent-color:var(--brass)"></label>
-    <span class="hint">O repique é agudo, metálico e sem esteira. Todos os sons são sintetizados na hora (senoides, triangulares e ruído filtrado com envelopes curtos) e passam por um compressor na saída, então nunca estouram mesmo em rolos rápidos. Os toques são agendados no relógio de áudio para latência mínima.</span>
+    <span class="hint">O repique é agudo, metálico e sem esteira. Os sons são modelagem física: modos inarmônicos de membrana (1 · 1,59 · 2,14 × a base) com afinação fixa, transientes de ruído branco filtrado para o impacto e soft clipping no rimshot, tudo por um compressor na saída, então nunca estouram mesmo em rolos rápidos. Os toques são agendados no relógio de áudio para latência mínima.</span>
   </div>
 </div>
 <script>
@@ -231,7 +244,7 @@ function ensureCtx() {
     comp = ctx.createDynamicsCompressor();
     comp.threshold.value = -14; comp.knee.value = 18; comp.ratio.value = 6; comp.attack.value = 0.002; comp.release.value = 0.12;
     master.connect(comp); comp.connect(ctx.destination);
-    noiseBuf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.2), ctx.sampleRate);
+    noiseBuf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 1.0), ctx.sampleRate);
     const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
     ctx.onstatechange = updateStatus;
     requestAnimationFrame(tlLoop);
@@ -242,68 +255,103 @@ function ensureCtx() {
 }
 vol.addEventListener("input", () => { if (master) master.gain.value = +vol.value; });
 
-// Blocos de síntese. Tudo com envelopes exponenciais curtos; "peak" nunca passa de 1 por voz e o compressor cuida da soma.
-function tone(t, o) {
-  const osc = ctx.createOscillator(); osc.type = o.type || "sine";
-  osc.frequency.setValueAtTime(o.from || o.f, t);
-  if (o.from) osc.frequency.exponentialRampToValueAtTime(o.f, t + (o.bendT || 0.02));
-  const g = ctx.createGain();
-  const a = o.attack || 0.0015;
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(o.peak, t + a);
-  g.gain.exponentialRampToValueAtTime(0.0005, t + a + o.dec);
-  let node = osc; osc.connect(g); node = g;
-  if (o.lp) { const f = ctx.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = o.lp; f.Q.value = 0.7; node.connect(f); node = f; }
-  if (o.hp) { const f = ctx.createBiquadFilter(); f.type = "highpass"; f.frequency.value = o.hp; node.connect(f); node = f; }
-  node.connect(master);
-  osc.start(t); osc.stop(t + a + o.dec + 0.05);
+// ---------- Motor de som: modelagem física percussiva ----------
+// Cada toque = modos inarmônicos de membrana (proporções 1 · 1,59 · 2,14 · 2,65 da frequência base) com afinação FIXA,
+// mais um transiente de ruído branco filtrado nos primeiros milissegundos (impacto na pele e no alumínio).
+// O único envelope de frequência permitido é o "punch": no máximo 8 ms de descida no ataque, depois a nota não se mexe.
+const PUNCH_T = 0.008;
+let softClip = null;
+function getSoftClip() { // curva de soft clipping (tanh) para o estalo do rimshot
+  if (softClip) return softClip;
+  const n = 2048, curve = new Float32Array(n), k = 3.2;
+  for (let i = 0; i < n; i++) { const x = (i / (n - 1)) * 2 - 1; curve[i] = Math.tanh(k * x) / Math.tanh(k); }
+  softClip = ctx.createWaveShaper(); softClip.curve = curve; softClip.oversample = "2x";
+  softClip.connect(master);
+  return softClip;
 }
-function noise(t, o) {
+// Modo de vibração: oscilador em frequência fixa com decaimento exponencial. punch = quanto acima da nota o ataque começa (8 ms).
+function modeOsc(t, o, dest) {
+  const osc = ctx.createOscillator(); osc.type = o.type || "sine";
+  if (o.punch) { osc.frequency.setValueAtTime(o.f * o.punch, t); osc.frequency.exponentialRampToValueAtTime(o.f, t + PUNCH_T); }
+  else osc.frequency.setValueAtTime(o.f, t);
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(o.gain, t + 0.0012);
+  g.gain.exponentialRampToValueAtTime(0.0004, t + 0.0012 + o.dec);
+  osc.connect(g); g.connect(dest);
+  osc.start(t); osc.stop(t + o.dec + 0.03);
+}
+// Transiente de impacto: ruído branco do buffer global por um filtro, com decaimento curtíssimo.
+function burst(t, o, dest) {
   const src = ctx.createBufferSource(); src.buffer = noiseBuf;
   const f = ctx.createBiquadFilter(); f.type = o.type || "bandpass"; f.frequency.value = o.f; f.Q.value = o.Q || 1;
   const g = ctx.createGain();
-  g.gain.setValueAtTime(o.peak, t); g.gain.exponentialRampToValueAtTime(0.0005, t + o.dec);
-  src.connect(f); f.connect(g); g.connect(master);
-  src.start(t); src.stop(t + o.dec + 0.03);
+  g.gain.setValueAtTime(o.gain, t);
+  g.gain.exponentialRampToValueAtTime(0.0004, t + o.dec);
+  src.connect(f); f.connect(g); g.connect(dest);
+  src.start(t); src.stop(t + o.dec + 0.02);
 }
+function voiceOut(v) { const g = ctx.createGain(); g.gain.value = v; g.connect(master); return g; }
 const RECIPES = {
-  grave: (t, v) => { // "tu": cheio, do meio da pele; madeira dá um clique sutil e um harmônico metálico curto
-    tone(t, { f: 300, from: 335, bendT: 0.025, peak: 0.85 * v, dec: 0.25 });
-    tone(t, { f: 300 * 2.42, type: "triangle", peak: 0.1 * v, dec: 0.08, hp: 500 });
-    noise(t, { type: "lowpass", f: 2200, peak: 0.22 * v, dec: 0.012 });
+  grave: (t, v) => { // "tu": corpo em 285 Hz + modos 453 e 610; madeira = ruído em 1800 Hz por 12 ms
+    const out = voiceOut(v);
+    modeOsc(t, { f: 285, type: "triangle", gain: 0.7, dec: 0.22, punch: 1.05 }, out);
+    modeOsc(t, { f: 453, gain: 0.25, dec: 0.12 }, out);
+    modeOsc(t, { f: 610, gain: 0.12, dec: 0.18 }, out);
+    burst(t, { f: 1800, Q: 2.0, gain: 0.5, dec: 0.012 }, out);
   },
-  rim: (t, v) => { // "tá/ca": ponta na pele + corpo da baqueta no aro, estridente
-    tone(t, { f: 340, from: 360, peak: 0.45 * v, dec: 0.16 });
-    tone(t, { f: 880, type: "triangle", peak: 0.42 * v, dec: 0.09 });
-    tone(t, { f: 1180, type: "sine", peak: 0.3 * v, dec: 0.07 });
-    noise(t, { type: "bandpass", f: 3200, Q: 1.3, peak: 0.6 * v, dec: 0.018 });
+  rim: (t, v) => { // "tá/ca": estalo de ruído com soft clipping + canto agudo do aro/pele
+    const atk = ctx.createGain(); atk.gain.value = v; atk.connect(getSoftClip());
+    burst(t, { f: 2600, Q: 3.5, gain: 1.0, dec: 0.035 }, atk);
+    burst(t, { type: "highpass", f: 4500, Q: 0.7, gain: 1.0, dec: 0.015 }, atk);
+    const out = voiceOut(v);
+    modeOsc(t, { f: 340, gain: 0.4, dec: 0.09, punch: 1.04 }, out);
+    modeOsc(t, { f: 780, type: "triangle", gain: 0.5, dec: 0.16 }, out);
+    modeOsc(t, { f: 1240, gain: 0.35, dec: 0.14 }, out);
   },
-  open: (t, v) => { // mão aberta: mesma nota do grave, ataque macio e sem clique
-    tone(t, { f: 290, from: 305, bendT: 0.03, peak: 0.8 * v, dec: 0.22, attack: 0.008, lp: 900 });
-    noise(t, { type: "lowpass", f: 500, peak: 0.12 * v, dec: 0.02 });
+  open: (t, v) => { // mão aberta: corpo quente passando por passa-baixa em 900 Hz + impacto da palma
+    const out = voiceOut(v);
+    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 900; lp.Q.value = 0.7; lp.connect(out);
+    modeOsc(t, { f: 280, gain: 0.8, dec: 0.20, punch: 1.04 }, lp);
+    modeOsc(t, { f: 445, gain: 0.2, dec: 0.08 }, lp);
+    burst(t, { f: 800, Q: 1.5, gain: 0.35, dec: 0.018 }, out);
   },
-  slap: (t, v) => { // tapa: estalo seco de pele abafada
-    noise(t, { type: "highpass", f: 2600, Q: 0.7, peak: 0.65 * v, dec: 0.045 });
-    tone(t, { f: 540, from: 700, bendT: 0.01, type: "triangle", peak: 0.45 * v, dec: 0.06, hp: 400 });
-    tone(t, { f: 1500, peak: 0.2 * v, dec: 0.035 });
+  slap: (t, v) => { // tapa: pele presa, quase sem grave
+    const out = voiceOut(v);
+    burst(t, { f: 2200, Q: 2.5, gain: 0.9, dec: 0.025 }, out);
+    modeOsc(t, { f: 520, gain: 0.35, dec: 0.03 }, out);
+    modeOsc(t, { f: 980, gain: 0.25, dec: 0.03 }, out);
   },
-  left: (t, v) => rod(t, v, 364),
-  right: (t, v) => rod(t, v, 379),
-  aro: (t, v) => { // vareta na ferragem lateral: clique metálico curtíssimo
-    tone(t, { f: 1400, type: "triangle", peak: 0.4 * v, dec: 0.04 });
-    tone(t, { f: 2150, type: "square", peak: 0.12 * v, dec: 0.025, hp: 1500 });
-    noise(t, { type: "bandpass", f: 5200, Q: 0.8, peak: 0.5 * v, dec: 0.022 });
+  left: (t, v) => rodHit(t, v, 350),
+  right: (t, v) => rodHit(t, v, 362),
+  aro: (t, v) => { // só ferragem: ruído em 3200 Hz + três parciais metálicas por passa-banda em 2000 Hz
+    const out = voiceOut(v);
+    burst(t, { f: 3200, Q: 1.5, gain: 0.8, dec: 0.01 }, out);
+    const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 2000; bp.Q.value = 0.9; bp.connect(out);
+    modeOsc(t, { f: 1150, type: "square", gain: 0.3, dec: 0.025 }, bp);
+    modeOsc(t, { f: 1720, type: "triangle", gain: 0.35, dec: 0.025 }, bp);
+    modeOsc(t, { f: 2480, type: "square", gain: 0.22, dec: 0.025 }, bp);
   },
 };
-function rod(t, v, f) { // bacurinha: chicote agudo na pele laranja
-  noise(t, { type: "highpass", f: 4000, Q: 0.7, peak: 0.6 * v, dec: 0.007 });
-  tone(t, { f, from: f * 1.18, bendT: 0.012, peak: 0.78 * v, dec: 0.19 });
-  tone(t, { f: f * 2.7, type: "triangle", peak: 0.18 * v, dec: 0.05, hp: 600 });
+function rodHit(t, v, f) { // bacurinha: chicote de plástico (ruído brilhante) + pele de alta tensão com modos metálicos
+  const out = voiceOut(v);
+  burst(t, { f: 3800, Q: 3.0, gain: 0.95, dec: 0.012 }, out);
+  modeOsc(t, { f, type: "triangle", gain: 0.65, dec: 0.13, punch: 1.05 }, out);
+  modeOsc(t, { f: 560, gain: 0.3, dec: 0.11 }, out);
+  modeOsc(t, { f: 890, gain: 0.18, dec: 0.11 }, out);
+}
+// Amostras reais: quando um som tem arquivo carregado, ele substitui a síntese.
+const samples = {};
+function playSample(id, t, v) {
+  const src = ctx.createBufferSource(); src.buffer = samples[id];
+  const g = ctx.createGain(); g.gain.value = v;
+  src.connect(g); g.connect(master); src.start(t);
 }
 function play(id, t, vel = 1, origin) {
   ensureCtx();
   if (t == null) t = ctx.currentTime;
   const v = clamp(vel, 0.15, 1);
-  RECIPES[id](t, v);
+  if (samples[id]) playSample(id, t, v); else RECIPES[id](t, v);
   const delay = Math.max(0, (t - ctx.currentTime) * 1000);
   if (delay < 5) animate(id, origin, v); else setTimeout(() => animate(id, origin, v), delay);
   if (loop.rec) loop.events.push({ t: ctx.currentTime - loop.start + Math.max(0, t - ctx.currentTime), id, vel: v, mode: SOUNDS[id].mode });
@@ -554,6 +602,41 @@ function levStop() {
   $("levadas").querySelectorAll("[data-lev]").forEach(b => { b.classList.remove("on"); b.textContent = "▶ Ouvir"; });
 }
 document.addEventListener("visibilitychange", () => { if (document.hidden) { levStop(); if (loop.playing) loopStop(); } });
+
+// ---------- Amostras reais ----------
+const smpPanel = $("smpPanel"), smpBtn = $("smpBtn");
+smpBtn.addEventListener("click", () => { smpPanel.hidden = !smpPanel.hidden; smpBtn.classList.toggle("on", !smpPanel.hidden); if (!smpPanel.hidden) renderSamples(); });
+function renderSamples() {
+  const box = $("smpList"); box.innerHTML = "";
+  for (const id in SOUNDS) {
+    const s = SOUNDS[id];
+    const d = document.createElement("div"); d.className = "smp";
+    d.innerHTML = `<b>${s.name} <small>· ${MODES[s.mode].label}</small></b><small class="${samples[id] ? "ok" : ""}" data-st="${id}">${samples[id] ? "amostra carregada (" + samples[id].duration.toFixed(2) + " s)" : "som sintetizado"}</small>
+      <div class="row"><label class="chip" for="smp-${id}">Carregar</label><input type="file" id="smp-${id}" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac" hidden><button class="chip" type="button" data-test="${id}">Ouvir</button><button class="chip" type="button" data-rm="${id}" ${samples[id] ? "" : "disabled"}>Remover</button></div>`;
+    box.append(d);
+    d.querySelector("input").addEventListener("change", e => loadSample(id, e.target.files[0]));
+    d.querySelector("[data-test]").addEventListener("click", () => play(id));
+    d.querySelector("[data-rm]").addEventListener("click", () => { delete samples[id]; renderSamples(); });
+  }
+}
+async function loadSample(id, file) {
+  if (!file) return;
+  ensureCtx();
+  try {
+    const buf = await ctx.decodeAudioData(await file.arrayBuffer());
+    samples[id] = trimSilence(buf);
+    renderSamples(); play(id);
+  } catch (e) { alert("Não consegui ler esse arquivo: " + (e.message || e)); }
+}
+function trimSilence(buf) { // corta o silêncio inicial para o ataque cair exatamente no toque
+  const ch = buf.getChannelData(0); let i = 0;
+  while (i < ch.length && Math.abs(ch[i]) < 0.02) i++;
+  i = Math.max(0, i - Math.round(buf.sampleRate * 0.002));
+  if (i === 0) return buf;
+  const out = ctx.createBuffer(buf.numberOfChannels, buf.length - i, buf.sampleRate);
+  for (let c = 0; c < buf.numberOfChannels; c++) out.getChannelData(c).set(buf.getChannelData(c).subarray(i));
+  return out;
+}
 
 // ---------- Início ----------
 renderLevadas();
