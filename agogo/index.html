@@ -107,13 +107,20 @@ kbd { font-family: var(--f-mono); font-size: 11px; padding: 1px 6px; border: 1px
 .note { font-size: 12.5px; color: var(--muted); max-width: 70ch; }
 .lev { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
 .lev h3 { margin: 0; font-size: 13px; font-weight: 700; color: var(--brass); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.syl { font-family: var(--f-display); font-weight: 800; font-size: 26px; letter-spacing: .03em; line-height: 1.1; display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.syl { font-family: var(--f-display); font-weight: 800; font-size: 26px; letter-spacing: .03em; line-height: 1.1; display: flex; flex-direction: column; gap: 3px; }
+.syl .ln { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.syl .ln.sec { margin-top: 10px; }
+.lev.big .syl { font-size: 20px; }
+.lev.big .syl .ln { gap: 2px 8px; }
+.lev h3 s { opacity: .6; }
+.syl span.weak { font-weight: 600; opacity: .62; }
+.lev .meta { font: 500 11.5px var(--f-mono); color: var(--muted); }
 .syl span { transition: transform .08s; border-radius: 4px; padding: 0 2px; }
-.syl span.rest { color: var(--line); }
+.syl span.rest { color: #4a4e57; }
 .syl span.acc { text-decoration: underline; text-underline-offset: 4px; }
 .syl span.cur { background: rgba(255,210,122,.18); box-shadow: inset 0 0 0 1px var(--hit); transform: translateY(-2px); }
 .exp { font-size: 12.5px; color: var(--muted); }
-input[type=text] { font: 500 13px var(--f-mono); color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; width: 100%; min-width: 0; }
+textarea, input[type=text] { resize: vertical; font: 500 13px var(--f-mono); color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; width: 100%; min-width: 0; }
 .err { font-size: 12.5px; color: var(--rec); }
 .smp-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
 .smp { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); font-size: 13px; }
@@ -194,10 +201,10 @@ input[type=text] { font: 500 13px var(--f-mono); color: var(--fg); background: v
         <div class="lev">
           <h3><span>Minha levada</span><button class="chip" type="button" id="myPlay">▶ Ouvir</button></h3>
           <label class="sr" for="myLev" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Minha levada</label>
-          <input type="text" id="myLev" spellcheck="false" autocapitalize="off" autocomplete="off">
+          <textarea id="myLev" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
           <div class="syl" id="mySyl"></div>
           <p class="err" id="myErr" hidden></p>
-          <p class="exp">Cada palavra é uma semicolcheia (quatro por tempo). Use <b>.</b> para pausa e maiúsculas (<b>PU</b>) para acentuar.</p>
+          <p class="exp">Cada palavra é uma semicolcheia (quatro por tempo). Maiúscula toca forte (<b>Pu</b>), minúscula fraco (<b>pu</b>), tudo maiúsculo acentua (<b>PU</b>). <b>E</b> ou <b>.</b> é pausa; pule uma linha para separar partes.</p>
         </div>
       </div>
     </aside>
@@ -539,26 +546,44 @@ function tlLoop() {
 const LEVADAS = [
   { id: "varrida", name: "Levada base (varrida)", text: "Pu Po Pe Pi Pe Po Pu .", desc: "Desce da boca grave à aguda e volta: sete toques em semicolcheias e uma pausa para fechar dois tempos." },
   { id: "sincopada", name: "Variação sincopada", text: "Pi Pi Po Pe Pu Pu Po Pe", desc: "Oito semicolcheias. As notas repetidas (Pi Pi, Pu Pu) puxam o balanço para fora do tempo." },
+  { id: "cachorra", name: "A cachorra <s>da sua mãe</s>", big: true, bpm: 80, swing: 0.52, text: "Pi po Pe po Pe po Pu pi\nE po Pe po Pe po Pi\npo Pe po Pe po Pu pi\nE po Pe po Pe po\n\nPu pu Pu pu\nPo po Po po\nPe pe Pe pe\nPi pi\n\nPi po Pe po Pe po Pu pi\nPe po Pe po Pe po Pi\npo Pe po Pe po Pu pi\nPe po Pe po Pe po Pi\npo Pe po Pe po Pu pi\n\nPu pu\nPo po\nPe pe\n\nPi pi Pi pi\nPe po Pu po Pe po Pu po Pe pe\nPi pi Pi pi\nPe po Pu po Pe po Pu po Pe pe\nPi pi Pi pi\nPe po Pu po\n\nPu pu\nPo po\nPe pe\n\nPi po Pe po Pe po Pu pi\nPe po Pe po Pe po\nPi po Pe po Pe po Pu pi\nPu . Po . Pe . Pi",
+    desc: "Breque transcrito da sua gravação: cada sílaba vale uma semicolcheia a 80 bpm (187 ms), com um leve balanço (a primeira de cada par um pouco mais longa). E é uma pausa do tamanho de uma sílaba. No final, Pu Po Pe Pi duram duas sílabas cada (os pontos). Maiúscula toca forte, minúscula fraco." },
 ];
 function parseLev(text) {
-  const toks = text.trim().split(/\s+/).filter(Boolean);
+  const toks = []; let line = -1, sec = 0, gap = false;
+  for (const row of text.replace(/\r/g, "").split("\n")) {
+    const ws = row.trim().split(/\s+/).filter(Boolean);
+    if (!ws.length) { if (line >= 0) gap = true; continue; }
+    line++; if (gap) { sec++; gap = false; }
+    for (const tk of ws) {
+      if (tk === "." || tk === "-") { toks.push({ rest: true, text: "·", line, sec }); continue; }
+      if (tk.toLowerCase() === "e") { toks.push({ rest: true, text: "E", line, sec }); continue; }
+      const id = tk.toLowerCase();
+      if (!BELLS[id]) throw new Error(`Não entendi "${tk}". Use Pu, Po, Pe, Pi, E ou ponto.`);
+      const acc = tk === tk.toUpperCase(), strong = tk[0] !== tk[0].toLowerCase();
+      toks.push({ id, acc, weak: !strong, text: tk, v: acc ? 1 : strong ? 0.92 : 0.62, line, sec });
+    }
+  }
   if (!toks.length) throw new Error("Escreva pelo menos uma boca.");
-  return toks.map(tk => {
-    if (tk === "." || tk === "-") return { rest: true, text: "·" };
-    const id = tk.toLowerCase();
-    if (!BELLS[id]) throw new Error(`Não entendi "${tk}". Use Pu, Po, Pe, Pi ou ponto.`);
-    const acc = tk === tk.toUpperCase();
-    return { id, acc, text: BELLS[id].name, v: acc ? 1 : 0.8 };
-  });
+  return toks;
 }
-function sylHTML(toks) { return toks.map((t, i) => t.rest ? `<span class="rest" data-i="${i}">·</span>` : `<span data-i="${i}" class="${t.acc ? "acc" : ""}" style="color:${BELLS[t.id].hex}">${t.text}</span>`).join(""); }
+function sylHTML(toks) {
+  let html = "", curL = null, curS = null;
+  toks.forEach((t, i) => {
+    if (t.line !== curL) { if (curL !== null) html += "</div>"; html += `<div class="ln${curS !== null && t.sec !== curS ? " sec" : ""}">`; curL = t.line; curS = t.sec; }
+    html += t.rest ? `<span class="rest" data-i="${i}">${t.text}</span>` : `<span data-i="${i}" class="${t.acc ? "acc" : t.weak ? "weak" : ""}" style="color:${BELLS[t.id].hex}">${t.text}</span>`;
+  });
+  return html + (curL !== null ? "</div>" : "");
+}
 function renderLevadas() {
   const box = $("levadas"); box.innerHTML = "";
   for (const L of LEVADAS) {
     const d = document.createElement("div"); d.className = "lev"; d.dataset.id = L.id;
-    d.innerHTML = `<h3><span>${L.name}</span><button class="chip" type="button" data-lev="${L.id}">▶ Ouvir</button></h3><div class="syl">${sylHTML(parseLev(L.text))}</div><p class="exp">${L.desc}</p>`;
+    d.className = "lev" + (L.big ? " big" : "");
+    const toks = parseLev(L.text), n = toks.filter(t => !t.rest).length;
+    d.innerHTML = `<h3><span>${L.name}</span><button class="chip" type="button" data-lev="${L.id}">▶ Ouvir</button></h3>${L.bpm ? `<span class="meta">${n} toques · ${L.bpm} bpm · ${toks.length} semicolcheias</span>` : ""}<div class="syl">${sylHTML(toks)}</div><p class="exp">${L.desc}</p>`;
     box.append(d);
-    d.querySelector("[data-lev]").addEventListener("click", e => lev.key === L.id ? levStop() : levStart(L.id, parseLev(L.text), d.querySelector(".syl"), e.currentTarget));
+    d.querySelector("[data-lev]").addEventListener("click", e => lev.key === L.id ? levStop() : levStart(L.id, parseLev(L.text), d.querySelector(".syl"), e.currentTarget, L));
   }
 }
 const myLev = $("myLev");
@@ -571,9 +596,10 @@ myLev.addEventListener("input", () => { LS.set("my", myLev.value); if (lev.key =
 $("myPlay").addEventListener("click", e => { if (lev.key === "my") { levStop(); return; } const toks = renderMy(); if (toks) levStart("my", toks, $("mySyl"), e.currentTarget); });
 $("bpm").addEventListener("input", () => $("bpmOut").textContent = $("bpm").value + " bpm");
 const lev = { key: null, toks: null, box: null, btn: null, timer: null, idx: 0, cycleStart: 0 };
-function levStart(key, toks, box, btn) {
+function levStart(key, toks, box, btn, L) {
   ensureCtx(); levStop();
-  Object.assign(lev, { key, toks, box, btn, idx: 0, cycleStart: ctx.currentTime + 0.08 });
+  if (L && L.bpm) { $("bpm").value = L.bpm; $("bpmOut").textContent = L.bpm + " bpm"; }
+  Object.assign(lev, { key, toks, box, btn, idx: 0, cycleStart: ctx.currentTime + 0.08, swing: (L && L.swing) || 0.5 });
   btn.classList.add("on"); btn.textContent = "■ Parar";
   lev.timer = setInterval(levTick, 25); levTick();
 }
@@ -585,7 +611,7 @@ function levTick() {
       if (!$("levRepeat").checked) { if (ctx.currentTime > lev.cycleStart + n * sx) levStop(); return; }
       lev.idx = 0; lev.cycleStart += n * sx;
     }
-    const tk = lev.toks[lev.idx], t = lev.cycleStart + lev.idx * sx;
+    const tk = lev.toks[lev.idx], t = lev.cycleStart + Math.floor(lev.idx / 2) * 2 * sx + (lev.idx % 2 ? 2 * sx * lev.swing : 0);
     if (t >= horizon) break;
     if (t >= ctx.currentTime - 0.01) {
       if ($("levMetro").checked && lev.idx % 4 === 0) click(t, lev.idx === 0);
