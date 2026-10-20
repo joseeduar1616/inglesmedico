@@ -223,9 +223,9 @@ const BELLS = {
 };
 const PITCH = ["pu", "po", "pe", "pi"];                 // do mais grave para o mais agudo
 const KEYS = ["d", "f", "j", "k"];                      // teclas da esquerda para a direita
-let inverted = LS.get("inverted", false);
-const order = () => inverted ? ["pu", "po", "pe", "pi"] : ["pi", "pe", "po", "pu"];
-const angles = () => inverted ? [-44, -9, 27, 64] : [-64, -27, 9, 44];
+let inverted = LS.get("inv-pi-dir", false);
+const order = () => inverted ? ["pi", "pe", "po", "pu"] : ["pu", "po", "pe", "pi"];
+const angles = () => inverted ? [-64, -27, 9, 44] : [-44, -9, 27, 64];
 let keyOf = {}, bellOfKey = {};
 
 // ---------- Áudio ----------
@@ -381,7 +381,7 @@ function animate(id, v) {
   }
   const sp = $("legend").querySelector(`[data-id="${id}"]`); if (sp) { sp.classList.add("hot"); setTimeout(() => sp.classList.remove("hot"), 120); }
 }
-$("flipBtn").addEventListener("click", () => { inverted = !inverted; LS.set("inverted", inverted); $("flipBtn").classList.toggle("on", inverted); buildBells(); });
+$("flipBtn").addEventListener("click", () => { inverted = !inverted; LS.set("inv-pi-dir", inverted); $("flipBtn").classList.toggle("on", inverted); buildBells(); });
 
 // ---------- Toque, varrida e multitoque ----------
 function bellAt(x, y) { const e = document.elementFromPoint(x, y); const g = e && e.closest && e.closest("[data-bell]"); return g ? g.dataset.bell : null; }
