@@ -1,0 +1,1109 @@
+<title>Surdos em 3D</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Dois bonequinhos em 3D tocando surdo de 1ª e de 2ª, com a maceta batendo na pele no tempo de cada toque dos breques.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: o palco 3D ocupa a largura toda; embaixo os controles do breque e a partitura com o tempo atual aceso */
+:root {
+  --stage: #0e0f12;
+  --stage-2: #16181d;
+  --line: #2a2d35;
+  --fg: #ecebe6;
+  --muted: #8d8f98;
+  --brass: #c9a24a;
+  --hit: #ffb547;
+  --ok: #6fcf97;
+  --d1: #c9a24a;
+  --d2: #7fb3d5;
+  --t-to: #6ea8ff; --t-pa: #3fc1b0; --t-po: #ff9a4a; --t-e: #ff6b6b; --t-cnt: #6b6e78;
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: radial-gradient(ellipse at 50% 20%, var(--stage-2), var(--stage) 70%) fixed, var(--stage); color: var(--fg); font-family: var(--f-body); font-size: 15px; -webkit-tap-highlight-color: transparent; }
+[hidden] { display: none !important; }
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; padding-block: 18px 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+h1 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(28px, 5vw, 44px); letter-spacing: .02em; margin: 0; line-height: 1; text-wrap: balance; }
+h1 span { color: var(--brass); }
+.status { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brass); flex: none; }
+.dot.on { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+
+.stage3d { position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 320px; max-height: 72vh; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #0b0c0f; touch-action: none; }
+@media (max-width: 640px) { .stage3d { aspect-ratio: 4 / 5; } }
+.stage3d canvas { display: block; width: 100% !important; height: 100% !important; cursor: grab; }
+.stage3d canvas:active { cursor: grabbing; }
+.ov { position: absolute; pointer-events: none; }
+.ov-word { left: 0; right: 0; top: 14px; text-align: center; font-family: var(--f-display); font-weight: 800; font-size: clamp(34px, 6vw, 64px); line-height: 1; letter-spacing: .03em; text-shadow: 0 2px 18px rgba(0,0,0,.7); min-height: 1em; }
+.ov-pos { left: 14px; bottom: 12px; font: 500 12px var(--f-mono); color: var(--fg); background: rgba(14,15,18,.7); padding: 5px 9px; border-radius: 6px; font-variant-numeric: tabular-nums; }
+.views { position: absolute; right: 10px; top: 10px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 60%; }
+.views button { font: 600 12px var(--f-body); color: var(--fg); background: rgba(22,24,29,.82); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.views button:hover, .views button.on { border-color: var(--brass); color: var(--brass); }
+.hint3d { right: 12px; bottom: 12px; font-size: 11.5px; color: var(--muted); background: rgba(14,15,18,.7); padding: 4px 8px; border-radius: 6px; }
+@media (max-width: 640px) { .hint3d { display: none; } .views { max-width: 75%; } }
+
+.panel { display: flex; flex-direction: column; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--stage-2) 80%, transparent); }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 13px; color: var(--muted); }
+.row label { display: inline-flex; align-items: center; gap: 8px; }
+.row input[type=range] { width: 120px; accent-color: var(--brass); }
+.row input[type=checkbox] { accent-color: var(--brass); width: 16px; height: 16px; }
+.row output { font: 500 12px var(--f-mono); color: var(--fg); min-width: 58px; font-variant-numeric: tabular-nums; }
+.bq-title { font-family: var(--f-display); font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: .03em; margin: 0; line-height: 1; }
+.bq-meta { font-size: 12px; color: var(--muted); }
+.sel { font: 600 13px var(--f-body); color: var(--fg); background: var(--stage); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 13px var(--f-body); color: var(--fg); background: var(--stage); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px 8px 12px; cursor: pointer; }
+.btn:hover { border-color: var(--brass); }
+.btn.playing { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 12%, var(--stage)); }
+.btn svg { width: 14px; height: 14px; flex: none; }
+.btn:focus-visible, .sel:focus-visible, .views button:focus-visible, .pad:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.pads { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pad { font: inherit; border: 2px solid var(--line); border-radius: 14px; background: var(--stage); color: var(--fg); padding: 14px 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; touch-action: none; user-select: none; -webkit-user-select: none; }
+.pad b { font-family: var(--f-display); font-size: 30px; line-height: 1; }
+.pad small { font-size: 11.5px; color: var(--muted); }
+.pad.p1 b { color: var(--d1); } .pad.p2 b { color: var(--d2); }
+.pad.hit { border-color: var(--hit); transform: scale(.98); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); }
+.legend b { font-weight: 700; margin-right: 4px; }
+.score { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 6px; max-height: 300px; overflow-y: auto; padding: 2px; }
+.bar-row { display: grid; grid-template-columns: 26px 1fr; gap: 6px; cursor: pointer; border-radius: 6px; }
+.bar-row:hover .cells { border-color: var(--brass); }
+.bar-row:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.bar-row .n { font: 500 11px var(--f-mono); color: var(--muted); display: flex; align-items: center; justify-content: flex-end; }
+.bar-row.start .n { color: var(--brass); }
+.bar-row.wide { grid-column: 1 / -1; }
+.cells { display: grid; grid-template-columns: repeat(var(--n, 4), 1fr); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: color-mix(in srgb, var(--sec, var(--stage)) 14%, var(--stage)); }
+.beat { display: flex; min-width: 0; border-right: 1px solid color-mix(in srgb, var(--line) 70%, transparent); }
+.beat:last-child { border-right: 0; }
+.beat.now { background: color-mix(in srgb, var(--hit) 30%, transparent); }
+.slot-t { flex: 1; min-width: 0; text-align: center; font: 700 12.5px/28px var(--f-body); }
+.slot-t sup { font-size: 8px; }
+.tk-To, .tk-Bo, .tk-bo { color: var(--t-to); } .tk-Pa { color: var(--t-pa); } .tk-po { color: var(--t-po); }
+.tk-E, .tk-ti { color: var(--t-e); font-weight: 600; } .tk-to { color: var(--t-to); font-weight: 600; opacity: .85; }
+.tk-ro, .tk-go { color: var(--t-po); font-weight: 600; opacity: .75; } .tk-ra, .tk-ga { color: var(--t-pa); font-weight: 600; opacity: .75; }
+.tk-cnt { color: var(--t-cnt); font-weight: 500; }
+.note { font-size: 12.5px; color: var(--muted); max-width: 90ch; margin: 0; }
+kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 1px 5px; color: var(--fg); }
+.err { color: #ef6b6b; font-size: 13px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Surdos <span>em</span> 3D</h1>
+    <div class="status"><i class="dot" id="ctxDot"></i><span id="ctxText">Áudio em espera · toque num botão para ativar</span></div>
+  </header>
+
+  <div class="stage3d" id="stage3d">
+    <div class="ov ov-word" id="ovWord"></div>
+    <div class="views" id="views">
+      <button type="button" data-v="frente" class="on">Frente</button>
+      <button type="button" data-v="lado">De lado</button>
+      <button type="button" data-v="cima">De cima</button>
+      <button type="button" data-v="p1">Perto da 1ª</button>
+      <button type="button" data-v="p2">Perto da 2ª</button>
+    </div>
+    <div class="ov ov-pos" id="ovPos">Escolha um breque e toque em Tocar breque</div>
+    <div class="ov hint3d">arraste para girar · pinça ou roda para aproximar</div>
+    <p class="err" id="err3d" hidden style="position:absolute;inset:auto 16px 50% 16px;text-align:center"></p>
+  </div>
+
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <div class="row">
+        <label class="sr" for="bqSel" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Breque</label>
+        <select id="bqSel" class="sel"></select>
+        <h2 class="bq-title" id="bqTitle">Ganesha</h2>
+        <span class="bq-meta" id="bqMeta"></span>
+      </div>
+      <button class="btn" id="bqPlay" type="button"><svg viewBox="0 0 14 14" aria-hidden="true"><path id="bqIcon" d="M3 1.5v11l9.5-5.5z" fill="currentColor"/></svg><span id="bqLbl">Tocar breque</span></button>
+    </div>
+    <div class="row">
+      <label for="bpm">Andamento <input type="range" id="bpm" min="60" max="180" step="1" value="150"><output id="bpmOut">150 bpm</output></label>
+      <label for="metro"><input type="checkbox" id="metro"> Metrônomo</label>
+      <label for="countIn"><input type="checkbox" id="countIn" checked> Contagem de entrada</label>
+      <label for="bqRepeat"><input type="checkbox" id="bqRepeat"> Repetir</label>
+      <label for="vol">Volume <input type="range" id="vol" min="0" max="1" step="0.01" value="0.7"></label>
+      <span id="bqPos" class="bq-meta">Começa no compasso 1</span>
+    </div>
+    <div class="legend">
+      <span><b class="tk-To">To</b>1ª + 2ª</span><span><b class="tk-Pa">Pa</b>só a 2ª</span><span><b class="tk-po">po</b>só a 1ª</span>
+      <span><b class="tk-Bo">Bo</b>1ª + 2ª abafados (a mão segura a pele)</span><span><b class="tk-ro">ro</b><b class="tk-ra">ra</b>leves</span>
+      <span><b class="tk-E">E</b>pausa falada</span><span><b class="tk-cnt">1 2 3</b>contagem</span><span>Clique num compasso para começar dali.</span>
+    </div>
+    <div class="score" id="score"></div>
+  </div>
+
+  <div class="panel">
+    <div class="pads">
+      <button class="pad p1" id="pad1" type="button"><b>1ª</b><small>tocar · tecla A · Shift abafa</small></button>
+      <button class="pad p2" id="pad2" type="button"><b>2ª</b><small>tocar · tecla S · Shift abafa</small></button>
+    </div>
+    <p class="note">Os bonequinhos levantam a maceta antes de cada toque e acertam a pele no instante em que o som sai. Em notas rápidas, o golpe fica curto. No abafado (Bo), a mão esquerda segura a pele. <kbd>Espaço</kbd> ou <kbd>B</kbd> toca e para o breque. O som é o mesmo do simulador de surdos: 1ª em 45 Hz e 2ª em 78 Hz.</p>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(() => {
+"use strict";
+  const PRESETS = [
+    { name: "1ª", full: "Surdo de 1ª", role: "Marcação principal", key: "a", alt: "1", size: 1.0,
+      f0: 45, fMin: 40, fMax: 50, bend: 1.3, bendT: 0.09,
+      A: 0.02, D: 0.15, S: 0.7, R: 2.4, rMin: 1.6, rMax: 3.4,
+      peak: 0.85, ot: 0, pres: 0.8, click: { type: "lowpass", f: 700, Q: 0.7, gain: 0.1, dur: 0.04 }, level: 0.8 },
+    { name: "2ª", full: "Surdo de 2ª", role: "Resposta", key: "s", alt: "2", size: 0.92,
+      f0: 78, fMin: 70, fMax: 85, bend: 1.25, bendT: 0.06,
+      A: 0.012, D: 0.1, S: 0.5, R: 0.85, rMin: 0.5, rMax: 1.3,
+      peak: 0.8, ot: 0, pres: 0.6, click: { type: "lowpass", f: 1000, Q: 0.7, gain: 0.1, dur: 0.03 }, level: 0.8 },
+    { name: "3ª", full: "Surdo de 3ª", role: "Corte / balanço", key: "d", alt: "3", size: 0.84,
+      f0: 130, fMin: 120, fMax: 140, bend: 1.4, bendT: 0.025,
+      A: 0.01, D: 0.035, S: 0.3, R: 0.2, rMin: 0.1, rMax: 0.38,
+      peak: 0.28, ot: 0.08, pres: 0, click: { type: "bandpass", f: 2400, Q: 0.9, gain: 0.14, dur: 0.028 }, level: 0.6 },
+  ];
+
+  function makeEngine(ac, out) {
+    const busGains = P.map(p => { const g = ac.createGain(); g.gain.value = p.level; g.connect(out); return g; });
+    const sr = ac.sampleRate;
+    const noiseBuf = ac.createBuffer(1, Math.ceil(sr * 0.1), sr);
+    const nd = noiseBuf.getChannelData(0);
+    for (let k = 0; k < nd.length; k++) nd[k] = Math.random() * 2 - 1;
+    const voices = [[], [], []];
+    const extra = [];   // vozes faladas e cliques, para poderem ser cancelados
+
+    // Abafa as vozes do tambor i que já começaram antes de "at". Cada voz tem um ganho próprio de corte,
+    // por isso não é preciso cancelar o envelope (o que causaria saltos de nível e estalos).
+    // Vozes agendadas para depois de "at" (batidas futuras) não são tocadas.
+    function stopVoices(i, at, tau = 0.012) {
+      for (const v of voices[i]) {
+        if (v.cut || v.start > at) continue;
+        v.cut = true;
+        v.choke.gain.setValueAtTime(v.vel, at);
+        v.choke.gain.setTargetAtTime(0, at, tau);
+        for (const s of v.srcs) { try { s.stop(at + tau * 8); } catch (e) {} }
+      }
+    }
+
+    function strike(i, t, tag, vel = 1) {
+      const p = P[i];
+      const end = t + p.A + p.D + p.R;
+      const cut = ac.createGain();
+      cut.gain.value = vel;
+      cut.connect(busGains[i]);
+      const srcs = [];
+
+      // Corpo: senoide pura na fundamental, com a queda de afinação do golpe
+      const body = ac.createOscillator(), env = ac.createGain();
+      body.type = "sine";
+      body.frequency.setValueAtTime(p.f0 * p.bend, t);
+      body.frequency.exponentialRampToValueAtTime(p.f0, t + p.bendT);
+      env.gain.setValueAtTime(0.0001, t);
+      env.gain.exponentialRampToValueAtTime(p.peak, t + p.A);               // A: rampa curta, sem estalo
+      env.gain.exponentialRampToValueAtTime(p.peak * p.S, t + p.A + p.D);   // D → S
+      env.gain.exponentialRampToValueAtTime(0.0001, end);                   // R: cauda exponencial
+      body.connect(env).connect(cut);
+      body.start(t); body.stop(end + 0.05);
+      srcs.push(body);
+
+      // Harmónico da pele (só na 3ª)
+      if (p.ot > 0) {
+        const ot = ac.createOscillator(), oe = ac.createGain();
+        ot.type = "sine";
+        ot.frequency.setValueAtTime(p.f0 * 1.59 * p.bend, t);
+        ot.frequency.exponentialRampToValueAtTime(p.f0 * 1.59, t + p.bendT);
+        oe.gain.setValueAtTime(0.0001, t);
+        oe.gain.exponentialRampToValueAtTime(p.ot, t + p.A);
+        oe.gain.exponentialRampToValueAtTime(0.0001, t + p.A + p.R * 0.5);
+        ot.connect(oe).connect(cut);
+        ot.start(t); ot.stop(end + 0.05);
+        srcs.push(ot);
+      }
+
+      // Presença: parciais senoidais limpas em 2× e 3× f0 para o grave se ouvir sem distorção
+      if (p.pres > 0) {
+        [[2, 0.34, 0.45], [3, 0.16, 0.25]].forEach(([mult, g, dec]) => {
+          const o = ac.createOscillator(), oe = ac.createGain();
+          o.type = "sine";
+          o.frequency.setValueAtTime(p.f0 * mult * p.bend, t);
+          o.frequency.exponentialRampToValueAtTime(p.f0 * mult, t + p.bendT);
+          oe.gain.setValueAtTime(0.0001, t);
+          oe.gain.exponentialRampToValueAtTime(g * p.pres, t + p.A);
+          oe.gain.exponentialRampToValueAtTime(0.0001, t + p.A + p.R * dec);
+          o.connect(oe).connect(cut);
+          o.start(t); o.stop(end + 0.05);
+          srcs.push(o);
+        });
+      }
+
+      // Toque da maceta: ruído curto filtrado, com rampa de entrada para não estalar
+      const c = p.click, n = ac.createBufferSource(), nf = ac.createBiquadFilter(), ne = ac.createGain();
+      n.buffer = noiseBuf;
+      nf.type = c.type; nf.frequency.value = c.f; nf.Q.value = c.Q;
+      ne.gain.setValueAtTime(0.0001, t);
+      ne.gain.exponentialRampToValueAtTime(c.gain, t + 0.002);
+      ne.gain.exponentialRampToValueAtTime(0.0001, t + c.dur);
+      n.connect(nf).connect(ne).connect(cut);
+      n.start(t); n.stop(t + c.dur + 0.02);
+      srcs.push(n);
+
+      const v = { srcs, choke: cut, vel, start: t, tag: tag || false, cut: false };
+      voices[i].push(v);
+      body.onended = () => { cut.disconnect(); const k = voices[i].indexOf(v); if (k >= 0) voices[i].splice(k, 1); };
+    }
+
+    // Um toque no instante t do relógio de áudio
+    function trigger(i, mute, t, tag, vel = 1) {
+      if (mute) { stopVoices(i, t, 0.03); return; }
+      if (choke.checked) stopVoices(i, t, 0.012);
+      strike(i, t, tag, vel);
+    }
+
+    function track(src, t, tag) {
+      const e = { src, start: t, tag };
+      extra.push(e);
+      src.onended = () => { const k = extra.indexOf(e); if (k >= 0) extra.splice(k, 1); };
+    }
+
+    function click(t, accent, tag) {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.type = "sine"; o.frequency.value = accent ? 1760 : 1320;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(accent ? 0.22 : 0.14, t + 0.002);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+      o.connect(g).connect(out);
+      o.start(t); o.stop(t + 0.06);
+      track(o, t, tag);
+    }
+
+    // Cada sílaba tem várias gravações (cantadas numa frase, com entonação natural): a 1ª é a acentuada,
+    // as outras alternam para a voz não soar sempre igual. Sem acelerar (no máximo 1,1×): se não couber,
+    // a sílaba fecha com um fade curto. Pequenas variações de afinação e volume deixam a fala mais humana.
+    let voxTurn = 0;
+    function speak(voice, word, t, slot, gain, tag) {
+      const list = voxBufs[voice] && voxBufs[voice][word];
+      if (!list || !list.length) return;
+      const strong = gain >= 0.95 || list.length === 1;
+      const buf = strong ? list[0] : list[1 + (voxTurn++ % (list.length - 1))];
+      const src = ac.createBufferSource(), g = ac.createGain();
+      src.buffer = buf;
+      const room = Math.max(0.07, slot * 0.96);
+      const detune = Math.pow(2, (Math.random() * 24 - 12) / 1200);
+      const rate = Math.min(1.1, Math.max(1, buf.duration / room)) * detune;
+      src.playbackRate.value = rate;
+      const len = Math.min(buf.duration / rate, room);
+      const lvl = gain * +voxVol.value * (0.92 + Math.random() * 0.16);
+      const fade = Math.min(0.04, len * 0.3);
+      g.gain.setValueAtTime(lvl, t);
+      g.gain.setValueAtTime(lvl, t + Math.max(0.005, len - fade));
+      g.gain.linearRampToValueAtTime(0, t + len);
+      src.connect(g).connect(out);
+      src.start(t); src.stop(t + len + 0.01);
+      track(src, t, tag);
+    }
+
+    // Cancela tudo o que tem esta etiqueta e ainda não começou (ao parar o loop ou o breque)
+    function cancelTagged(tag, t) {
+      for (let i = 0; i < 3; i++) for (const v of voices[i]) {
+        if (v.tag === tag && !v.cut && v.start > t) { v.cut = true; v.choke.gain.setValueAtTime(0, t); v.srcs.forEach(s => { try { s.stop(t); } catch (e) {} }); }
+      }
+      for (const e of extra) if (e.tag === tag && e.start > t) { try { e.src.stop(t); } catch (x) {} }
+    }
+
+    return { busGains, voices, stopVoices, strike, trigger, click, speak, cancelTagged };
+  }
+
+
+  function makeLimiter(ac) {
+    const l = ac.createDynamicsCompressor();
+    l.threshold.value = -1; l.knee.value = 0; l.ratio.value = 20;
+    l.attack.value = 0.001; l.release.value = 0.1;
+    return l;
+  }
+
+  const GANESHA_TXT = `1 2 3 To-To
+To 1 2 To-To
+To 1 3 To-To
+To 1 4 To-To
+To 1 5 To-To
+To 1 6 To-To
+
+To To To E-To
+To 1 2 To
+To 1 3 To
+To 1 4 To1
+
+To2 To3 To4 To5
+To6 1 2 Pa
+To To To 1
+To 1 2 3
+To1 To2 To3 To4
+To5 2 3 4
+
+2 2 3 4
+3 2 3 4
+4 2 3 4
+
+To po Pa To
+To po Pa To1
+To2 To3 To4 To5
+
+To6 1 To E-.-To
+Bo 1 To-E-To E-.-.
+To 2 To E-.-To
+Bo 2 To-E-To E-To-bo
+
+To 1 2 3
+
+To .-E-To Bo-E-To E-To-bo
+To 1 2 3
+To .-.-To Bo-E-To E-To-bo
+To .-.-To Bo-E-To E-To-bo
+To`;
+  const SOMA_TXT = `1 2 3 To-To
+To-.-.-Po Pa To-.-.-Pa Po-To
+To E-To E-To E-To
+To-.-.-Po Pa To-.-.-Pa Po
+To-.-.-Po Pa To[25]-To[40] To[60]-To[80]
+
+To To-To E-To 1
+To To-To 1 To
+To To-To E-To E-To
+
+To To To To-To
+To To To-Po Pa-Po
+To To To To-To
+
+To E-To To 1
+To To To 1
+To`;
+  const DAGON_TXT = `To 1 E-.-to-. .-to-.-.
+To 2 E-.-to-. E
+To 3 E-.-to-. .-to-.-.
+To 4 E-.-to-. .-to-.-.
+
+To 1 E-.-to-ro .-to-ro-.
+To 2 E-.-to-ro .-to-ro-.
+To 3 E-.-to-ro .-to-ro-.
+To 4 E-.-To-. .-To-.-.
+To 2 3 4
+
+To-to-.-to E-.-to-to .-to-to-. ti-to-.-to
+to-.-to-to .-to-to-. to-To-.-to E
+To-to-.-to E-.-to-to .-to-to-. ti-to-.-to
+to-.-to-to .-to-to-. To To
+
+To-to-.-to E-.-to-to .-to-to-. ti-to-.-to
+to-.-to-to .-to-to-. to-To-.-to E
+To-to-.-to E-.-to-to .-to-to-. ti-to-.-to
+to-.-to-to .-to-to-. To To
+
+To-.-.-to 1 To-.-.-to 2
+To-.-.-to 3 To-.-.-to 4
+
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+To-.-.-to ti-to-.-. To-.-.-to 1
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+
+To 2 3 4
+
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+
+To-.-to-. E-.-to-. E-.-to-. To
+To-.-to-. E-.-to-. E-.-to-. To
+To-.-to-. E-.-to-. E-.-to-. To
+To-.-to-. E-.-to-. E-.-to-. To
+To-.-to-. E-.-to-. E-.-to-. To
+
+To-.-to-. To-.-to-. To-.-to-. To-.-to-.
+
+To 2 E-.-to-ro .-to-ro-.
+To 1 To-.-to-ro .-to-ro-.
+
+To 2 E-.-to-. .-to-.-.
+To 3 E-.-to-. .-to-.-.
+To`;
+  // Hécate: 8 compassos de contagem e 4 em 4/4, depois 7/4 (cada tempo dividido em colcheias)
+  const HECATE_TXT = `1 2 3 4
+2 2 3 4
+3 2 3 4
+4 2 3 4
+5 2 3 4
+6 2 3 4
+7 2 3 4
+8 2 3 4
+
+To Po Pa Po
+To Po Pa Po
+To Po Pa Po
+To To To-.-.-to E-.-to-.
+
+To Pa Pa Pa-po[70] E-po[70] Pa Pa
+To Pa Pa Pa-po[70] .-po[70] Pa Pa
+
+To 1 To 2 To 3 To-To
+
+To Pa Pa Pa-po[70] E-po[70] Pa Pa
+To Pa Pa Pa-po[70] E-po[70] Pa Pa
+To Pa Pa Pa-po[70] To To To
+
+To-po[70] Po-pa[70] Pa-po[70] Po-pa[70] Pa-po[70] Po-pa[70] po[70]-pa[70]
+To-po[70] Po-pa[70] Pa-po[70] Po-pa[70] Pa-po[70] Po-pa[70] po[70]-pa[70]
+To-po[70] Po-pa[70] Pa-po[70] Po-po[70] To To To
+
+E-to 1-to 2-to 3-to 4-to 5-to 6-to
+E-to 1-to 2-to 3-to To To To
+To`;
+  // Wukong: 4 compassos de contagem; minúsculas (pa, po) mais leves
+  const WUKONG_TXT = `1 2 3 4
+2 2 3 4
+3 2 3 4
+4 2 3 4
+
+To-.-.-to E To-.-.-to E-pa[70]
+To-.-.-to E-pa[70] po[70]-pa[70] po[70]-pa[70]
+To-.-.-to E To-.-.-to E-pa[70]
+Po Pa-pa[70] Po-pa[70] po[70]-pa[70]
+To 2 3 4
+2 2 3 4
+3 2 3 4
+
+To To To-po[70] To
+To-to 1 2 E-to
+To-to E-to To To
+To-to 1 2 E-to
+
+To-to E Pa-po[70] Pa-po[70]
+To-pa[70] Po-pa[70] E-to E-to
+Pa-po[70] Pa-po[70] 1 2
+To-pa[70] Po-pa[70] E-to E-to
+
+Pa-po[70] Pa-po[70] 1 2
+To-pa[70] Po-pa[70] E-to E-to
+Pa-po[70] Pa-po[70] 1 2
+To-pa[70] Po-pa[70] E-to E-to
+
+Pa-po[70] Pa-po[70] To E
+To To To-to To-to
+
+To-po[70] Pa-po[70] Po-po[70] Pa-po[70]
+To-pa[70] po[70]-Pa Po-po[70] Pa-po[70]
+To-po[70] Pa-po[70] Po-po[70] Pa-po[70]
+To To To To-to
+To-po[70] Pa-po[70] Po-Po to
+E-to Pa-po[70] Po-po[70] Pa-po[70]
+To-pa[70] po[70]-pa[70] Po-po[70] To
+To To To To-to
+To`;
+  // Shady (legenda do PDF: primeira = po, segunda = pa, dois = to). ro/go = 1ª leve, ra/ga = 2ª leve
+  const SHADY_TXT = `Pa E-Pa Po E-Po
+Pa E-Pa Po-.-.-Po E-Po
+
+To Pa-Po Pa E
+To-.-po-ro pa-po pa E
+To po pa po
+To To-po pa-po pa-po
+
+To E To E-To
+To E-To Pa Po
+To E To-To To
+E-To E-To pa-po pa-po
+To-To 1 E-To To-To
+E-To E-To pa po
+To E To-po pa-po
+To-.-po-ro pa-po E-.-po-ro pa-po
+
+To-.-pa-ra Po-.-po-ro pa-.-pa-ra po-To
+To-.-pa-ra po-to-pa-pa To-.-po-ro pa-To
+To-.-pa-ga ra-ga-po-go ro-go-pa-ra pa-To
+To-.-pa-ra pa-.-po-ro To-To E-To
+
+To-.-.-To E-To 1 2
+3 4 5 6
+7 8 To 1
+
+To E-To To 1
+To-To E-To To 2
+To E-To To 1
+To-To E-To To To-To
+E-To To To-To To-To
+E-To E-To 1 E-To
+
+To E-To To 1
+To To-To To-To E-To
+To 1 E-To To
+To 1 To-.-.-To E-To
+To 2 3 4
+
+1 2 3 4
+2 2 3 4
+3 2 3 4
+4 2 3 4
+5 2 3 4
+6 2 3 4
+7 2 3 4
+
+To 1 E-To To
+To 1 E-To E-To
+To-To E-To E-To E-To
+To-.-.-To E-To Pa-Po Pa-Po
+To`;
+  const MINUS_TXT = `To E-To To To-To
+To Po-Pa Po-Pa 1
+E-Po Po-Pa Pa-Po 1
+To-.-.-To E-Pa Pa-Po 1
+To-.-.-To E-To Pa-Po Pa-Po
+To 2 3 4
+
+1 2 3 4
+2 2 3 E-To
+To-To 1 2 E-To
+To-To 1 2 E-To
+To-.-.-To E-To To-To To-To
+To-.-To-ro to E-.-to-ro 1
+
+To-.-.-To E-To E-To To
+To-.-.-To E-To To To
+To-.-.-To E-To E-To To
+To 1 E-To To-To
+
+To-.-.-To E-To To To-To
+To-.-.-To E-To To To-To
+To-.-.-To E-To To To-To
+To To To-.-Po-ro Pa-To
+
+To-To E-.-.-To E-To .-To-.-.
+To-To E-.-.-To E-To .-To-.-.
+To-To E-.-.-To E-To .-To-.-.
+To-To .-.-.-To E-To To-To
+
+To-.-.-To E-To To 1
+To-.-.-To E-To To 1
+To-.-.-To E-To To E-To
+To To To E
+
+1 2 3 4
+2 2 3 4
+3 2 3 4
+4 2 3 4
+
+To 1 2 To-To
+E-To To 1 2
+
+To 1 E-To To
+E-To To To-To To-To
+To E-To To-To 1
+To E-To To-To 1
+To E-To To-To 1
+To To To To
+To E-To To-To 1
+To E-To To-To 1
+To E-To To-To 1
+To To To To
+
+To E-To 1 E-To
+To Pa-Po Pa To
+To Po Pa To-To
+To Pa Po To-To
+To Po Pa Po
+Pa Po To To
+To`;
+  const BUILTIN = [
+    { id: "ganesha", name: "Ganesha", bpm: 150, text: GANESHA_TXT, builtin: true },
+    { id: "soma", name: "Soma", bpm: 130, text: SOMA_TXT, builtin: true },
+    { id: "dagon", name: "Dagon", bpm: 140, text: DAGON_TXT, builtin: true },
+    { id: "hecate", name: "Hécate", bpm: 130, text: HECATE_TXT, builtin: true },
+    { id: "wukong", name: "Wukong", bpm: 130, text: WUKONG_TXT, builtin: true },
+    { id: "shady", name: "Shady", bpm: 130, text: SHADY_TXT, builtin: true },
+    { id: "minus", name: "Minus", bpm: 130, text: MINUS_TXT, builtin: true },
+  ];
+  const SEC_COLORS = ["#ff9a4a", "#3fc18a", "#b7d65a", "#3fc1d6", "#e070b0", "#9f8cff"];
+  // Toque → tambores [1ª, 2ª], força, abafado, palavra falada, volume da voz
+  const HITS = {
+    To: { drums: [0, 1], vel: 1, mute: false, say: "to", sg: 1 },
+    Pa: { drums: [1], vel: 1, mute: false, say: "pa", sg: 1 },
+    po: { drums: [0], vel: 1, mute: false, say: "po", sg: 1 },
+    Bo: { drums: [0, 1], vel: 1, mute: true, say: "bo", sg: 1 },
+    bo: { drums: [0, 1], vel: 0.75, mute: false, say: "bo", sg: 0.8 },
+    to: { drums: [0, 1], vel: 0.8, mute: false, say: "to", sg: 0.85 },
+    ro: { drums: [0], vel: 0.6, mute: false, say: "ro", sg: 0.8 },
+    go: { drums: [0], vel: 0.6, mute: false, say: "go", sg: 0.8 },
+    ra: { drums: [1], vel: 0.6, mute: false, say: "ra", sg: 0.8 },
+    ga: { drums: [1], vel: 0.6, mute: false, say: "ga", sg: 0.8 },
+  };
+  const RESTS = { E: "e", ti: "ti" };   // falados, sem toque
+  const ALIASES = { TO: "To", Ti: "ti", TI: "ti", Ro: "ro", RO: "ro", Go: "go", Ra: "ra", Ga: "ga", tô: "To", "Tô": "To", pa: "Pa", PA: "Pa", "pá": "Pa", Po: "po", PO: "po", e: "E", "é": "E", "ê": "E" };
+
+  // "To3[40]" → base "To", índice "3", intensidade 40
+  function tokParts(tok) {
+    const m = tok.match(/^([^\d\[]+)(\d*)(?:\[(\d+)\])?$/);
+    return m ? { base: m[1], sup: m[2], vel: m[3] ? +m[3] : null } : { base: tok, sup: "", vel: null };
+  }
+
+  function parseBreque(text) {
+    const bars = [], errors = [];
+    let sec = 0, secStart = 0, lineNo = 0;
+    const secs = [];            // índice da secção de cada compasso
+    const secHasHit = [];
+    for (const raw of text.split(/\r?\n/)) {
+      lineNo++;
+      const line = raw.replace(/#.*/, "").trim();
+      if (!line) { if (bars.length > secStart) { sec++; secStart = bars.length; } continue; }
+      const beats = line.split(/[\s|]+/).filter(Boolean).slice(0, 12).map(b => b.split("-").map(tok => {
+        if (tok === "." || tok === "_") return "";
+        if (/^[1-9]$/.test(tok)) return "#" + tok;
+        const m = tok.match(/^([^\d\[]+)(\d*)(?:\[(\d{1,3})\])?$/) || [tok, tok, "", ""];
+        const base = ALIASES[m[1]] || m[1];
+        if (RESTS[base]) return base + m[2];
+        if (HITS[base]) return base + m[2] + (m[3] ? `[${Math.min(100, +m[3])}]` : "");
+        errors.push(`Linha ${lineNo}: "${tok}" não é um toque conhecido`);
+        return "";
+      }));
+      if (line.split(/[\s|]+/).filter(Boolean).length > 12) errors.push(`Linha ${lineNo}: mais de 12 tempos (o resto foi ignorado)`);
+      bars.push(beats);
+      secs.push(sec);
+      if (beats.some(b => b.some(t => t && !t.startsWith("#")))) secHasHit[sec] = true;
+    }
+    // Secções só com contagem ficam neutras, como na partitura
+    let ci = 0;
+    const secColor = [];
+    for (let s = 0; s <= sec; s++) secColor[s] = secHasHit[s] ? SEC_COLORS[ci++ % SEC_COLORS.length] : null;
+    // Compassos podem ter quantos tempos quiserem (4/4, 7/4…): cada linha ocupa os tempos que tem
+    const barStart = [], beatBar = [], beatInBar = [];
+    let total = 0;
+    bars.forEach((bar, b) => { barStart[b] = total; bar.forEach((_, k) => { beatBar.push(b); beatInBar.push(k); }); total += bar.length; });
+    return { bars, sectionColor: secs.map(s => secColor[s]), section: secs, errors, barStart, beatBar, beatInBar, total };
+  }
+
+  // Lista de eventos em tempos (beats): toques e falas
+  function buildEvents(parsed) {
+    const ev = [];
+    parsed.bars.forEach((bar, b) => bar.forEach((beat, k) => beat.forEach((tok, j) => {
+      if (!tok) return;
+      const at = parsed.barStart[b] + k + j / beat.length, slot = 1 / beat.length;
+      if (tok.startsWith("#")) { const n = +tok.slice(1); ev.push({ beat: at, slot, say: n <= 8 ? "n" + n : null, sg: 0.8, count: true }); return; }
+      const { base, vel } = tokParts(tok);
+      if (RESTS[base]) { ev.push({ beat: at, slot, say: RESTS[base], sg: 0.9, rest: true, label: base }); return; }
+      const h = HITS[base];
+      const v = vel == null ? 1 : Math.max(0.05, vel / 100);
+      ev.push({ beat: at, slot, drums: h.drums, vel: h.vel * v, mute: h.mute, say: h.say, sg: h.sg * Math.max(0.5, v), label: base });
+    })));
+    return ev.sort((a, b) => a.beat - b.beat);
+  }
+
+
+  // ======================= Simulador 3D =======================
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const choke = { checked: true };      // novo toque corta o anterior, como no simulador de surdos
+  let P = JSON.parse(JSON.stringify(PRESETS));
+  let ctx = null, master = null, eng = null;
+  const vol = $("vol");
+  function updateStatus() {
+    const on = ctx && ctx.state === "running";
+    $("ctxDot").classList.toggle("on", !!on);
+    $("ctxText").textContent = on ? "Áudio ligado" : "Áudio em espera · toque num botão para ativar";
+  }
+  function ensureCtx() {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      ctx = new AC({ latencyHint: "interactive" });
+      const lim = makeLimiter(ctx);
+      master = ctx.createGain(); master.gain.value = +vol.value;
+      master.connect(lim).connect(ctx.destination);
+      eng = makeEngine(ctx, master);
+      ctx.onstatechange = updateStatus;
+    }
+    if (ctx.state !== "running") ctx.resume().catch(() => {});
+    updateStatus();
+  }
+  vol.addEventListener("input", () => { if (master) master.gain.value = +vol.value; });
+  // tempo "que se ouve agora": o som agendado em t só sai do alto-falante depois da latência de saída
+  const outLat = () => ctx ? (ctx.baseLatency || 0) + (ctx.outputLatency || 0) : 0;
+  const audibleNow = () => ctx ? ctx.currentTime - outLat() : 0;
+
+  // ---------- Cena ----------
+  const host = $("stage3d");
+  if (!window.THREE) { $("err3d").textContent = "Não foi possível carregar o motor 3D. Verifique a ligação e recarregue a página."; $("err3d").hidden = false; }
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  host.prepend(renderer.domElement);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0d0e12);
+  scene.fog = new THREE.Fog(0x0d0e12, 7, 14);
+  const camera = new THREE.PerspectiveCamera(38, 16 / 9, 0.05, 50);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enablePan = false;
+  controls.minDistance = 1.2; controls.maxDistance = 7; controls.maxPolarAngle = Math.PI * 0.49;
+
+  scene.add(new THREE.HemisphereLight(0xdfe6ff, 0x1a1410, 0.55));
+  const key = new THREE.DirectionalLight(0xfff1dc, 1.05); key.position.set(2.2, 4.2, 3.2); key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024); key.shadow.camera.left = -3; key.shadow.camera.right = 3; key.shadow.camera.top = 3; key.shadow.camera.bottom = -2; key.shadow.bias = -0.0005;
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0x8fb6ff, 0.5); rim.position.set(-3, 2.5, -3); scene.add(rim);
+  const warm = new THREE.PointLight(0xffb547, 0.6, 6); warm.position.set(0, 2.6, 1.6); scene.add(warm);
+  // palco: tablado redondo de madeira escura com um anel de luz
+  const floor = new THREE.Mesh(new THREE.CircleGeometry(3.4, 64), new THREE.MeshStandardMaterial({ color: 0x2a2018, roughness: 0.85 }));
+  floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+  for (let k = 0; k < 16; k++) { const x = -3.15 + k * 0.42, len = 2 * Math.sqrt(Math.max(0, 3.38 * 3.38 - x * x)); const plank = new THREE.Mesh(new THREE.PlaneGeometry(0.012, len), new THREE.MeshBasicMaterial({ color: 0x1b140f })); plank.rotation.x = -Math.PI / 2; plank.position.set(x, 0.001, 0); scene.add(plank); }
+  const ring = new THREE.Mesh(new THREE.RingGeometry(3.32, 3.4, 96), new THREE.MeshBasicMaterial({ color: 0xc9a24a })); ring.rotation.x = -Math.PI / 2; ring.position.y = 0.002; scene.add(ring);
+
+  const M = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: o.r ?? 0.6, metalness: o.m ?? 0, ...(o.extra || {}) });
+  function mesh(geo, mat, cast = true) { const m = new THREE.Mesh(geo, mat); m.castShadow = cast; m.receiveShadow = true; return m; }
+  const UNIT_CYL = new THREE.CylinderGeometry(1, 1, 1, 16);
+  // um "osso": cilindro de altura 1 esticado entre dois pontos (braços que mudam de forma a cada quadro)
+  function limb(r, mat) { const m = mesh(UNIT_CYL, mat); m.userData.r = r; return m; }
+  const Y = new THREE.Vector3(0, 1, 0), tmpV = new THREE.Vector3();
+  function between(m, a, b) {
+    tmpV.subVectors(b, a); const len = tmpV.length();
+    m.position.copy(a).addScaledVector(tmpV, 0.5);
+    m.scale.set(m.userData.r, len, m.userData.r);
+    m.quaternion.setFromUnitVectors(Y, tmpV.normalize());
+  }
+  function label(text, color) {
+    const c = document.createElement("canvas"); c.width = 256; c.height = 128; const g = c.getContext("2d");
+    g.fillStyle = "rgba(14,15,18,.78)"; g.beginPath(); g.roundRect ? g.roundRect(28, 18, 200, 92, 46) : g.rect(28, 18, 200, 92); g.fill();
+    g.fillStyle = color; g.font = "800 72px 'Big Shoulders Display', Impact, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(text, 128, 68);
+    const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding;
+    const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthWrite: false })); s.scale.set(0.42, 0.21, 1); return s;
+  }
+
+  // ---------- O surdo ----------
+  function makeDrum(R, H, hoopColor) {
+    const d = new THREE.Group();
+    const shell = mesh(new THREE.CylinderGeometry(R, R, H, 56, 1, true), M(0xd9dde3, { m: 0.35, r: 0.3, extra: { side: THREE.DoubleSide } }));
+    d.add(shell);
+    const skinMat = M(0xece4cf, { r: 0.92, extra: { emissive: new THREE.Color(0xffb547), emissiveIntensity: 0 } });
+    const head = mesh(new THREE.CircleGeometry(R * 0.99, 56), skinMat, false); head.rotation.x = -Math.PI / 2; head.position.y = H / 2 + 0.003; d.add(head);
+    const bottom = mesh(new THREE.CircleGeometry(R * 0.99, 56), M(0xd8cfb7, { r: 0.95 }), false); bottom.rotation.x = Math.PI / 2; bottom.position.y = -H / 2 - 0.003; d.add(bottom);
+    const hoopMat = M(hoopColor, { m: 0.55, r: 0.35 });
+    for (const y of [H / 2 + 0.006, -H / 2 - 0.006]) { const hoop = mesh(new THREE.TorusGeometry(R + 0.006, 0.019, 10, 56), hoopMat); hoop.rotation.x = Math.PI / 2; hoop.position.y = y; d.add(hoop); }
+    const rodMat = M(0xe3e6ea, { m: 0.9, r: 0.2 });
+    for (let k = 0; k < 10; k++) {
+      const a = k / 10 * Math.PI * 2, x = Math.cos(a) * (R + 0.026), z = Math.sin(a) * (R + 0.026);
+      const rod = mesh(new THREE.CylinderGeometry(0.0055, 0.0055, H * 0.98, 6), rodMat); rod.position.set(x, 0, z); d.add(rod);
+      for (const y of [H / 2 - 0.03, -H / 2 + 0.03]) { const lug = mesh(new THREE.BoxGeometry(0.022, 0.05, 0.022), rodMat); lug.position.set(x, y, z); d.add(lug); }
+    }
+    // onda de choque na pele
+    const wave = new THREE.Mesh(new THREE.RingGeometry(0.9, 1, 48), new THREE.MeshBasicMaterial({ color: 0xffb547, transparent: true, opacity: 0, depthWrite: false }));
+    wave.rotation.x = -Math.PI / 2; wave.position.y = H / 2 + 0.006; d.add(wave);
+    return { group: d, head, skinMat, wave, R, H };
+  }
+
+  // ---------- O bonequinho ----------
+  function makePlayer(o) {
+    const g = new THREE.Group(); g.position.set(o.x, 0, 0); g.rotation.y = o.ry; scene.add(g);
+    const body = new THREE.Group(); g.add(body);
+    const shirt = M(o.shirt, { r: 0.75 }), pants = M(o.pants, { r: 0.8 }), skin = M(o.skin, { r: 0.7 }), dark = M(0x15161a, { r: 0.5 });
+    // pernas e tênis
+    for (const sx of [-1, 1]) {
+      const leg = mesh(new THREE.CylinderGeometry(0.078, 0.07, 0.62, 14), pants); leg.position.set(0.1 * sx, 0.33, 0); g.add(leg);
+      const shoe = mesh(new THREE.BoxGeometry(0.13, 0.07, 0.25), M(0xf2f2f2, { r: 0.6 })); shoe.position.set(0.1 * sx, 0.036, 0.04); g.add(shoe);
+      const sole = mesh(new THREE.BoxGeometry(0.135, 0.02, 0.255), dark); sole.position.set(0.1 * sx, 0.01, 0.04); g.add(sole);
+    }
+    const hips = mesh(new THREE.CylinderGeometry(0.2, 0.19, 0.15, 20), pants); hips.position.y = 0.68; body.add(hips);
+    const torso = mesh(new THREE.CylinderGeometry(0.215, 0.2, 0.46, 24), shirt); torso.position.y = 0.97; body.add(torso);
+    const chest = mesh(new THREE.SphereGeometry(0.215, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), shirt); chest.position.y = 1.2; body.add(chest);
+    // número da camisa (1 ou 2)
+    const num = label(o.num, "#0e0f12"); num.material = num.material.clone(); num.scale.set(0.16, 0.08, 1); num.position.set(0, 1.02, -0.22); body.add(num);
+    const neck = mesh(new THREE.CylinderGeometry(0.06, 0.07, 0.08, 12), skin); neck.position.y = 1.31; body.add(neck);
+    // cabeça grande de bonequinho
+    const headG = new THREE.Group(); headG.position.y = 1.5; body.add(headG);
+    headG.add(mesh(new THREE.SphereGeometry(0.21, 32, 24), skin));
+    for (const sx of [-1, 1]) {
+      const eye = mesh(new THREE.SphereGeometry(0.028, 16, 12), dark, false); eye.position.set(0.075 * sx, 0.02, 0.188); headG.add(eye);
+      const shine = mesh(new THREE.SphereGeometry(0.008, 8, 6), M(0xffffff), false); shine.position.set(0.075 * sx + 0.01, 0.033, 0.212); headG.add(shine);
+      const cheek = mesh(new THREE.SphereGeometry(0.03, 12, 8), M(0xf29b8b, { r: 0.9 }), false); cheek.scale.set(1, 0.6, 0.35); cheek.position.set(0.12 * sx, -0.04, 0.165); headG.add(cheek);
+      const ear = mesh(new THREE.SphereGeometry(0.04, 12, 8), skin); ear.scale.set(0.6, 1, 0.8); ear.position.set(0.205 * sx, 0, 0); headG.add(ear);
+    }
+    const smile = mesh(new THREE.TorusGeometry(0.045, 0.009, 8, 20, Math.PI), dark, false); smile.rotation.z = Math.PI; smile.position.set(0, -0.055, 0.19); headG.add(smile);
+    // boné com a cor do surdo
+    const cap = mesh(new THREE.SphereGeometry(0.218, 28, 14, 0, Math.PI * 2, 0, Math.PI * 0.42), M(o.cap, { r: 0.7 })); cap.position.y = 0.025; headG.add(cap);
+    const brim = mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.018, 24, 1, false, -Math.PI / 2, Math.PI), M(o.cap, { r: 0.7 })); brim.position.set(0, 0.075, 0.13); brim.rotation.x = 0.12; headG.add(brim);
+    // talabarte
+    const strap = limb(0.022, M(0x1d1f24, { r: 0.9 })); body.add(strap);
+    // surdo pendurado à frente, inclinado para a pele aparecer
+    const drum = makeDrum(o.R, o.H, o.hoop);
+    drum.group.position.set(-0.03, 0.74 - (0.6 - o.H) / 2, 0.4 + o.R - 0.3); drum.group.rotation.x = 0.3; body.add(drum.group);
+    drum.group.updateMatrix();
+    const toBody = v => v.clone().applyMatrix4(drum.group.matrix);
+    const normal = new THREE.Vector3(0, 1, 0).applyQuaternion(drum.group.quaternion);
+    between(strap, new THREE.Vector3(0.18, 1.24, -0.02), toBody(new THREE.Vector3(-o.R, o.H / 2, -0.04)));
+    // braço direito: ombro fixo; antebraço + maceta giram no cotovelo e, sem levantar, a cabeça da maceta encosta na pele
+    const sR = new THREE.Vector3(0.255, 1.2, 0.0), eR = new THREE.Vector3(0.26, 0.98, 0.2);
+    const upperR = limb(0.052, shirt); body.add(upperR); between(upperR, sR, eR);
+    const sleeveR = mesh(new THREE.SphereGeometry(0.075, 14, 10), shirt); sleeveR.position.copy(sR); body.add(sleeveR);
+    const malletR = 0.05;
+    const hitPoint = toBody(new THREE.Vector3(0.05, o.H / 2, -0.04));
+    const target = hitPoint.clone().addScaledVector(normal, malletR + 0.004);
+    const dir = target.clone().sub(eR), L = dir.length(); dir.normalize();
+    const swing = new THREE.Group(); swing.position.copy(eR); body.add(swing);
+    const inner = new THREE.Group(); inner.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), dir); swing.add(inner);
+    const elbowBall = mesh(new THREE.SphereGeometry(0.052, 12, 10), skin); inner.add(elbowBall);
+    const fore = mesh(new THREE.CylinderGeometry(0.045, 0.04, 0.2, 12), skin); fore.rotation.x = Math.PI / 2; fore.position.z = 0.1; inner.add(fore);
+    const hand = mesh(new THREE.SphereGeometry(0.052, 14, 10), skin); hand.position.z = 0.22; inner.add(hand);
+    const stickLen = L - 0.22 - malletR * 0.6;
+    const stick = mesh(new THREE.CylinderGeometry(0.012, 0.014, stickLen, 10), M(0xb07a43, { r: 0.55 })); stick.rotation.x = Math.PI / 2; stick.position.z = 0.22 + stickLen / 2; inner.add(stick);
+    const mallet = mesh(new THREE.CylinderGeometry(malletR, malletR, 0.075, 20), M(0xf4efe4, { r: 0.98 })); mallet.rotation.z = Math.PI / 2; mallet.position.z = L; inner.add(mallet);
+    const malletCap = mesh(new THREE.TorusGeometry(malletR * 0.98, 0.006, 6, 20), M(o.hoop, { m: 0.4, r: 0.4 })); malletCap.rotation.y = Math.PI / 2; malletCap.position.set(0, 0, L); inner.add(malletCap);
+    const axis = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize();
+    // braço esquerdo: a mão descansa no aro e desce sobre a pele no abafado
+    const sL = new THREE.Vector3(-0.255, 1.2, 0.0);
+    const restL = toBody(new THREE.Vector3(-o.R * 0.86, o.H / 2 + 0.04, -o.R * 0.32));
+    const muteL = toBody(new THREE.Vector3(-o.R * 0.35, o.H / 2 + 0.035, -0.02));
+    const upperL = limb(0.052, shirt), foreL = limb(0.045, skin); body.add(upperL, foreL);
+    const sleeveL = mesh(new THREE.SphereGeometry(0.075, 14, 10), shirt); sleeveL.position.copy(sL); body.add(sleeveL);
+    const handL = mesh(new THREE.SphereGeometry(0.055, 14, 10), skin); handL.scale.set(1.1, 0.6, 1.2); body.add(handL);
+    const elbowL = mesh(new THREE.SphereGeometry(0.05, 12, 10), skin); body.add(elbowL);
+    const tag = label(o.label, o.labelColor); tag.position.set(0, 1.98, 0); body.add(tag);
+    return { i: o.i, g, body, headG, drum, swing, axis, upperL, foreL, handL, elbowL, sL, restL, muteL, hits: [], lastFx: -1, fx: [], idle: Math.random() * 6 };
+  }
+  // posições ajustadas ao ângulo da câmera: 1ª à esquerda, 2ª à direita, levemente virados um para o outro
+  const players = [
+    makePlayer({ i: 0, x: -0.72, ry: 0.22, R: 0.3, H: 0.58, shirt: 0xc9a24a, pants: 0x23262e, skin: 0xc68a63, cap: 0x1d1f24, hoop: 0xc9a24a, label: "1ª", labelColor: "#c9a24a", num: "1" }),
+    makePlayer({ i: 1, x: 0.72, ry: -0.22, R: 0.27, H: 0.52, shirt: 0x7fb3d5, pants: 0x23262e, skin: 0x8d5a3b, cap: 0xffffff, hoop: 0x7fb3d5, label: "2ª", labelColor: "#7fb3d5", num: "2" }),
+  ];
+
+  // ---------- Câmeras ----------
+  const VIEWS = {
+    frente: { pos: [0, 1.75, 3.9], at: [0, 0.95, 0.25] },
+    lado: { pos: [3.4, 1.6, 1.6], at: [0, 0.9, 0.2] },
+    cima: { pos: [0, 4.2, 1.5], at: [0, 0.75, 0.3] },
+    p1: { pos: [-0.3, 1.75, 2.25], at: [-0.72, 1.05, 0.3] },
+    p2: { pos: [0.3, 1.75, 2.25], at: [0.72, 1.05, 0.3] },
+  };
+  let camTween = null;
+  function setView(v, instant) {
+    const V = VIEWS[v]; if (!V) return;
+    document.querySelectorAll("#views button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+    const to = { pos: new THREE.Vector3(...V.pos), at: new THREE.Vector3(...V.at) };
+    if (instant) { camera.position.copy(to.pos); controls.target.copy(to.at); controls.update(); return; }
+    camTween = { from: { pos: camera.position.clone(), at: controls.target.clone() }, to, t0: performance.now(), dur: 700 };
+  }
+  document.querySelectorAll("#views button").forEach(b => b.addEventListener("click", () => setView(b.dataset.v)));
+  setView("frente", true);
+  function resize() {
+    const w = host.clientWidth, h = host.clientHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h;
+    camera.fov = w / h < 1 ? 52 : 38;
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(host); resize();
+
+  // ---------- Animação da maceta ----------
+  // A maceta sobe antes do toque e desce acelerando até encostar na pele exatamente no instante do som.
+  // A janela do golpe se encolhe nas notas rápidas, como faz quem toca. Depois do toque, um rebote curto.
+  const REST = 0.32, TOP = 1.25;   // ângulos (rad) da maceta em repouso e no alto do golpe
+  function malletAngle(p, t) {
+    let prev = null, next = null;
+    for (const h of p.hits) { if (h.t <= t) prev = h; else { next = h; break; } }
+    let a = REST;
+    if (prev) { const dt = t - prev.t; if (dt < 0.16) { const q = dt / 0.16; a = REST * (1 - Math.pow(1 - q, 3)); } }
+    if (next) {
+      const gap = next.t - (prev ? prev.t : next.t - 1);
+      const W = Math.min(0.34, Math.max(0.05, gap * 0.78));
+      const u = (next.t - t) / W;                              // 1 = começo do golpe, 0 = contato
+      if (u <= 1) {
+        const top = REST + (TOP - REST) * Math.min(1, W / 0.34) * (0.55 + 0.45 * next.v);
+        const s = 1 - u;
+        const start = prev && t - prev.t < 0.16 ? a : REST;
+        a = s < 0.55 ? start + (top - start) * Math.sin((s / 0.55) * Math.PI / 2) : top * (1 - Math.pow((s - 0.55) / 0.45, 2));
+      }
+    }
+    return a;
+  }
+  function addHit(i, t, v, mute) {
+    const p = players[i]; p.hits.push({ t, v, mute }); p.hits.sort((a, b) => a.t - b.t);
+  }
+  function animate() {
+    requestAnimationFrame(animate);
+    const now = audibleNow(), wall = performance.now() / 1000;
+    if (camTween) {
+      const k = Math.min(1, (performance.now() - camTween.t0) / camTween.dur), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      camera.position.lerpVectors(camTween.from.pos, camTween.to.pos, e); controls.target.lerpVectors(camTween.from.at, camTween.to.at, e);
+      if (k >= 1) camTween = null;
+    }
+    controls.update();
+    const beatT = bq.on ? (now - bq.start) / spb() : wall * 0.9;
+    for (const p of players) {
+      while (p.hits.length > 2 && p.hits[1].t < now - 1) p.hits.shift();
+      // corpo: respiração e um balanço no tempo
+      const sway = bq.on ? Math.sin(beatT * Math.PI) * 0.03 : Math.sin(wall * 1.3 + p.idle) * 0.012;
+      p.body.rotation.z = sway; p.body.position.y = Math.abs(Math.sin(beatT * Math.PI)) * (bq.on ? 0.012 : 0.004);
+      p.headG.rotation.z = -sway * 0.8; p.headG.rotation.x = bq.on ? Math.sin(beatT * Math.PI * 2) * 0.04 : 0;
+      // maceta
+      p.swing.quaternion.setFromAxisAngle(p.axis, malletAngle(p, now));
+      // efeitos do toque no instante do contato
+      for (const h of p.hits) if (h.t <= now && h.t > p.lastFx) { p.lastFx = h.t; p.fx.push({ t: h.t, v: h.v, mute: h.mute }); }
+      p.fx = p.fx.filter(f => now - f.t < 0.5);
+      let glow = 0, squash = 0, wave = null, mute = 0;
+      for (const f of p.fx) {
+        const dt = now - f.t;
+        glow = Math.max(glow, Math.exp(-dt / 0.09) * f.v);
+        squash = Math.max(squash, Math.exp(-dt / 0.05) * f.v);
+        if (!wave || f.t > wave.t) wave = f;
+        if (f.mute) mute = Math.max(mute, dt < 0.22 ? 1 : Math.max(0, 1 - (dt - 0.22) / 0.12));
+      }
+      for (const h of p.hits) if (h.mute && h.t > now && h.t - now < 0.08) mute = Math.max(mute, 1 - (h.t - now) / 0.08);
+      p.drum.skinMat.emissiveIntensity = glow * 0.55;
+      p.drum.group.scale.set(1 + squash * 0.012, 1 - squash * 0.02, 1 + squash * 0.012);
+      if (wave) { const dt = now - wave.t, k = dt / (wave.mute ? 0.18 : 0.42); p.drum.wave.material.opacity = Math.max(0, (1 - k) * 0.8 * wave.v); const r = p.drum.R * (0.15 + 0.8 * Math.min(1, k)); p.drum.wave.scale.set(r, r, r); }
+      else p.drum.wave.material.opacity = 0;
+      // mão esquerda: do aro para cima da pele no abafado
+      const hp = p.restL.clone().lerp(p.muteL, mute); hp.y += Math.sin(wall * 1.7 + p.idle) * 0.004;
+      const el = p.sL.clone().lerp(hp, 0.5).add(new THREE.Vector3(-0.1, -0.06, -0.05));
+      between(p.upperL, p.sL, el); between(p.foreL, el, hp); p.handL.position.copy(hp); p.elbowL.position.copy(el);
+    }
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(animate);
+
+  // ---------- Tocar ao vivo ----------
+  function playLive(i, mute) {
+    ensureCtx();
+    const t = ctx.currentTime;
+    eng.trigger(i, mute, t, false);
+    addHit(i, t, mute ? 0.8 : 1, mute);
+    const pad = $(i === 0 ? "pad1" : "pad2"); pad.classList.add("hit"); setTimeout(() => pad.classList.remove("hit"), 110);
+  }
+  $("pad1").addEventListener("pointerdown", e => { e.preventDefault(); playLive(0, e.shiftKey); });
+  $("pad2").addEventListener("pointerdown", e => { e.preventDefault(); playLive(1, e.shiftKey); });
+
+  // ---------- Breques ----------
+  const bqSel = $("bqSel"), bqTitle = $("bqTitle"), bqMeta = $("bqMeta"), scoreEl = $("score"), bpm = $("bpm"), bpmOut = $("bpmOut");
+  const metro = $("metro"), countIn = $("countIn"), bqRepeat = $("bqRepeat"), bqPos = $("bqPos"), ovWord = $("ovWord"), ovPos = $("ovPos");
+  let current = BUILTIN[0], parsed = parseBreque(current.text), events = buildEvents(parsed), beatCells = [], barRows = [], startBar = 0;
+  BUILTIN.forEach(b => bqSel.appendChild(new Option(b.name, b.id)));
+  const spb = () => 60 / +bpm.value;
+  function selectBreque(id) {
+    current = BUILTIN.find(b => b.id === id) || BUILTIN[0];
+    if (bq.on) stopBreque();
+    parsed = parseBreque(current.text); events = buildEvents(parsed); startBar = 0;
+    bqSel.value = current.id; bpm.value = current.bpm; bpmOut.textContent = `${bpm.value} bpm`;
+    bqTitle.textContent = current.name; bqMeta.textContent = `${parsed.bars.length} compassos · ${current.bpm} bpm`;
+    bqPos.textContent = "Começa no compasso 1"; renderScore();
+    try { localStorage.setItem("surdos3d.sel", current.id); } catch (e) {}
+  }
+  bqSel.addEventListener("change", () => selectBreque(bqSel.value));
+  bpm.addEventListener("input", () => { bpmOut.textContent = `${bpm.value} bpm`; if (bq.on) { stopBreque(); startBreque(); } });
+  function renderScore() {
+    scoreEl.innerHTML = ""; beatCells = []; barRows = [];
+    parsed.bars.forEach((bar, b) => {
+      const row = document.createElement("div"); row.className = "bar-row" + (b === startBar ? " start" : "") + (bar.length > 4 ? " wide" : "");
+      row.tabIndex = 0; row.setAttribute("role", "button"); row.setAttribute("aria-label", `Começar no compasso ${b + 1}`);
+      const cells = document.createElement("div"); cells.className = "cells"; cells.style.setProperty("--n", Math.max(bar.length, 4));
+      if (parsed.sectionColor[b]) cells.style.setProperty("--sec", parsed.sectionColor[b]);
+      bar.forEach((beat, k) => {
+        const cell = document.createElement("div"); cell.className = "beat";
+        beat.forEach(tok => {
+          const sp = document.createElement("span"); sp.className = "slot-t";
+          if (tok.startsWith("#")) { sp.classList.add("tk-cnt"); sp.textContent = tok.slice(1); }
+          else if (tok) { const { base, sup, vel } = tokParts(tok); sp.classList.add("tk-" + base); sp.innerHTML = base + (sup ? `<sup>${sup}</sup>` : ""); if (vel != null) sp.style.opacity = (0.35 + 0.65 * vel / 100).toFixed(2); }
+          cell.appendChild(sp);
+        });
+        beatCells[parsed.barStart[b] + k] = cell; cells.appendChild(cell);
+      });
+      row.innerHTML = `<span class="n">${b + 1}</span>`; row.appendChild(cells);
+      const pick = () => { startBar = b; barRows.forEach((r, i) => r.classList.toggle("start", i === b)); bqPos.textContent = `Começa no compasso ${b + 1}`; if (bq.on) { stopBreque(); startBreque(); } };
+      row.addEventListener("click", pick); row.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); pick(); } });
+      scoreEl.appendChild(row); barRows.push(row);
+    });
+  }
+  // Agendador: o som vai 0,15 s à frente; os bonequinhos recebem os toques 0,6 s antes para preparar o golpe
+  const bq = { on: false, start: 0, timer: 0, ev: [], aIdx: 0, vIdx: 0, nextClick: 0, cur: -1, sb: 0, span: 0 };
+  const evTime = k => { const n = bq.ev.length, e = bq.ev[k % n], cyc = Math.floor(k / n); return bq.start + (cyc * bq.span + e.beat - bq.sb) * spb(); };
+  function bqSchedule() {
+    const s = spb(), now = ctx.currentTime, total = parsed.total;
+    while (true) {   // contagem e metrônomo
+      const t = bq.start + bq.nextClick * s; if (t > now + 0.15) break;
+      const inCount = bq.nextClick < 0, pos = bq.sb + bq.nextClick;
+      if (!bqRepeat.checked && pos >= total) break;
+      if (inCount && countIn.checked) eng.click(t, bq.nextClick === -4, "bq");
+      else if (!inCount && metro.checked) { const n = total || 1; eng.click(t, parsed.beatInBar[((pos % n) + n) % n] === 0, "bq"); }
+      bq.nextClick++;
+    }
+    const n = bq.ev.length, limit = bqRepeat.checked ? Infinity : n;
+    while (bq.vIdx < limit && n) {   // bonequinhos: antecedência maior
+      const t = evTime(bq.vIdx); if (t > now + 0.6) break;
+      const e = bq.ev[bq.vIdx % n];
+      if (e.drums) for (const d of e.drums) if (d < 2) addHit(d, t, e.vel, e.mute);
+      bq.vIdx++;
+    }
+    while (bq.aIdx < limit && n) {   // som
+      const t = evTime(bq.aIdx); if (t > now + 0.15) break;
+      const e = bq.ev[bq.aIdx % n];
+      if (t >= now - 0.01 && e.drums) for (const d of e.drums) { if (d > 1) continue; eng.trigger(d, false, Math.max(t, now), "bq", e.vel); if (e.mute) eng.stopVoices(d, t + 0.13, 0.035); }
+      bq.aIdx++;
+    }
+    if (!bqRepeat.checked && bq.aIdx >= n && now > bq.start + (bq.span + 0.6) * s) stopBreque();
+  }
+  function bqDraw() {
+    if (!bq.on) return;
+    const s = spb(), now = audibleNow(), rel = (now - bq.start) / s;
+    let gi = -1;
+    if (rel >= 0) { const r = Math.floor(rel); gi = bq.sb + (bqRepeat.checked ? r % bq.span : r); }
+    if (gi !== bq.cur) {
+      if (beatCells[bq.cur]) beatCells[bq.cur].classList.remove("now");
+      bq.cur = gi; const c = beatCells[gi];
+      if (c) { c.classList.add("now"); const row = c.closest(".bar-row"), top = row.offsetTop - scoreEl.offsetTop; if (top < scoreEl.scrollTop || top + row.offsetHeight > scoreEl.scrollTop + scoreEl.clientHeight) scoreEl.scrollTop = top - 8; ovPos.textContent = `${current.name} · compasso ${parsed.beatBar[gi] + 1} · tempo ${parsed.beatInBar[gi] + 1}`; }
+    }
+    // sílaba do momento, grande sobre o palco
+    let word = "", col = "#8d8f98";
+    if (rel < 0 && countIn.checked) word = String(Math.max(1, Math.min(4, Math.floor(rel + 5))));
+    else {
+      const b = bq.sb + (bqRepeat.checked ? ((rel % bq.span) + bq.span) % bq.span : rel);
+      for (let k = events.length - 1; k >= 0; k--) { const e = events[k]; if (e.beat <= b + 1e-6) { if (b - e.beat < Math.max(e.slot, 0.35)) { word = e.count ? String(+e.say?.slice(1) || "") : (e.label || ""); col = e.count ? "#6b6e78" : e.rest ? "#ff6b6b" : ({ Pa: "#3fc1b0", po: "#ff9a4a", ro: "#ff9a4a", go: "#ff9a4a", ra: "#3fc1b0", ga: "#3fc1b0" })[e.label] || "#6ea8ff"; } break; } }
+    }
+    ovWord.textContent = word; ovWord.style.color = col;
+    requestAnimationFrame(bqDraw);
+  }
+  function startBreque() {
+    if (!parsed.bars.length) return;
+    ensureCtx();
+    const s = spb();
+    bq.sb = parsed.barStart[startBar] || 0; bq.span = parsed.total - bq.sb;
+    bq.ev = events.filter(e => e.beat >= bq.sb);
+    bq.on = true; bq.aIdx = 0; bq.vIdx = 0; bq.cur = -1;
+    bq.nextClick = countIn.checked ? -4 : 0;
+    bq.start = ctx.currentTime + 0.1 + (countIn.checked ? 4 * s : 0);
+    players.forEach(p => { p.hits = p.hits.filter(h => h.t < ctx.currentTime); });
+    bqSchedule(); bq.timer = setInterval(bqSchedule, 25);
+    $("bqPlay").classList.add("playing"); $("bqLbl").textContent = "Parar breque"; $("bqIcon").setAttribute("d", "M3 3h8v8H3z");
+    bqDraw();
+  }
+  function stopBreque() {
+    bq.on = false; clearInterval(bq.timer);
+    if (eng) eng.cancelTagged("bq", ctx.currentTime);
+    const now = ctx ? ctx.currentTime : 0;
+    players.forEach(p => { p.hits = p.hits.filter(h => h.t <= now); });
+    if (beatCells[bq.cur]) beatCells[bq.cur].classList.remove("now");
+    bq.cur = -1; ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`;
+    $("bqPlay").classList.remove("playing"); $("bqLbl").textContent = "Tocar breque"; $("bqIcon").setAttribute("d", "M3 1.5v11l9.5-5.5z");
+    bqPos.textContent = `Começa no compasso ${startBar + 1}`;
+  }
+  const toggleBreque = () => bq.on ? stopBreque() : startBreque();
+  $("bqPlay").addEventListener("click", toggleBreque);
+  window.addEventListener("keydown", e => {
+    if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.target.closest && e.target.closest("input:not([type=range]):not([type=checkbox]), select, textarea")) return;
+    const k = e.key.toLowerCase();
+    if (k === " " || k === "b") { e.preventDefault(); toggleBreque(); return; }
+    if (k === "a") { e.preventDefault(); playLive(0, e.shiftKey); return; }
+    if (k === "s") { e.preventDefault(); playLive(1, e.shiftKey); return; }
+  });
+  document.addEventListener("visibilitychange", () => { if (document.hidden && bq.on) stopBreque(); });
+  let last = null; try { last = localStorage.getItem("surdos3d.sel"); } catch (e) {}
+  selectBreque(last && BUILTIN.some(b => b.id === last) ? last : "minus");
+  ovPos.textContent = `${current.name} · pronto para tocar`;
+  window.__s3d = { players, malletAngle, addHit, get bq() { return bq; }, camera, scene };
+
+})();
+</script>
