@@ -1,0 +1,589 @@
+<title>Agogô de 4 Bocas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Agogô de 4 bocas (Pu, Po, Pe, Pi) visto de frente, com som metálico sintetizado, varrida com o dedo, looper e levadas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: palco escuro; o agogô em leque ocupa a coluna principal, looper e levadas ao lado (empilham no celular) */
+:root {
+  --bg: #0f1013;
+  --panel: #17191e;
+  --line: #2a2d35;
+  --fg: #ecebe6;
+  --muted: #8f929b;
+  --brass: #c9a24a;
+  --hit: #ffd27a;
+  --rec: #ef4b4b;
+  --ok: #6fcf97;
+  --pi: #ff8e6e;
+  --pe: #b9e27a;
+  --po: #8fc8ff;
+  --pu: #ffb547;
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { min-height: 100%; }
+body {
+  background: radial-gradient(ellipse at 40% 20%, var(--panel), var(--bg) 70%) fixed, var(--bg);
+  color: var(--fg); font-family: var(--f-body); font-size: 15px; line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+}
+.wrap {
+  max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;
+  padding-block: 18px 32px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; }
+h1 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(28px, 5vw, 44px); letter-spacing: .02em; margin: 0; line-height: 1; text-wrap: balance; }
+h1 span { color: var(--brass); }
+h2 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: 22px; letter-spacing: .03em; margin: 0; line-height: 1; }
+h2 small { font-family: var(--f-body); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--muted); margin-left: 8px; }
+p { margin: 0; }
+.status { font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brass); flex: none; }
+.dot.on { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+.btn { font: inherit; font-size: 13px; font-weight: 600; color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.btn:hover { border-color: var(--brass); }
+.btn:focus-visible, .chip:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.btn:disabled { opacity: .45; cursor: default; }
+.btn.on { border-color: var(--hit); color: var(--hit); }
+.btn svg { width: 13px; height: 13px; flex: none; }
+.btn .rec-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--rec); flex: none; }
+.btn.recording { border-color: var(--rec); color: var(--rec); }
+.btn.recording .rec-dot { animation: blink 1s steps(2) infinite; }
+@keyframes blink { to { opacity: .2; } }
+.chip { font: inherit; font-size: 12px; color: var(--muted); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; cursor: pointer; }
+.chip:hover { border-color: var(--brass); color: var(--fg); }
+.chip.on { background: var(--brass); color: #1b1407; border-color: var(--brass); font-weight: 600; }
+kbd { font-family: var(--f-mono); font-size: 11px; padding: 1px 6px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; background: var(--bg); color: var(--fg); }
+
+.main { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(280px, .8fr); gap: 20px; align-items: start; }
+@media (max-width: 820px) { .main { grid-template-columns: 1fr; } }
+.stage { display: flex; flex-direction: column; align-items: center; gap: 12px; min-width: 0; }
+.agogo { width: min(100%, 620px); max-width: 100%; height: auto; display: block; touch-action: none; user-select: none; -webkit-user-select: none; cursor: pointer; overflow: hidden; }
+.agogo .bell { cursor: pointer; }
+.agogo .cone { fill: url(#chrome); stroke: #4b5058; stroke-width: 1; }
+.agogo .mouth { fill: url(#mouth); }
+.agogo .rim { fill: none; stroke: #f4f6f9; stroke-width: 2.2; opacity: .9; }
+.agogo .glow { fill: none; stroke-width: 7; opacity: 0; filter: url(#blur); pointer-events: none; }
+.agogo .stem { stroke: #4a2c1c; stroke-width: 15; stroke-linecap: round; }
+.agogo .stamp { fill: none; stroke: #8b9099; stroke-width: 1.2; opacity: .55; }
+.agogo .name { font: 800 30px var(--f-display); fill: #1a1c21; text-anchor: middle; pointer-events: none; letter-spacing: .03em; }
+.agogo .key { font: 500 12px var(--f-mono); fill: #2b2e35; text-anchor: middle; pointer-events: none; }
+.agogo .leather { fill: #4a2c1c; }
+.agogo .wrapline { stroke: #2f1b10; stroke-width: 1.4; opacity: .75; }
+.agogo .wire { fill: none; stroke: #b8bcc3; stroke-width: 4; stroke-linejoin: round; }
+.agogo .stick { fill: #b07a43; stroke: #5b3a1b; stroke-width: 1; }
+.agogo .stick-tip { fill: #d2a46c; stroke: #5b3a1b; stroke-width: 1; }
+.agogo .ripple { fill: none; stroke-width: 3; pointer-events: none; }
+.legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); }
+.legend b { font-family: var(--f-display); font-size: 18px; line-height: 1; }
+.legend span.hot { border-color: var(--hit); color: var(--fg); }
+.hint-stage { font-size: 13px; color: var(--muted); text-align: center; max-width: 62ch; }
+
+.side { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.card { display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--panel) 80%, transparent); min-width: 0; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.row label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+.row input[type=range] { width: 120px; accent-color: var(--brass); }
+.row input[type=checkbox] { accent-color: var(--brass); width: 16px; height: 16px; }
+.row output { font-family: var(--f-mono); font-size: 12px; color: var(--fg); min-width: 58px; font-variant-numeric: tabular-nums; }
+.lp-info { display: flex; gap: 16px; font-size: 13px; color: var(--muted); }
+.lp-info b { color: var(--fg); font-family: var(--f-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.timeline { position: relative; height: 72px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); overflow: hidden; }
+.timeline .mark { position: absolute; width: 3px; height: 13px; border-radius: 2px; transform: translateX(-50%); }
+.timeline .head { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--hit); left: 0; }
+.timeline .empty { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; color: var(--muted); padding: 0 12px; text-align: center; }
+.note { font-size: 12.5px; color: var(--muted); max-width: 70ch; }
+.lev { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+.lev h3 { margin: 0; font-size: 13px; font-weight: 700; color: var(--brass); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.syl { font-family: var(--f-display); font-weight: 800; font-size: 26px; letter-spacing: .03em; line-height: 1.1; display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.syl span { transition: transform .08s; border-radius: 4px; padding: 0 2px; }
+.syl span.rest { color: var(--line); }
+.syl span.acc { text-decoration: underline; text-underline-offset: 4px; }
+.syl span.cur { background: rgba(255,210,122,.18); box-shadow: inset 0 0 0 1px var(--hit); transform: translateY(-2px); }
+.exp { font-size: 12.5px; color: var(--muted); }
+input[type=text] { font: 500 13px var(--f-mono); color: var(--fg); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; width: 100%; min-width: 0; }
+.err { font-size: 12.5px; color: var(--rec); }
+.smp-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.smp { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); font-size: 13px; }
+.smp small { color: var(--muted); font-size: 11.5px; }
+.smp .ok { color: var(--ok); }
+.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; }
+.foot label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.foot input[type=range] { accent-color: var(--brass); }
+.hint { font-size: 12.5px; color: var(--muted); max-width: 90ch; }
+@media (prefers-reduced-motion: reduce) { .syl span { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Agogô <span>de</span> 4 bocas</h1>
+    <div class="row">
+      <button class="chip" id="flipBtn" type="button">⇄ Inverter lados</button>
+      <button class="chip" id="smpBtn" type="button">Usar amostras reais (MP3/WAV)</button>
+    </div>
+    <div class="status"><i class="dot" id="ctxDot"></i><span id="ctxText">Áudio em espera · toque numa boca para ativar</span></div>
+  </header>
+
+  <div class="card" id="smpPanel" hidden>
+    <h2>Amostras reais<small>cada arquivo substitui o som sintetizado daquela boca</small></h2>
+    <div class="smp-list" id="smpList"></div>
+    <p class="note">Aceita MP3, WAV, M4A, OGG. Grave cada boca isolada, com um silêncio curto antes; a página corta o silêncio inicial sozinha. As amostras valem enquanto a página estiver aberta.</p>
+  </div>
+
+  <div class="main">
+    <div class="stage">
+      <svg class="agogo" id="agogo" viewBox="-250 -292 500 532" aria-label="Agogô de 4 bocas">
+        <defs>
+          <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#4f545c"/><stop offset=".16" stop-color="#c9cdd3"/><stop offset=".3" stop-color="#ffffff"/>
+            <stop offset=".48" stop-color="#9aa0a8"/><stop offset=".7" stop-color="#e6e8ec"/><stop offset=".88" stop-color="#8a9098"/><stop offset="1" stop-color="#5a5f67"/>
+          </linearGradient>
+          <radialGradient id="mouth" cx="50%" cy="55%" r="60%"><stop offset="0" stop-color="#0c0d10"/><stop offset=".7" stop-color="#2a2d33"/><stop offset="1" stop-color="#6c727b"/></radialGradient>
+          <linearGradient id="leatherG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2f1b10"/><stop offset=".45" stop-color="#5a3826"/><stop offset="1" stop-color="#2f1b10"/></linearGradient>
+          <filter id="blur" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="3"/></filter>
+          <g id="stickShape"><rect class="stick" x="6" y="-4.5" width="112" height="9" rx="4"/><ellipse class="stick-tip" cx="7" cy="0" rx="8" ry="6"/></g>
+        </defs>
+        <g id="handle">
+          <path class="wire" d="M-22 150 L-30 232 L30 232 L22 150"/>
+          <path class="leather" style="fill:url(#leatherG)" d="M-24 -6 C-22 40 -20 100 -26 158 L26 158 C20 100 22 40 24 -6 Z"/>
+          <g id="wraps"></g>
+        </g>
+        <g id="bells"></g>
+      </svg>
+      <div class="legend" id="legend"></div>
+      <p class="hint-stage">Clique ou toque numa boca. Deslize o dedo pelas quatro para a varrida, e use vários dedos ao mesmo tempo no celular. <kbd>Shift</kbd> + tecla toca mais fraco.</p>
+    </div>
+
+    <aside class="side">
+      <div class="card">
+        <h2>Looper<small>grave uma base e improvise por cima</small></h2>
+        <div class="row">
+          <button class="btn" id="btnRec" type="button"><i class="rec-dot"></i><span>Gravar</span></button>
+          <button class="btn" id="btnStop" type="button" disabled><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="2" width="10" height="10" rx="1.5" fill="currentColor"/></svg><span>Parar/Salvar</span></button>
+          <button class="btn" id="btnPlay" type="button" disabled><svg viewBox="0 0 14 14" aria-hidden="true"><path id="playIcon" d="M3 1.5v11l9.5-5.5z" fill="currentColor"/></svg><span id="playLbl">Tocar loop</span></button>
+          <button class="btn" id="btnClear" type="button" disabled>Apagar</button>
+        </div>
+        <div class="lp-info"><span>Tempo <b id="lpTime">0,00 s</b></span><span>Toques <b id="lpHits">0</b></span></div>
+        <div class="timeline" id="timeline" aria-hidden="true"><div class="empty" id="tlEmpty">Clique em Gravar, toque a levada e clique em Parar/Salvar no tempo em que o ciclo deve recomeçar.</div><div class="head" id="tlHead" hidden></div></div>
+        <p class="note"><kbd>R</kbd> gravar/parar · <kbd>P</kbd> tocar/pausar loop · <kbd>Esc</kbd> parar levada</p>
+      </div>
+
+      <div class="card">
+        <h2>Levadas<small>na linguagem do agogô</small></h2>
+        <div class="row">
+          <label for="bpm">Andamento <input type="range" id="bpm" min="60" max="160" step="1" value="100"><output id="bpmOut">100 bpm</output></label>
+          <label for="levRepeat"><input type="checkbox" id="levRepeat" checked> Repetir</label>
+          <label for="levMetro"><input type="checkbox" id="levMetro"> Metrônomo</label>
+        </div>
+        <div id="levadas" class="side"></div>
+        <div class="lev">
+          <h3><span>Minha levada</span><button class="chip" type="button" id="myPlay">▶ Ouvir</button></h3>
+          <label class="sr" for="myLev" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Minha levada</label>
+          <input type="text" id="myLev" spellcheck="false" autocapitalize="off" autocomplete="off">
+          <div class="syl" id="mySyl"></div>
+          <p class="err" id="myErr" hidden></p>
+          <p class="exp">Cada palavra é uma semicolcheia (quatro por tempo). Use <b>.</b> para pausa e maiúsculas (<b>PU</b>) para acentuar.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="foot">
+    <label for="vol">Volume geral <input type="range" id="vol" min="0" max="1" step="0.01" value="0.8"></label>
+    <span class="hint">O timbre de cada boca é síntese modal de metal: quatro parciais inarmônicos (1 · 1,48 · 2,11 · 2,87 × a fundamental) por um filtro de corpo, mais um estalo curto de ruído para a madeira da baqueta. Pu em Ré5 (587 Hz), Po em Fá#5 (740 Hz), Pe em Lá5 (880 Hz) e Pi em Ré6 (1174 Hz). Um compressor na saída segura os picos.</span>
+  </div>
+</div>
+
+<script>
+(() => {
+"use strict";
+const $ = id => document.getElementById(id);
+const NS = "http://www.w3.org/2000/svg";
+const el = (tag, attrs = {}, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; };
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem("agogo." + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem("agogo." + k, JSON.stringify(v)); } catch (e) {} },
+};
+
+// ---------- As 4 bocas ----------
+const BELLS = {
+  pu: { name: "Pu", f: 587,  note: "Ré5",  desc: "grave",       L: 246, R: 67, hex: "#ffb547" },
+  po: { name: "Po", f: 740,  note: "Fá#5", desc: "média-grave", L: 214, R: 57, hex: "#8fc8ff" },
+  pe: { name: "Pe", f: 880,  note: "Lá5",  desc: "média-aguda", L: 183, R: 49, hex: "#b9e27a" },
+  pi: { name: "Pi", f: 1174, note: "Ré6",  desc: "aguda",       L: 150, R: 40, hex: "#ff8e6e" },
+};
+const PITCH = ["pu", "po", "pe", "pi"];                 // do mais grave para o mais agudo
+const KEYS = ["d", "f", "j", "k"];                      // teclas da esquerda para a direita
+let inverted = LS.get("inverted", false);
+const order = () => inverted ? ["pu", "po", "pe", "pi"] : ["pi", "pe", "po", "pu"];
+const angles = () => inverted ? [-44, -9, 27, 64] : [-64, -27, 9, 44];
+let keyOf = {}, bellOfKey = {};
+
+// ---------- Áudio ----------
+let ctx = null, master = null, noiseBuf = null;
+const vol = $("vol");
+function updateStatus() {
+  const on = ctx && ctx.state === "running";
+  $("ctxDot").classList.toggle("on", !!on);
+  $("ctxText").textContent = on ? "Áudio ligado · latência " + Math.round((ctx.baseLatency || 0) * 1000) + " ms" : "Áudio em espera · toque numa boca para ativar";
+}
+function ensureCtx() {
+  if (!ctx) {
+    ctx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: "interactive" });
+    master = ctx.createGain(); master.gain.value = +vol.value;
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -14; comp.knee.value = 14; comp.ratio.value = 6; comp.attack.value = 0.002; comp.release.value = 0.15;
+    master.connect(comp); comp.connect(ctx.destination);
+    noiseBuf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.5), ctx.sampleRate);
+    const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    ctx.onstatechange = updateStatus;
+    requestAnimationFrame(tlLoop);
+  }
+  if (ctx.state === "suspended") ctx.resume().then(updateStatus);
+  updateStatus();
+  return ctx;
+}
+vol.addEventListener("input", () => { if (master) master.gain.value = +vol.value; });
+
+// Parcial de campânula: frequência fixa, ataque de 1,5 ms e queda exponencial com constante "dec" (o metal segue soando).
+function partial(t, f, type, gain, dec, dest, lp) {
+  const o = ctx.createOscillator(); o.type = type; o.frequency.value = f;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(gain, t + 0.0015);
+  g.gain.setTargetAtTime(0, t + 0.0015, dec);
+  if (lp) { const fl = ctx.createBiquadFilter(); fl.type = "lowpass"; fl.frequency.value = lp; fl.Q.value = 0.7; o.connect(fl); fl.connect(g); }
+  else o.connect(g);
+  g.connect(dest);
+  o.start(t); o.stop(t + 0.0015 + dec * 8);
+}
+// Uma batida: 4 parciais inarmônicos -> bandpass do corpo (1,2 f, Q 1,8) -> highpass 400 Hz, mais o estalo da madeira.
+function strikeBell(id, t, v) {
+  const f = BELLS[id].f;
+  const out = ctx.createGain(); out.gain.value = 0.6 * v; out.connect(master);
+  const sum = ctx.createGain();
+  const body = ctx.createBiquadFilter(); body.type = "bandpass"; body.frequency.value = 1.2 * f; body.Q.value = 1.8;
+  const hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 400; hp.Q.value = 0.7;
+  sum.connect(body); body.connect(hp); hp.connect(out);
+  partial(t, f,        "triangle", 0.6,  0.28, sum);
+  partial(t, 1.48 * f, "square",   0.35, 0.14, sum, 1.48 * f * 2.2);
+  partial(t, 2.11 * f, "sine",     0.2,  0.09, sum);
+  partial(t, 2.87 * f, "sine",     0.12, 0.05, sum);
+  // estalo da baqueta de madeira no aço: 8 ms de ruído branco em 3200 Hz
+  const src = ctx.createBufferSource(); src.buffer = noiseBuf;
+  const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 3200; bp.Q.value = 2.5;
+  const ng = ctx.createGain(); ng.gain.setValueAtTime(0.5, t); ng.gain.exponentialRampToValueAtTime(0.0005, t + 0.008);
+  src.connect(bp); bp.connect(ng); ng.connect(out);
+  src.start(t, Math.random() * 0.4); src.stop(t + 0.012);
+}
+const samples = {};
+function playSample(id, t, v) { const s = ctx.createBufferSource(); s.buffer = samples[id]; const g = ctx.createGain(); g.gain.value = v; s.connect(g); g.connect(master); s.start(t); }
+function click(t, accent) {
+  const o = ctx.createOscillator(); o.type = "square"; o.frequency.value = accent ? 2400 : 1800;
+  const g = ctx.createGain(); g.gain.setValueAtTime(accent ? 0.18 : 0.1, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.03);
+  o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.04);
+}
+function play(id, v = 1, t = null) {
+  ensureCtx();
+  if (t == null) t = ctx.currentTime;
+  v = clamp(v, 0.1, 1);
+  if (samples[id]) playSample(id, t, v); else strikeBell(id, t, v);
+  const delay = Math.max(0, (t - ctx.currentTime) * 1000);
+  if (delay < 6) animate(id, v); else setTimeout(() => animate(id, v), delay);
+  if (loop.rec) loop.events.push({ t: Math.max(0, t - loop.start), id, v });
+}
+
+// ---------- Desenho do agogô ----------
+const svg = $("agogo"), bellsG = $("bells");
+let refs = {};
+const S0 = 46, R0 = 9;                                  // início do cone (garganta) e seu raio
+const wraps = $("wraps");
+for (let y = 6; y < 156; y += 13) wraps.append(el("path", { class: "wrapline", d: `M-24 ${y} Q0 ${y + 6} 24 ${y - 2}` }));
+function sideAt(b, frac) { return R0 + (b.R - R0) * Math.pow(frac, 1.35); }  // leve abertura em sino
+function buildBells() {
+  bellsG.innerHTML = ""; refs = {}; keyOf = {}; bellOfKey = {};
+  const ord = order(), ang = angles();
+  ord.forEach((id, i) => {
+    const b = BELLS[id], a = ang[i], L = b.L, R = b.R, ry = R * 0.28;
+    keyOf[id] = KEYS[i]; bellOfKey[KEYS[i]] = id;
+    const g = el("g", { class: "bell", "data-bell": id, transform: `rotate(${a})` });
+    g.append(el("line", { class: "stem", x1: 0, y1: -4, x2: 0, y2: -S0 - 6 }));
+    const body = el("g");
+    // cone: lados levemente curvos (abrem em sino), boca vista de frente como elipse
+    const pts = []; for (let k = 0; k <= 12; k++) { const fr = k / 12, y = -(S0 + (L - S0) * fr); pts.push([sideAt(b, fr), y]); }
+    let d = `M${-R0},${-S0} ` + pts.map(([x, y]) => `L${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+    d += ` A${R} ${ry} 0 0 1 ${-R},${-L} ` + pts.slice().reverse().map(([x, y]) => `L${(-x).toFixed(1)},${y.toFixed(1)}`).join(" ") + " Z";
+    body.append(el("path", { class: "cone", d }));
+    body.append(el("ellipse", { class: "mouth", cx: 0, cy: -L, rx: R - 2, ry: ry - 1 }));
+    body.append(el("ellipse", { class: "rim", cx: 0, cy: -L, rx: R, ry }));
+    body.append(el("circle", { class: "stamp", cx: R * 0.3, cy: -(S0 + (L - S0) * 0.42), r: 6 }));
+    const glow = el("ellipse", { class: "glow", cx: 0, cy: -L, rx: R + 2, ry: ry + 2, stroke: b.hex });
+    body.append(glow);
+    g.append(body);
+    // rótulo sempre de pé
+    const ly = -(S0 + (L - S0) * 0.62);
+    const lab = el("g", { transform: `translate(0 ${ly}) rotate(${-a})` });
+    lab.append(el("text", { class: "name", x: 0, y: 6, style: `font-size:${Math.round(R * 0.62)}px` }, b.name));
+    lab.append(el("text", { class: "key", x: 0, y: 6 + Math.round(R * 0.36) }, KEYS[i].toUpperCase()));
+    g.append(lab);
+    const fx = el("g"); g.append(fx);
+    bellsG.append(g);
+    refs[id] = { g, body, glow, fx, a, b };
+  });
+  renderLegend();
+  renderLevadas();
+  renderMy();
+}
+function renderLegend() {
+  const lg = $("legend"); lg.innerHTML = "";
+  for (const id of order()) {
+    const b = BELLS[id], sp = document.createElement("span"); sp.dataset.id = id;
+    sp.innerHTML = `<kbd>${keyOf[id].toUpperCase()}</kbd><b style="color:${b.hex}">${b.name}</b>${b.desc} · ${b.note}`;
+    lg.append(sp);
+  }
+}
+// SMIL criado na hora: começa "indefinite" e é disparado com beginElement, senão já nasce terminado.
+function anim(parent, tag, attrs) { const a = el(tag, { begin: "indefinite", fill: "freeze", ...attrs }); parent.append(a); try { a.beginElement(); } catch (e) {} return a; }
+let lastSprite = {};
+function animate(id, v) {
+  const r = refs[id]; if (!r) return;
+  const { b, a } = r, L = b.L;
+  // vibração da campânula
+  const sh = anim(r.body, "animateTransform", { attributeName: "transform", type: "rotate", values: `0;${(1.5 * v).toFixed(2)};${(-1.1 * v).toFixed(2)};${(0.6 * v).toFixed(2)};${(-0.25 * v).toFixed(2)};0`, dur: "0.3s", fill: "remove" });
+  setTimeout(() => sh.remove(), 360);
+  // brilho na borda da boca
+  const gl = anim(r.glow, "animate", { attributeName: "opacity", values: `${(0.55 + 0.45 * v).toFixed(2)};0`, dur: "0.45s", fill: "remove" });
+  setTimeout(() => gl.remove(), 500);
+  // baqueta de madeira batendo no lado do cone, perto da boca
+  const fr = 0.8, yh = -(S0 + (L - S0) * fr), side = a < 0 ? -1 : 1, xh = side * sideAt(b, fr);
+  const rp = el("circle", { class: "ripple", cx: xh, cy: yh, r: 4, stroke: b.hex });
+  r.fx.append(rp);
+  anim(rp, "animate", { attributeName: "r", from: 4, to: 22 + 22 * v, dur: "0.35s" });
+  anim(rp, "animate", { attributeName: "opacity", from: 0.95, to: 0, dur: "0.35s" });
+  setTimeout(() => rp.remove(), 400);
+  const now = performance.now();
+  if (!lastSprite[id] || now - lastSprite[id] > 50) {
+    lastSprite[id] = now;
+    const outer = el("g", { transform: `translate(${xh.toFixed(1)} ${yh.toFixed(1)}) scale(${side} 1) rotate(-18)` });
+    const inner = el("g", { opacity: 0 }); inner.append(el("use", { href: "#stickShape" })); outer.append(inner); r.fx.append(outer);
+    anim(inner, "animateTransform", { attributeName: "transform", type: "translate", values: "38 0;0 0;24 0", keyTimes: "0;0.3;1", dur: "0.22s" });
+    anim(inner, "animate", { attributeName: "opacity", values: "0;1;0", keyTimes: "0;0.25;1", dur: "0.22s" });
+    setTimeout(() => outer.remove(), 260);
+  }
+  const sp = $("legend").querySelector(`[data-id="${id}"]`); if (sp) { sp.classList.add("hot"); setTimeout(() => sp.classList.remove("hot"), 120); }
+}
+$("flipBtn").addEventListener("click", () => { inverted = !inverted; LS.set("inverted", inverted); $("flipBtn").classList.toggle("on", inverted); buildBells(); });
+
+// ---------- Toque, varrida e multitoque ----------
+function bellAt(x, y) { const e = document.elementFromPoint(x, y); const g = e && e.closest && e.closest("[data-bell]"); return g ? g.dataset.bell : null; }
+const pointers = new Map();
+svg.addEventListener("pointerdown", e => {
+  e.preventDefault(); ensureCtx();
+  try { svg.setPointerCapture(e.pointerId); } catch (err) {}
+  const id = bellAt(e.clientX, e.clientY);
+  pointers.set(e.pointerId, { id, x: e.clientX, y: e.clientY, t: performance.now() });
+  if (id) play(id, e.shiftKey ? 0.55 : 1);
+});
+svg.addEventListener("pointermove", e => {
+  const st = pointers.get(e.pointerId); if (!st) return;
+  const dx = e.clientX - st.x, dy = e.clientY - st.y, dist = Math.hypot(dx, dy), now = performance.now();
+  if (dist < 2) return;
+  const speed = dist / Math.max(1, now - st.t);                  // px por ms
+  const v = clamp(0.55 + speed * 0.25, 0.55, 1);
+  // percorre o caminho em passos curtos para não pular uma boca numa varrida rápida
+  const steps = Math.max(1, Math.ceil(dist / 8));
+  for (let k = 1; k <= steps; k++) {
+    const id = bellAt(st.x + dx * k / steps, st.y + dy * k / steps);
+    if (id !== st.id) { if (id) play(id, v); st.id = id; }
+  }
+  st.x = e.clientX; st.y = e.clientY; st.t = now;
+});
+const endPtr = e => pointers.delete(e.pointerId);
+svg.addEventListener("pointerup", endPtr); svg.addEventListener("pointercancel", endPtr);
+svg.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("keydown", e => {
+  const tag = (e.target.tagName || "").toLowerCase();
+  if (tag === "input" || tag === "select" || tag === "textarea" || e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key.toLowerCase();
+  if (e.repeat) { if (bellOfKey[k]) e.preventDefault(); return; }
+  if (k === "r") { e.preventDefault(); loop.rec ? recStop() : recStart(); return; }
+  if (k === "p") { e.preventDefault(); if (loop.events.length) loopToggle(); return; }
+  if (k === "escape") { levStop(); return; }
+  const id = bellOfKey[k]; if (!id) return;
+  e.preventDefault();
+  play(id, e.shiftKey ? 0.55 : 1);
+});
+
+// ---------- Looper ----------
+const loop = { rec: false, start: 0, events: [], len: 0, playing: false, timer: null, cycleStart: 0, idx: 0 };
+const btnRec = $("btnRec"), btnStop = $("btnStop"), btnPlay = $("btnPlay"), btnClear = $("btnClear");
+function recStart() {
+  ensureCtx(); if (loop.playing) loopStop();
+  loop.rec = true; loop.start = ctx.currentTime; loop.events = []; loop.len = 0;
+  btnRec.classList.add("recording"); btnRec.querySelector("span").textContent = "Gravando…";
+  btnStop.disabled = false; btnPlay.disabled = true; btnClear.disabled = true;
+  $("tlEmpty").textContent = "Gravando: toque a levada e clique em Parar/Salvar no tempo em que o ciclo recomeça.";
+}
+function recStop() {
+  if (!loop.rec) return;
+  loop.rec = false; loop.len = ctx.currentTime - loop.start;
+  btnRec.classList.remove("recording"); btnRec.querySelector("span").textContent = "Gravar"; btnStop.disabled = true;
+  if (!loop.events.length || loop.len < 0.25) { loop.events = []; loop.len = 0; tlRender(); return; }
+  btnPlay.disabled = false; btnClear.disabled = false; tlRender(); loopStart();
+}
+function loopStart() {
+  ensureCtx(); loop.playing = true; loop.idx = 0; loop.cycleStart = ctx.currentTime + 0.05;
+  btnPlay.classList.add("on"); $("playLbl").textContent = "Pausar loop"; $("playIcon").setAttribute("d", "M3 2h3v10H3zM8 2h3v10H8z"); $("tlHead").hidden = false;
+  loop.timer = setInterval(loopTick, 25); loopTick();
+}
+function loopTick() {
+  if (!loop.playing) return;
+  const horizon = ctx.currentTime + 0.12;
+  for (;;) {
+    if (loop.idx >= loop.events.length) { loop.idx = 0; loop.cycleStart += loop.len; }
+    const ev = loop.events[loop.idx], t = loop.cycleStart + ev.t;
+    if (t >= horizon) break;
+    if (t >= ctx.currentTime - 0.01) play(ev.id, ev.v, t);
+    loop.idx++;
+  }
+}
+function loopStop() { loop.playing = false; clearInterval(loop.timer); btnPlay.classList.remove("on"); $("playLbl").textContent = "Tocar loop"; $("playIcon").setAttribute("d", "M3 1.5v11l9.5-5.5z"); $("tlHead").hidden = true; }
+function loopToggle() { loop.playing ? loopStop() : loopStart(); }
+btnRec.addEventListener("click", () => loop.rec ? recStop() : recStart());
+btnStop.addEventListener("click", recStop);
+btnPlay.addEventListener("click", loopToggle);
+btnClear.addEventListener("click", () => { loopStop(); loop.events = []; loop.len = 0; btnPlay.disabled = true; btnClear.disabled = true; tlRender(); });
+function tlRender() {
+  const tl = $("timeline"); tl.querySelectorAll(".mark").forEach(m => m.remove());
+  const n = loop.events.length;
+  $("lpHits").textContent = n; $("lpTime").textContent = loop.len.toFixed(2).replace(".", ",") + " s";
+  $("tlEmpty").hidden = !!n;
+  if (!n) $("tlEmpty").textContent = "Clique em Gravar, toque a levada e clique em Parar/Salvar no tempo em que o ciclo deve recomeçar.";
+  for (const ev of loop.events) {
+    const m = document.createElement("div"); m.className = "mark";
+    const lane = PITCH.length - 1 - PITCH.indexOf(ev.id);   // Pi em cima, Pu embaixo
+    m.style.left = (ev.t / loop.len * 100) + "%"; m.style.top = (6 + lane * 15) + "px";
+    m.style.background = BELLS[ev.id].hex; m.style.opacity = 0.4 + 0.6 * ev.v;
+    tl.append(m);
+  }
+}
+function tlLoop() {
+  if (loop.playing && loop.len > 0) { const pos = ((ctx.currentTime - loop.cycleStart) % loop.len + loop.len) % loop.len; $("tlHead").style.left = (pos / loop.len * 100) + "%"; }
+  requestAnimationFrame(tlLoop);
+}
+
+// ---------- Levadas ----------
+const LEVADAS = [
+  { id: "varrida", name: "Levada base (varrida)", text: "Pu Po Pe Pi Pe Po Pu .", desc: "Desce da boca grave à aguda e volta: sete toques em semicolcheias e uma pausa para fechar dois tempos." },
+  { id: "sincopada", name: "Variação sincopada", text: "Pi Pi Po Pe Pu Pu Po Pe", desc: "Oito semicolcheias. As notas repetidas (Pi Pi, Pu Pu) puxam o balanço para fora do tempo." },
+];
+function parseLev(text) {
+  const toks = text.trim().split(/\s+/).filter(Boolean);
+  if (!toks.length) throw new Error("Escreva pelo menos uma boca.");
+  return toks.map(tk => {
+    if (tk === "." || tk === "-") return { rest: true, text: "·" };
+    const id = tk.toLowerCase();
+    if (!BELLS[id]) throw new Error(`Não entendi "${tk}". Use Pu, Po, Pe, Pi ou ponto.`);
+    const acc = tk === tk.toUpperCase();
+    return { id, acc, text: BELLS[id].name, v: acc ? 1 : 0.8 };
+  });
+}
+function sylHTML(toks) { return toks.map((t, i) => t.rest ? `<span class="rest" data-i="${i}">·</span>` : `<span data-i="${i}" class="${t.acc ? "acc" : ""}" style="color:${BELLS[t.id].hex}">${t.text}</span>`).join(""); }
+function renderLevadas() {
+  const box = $("levadas"); box.innerHTML = "";
+  for (const L of LEVADAS) {
+    const d = document.createElement("div"); d.className = "lev"; d.dataset.id = L.id;
+    d.innerHTML = `<h3><span>${L.name}</span><button class="chip" type="button" data-lev="${L.id}">▶ Ouvir</button></h3><div class="syl">${sylHTML(parseLev(L.text))}</div><p class="exp">${L.desc}</p>`;
+    box.append(d);
+    d.querySelector("[data-lev]").addEventListener("click", e => lev.key === L.id ? levStop() : levStart(L.id, parseLev(L.text), d.querySelector(".syl"), e.currentTarget));
+  }
+}
+const myLev = $("myLev");
+myLev.value = LS.get("my", "Pu . Po Pe . Pi Pe Po");
+function renderMy() {
+  try { const toks = parseLev(myLev.value); $("mySyl").innerHTML = sylHTML(toks); $("myErr").hidden = true; return toks; }
+  catch (e) { $("myErr").textContent = e.message; $("myErr").hidden = false; return null; }
+}
+myLev.addEventListener("input", () => { LS.set("my", myLev.value); if (lev.key === "my") levStop(); renderMy(); });
+$("myPlay").addEventListener("click", e => { if (lev.key === "my") { levStop(); return; } const toks = renderMy(); if (toks) levStart("my", toks, $("mySyl"), e.currentTarget); });
+$("bpm").addEventListener("input", () => $("bpmOut").textContent = $("bpm").value + " bpm");
+const lev = { key: null, toks: null, box: null, btn: null, timer: null, idx: 0, cycleStart: 0 };
+function levStart(key, toks, box, btn) {
+  ensureCtx(); levStop();
+  Object.assign(lev, { key, toks, box, btn, idx: 0, cycleStart: ctx.currentTime + 0.08 });
+  btn.classList.add("on"); btn.textContent = "■ Parar";
+  lev.timer = setInterval(levTick, 25); levTick();
+}
+function levTick() {
+  if (!lev.key) return;
+  const sx = 60 / +$("bpm").value / 4, n = lev.toks.length, horizon = ctx.currentTime + 0.12;
+  for (;;) {
+    if (lev.idx >= n) {
+      if (!$("levRepeat").checked) { if (ctx.currentTime > lev.cycleStart + n * sx) levStop(); return; }
+      lev.idx = 0; lev.cycleStart += n * sx;
+    }
+    const tk = lev.toks[lev.idx], t = lev.cycleStart + lev.idx * sx;
+    if (t >= horizon) break;
+    if (t >= ctx.currentTime - 0.01) {
+      if ($("levMetro").checked && lev.idx % 4 === 0) click(t, lev.idx === 0);
+      if (!tk.rest) play(tk.id, tk.v * (lev.idx % 4 === 0 ? 1 : 0.92), t);
+      const i = lev.idx, box = lev.box;
+      setTimeout(() => { if (lev.box === box) box.querySelectorAll("[data-i]").forEach(s => s.classList.toggle("cur", +s.dataset.i === i)); }, Math.max(0, (t - ctx.currentTime) * 1000));
+    }
+    lev.idx++;
+  }
+}
+function levStop() {
+  clearInterval(lev.timer); lev.timer = null;
+  if (lev.box) { const box = lev.box; setTimeout(() => box.querySelectorAll(".cur").forEach(s => s.classList.remove("cur")), 120); }
+  if (lev.btn) { lev.btn.classList.remove("on"); lev.btn.textContent = "▶ Ouvir"; }
+  lev.key = null; lev.box = null; lev.btn = null;
+}
+
+// ---------- Amostras reais ----------
+const smpPanel = $("smpPanel"), smpBtn = $("smpBtn");
+smpBtn.addEventListener("click", () => { smpPanel.hidden = !smpPanel.hidden; smpBtn.classList.toggle("on", !smpPanel.hidden); if (!smpPanel.hidden) renderSamples(); });
+function renderSamples() {
+  const box = $("smpList"); box.innerHTML = "";
+  for (const id of PITCH) {
+    const b = BELLS[id], d = document.createElement("div"); d.className = "smp";
+    d.innerHTML = `<b style="color:${b.hex}">${b.name} <small>· ${b.desc}</small></b><small class="${samples[id] ? "ok" : ""}">${samples[id] ? "amostra carregada (" + samples[id].duration.toFixed(2) + " s)" : "som sintetizado"}</small>
+      <div class="row"><label class="chip" for="smp-${id}">Carregar</label><input type="file" id="smp-${id}" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac" hidden><button class="chip" type="button" data-test>Ouvir</button><button class="chip" type="button" data-rm ${samples[id] ? "" : "disabled"}>Remover</button></div>`;
+    box.append(d);
+    d.querySelector("input").addEventListener("change", e => loadSample(id, e.target.files[0]));
+    d.querySelector("[data-test]").addEventListener("click", () => play(id));
+    d.querySelector("[data-rm]").addEventListener("click", () => { delete samples[id]; renderSamples(); });
+  }
+}
+async function loadSample(id, file) {
+  if (!file) return; ensureCtx();
+  try { const buf = await ctx.decodeAudioData(await file.arrayBuffer()); samples[id] = trimSilence(buf); renderSamples(); play(id); }
+  catch (e) { renderSamples(); const st = $("smp-" + id).closest(".smp").querySelector("small:not(b small)"); st.textContent = "Não consegui ler esse arquivo. Tente MP3 ou WAV."; st.style.color = "var(--rec)"; }
+}
+function trimSilence(buf) {
+  const ch = buf.getChannelData(0); let i = 0;
+  while (i < ch.length && Math.abs(ch[i]) < 0.02) i++;
+  i = Math.max(0, i - Math.round(buf.sampleRate * 0.002));
+  if (i === 0) return buf;
+  const out = ctx.createBuffer(buf.numberOfChannels, buf.length - i, buf.sampleRate);
+  for (let c = 0; c < buf.numberOfChannels; c++) out.getChannelData(c).set(buf.getChannelData(c).subarray(i));
+  return out;
+}
+document.addEventListener("visibilitychange", () => { if (document.hidden) { levStop(); if (loop.playing) loopStop(); } });
+
+// ---------- Início ----------
+$("flipBtn").classList.toggle("on", inverted);
+buildBells();
+tlRender();
+updateStatus();
+})();
+</script>
