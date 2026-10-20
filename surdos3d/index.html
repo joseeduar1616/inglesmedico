@@ -88,6 +88,10 @@ h1 span { color: var(--brass); }
 .note { font-size: 12.5px; color: var(--muted); max-width: 90ch; margin: 0; }
 kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 1px 5px; color: var(--fg); }
 .err { color: #ef6b6b; font-size: 13px; }
+.export { display: flex; flex-direction: column; gap: 8px; padding-block: 10px; border-block: 1px solid var(--line); }
+.ex-progress { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--fg); }
+.ex-track { flex: 1; height: 6px; border-radius: 3px; background: var(--stage); overflow: hidden; border: 1px solid var(--line); min-width: 80px; }
+.ex-track i { display: block; height: 100%; width: 0; background: var(--brass); }
 </style>
 
 <div class="wrap">
@@ -128,6 +132,16 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
       <label for="vol">Volume <input type="range" id="vol" min="0" max="1" step="0.01" value="0.7"></label>
       <span id="bqPos" class="bq-meta">Começa no compasso 1</span>
     </div>
+    <div class="export">
+      <div class="row">
+        <button class="btn" id="exVideo" type="button"><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="3" width="8.5" height="8" rx="1.5" fill="currentColor"/><path d="M10 6l3-2v6l-3-2z" fill="currentColor"/></svg><span>Baixar vídeo do breque</span></button>
+        <button class="btn" id="exCancel" type="button" hidden>Cancelar</button>
+        <button class="btn" id="exSave" type="button" hidden>Guardar arquivo</button>
+        <label for="exMonitor"><input type="checkbox" id="exMonitor" checked> Ouvir se precisar gravar em tempo real</label>
+      </div>
+      <div class="ex-progress" id="exProgress" hidden><div class="ex-track"><i id="exBar"></i></div><span id="exStatus"></span></div>
+      <p class="note">O vídeo mostra o breque inteiro com os bonequinhos tocando, na câmera que estiver no palco agora (gire ou escolha uma vista antes de baixar), com o andamento, a contagem e o metrônomo escolhidos acima. Sai em MP4 1280×720 com H.264 e AAC, que abre no iPhone, na galeria e no WhatsApp.</p>
+    </div>
     <div class="legend">
       <span><b class="tk-To">To</b>1ª + 2ª</span><span><b class="tk-Pa">Pa</b>só a 2ª</span><span><b class="tk-po">po</b>só a 1ª</span>
       <span><b class="tk-Bo">Bo</b>1ª + 2ª abafados (a mão segura a pele)</span><span><b class="tk-ro">ro</b><b class="tk-ra">ra</b>leves</span>
@@ -146,6 +160,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mp4-muxer@5.2.2/build/mp4-muxer.min.js"></script>
 <script>
 (() => {
 "use strict";
@@ -925,6 +940,7 @@ To`;
   }
   function animate() {
     requestAnimationFrame(animate);
+    if (exporting) return;
     const now = audibleNow(), wall = performance.now() / 1000;
     if (camTween) {
       const k = Math.min(1, (performance.now() - camTween.t0) / camTween.dur), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
@@ -933,12 +949,17 @@ To`;
     }
     controls.update();
     const beatT = bq.on ? (now - bq.start) / spb() : wall * 0.9;
+    stepScene(now, wall, beatT, bq.on);
+    renderer.render(scene, camera);
+  }
+  // Atualiza os bonequinhos para o instante "now" (no ao vivo e em cada quadro do vídeo)
+  function stepScene(now, wall, beatT, playing) {
     for (const p of players) {
       while (p.hits.length > 2 && p.hits[1].t < now - 1) p.hits.shift();
       // corpo: respiração e um balanço no tempo
-      const sway = bq.on ? Math.sin(beatT * Math.PI) * 0.03 : Math.sin(wall * 1.3 + p.idle) * 0.012;
-      p.body.rotation.z = sway; p.body.position.y = Math.abs(Math.sin(beatT * Math.PI)) * (bq.on ? 0.012 : 0.004);
-      p.headG.rotation.z = -sway * 0.8; p.headG.rotation.x = bq.on ? Math.sin(beatT * Math.PI * 2) * 0.04 : 0;
+      const sway = playing ? Math.sin(beatT * Math.PI) * 0.03 : Math.sin(wall * 1.3 + p.idle) * 0.012;
+      p.body.rotation.z = sway; p.body.position.y = Math.abs(Math.sin(beatT * Math.PI)) * (playing ? 0.012 : 0.004);
+      p.headG.rotation.z = -sway * 0.8; p.headG.rotation.x = playing ? Math.sin(beatT * Math.PI * 2) * 0.04 : 0;
       // maceta
       p.swing.quaternion.setFromAxisAngle(p.axis, malletAngle(p, now));
       // efeitos do toque no instante do contato
@@ -962,8 +983,8 @@ To`;
       const el = p.sL.clone().lerp(hp, 0.5).add(new THREE.Vector3(-0.1, -0.06, -0.05));
       between(p.upperL, p.sL, el); between(p.foreL, el, hp); p.handL.position.copy(hp); p.elbowL.position.copy(el);
     }
-    renderer.render(scene, camera);
   }
+  let exporting = false;
   requestAnimationFrame(animate);
 
   // ---------- Tocar ao vivo ----------
@@ -1100,10 +1121,245 @@ To`;
     if (k === "s") { e.preventDefault(); playLive(1, e.shiftKey); return; }
   });
   document.addEventListener("visibilitychange", () => { if (document.hidden && bq.on) stopBreque(); });
+
+  // ---------- Baixar vídeo ----------
+  // 1) o som do breque inteiro é sintetizado num OfflineAudioContext; 2) cada quadro da cena 3D é desenhado no instante
+  // exato (a maceta na pele no quadro do toque); 3) WebCodecs + MP4 quando o navegador tem, senão gravação em tempo real.
+  const VW = 1280, VH = 720, FPS = 30;
+  const vcan = document.createElement("canvas"); vcan.width = VW; vcan.height = VH; const vg = vcan.getContext("2d");
+  const exBtn = $("exVideo"), exCancel = $("exCancel"), exSave = $("exSave"), exStatus = $("exStatus"), exBar = $("exBar"), exWrap = $("exProgress"), exMonitor = $("exMonitor");
+  let downloadsApi, pendingFile = null, job = null;
+  (async () => { try { downloadsApi = window.claude && claude.use ? await claude.use("downloads") : null; } catch (e) { downloadsApi = null; } })();
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const slug = t => (t || "breque").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-|-$/g, "").toLowerCase() || "breque";
+  async function renderBrequeAudio() {
+    const s = spb(), sr = 48000, lead = 0.25, pre = countIn.checked ? 4 * s : 0, t0 = lead + pre;
+    const dur = t0 + parsed.total * s + 1.4;
+    const off = new OfflineAudioContext(2, Math.ceil(dur * sr), sr);
+    const lim = makeLimiter(off), m = off.createGain(); m.gain.value = 0.6; lim.threshold.value = -4;
+    m.connect(lim).connect(off.destination);
+    const e2 = makeEngine(off, m), hits = [[], []];
+    if (countIn.checked) for (let k = 0; k < 4; k++) e2.click(lead + k * s, k === 0);
+    if (metro.checked) for (let k = 0; k < parsed.total; k++) e2.click(t0 + k * s, parsed.beatInBar[k] === 0);
+    for (const e of events) {
+      const t = t0 + e.beat * s;
+      if (e.drums) for (const d of e.drums) { if (d > 1) continue; e2.trigger(d, false, t, false, e.vel); if (e.mute) e2.stopVoices(d, t + 0.13, 0.035); hits[d].push({ t, v: e.vel, mute: e.mute }); }
+    }
+    const buffer = await off.startRendering();
+    return { buffer, t0, s, lead, hits };
+  }
+  function wordAt(b) {
+    for (let k = events.length - 1; k >= 0; k--) {
+      const e = events[k];
+      if (e.beat <= b + 1e-6) {
+        if (b - e.beat >= Math.max(e.slot, 0.35)) return ["", ""];
+        const w = e.count ? String(+(e.say || "").slice(1) || "") : (e.label || "");
+        const c = e.count ? "#6b6e78" : e.rest ? "#ff6b6b" : ({ Pa: "#3fc1b0", po: "#ff9a4a", ro: "#ff9a4a", go: "#ff9a4a", ra: "#3fc1b0", ga: "#3fc1b0" })[e.label] || "#6ea8ff";
+        return [w, c];
+      }
+    }
+    return ["", ""];
+  }
+  function overlay(tv, r) {
+    const g = vg, rel = (tv - r.t0) / r.s;
+    const top = g.createLinearGradient(0, 0, 0, 170); top.addColorStop(0, "rgba(10,11,14,.8)"); top.addColorStop(1, "rgba(10,11,14,0)");
+    g.fillStyle = top; g.fillRect(0, 0, VW, 170);
+    g.textBaseline = "alphabetic"; g.textAlign = "left"; g.fillStyle = "#ecebe6"; g.font = '800 54px "Big Shoulders Display", Impact, sans-serif';
+    g.fillText(current.name.toUpperCase(), 40, 72);
+    g.textAlign = "right"; g.fillStyle = "#b9bbc3"; g.font = '500 22px "JetBrains Mono", ui-monospace, monospace';
+    const bi = rel < 0 ? -1 : parsed.beatBar[Math.min(parsed.total - 1, Math.floor(rel))];
+    g.fillText(rel < 0 ? `${bpm.value} bpm · contagem` : `${bpm.value} bpm · compasso ${Math.min(parsed.bars.length, bi + 1)}/${parsed.bars.length}`, VW - 40, 66);
+    let word = "", col = "#8d8f98";
+    if (rel < 0) { if (countIn.checked && rel >= -4) word = String(Math.max(1, Math.min(4, Math.floor(rel + 5)))); }
+    else [word, col] = wordAt(rel);
+    if (word) {
+      g.textAlign = "center"; g.font = '800 104px "Big Shoulders Display", Impact, sans-serif';
+      g.lineWidth = 10; g.strokeStyle = "rgba(10,11,14,.75)"; g.strokeText(word, VW / 2, 150);
+      g.fillStyle = col; g.fillText(word, VW / 2, 150);
+    }
+    g.fillStyle = "rgba(201,162,74,.95)"; g.fillRect(0, VH - 6, VW * Math.min(1, Math.max(0, tv / r.buffer.duration)), 6);
+    g.textAlign = "right"; g.font = '600 20px Figtree, system-ui, sans-serif'; g.fillStyle = "rgba(236,235,230,.65)"; g.fillText("Surdos em 3D", VW - 32, VH - 24);
+  }
+  function makePainter(r) {
+    const saved = players.map(p => ({ hits: p.hits, fx: p.fx, lastFx: p.lastFx }));
+    players.forEach((p, i) => { p.hits = r.hits[i].slice(); p.fx = []; p.lastFx = -1; });
+    const pr = renderer.getPixelRatio(), fov = camera.fov;
+    renderer.setPixelRatio(1); renderer.setSize(VW, VH, false); camera.aspect = VW / VH; camera.fov = 38; camera.updateProjectionMatrix();
+    return {
+      draw(tv) {
+        stepScene(tv, tv, (tv - r.t0) / r.s, tv >= r.t0 - 0.05);
+        renderer.render(scene, camera);
+        vg.drawImage(renderer.domElement, 0, 0, VW, VH);
+        overlay(tv, r);
+      },
+      restore() { players.forEach((p, i) => Object.assign(p, saved[i])); renderer.setPixelRatio(pr); camera.fov = fov; resize(); },
+    };
+  }
+  async function pickAudioCodec(allowOpus) {
+    if (typeof AudioEncoder === "undefined") return null;
+    for (const c of [{ codec: "mp4a.40.2", mux: "aac" }].concat(allowOpus ? [{ codec: "opus", mux: "opus" }] : [])) {
+      const cfg = { codec: c.codec, sampleRate: 48000, numberOfChannels: 2, bitrate: 160000 };
+      try { if ((await AudioEncoder.isConfigSupported(cfg)).supported) return { cfg, mux: c.mux }; } catch (e) {}
+    }
+    return null;
+  }
+  async function pickVideoCodec(allowVp9) {
+    if (typeof VideoEncoder === "undefined" || typeof VideoFrame === "undefined") return null;
+    const list = ["avc1.42001f", "avc1.4d401f", "avc1.640028"].map(codec => ({ codec, mux: "avc", extra: { avc: { format: "avc" } } }));
+    if (allowVp9) list.push({ codec: "vp09.00.10.08", mux: "vp9", extra: {} });
+    for (const c of list) {
+      const cfg = { codec: c.codec, width: VW, height: VH, bitrate: 4500000, framerate: FPS, ...c.extra };
+      try { if ((await VideoEncoder.isConfigSupported(cfg)).supported) return { cfg, mux: c.mux }; } catch (e) {}
+    }
+    return null;
+  }
+  async function encodeFast(r, ac, vc) {
+    const Mx = window.Mp4Muxer;
+    const muxer = new Mx.Muxer({ target: new Mx.ArrayBufferTarget(), video: { codec: vc.mux, width: VW, height: VH }, audio: { codec: ac.mux, numberOfChannels: 2, sampleRate: 48000 }, fastStart: "in-memory", firstTimestampBehavior: "offset" });
+    let encErr = null, aBytes = 0, aChunks = 0;
+    const aDur = Math.round(1024 / 48000 * 1e6);
+    const aenc = new AudioEncoder({
+      output: (c, m) => {
+        let d = new Uint8Array(c.byteLength); c.copyTo(d);
+        if (ac.mux === "aac") { if (d.length > 7 && d[0] === 0xFF && (d[1] & 0xF6) === 0xF0) d = d.subarray((d[1] & 1) ? 7 : 9); muxer.addAudioChunkRaw(d, c.type, c.timestamp, c.duration || aDur); }
+        else muxer.addAudioChunkRaw(d, c.type, c.timestamp, c.duration || 20000, m);
+        aBytes += d.length; aChunks++;
+      },
+      error: e => { encErr = e; },
+    });
+    aenc.configure(ac.cfg);
+    const venc = new VideoEncoder({ output: (c, m) => muxer.addVideoChunk(c, m), error: e => { encErr = e; } });
+    venc.configure(vc.cfg);
+    const buf = r.buffer, n = buf.length, L = buf.getChannelData(0), R = buf.getChannelData(1), STEP = 4800;
+    const painter = makePainter(r), frames = Math.ceil(buf.duration * FPS);
+    let a = 0, f = 0, lastUi = 0;
+    try {
+      while (a < n || f < frames) {
+        if (job.cancelled) throw "cancel";
+        if (encErr) throw encErr;
+        const ta = a / 48000, tv = f / FPS;
+        if (a < n && (f >= frames || ta <= tv)) {
+          const k = Math.min(STEP, n - a), data = new Float32Array(k * 2);
+          data.set(L.subarray(a, a + k), 0); data.set(R.subarray(a, a + k), k);
+          const ad = new AudioData({ format: "f32-planar", sampleRate: 48000, numberOfFrames: k, numberOfChannels: 2, timestamp: Math.round(ta * 1e6), data });
+          aenc.encode(ad); ad.close(); a += k;
+        } else {
+          painter.draw(tv);
+          const fr = new VideoFrame(vcan, { timestamp: Math.round(tv * 1e6), duration: Math.round(1e6 / FPS) });
+          venc.encode(fr, { keyFrame: f % 60 === 0 }); fr.close(); f++;
+          while (venc.encodeQueueSize > 4) await sleep(4);
+        }
+        if (performance.now() - lastUi > 150) {
+          lastUi = performance.now();
+          const done = Math.min(f / frames, a / n);
+          exBar.style.width = `${(done * 100).toFixed(1)}%`; exStatus.textContent = `Criando o vídeo… ${Math.round(done * 100)}% (quadro ${f} de ${frames})`;
+          await sleep(0);
+        }
+      }
+      await aenc.flush(); await venc.flush();
+    } finally { painter.restore(); }
+    if (encErr) throw encErr;
+    aenc.close(); venc.close();
+    if (!aChunks || aBytes / aChunks < 24) throw new Error("silent-encoder");
+    muxer.finalize();
+    return new Blob([muxer.target.buffer], { type: "video/mp4" });
+  }
+  function pickMime() {
+    if (!window.MediaRecorder) return null;
+    return ["video/mp4;codecs=avc1,mp4a.40.2", "video/mp4", "video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"].find(t => MediaRecorder.isTypeSupported(t)) || null;
+  }
+  async function recordRealtime(r, mime) {
+    ensureCtx();
+    const dest = ctx.createMediaStreamDestination(), src = ctx.createBufferSource(); src.buffer = r.buffer; src.connect(dest);
+    let mon = null; if (exMonitor.checked) { mon = ctx.createGain(); mon.gain.value = 0.9; src.connect(mon); mon.connect(ctx.destination); }
+    const painter = makePainter(r); painter.draw(0);
+    const vs = vcan.captureStream(FPS), stream = new MediaStream([...vs.getVideoTracks(), ...dest.stream.getAudioTracks()]);
+    const chunks = [], rec = new MediaRecorder(stream, { mimeType: mime, audioBitsPerSecond: 160000, videoBitsPerSecond: 4500000 });
+    rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+    const stopped = new Promise(res => { rec.onstop = res; });
+    rec.start(500);
+    const startAt = ctx.currentTime + 0.15, total = r.buffer.duration;
+    src.start(startAt);
+    try {
+      await new Promise(res => {
+        const iv = setInterval(() => {
+          const t = ctx.currentTime - startAt;
+          painter.draw(Math.max(0, t));
+          exBar.style.width = `${Math.min(100, Math.max(0, t / total * 100)).toFixed(1)}%`;
+          exStatus.textContent = `Gravando em tempo real · ${Math.max(0, Math.ceil(total - t))} s restantes. Mantenha esta página aberta.`;
+          if (job.cancelled || t >= total + 0.2) { clearInterval(iv); res(); }
+        }, 1000 / FPS);
+      });
+    } finally { painter.restore(); }
+    try { src.stop(); } catch (e) {}
+    rec.stop(); await stopped;
+    src.disconnect(); if (mon) mon.disconnect(); stream.getTracks().forEach(t => t.stop());
+    if (job.cancelled) throw "cancel";
+    return new Blob(chunks, { type: mime.split(";")[0] });
+  }
+  function rms(buf) { let sum = 0, n = 0; for (let c = 0; c < buf.numberOfChannels; c++) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i += 64) { sum += d[i] * d[i]; n++; } } return Math.sqrt(sum / Math.max(1, n)); }
+  async function isSilent(blob) { try { const ab = await blob.arrayBuffer(); const b = await new Promise((res, rej) => { const p = ctx.decodeAudioData(ab, res, rej); if (p && p.then) p.then(res, rej); }); return rms(b) < 1e-4; } catch (e) { return false; } }
+  async function offerSave() {
+    if (!pendingFile) return;
+    if (!downloadsApi) {
+      const a = document.createElement("a"); a.href = URL.createObjectURL(pendingFile.blob); a.download = pendingFile.name;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 60000);
+      exStatus.textContent = `Guardado: ${pendingFile.name}`; exSave.hidden = true; pendingFile = null; return;
+    }
+    exSave.disabled = true;
+    try { await downloadsApi.save({ filename: pendingFile.name, data: pendingFile.blob }); exStatus.textContent = `Guardado: ${pendingFile.name}`; exSave.hidden = true; pendingFile = null; }
+    catch (e) {
+      const code = e && e.code;
+      exStatus.textContent = code === "declined" ? "Download cancelado. Toque em Guardar arquivo para tentar outra vez." : code === "rate_limited" ? "Já há um pedido de download aberto. Responda a ele ou aguarde uns segundos." : `O download não foi concluído (${code || (e && e.message) || "erro desconhecido"}). Toque em Guardar arquivo para tentar outra vez.`;
+      exSave.hidden = false;
+    }
+    exSave.disabled = false;
+  }
+  exSave.addEventListener("click", offerSave);
+  async function exportVideo() {
+    if (job) return;
+    if (!parsed.bars.length) return;
+    ensureCtx(); if (bq.on) stopBreque();
+    job = { cancelled: false }; pendingFile = null; exSave.hidden = true;
+    exBtn.disabled = true; exCancel.hidden = false; exWrap.hidden = false; exBar.style.width = "0%"; exStatus.textContent = "Preparando o som do breque…";
+    exporting = true;
+    try {
+      const r = await renderBrequeAudio();
+      if (job.cancelled) throw "cancel";
+      if (rms(r.buffer) < 1e-4) throw new Error("o som gerado ficou vazio");
+      const recMime = pickMime(), attempts = [];
+      const acA = window.Mp4Muxer ? await pickAudioCodec(false) : null, vcA = acA ? await pickVideoCodec(false) : null;
+      if (acA && vcA) attempts.push(["rápido", () => encodeFast(r, acA, vcA), "mp4"]);
+      if (recMime && recMime.startsWith("video/mp4")) attempts.push(["tempo real mp4", () => recordRealtime(r, recMime), "mp4"]);
+      attempts.push(["rápido (outros codecs)", async () => { const ac = window.Mp4Muxer ? await pickAudioCodec(true) : null, vc = ac ? await pickVideoCodec(true) : null; if (!ac || !vc) throw new Error("unsupported"); return encodeFast(r, ac, vc); }, "mp4"]);
+      if (recMime && !recMime.startsWith("video/mp4")) attempts.push(["tempo real webm", () => recordRealtime(r, recMime), "webm"]);
+      let blob = null, ext = "mp4", lastErr = null;
+      for (const [label, run, x] of attempts) {
+        try {
+          const b = await run(); if (job.cancelled) throw "cancel";
+          if (!b || !b.size) throw new Error("vazio");
+          exStatus.textContent = "Conferindo o som do arquivo…";
+          if (await isSilent(b)) throw new Error("mudo");
+          blob = b; ext = x; break;
+        } catch (e) { if (e === "cancel") throw e; console.warn("Vídeo:", label, e); lastErr = e; exStatus.textContent = "Tentando outro método…"; exBar.style.width = "0%"; }
+      }
+      if (!blob) throw new Error(lastErr && lastErr.message === "mudo" ? "o arquivo saiu sem som neste aparelho" : "este navegador não consegue criar o vídeo; atualize o sistema ou tente no computador");
+      pendingFile = { name: `surdos-3d-${slug(current.name)}-${bpm.value}bpm.${ext}`, blob };
+      exBar.style.width = "100%"; exStatus.textContent = `Pronto (${(blob.size / 1048576).toFixed(1).replace(".", ",")} MB). Confirme o download.`; exSave.hidden = false;
+      exporting = false;
+      await offerSave();
+    } catch (e) {
+      console.error(e);
+      exStatus.textContent = e === "cancel" ? "Vídeo cancelado." : `Não foi possível criar o vídeo: ${(e && e.message) || e}. Tente outra vez.`;
+    }
+    exporting = false; job = null; exBtn.disabled = false; exCancel.hidden = true;
+  }
+  exBtn.addEventListener("click", exportVideo);
+  exCancel.addEventListener("click", () => { if (job) job.cancelled = true; });
   let last = null; try { last = localStorage.getItem("surdos3d.sel"); } catch (e) {}
   selectBreque(last && BUILTIN.some(b => b.id === last) ? last : "minus");
   ovPos.textContent = `${current.name} · pronto para tocar`;
-  window.__s3d = { players, malletAngle, addHit, get bq() { return bq; }, camera, scene };
+  window.__s3d = { players, malletAngle, addHit, get bq() { return bq; }, camera, scene, selectBreque };
 
 })();
 </script>
