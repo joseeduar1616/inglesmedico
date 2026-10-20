@@ -1,6 +1,6 @@
 <title>Surdos em 3D</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Dois bonequinhos em 3D tocando surdo de 1ª e de 2ª, com a maceta batendo na pele no tempo de cada toque dos breques.">
+<meta name="description" content="Dois músicos em 3D tocando surdo de 1ª e de 2ª, com golpes amplos e a maceta na pele no tempo de cada toque dos breques. Tela cheia, vista por trás e espelho para copiar.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
@@ -38,13 +38,36 @@ h1 span { color: var(--brass); }
 .stage3d canvas { display: block; width: 100% !important; height: 100% !important; cursor: grab; }
 .stage3d canvas:active { cursor: grabbing; }
 .ov { position: absolute; pointer-events: none; }
-.ov-word { left: 0; right: 0; top: 14px; text-align: center; font-family: var(--f-display); font-weight: 800; font-size: clamp(34px, 6vw, 64px); line-height: 1; letter-spacing: .03em; text-shadow: 0 2px 18px rgba(0,0,0,.7); min-height: 1em; }
+.ov-word { left: 0; right: 0; top: 52px; text-align: center; font-family: var(--f-display); font-weight: 800; font-size: clamp(34px, 6vw, 64px); line-height: 1; letter-spacing: .03em; text-shadow: 0 2px 18px rgba(0,0,0,.7); min-height: 1em; }
 .ov-pos { left: 14px; bottom: 12px; font: 500 12px var(--f-mono); color: var(--fg); background: rgba(14,15,18,.7); padding: 5px 9px; border-radius: 6px; font-variant-numeric: tabular-nums; }
-.views { position: absolute; right: 10px; top: 10px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 60%; }
-.views button { font: 600 12px var(--f-body); color: var(--fg); background: rgba(22,24,29,.82); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
-.views button:hover, .views button.on { border-color: var(--brass); color: var(--brass); }
+.topbar { position: absolute; left: 10px; right: 10px; top: 10px; display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; }
+.tools, .views { display: flex; flex-wrap: wrap; gap: 6px; }
+.views { justify-content: flex-end; max-width: 66%; }
+.tools button, .views button, .fsbar button { font: 600 12px var(--f-body); color: var(--fg); background: rgba(22,24,29,.82); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.tools button, .fsbar button { display: inline-flex; align-items: center; gap: 6px; }
+.tools svg, .fsbar svg { width: 13px; height: 13px; flex: none; }
+.tools button:hover, .tools button[aria-pressed=true], .views button:hover, .views button.on, .fsbar button:hover { border-color: var(--brass); color: var(--brass); }
+.fsbar { position: absolute; left: 50%; bottom: max(12px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(14,15,18,.82); border: 1px solid var(--line); }
+.fsbar button { font-size: 14px; padding: 7px 13px; }
+.fsbar button.wide { min-width: 92px; justify-content: center; }
+.fsbar output { font: 500 12px var(--f-mono); min-width: 62px; text-align: center; font-variant-numeric: tabular-nums; }
+.stage3d.is-fs { border-radius: 0; border: 0; max-height: none; aspect-ratio: auto; width: 100%; height: 100%; }
+.stage3d.fs-css { position: fixed; inset: 0; z-index: 1000; height: 100vh; height: 100dvh; }
+.stage3d.is-fs .fsbar { display: flex; }
+.stage3d.is-fs .ov-pos { bottom: calc(max(12px, env(safe-area-inset-bottom, 0px)) + 52px); }
+.stage3d.is-fs .hint3d { display: none; }
+.stage3d.is-fs .topbar { top: max(10px, env(safe-area-inset-top, 0px)); left: max(10px, env(safe-area-inset-left, 0px)); right: max(10px, env(safe-area-inset-right, 0px)); }
+.stage3d.mirror canvas { transform: scaleX(-1); }
+body.no-scroll { overflow: hidden; }
 .hint3d { right: 12px; bottom: 12px; font-size: 11.5px; color: var(--muted); background: rgba(14,15,18,.7); padding: 4px 8px; border-radius: 6px; }
-@media (max-width: 640px) { .hint3d { display: none; } .views { max-width: 75%; } }
+@media (max-width: 640px) {
+  .hint3d { display: none; }
+  .topbar { flex-direction: column; align-items: stretch; gap: 6px; }
+  .views { max-width: none; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+  .views::-webkit-scrollbar { display: none; }
+  .views button { flex: none; }
+  .ov-word { top: 86px; }
+}
 
 .panel { display: flex; flex-direction: column; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--stage-2) 80%, transparent); }
 .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 13px; color: var(--muted); }
@@ -102,15 +125,30 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 
   <div class="stage3d" id="stage3d">
     <div class="ov ov-word" id="ovWord"></div>
-    <div class="views" id="views">
-      <button type="button" data-v="frente" class="on">Frente</button>
-      <button type="button" data-v="lado">De lado</button>
-      <button type="button" data-v="cima">De cima</button>
-      <button type="button" data-v="p1">Perto da 1ª</button>
-      <button type="button" data-v="p2">Perto da 2ª</button>
+    <div class="topbar">
+      <div class="tools">
+        <button type="button" id="fsBtn" aria-pressed="false"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1.5 5V1.5H5M9 1.5h3.5V5M12.5 9v3.5H9M5 12.5H1.5V9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span id="fsLbl">Tela cheia</span></button>
+        <button type="button" id="mirBtn" aria-pressed="false"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 1.6"/><path d="M5 3.5L1.5 7 5 10.5zM9 3.5L12.5 7 9 10.5z" fill="currentColor"/></svg>Espelho</button>
+      </div>
+      <div class="views" id="views">
+        <button type="button" data-v="frente" class="on">Frente</button>
+        <button type="button" data-v="a1">Atrás da 1ª</button>
+        <button type="button" data-v="a2">Atrás da 2ª</button>
+        <button type="button" data-v="p1">Perto da 1ª</button>
+        <button type="button" data-v="p2">Perto da 2ª</button>
+        <button type="button" data-v="lado">De lado</button>
+        <button type="button" data-v="cima">De cima</button>
+      </div>
     </div>
     <div class="ov ov-pos" id="ovPos">Escolha um breque e toque em Tocar breque</div>
     <div class="ov hint3d">arraste para girar · pinça ou roda para aproximar</div>
+    <div class="fsbar" id="fsBar">
+      <button type="button" id="fsPlay" class="wide"><svg viewBox="0 0 14 14" aria-hidden="true"><path id="fsIcon" d="M3 1.5v11l9.5-5.5z" fill="currentColor"/></svg><span id="fsPlayLbl">Tocar</span></button>
+      <button type="button" id="fsSlow" aria-label="Mais devagar">−</button>
+      <output id="fsBpm">150 bpm</output>
+      <button type="button" id="fsFast" aria-label="Mais rápido">+</button>
+      <button type="button" id="fsExit">Sair</button>
+    </div>
     <p class="err" id="err3d" hidden style="position:absolute;inset:auto 16px 50% 16px;text-align:center"></p>
   </div>
 
@@ -140,7 +178,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
         <label for="exMonitor"><input type="checkbox" id="exMonitor" checked> Ouvir se precisar gravar em tempo real</label>
       </div>
       <div class="ex-progress" id="exProgress" hidden><div class="ex-track"><i id="exBar"></i></div><span id="exStatus"></span></div>
-      <p class="note">O vídeo mostra o breque inteiro com os bonequinhos tocando, na câmera que estiver no palco agora (gire ou escolha uma vista antes de baixar), com o andamento, a contagem e o metrônomo escolhidos acima. Sai em MP4 1280×720 com H.264 e AAC, que abre no iPhone, na galeria e no WhatsApp.</p>
+      <p class="note">O vídeo mostra o breque inteiro com os músicos tocando, na câmera que estiver no palco agora (gire ou escolha uma vista antes de baixar; o espelho também vale), com o andamento, a contagem e o metrônomo escolhidos acima. Sai em MP4 1280×720 com H.264 e AAC, que abre no iPhone, na galeria e no WhatsApp.</p>
     </div>
     <div class="legend">
       <span><b class="tk-To">To</b>1ª + 2ª</span><span><b class="tk-Pa">Pa</b>só a 2ª</span><span><b class="tk-po">po</b>só a 1ª</span>
@@ -155,7 +193,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
       <button class="pad p1" id="pad1" type="button"><b>1ª</b><small>tocar · tecla A · Shift abafa</small></button>
       <button class="pad p2" id="pad2" type="button"><b>2ª</b><small>tocar · tecla S · Shift abafa</small></button>
     </div>
-    <p class="note">Os bonequinhos levantam a maceta antes de cada toque e acertam a pele no instante em que o som sai. Em notas rápidas, o golpe fica curto. No abafado (Bo), a mão esquerda segura a pele. <kbd>Espaço</kbd> ou <kbd>B</kbd> toca e para o breque. O som é o mesmo do simulador de surdos: 1ª em 45 Hz e 2ª em 78 Hz.</p>
+    <p class="note">Para copiar: <b>Atrás da 1ª</b> e <b>Atrás da 2ª</b> mostram o golpe por cima do ombro, como se fosse você tocando. De frente, ligue o <b>Espelho</b> para o músico ficar como o seu reflexo (a mão da maceta do mesmo lado que a sua). Os músicos levantam a maceta até perto da cabeça e acertam a pele no instante em que o som sai; nas notas rápidas o golpe fica mais curto, como na mão de verdade. No abafado (Bo), a mão esquerda segura a pele. <kbd>Espaço</kbd> ou <kbd>B</kbd> toca e para o breque, <kbd>F</kbd> põe em tela cheia e <kbd>E</kbd> liga o espelho. O som é o mesmo do simulador de surdos: 1ª em 45 Hz e 2ª em 78 Hz.</p>
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -753,11 +791,11 @@ To`;
   host.prepend(renderer.domElement);
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0d0e12);
-  scene.fog = new THREE.Fog(0x0d0e12, 7, 14);
+  scene.fog = new THREE.Fog(0x0d0e12, 8, 16);
   const camera = new THREE.PerspectiveCamera(38, 16 / 9, 0.05, 50);
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enablePan = false;
-  controls.minDistance = 1.2; controls.maxDistance = 7; controls.maxPolarAngle = Math.PI * 0.49;
+  controls.minDistance = 0.6; controls.maxDistance = 8; controls.maxPolarAngle = Math.PI * 0.49;
 
   scene.add(new THREE.HemisphereLight(0xdfe6ff, 0x1a1410, 0.55));
   const key = new THREE.DirectionalLight(0xfff1dc, 1.05); key.position.set(2.2, 4.2, 3.2); key.castShadow = true;
@@ -813,88 +851,183 @@ To`;
     return { group: d, head, skinMat, wave, R, H };
   }
 
-  // ---------- O bonequinho ----------
+  // ---------- O músico ----------
+  // Proporções humanas (1,75 m). Braços com ombro, cotovelo e punho de verdade. As poses de contato (maceta na pele),
+  // de alto (maceta perto da cabeça) e da mão esquerda (no aro e abafando) são calculadas por cinemática inversa
+  // no início, e a animação passa de uma para a outra. No instante do toque a pose é exatamente a de contato.
+  const HIP = 0.93;
+  function lathe(points, mat, sz = 1) { const g = new THREE.LatheGeometry(points.map(([r, y]) => new THREE.Vector2(r, y)), 28); const m = mesh(g, mat); m.scale.z = sz; return m; }
   function makePlayer(o) {
-    const g = new THREE.Group(); g.position.set(o.x, 0, 0); g.rotation.y = o.ry; scene.add(g);
-    const body = new THREE.Group(); g.add(body);
-    const shirt = M(o.shirt, { r: 0.75 }), pants = M(o.pants, { r: 0.8 }), skin = M(o.skin, { r: 0.7 }), dark = M(0x15161a, { r: 0.5 });
-    // pernas e tênis
+    const g = new THREE.Group(); g.position.set(o.x, 0, 0); g.rotation.y = o.ry; g.scale.x = -1; scene.add(g);   // espelhado: o modelo foi feito com a maceta em +x; assim ela fica na mão direita (destro)
+    const shirt = M(o.shirt, { r: 0.8 }), pants = M(o.pants, { r: 0.85 }), skin = M(o.skin, { r: 0.55 }), hair = M(o.hair, { r: 0.9 }), dark = M(0x15161a, { r: 0.5 });
+    const shoeM = M(0xf2f2f2, { r: 0.55 });
+    const hips = new THREE.Group(); hips.position.y = HIP; g.add(hips);
+    // quadril e pernas (as pernas dobram para o corpo descer no balanço sem tirar os pés do chão)
+    const pelvis = lathe([[0.001, -0.13], [0.13, -0.12], [0.165, -0.04], [0.16, 0.06], [0.001, 0.07]], pants, 0.72); hips.add(pelvis);
+    const legs = [];
     for (const sx of [-1, 1]) {
-      const leg = mesh(new THREE.CylinderGeometry(0.078, 0.07, 0.62, 14), pants); leg.position.set(0.1 * sx, 0.33, 0); g.add(leg);
-      const shoe = mesh(new THREE.BoxGeometry(0.13, 0.07, 0.25), M(0xf2f2f2, { r: 0.6 })); shoe.position.set(0.1 * sx, 0.036, 0.04); g.add(shoe);
-      const sole = mesh(new THREE.BoxGeometry(0.135, 0.02, 0.255), dark); sole.position.set(0.1 * sx, 0.01, 0.04); g.add(sole);
+      const hipJ = new THREE.Group(); hipJ.position.set(0.095 * sx, -0.06, 0); hips.add(hipJ);
+      const thigh = mesh(new THREE.CylinderGeometry(0.075, 0.058, 0.42, 16), pants); thigh.position.y = -0.21; hipJ.add(thigh);
+      const knee = new THREE.Group(); knee.position.y = -0.42; hipJ.add(knee);
+      knee.add(mesh(new THREE.SphereGeometry(0.058, 14, 10), pants));
+      const shin = mesh(new THREE.CylinderGeometry(0.056, 0.045, 0.4, 16), pants); shin.position.y = -0.2; knee.add(shin);
+      const ankle = new THREE.Group(); ankle.position.y = -0.4; knee.add(ankle);
+      const shoe = mesh(new THREE.BoxGeometry(0.1, 0.075, 0.26), shoeM); shoe.position.set(0, -0.03, 0.05); ankle.add(shoe);
+      const sole = mesh(new THREE.BoxGeometry(0.104, 0.02, 0.265), dark); sole.position.set(0, -0.07, 0.05); ankle.add(sole);
+      legs.push({ hipJ, knee, ankle });
     }
-    const hips = mesh(new THREE.CylinderGeometry(0.2, 0.19, 0.15, 20), pants); hips.position.y = 0.68; body.add(hips);
-    const torso = mesh(new THREE.CylinderGeometry(0.215, 0.2, 0.46, 24), shirt); torso.position.y = 0.97; body.add(torso);
-    const chest = mesh(new THREE.SphereGeometry(0.215, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), shirt); chest.position.y = 1.2; body.add(chest);
-    // número da camisa (1 ou 2)
-    const num = label(o.num, "#0e0f12"); num.material = num.material.clone(); num.scale.set(0.16, 0.08, 1); num.position.set(0, 1.02, -0.22); body.add(num);
-    const neck = mesh(new THREE.CylinderGeometry(0.06, 0.07, 0.08, 12), skin); neck.position.y = 1.31; body.add(neck);
-    // cabeça grande de bonequinho
-    const headG = new THREE.Group(); headG.position.y = 1.5; body.add(headG);
-    headG.add(mesh(new THREE.SphereGeometry(0.21, 32, 24), skin));
+    // tronco: cintura fina, peito e ombros
+    const torso = new THREE.Group(); hips.add(torso);
+    torso.add(lathe([[0.001, 0], [0.15, 0.0], [0.145, 0.12], [0.16, 0.26], [0.19, 0.38], [0.2, 0.45], [0.17, 0.51], [0.08, 0.55], [0.001, 0.555]], shirt, 0.66));
+    const num = label(o.num, "#0e0f12"); num.scale.set(0.14, 0.07, 1); num.position.set(0, 0.33, -0.15); torso.add(num);
+    const neck = mesh(new THREE.CylinderGeometry(0.045, 0.052, 0.1, 14), skin); neck.position.y = 0.58; torso.add(neck);
+    // cabeça
+    const headG = new THREE.Group(); headG.position.y = 0.63; torso.add(headG);
+    const skull = mesh(new THREE.SphereGeometry(0.1, 28, 22), skin); skull.scale.set(0.92, 1.12, 1.02); skull.position.y = 0.09; headG.add(skull);
+    const jaw = mesh(new THREE.SphereGeometry(0.075, 20, 14), skin); jaw.scale.set(1, 0.8, 1.05); jaw.position.set(0, 0.03, 0.02); headG.add(jaw);
+    const nose = mesh(new THREE.ConeGeometry(0.016, 0.042, 10), skin); nose.rotation.x = Math.PI / 2; nose.position.set(0, 0.085, 0.105); headG.add(nose);
     for (const sx of [-1, 1]) {
-      const eye = mesh(new THREE.SphereGeometry(0.028, 16, 12), dark, false); eye.position.set(0.075 * sx, 0.02, 0.188); headG.add(eye);
-      const shine = mesh(new THREE.SphereGeometry(0.008, 8, 6), M(0xffffff), false); shine.position.set(0.075 * sx + 0.01, 0.033, 0.212); headG.add(shine);
-      const cheek = mesh(new THREE.SphereGeometry(0.03, 12, 8), M(0xf29b8b, { r: 0.9 }), false); cheek.scale.set(1, 0.6, 0.35); cheek.position.set(0.12 * sx, -0.04, 0.165); headG.add(cheek);
-      const ear = mesh(new THREE.SphereGeometry(0.04, 12, 8), skin); ear.scale.set(0.6, 1, 0.8); ear.position.set(0.205 * sx, 0, 0); headG.add(ear);
+      const white = mesh(new THREE.SphereGeometry(0.013, 12, 8), M(0xf4f1ea, { r: 0.3 }), false); white.position.set(0.035 * sx, 0.11, 0.087); headG.add(white);
+      const iris = mesh(new THREE.SphereGeometry(0.0075, 10, 8), M(0x2a1a10, { r: 0.3 }), false); iris.position.set(0.035 * sx, 0.11, 0.098); headG.add(iris);
+      const brow = mesh(new THREE.BoxGeometry(0.03, 0.006, 0.01), hair, false); brow.position.set(0.035 * sx, 0.132, 0.093); brow.rotation.z = -0.12 * sx; headG.add(brow);
+      const ear = mesh(new THREE.SphereGeometry(0.022, 10, 8), skin); ear.scale.set(0.45, 1, 0.75); ear.position.set(0.092 * sx, 0.095, 0); headG.add(ear);
     }
-    const smile = mesh(new THREE.TorusGeometry(0.045, 0.009, 8, 20, Math.PI), dark, false); smile.rotation.z = Math.PI; smile.position.set(0, -0.055, 0.19); headG.add(smile);
-    // boné com a cor do surdo
-    const cap = mesh(new THREE.SphereGeometry(0.218, 28, 14, 0, Math.PI * 2, 0, Math.PI * 0.42), M(o.cap, { r: 0.7 })); cap.position.y = 0.025; headG.add(cap);
-    const brim = mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.018, 24, 1, false, -Math.PI / 2, Math.PI), M(o.cap, { r: 0.7 })); brim.position.set(0, 0.075, 0.13); brim.rotation.x = 0.12; headG.add(brim);
-    // talabarte
-    const strap = limb(0.022, M(0x1d1f24, { r: 0.9 })); body.add(strap);
-    // surdo pendurado à frente, inclinado para a pele aparecer
+    const lips = mesh(new THREE.BoxGeometry(0.034, 0.008, 0.01), M(0x7a3b2e, { r: 0.6 }), false); lips.position.set(0, 0.045, 0.092); headG.add(lips);
+    const hairCap = mesh(new THREE.SphereGeometry(0.104, 26, 14, 0, Math.PI * 2, 0, Math.PI * 0.5), hair); hairCap.scale.set(0.95, 1.05, 1.05); hairCap.position.set(0, 0.11, -0.006); headG.add(hairCap);
+    if (o.cap) {   // boné de aba virada para trás na 2ª
+      const capM = M(o.cap, { r: 0.75 });
+      const crown = mesh(new THREE.SphereGeometry(0.108, 26, 12, 0, Math.PI * 2, 0, Math.PI * 0.42), capM); crown.position.y = 0.125; headG.add(crown);
+      const brim = mesh(new THREE.CylinderGeometry(0.085, 0.085, 0.012, 20, 1, false, -Math.PI / 2, Math.PI), capM); brim.position.set(0, 0.15, -0.09); brim.rotation.set(-0.15, Math.PI, 0); headG.add(brim);
+    }
+    // talabarte do ombro direito até o gancho do surdo
+    const strap = limb(0.02, M(0x1d1f24, { r: 0.9 })); torso.add(strap);
+    // surdo, preso ao tronco (o talabarte segura): acompanha o corpo, então a pose de contato vale sempre
     const drum = makeDrum(o.R, o.H, o.hoop);
-    drum.group.position.set(-0.03, 0.74 - (0.6 - o.H) / 2, 0.4 + o.R - 0.3); drum.group.rotation.x = 0.3; body.add(drum.group);
+    drum.group.position.set(-0.05, 0.05 - o.H / 2, 0.16 + o.R); drum.group.rotation.x = 0.26; torso.add(drum.group);
     drum.group.updateMatrix();
-    const toBody = v => v.clone().applyMatrix4(drum.group.matrix);
-    const normal = new THREE.Vector3(0, 1, 0).applyQuaternion(drum.group.quaternion);
-    between(strap, new THREE.Vector3(0.18, 1.24, -0.02), toBody(new THREE.Vector3(-o.R, o.H / 2, -0.04)));
-    // braço direito: ombro fixo; antebraço + maceta giram no cotovelo e, sem levantar, a cabeça da maceta encosta na pele
-    const sR = new THREE.Vector3(0.255, 1.2, 0.0), eR = new THREE.Vector3(0.26, 0.98, 0.2);
-    const upperR = limb(0.052, shirt); body.add(upperR); between(upperR, sR, eR);
-    const sleeveR = mesh(new THREE.SphereGeometry(0.075, 14, 10), shirt); sleeveR.position.copy(sR); body.add(sleeveR);
-    const malletR = 0.05;
-    const hitPoint = toBody(new THREE.Vector3(0.05, o.H / 2, -0.04));
-    const target = hitPoint.clone().addScaledVector(normal, malletR + 0.004);
-    const dir = target.clone().sub(eR), L = dir.length(); dir.normalize();
-    const swing = new THREE.Group(); swing.position.copy(eR); body.add(swing);
-    const inner = new THREE.Group(); inner.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), dir); swing.add(inner);
-    const elbowBall = mesh(new THREE.SphereGeometry(0.052, 12, 10), skin); inner.add(elbowBall);
-    const fore = mesh(new THREE.CylinderGeometry(0.045, 0.04, 0.2, 12), skin); fore.rotation.x = Math.PI / 2; fore.position.z = 0.1; inner.add(fore);
-    const hand = mesh(new THREE.SphereGeometry(0.052, 14, 10), skin); hand.position.z = 0.22; inner.add(hand);
-    const stickLen = L - 0.22 - malletR * 0.6;
-    const stick = mesh(new THREE.CylinderGeometry(0.012, 0.014, stickLen, 10), M(0xb07a43, { r: 0.55 })); stick.rotation.x = Math.PI / 2; stick.position.z = 0.22 + stickLen / 2; inner.add(stick);
-    const mallet = mesh(new THREE.CylinderGeometry(malletR, malletR, 0.075, 20), M(0xf4efe4, { r: 0.98 })); mallet.rotation.z = Math.PI / 2; mallet.position.z = L; inner.add(mallet);
-    const malletCap = mesh(new THREE.TorusGeometry(malletR * 0.98, 0.006, 6, 20), M(o.hoop, { m: 0.4, r: 0.4 })); malletCap.rotation.y = Math.PI / 2; malletCap.position.set(0, 0, L); inner.add(malletCap);
-    const axis = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize();
-    // braço esquerdo: a mão descansa no aro e desce sobre a pele no abafado
-    const sL = new THREE.Vector3(-0.255, 1.2, 0.0);
-    const restL = toBody(new THREE.Vector3(-o.R * 0.86, o.H / 2 + 0.04, -o.R * 0.32));
-    const muteL = toBody(new THREE.Vector3(-o.R * 0.35, o.H / 2 + 0.035, -0.02));
-    const upperL = limb(0.052, shirt), foreL = limb(0.045, skin); body.add(upperL, foreL);
-    const sleeveL = mesh(new THREE.SphereGeometry(0.075, 14, 10), shirt); sleeveL.position.copy(sL); body.add(sleeveL);
-    const handL = mesh(new THREE.SphereGeometry(0.055, 14, 10), skin); handL.scale.set(1.1, 0.6, 1.2); body.add(handL);
-    const elbowL = mesh(new THREE.SphereGeometry(0.05, 12, 10), skin); body.add(elbowL);
-    const tag = label(o.label, o.labelColor); tag.position.set(0, 1.98, 0); body.add(tag);
-    return { i: o.i, g, body, headG, drum, swing, axis, upperL, foreL, handL, elbowL, sL, restL, muteL, hits: [], lastFx: -1, fx: [], idle: Math.random() * 6 };
+    const dToTorso = v => v.clone().applyMatrix4(drum.group.matrix);
+    between(strap, new THREE.Vector3(0.14, 0.52, -0.02), dToTorso(new THREE.Vector3(-o.R - 0.02, o.H / 2 - 0.06, 0)));
+    // braços
+    function arm(side) {
+      const sh = new THREE.Group(); sh.position.set(0.19 * side, 0.49, 0); torso.add(sh);
+      sh.add(mesh(new THREE.SphereGeometry(0.062, 14, 10), shirt));
+      const sleeve = mesh(new THREE.CylinderGeometry(0.064, 0.058, 0.15, 14), shirt); sleeve.position.y = -0.07; sh.add(sleeve);
+      const up = mesh(new THREE.CylinderGeometry(0.05, 0.043, 0.29, 14), skin); up.position.y = -0.15; sh.add(up);
+      const el = new THREE.Group(); el.position.y = -0.3; sh.add(el);
+      el.add(mesh(new THREE.SphereGeometry(0.044, 12, 10), skin));
+      const fore = mesh(new THREE.CylinderGeometry(0.042, 0.032, 0.26, 14), skin); fore.position.y = -0.13; el.add(fore);
+      const wr = new THREE.Group(); wr.position.y = -0.26; el.add(wr);
+      return { sh, el, wr };
+    }
+    const RA = arm(1), LA = arm(-1);
+    // mão direita fechada na maceta
+    const fist = mesh(new THREE.SphereGeometry(0.045, 14, 10), skin); fist.scale.set(0.95, 1.15, 1.05); fist.position.y = -0.05; RA.wr.add(fist);
+    const thumb = mesh(new THREE.CylinderGeometry(0.012, 0.011, 0.05, 8), skin); thumb.position.set(-0.03, -0.045, 0.03); thumb.rotation.set(0.9, 0, 0.4); RA.wr.add(thumb);
+    const malletR = 0.048, stickLen = 0.37;
+    const grip = new THREE.Group(); grip.position.y = -0.055; RA.wr.add(grip);
+    const stick = mesh(new THREE.CylinderGeometry(0.011, 0.013, stickLen + 0.07, 10), M(0xb07a43, { r: 0.55 })); stick.rotation.x = Math.PI / 2; stick.position.z = (stickLen - 0.07) / 2; grip.add(stick);
+    const malletHead = new THREE.Group(); malletHead.position.z = stickLen; grip.add(malletHead);
+    const felt = mesh(new THREE.CylinderGeometry(malletR, malletR, 0.075, 22), M(0xf4efe4, { r: 0.98 })); felt.rotation.z = Math.PI / 2; malletHead.add(felt);
+    const band = mesh(new THREE.TorusGeometry(malletR * 0.99, 0.006, 6, 22), M(o.hoop, { m: 0.4, r: 0.4 })); band.rotation.y = Math.PI / 2; malletHead.add(band);
+    // mão esquerda aberta (palma para a frente quando o braço está solto)
+    const palm = mesh(new THREE.BoxGeometry(0.082, 0.095, 0.026), skin); palm.position.y = -0.055; LA.wr.add(palm);
+    for (let k = 0; k < 4; k++) { const f = mesh(new THREE.CylinderGeometry(0.009, 0.008, 0.07, 8), skin); f.position.set(-0.03 + k * 0.02, -0.135, 0.002); LA.wr.add(f); }
+    const thumbL = mesh(new THREE.CylinderGeometry(0.011, 0.009, 0.055, 8), skin); thumbL.position.set(0.05, -0.05, 0.01); thumbL.rotation.z = 0.7; LA.wr.add(thumbL);
+    const palmPt = new THREE.Object3D(); palmPt.position.set(0, -0.08, 0.016); LA.wr.add(palmPt);
+    const tag = label(o.label, o.labelColor); tag.position.set(0, 2.06, 0); g.add(tag);
+
+    // ---- cinemática inversa (uma vez, com o corpo parado) ----
+    g.updateMatrixWorld(true);
+    const W = v => v.clone().applyMatrix4(drum.group.matrixWorld);
+    const nW = new THREE.Vector3(0, 1, 0).transformDirection(drum.group.matrixWorld);
+    const pos = o3 => new THREE.Vector3().setFromMatrixPosition(o3.matrixWorld);
+    function solve(params, apply, cost, iters = 900) {
+      let p = params.map(q => q.v), step = 0.25;
+      const ev = () => { apply(p); g.updateMatrixWorld(true); return cost(p); };
+      let c = ev();
+      for (let it = 0; it < iters && step > 2e-5; it++) {
+        let better = false;
+        for (let i = 0; i < p.length; i++) for (const s of [step, -step]) {
+          const old = p[i], nv = clamp(old + s, params[i].min, params[i].max); if (nv === old) continue;
+          p[i] = nv; const c2 = ev(); if (c2 < c) { c = c2; better = true; } else p[i] = old;
+        }
+        if (!better) step *= 0.5;
+      }
+      apply(p); g.updateMatrixWorld(true); return p;
+    }
+    // várias largadas e fica a melhor (a busca local às vezes para com o cabo atravessando o surdo)
+    function best(params, guesses, apply, mk) {
+      let win = null;
+      for (const gs of guesses) {
+        const cost = mk(gs), p = solve(params.map((q, i) => ({ ...q, v: gs[i] })), apply, cost);
+        apply(p); g.updateMatrixWorld(true); const c = cost(p);
+        if (!win || c < win.c) win = { p, c };
+      }
+      apply(win.p); g.updateMatrixWorld(true); return win.p;
+    }
+    const RP = [{ min: -3.0, max: 0.8 }, { min: -1.2, max: 1.2 }, { min: -0.4, max: 1.8 }, { min: -2.6, max: 0 }, { min: -1.4, max: 1.1 }, { min: -0.8, max: 0.8 }, { min: -1.4, max: 1.4 }];
+    const applyR = p => { RA.sh.rotation.set(p[0], p[1], p[2]); RA.el.rotation.set(p[3], 0, 0); RA.wr.rotation.set(p[4], p[6], p[5]); };
+    const reg = (p, guess, w) => p.reduce((a, v, i) => a + w * (v - guess[i]) ** 2, 0);
+    // custo: cabeça da maceta (ou a mão) no alvo e o cabo na direção pedida; a mão nunca abaixo da pele
+    function rightCost(o2) {
+      return p => {
+        const mh = pos(malletHead), hand = pos(grip), dir = mh.clone().sub(hand).normalize();
+        let c = dir.distanceToSquared(o2.dir) * 30 + reg(p, o2.guess, 0.003);
+        if (o2.mallet) c += mh.distanceToSquared(o2.mallet) * 1e4;
+        if (o2.hand) c += hand.distanceToSquared(o2.hand) * 2e3;
+        const above = hand.clone().sub(hit).dot(nW); if (above < 0.12) c += (0.12 - above) ** 2 * 3e3;
+        return c;
+      };
+    }
+    // contato: cabeça da maceta na pele, um pouco à direita do centro; o cabo vem da borda direita, descendo para a pele
+    const hit = W(new THREE.Vector3(0.06, o.H / 2, -0.03)).addScaledVector(nW, malletR + 0.003);
+    const dirC = new THREE.Vector3(-0.75, -0.45, 0.35).normalize().transformDirection(drum.group.matrixWorld);
+    const contact = best(RP, [[-0.55, 0.15, 0.35, -1.25, 0.1, 0, 0], [-0.9, 0.3, 0.6, -1.5, 0.4, 0, 0.5], [-0.3, 0, 0.2, -0.9, -0.3, 0.3, -0.5], [-0.7, -0.2, 0.5, -1.0, 0.2, -0.3, 0.9]],
+      applyR, gs => rightCost({ mallet: hit, dir: dirC, guess: gs }));
+    const contactErr = pos(malletHead).distanceTo(hit);
+    // alto: mão na altura do ombro, à direita e à frente, cotovelo aberto; a maceta em pé, acima da cabeça e para trás
+    const handT = new THREE.Vector3(0.34, HIP + 0.46, 0.15).applyMatrix4(g.matrixWorld);
+    const dirT = new THREE.Vector3(0.2, 1, -0.45).normalize().transformDirection(g.matrixWorld);
+    const top = best(RP, [[-1.55, 0.25, 0.75, -1.7, -0.75, 0, 0], [-1.0, 0.5, 1.0, -2.2, -0.5, 0, 0], [-1.8, 0, 0.4, -2.0, -1, 0.3, 0.5], [-0.6, 0.3, 1.2, -2.3, -0.3, 0, -0.6]],
+      applyR, gs => rightCost({ hand: handT, dir: dirT, guess: gs }));
+    const LP = [{ v: -0.5, min: -2.6, max: 0.6 }, { v: 0, min: -1.2, max: 1.2 }, { v: -0.3, min: -1.4, max: 0.4 }, { v: -1.2, min: -2.6, max: 0 }, { v: 0.3, min: -1.2, max: 1.2 }, { v: 0, min: -1.6, max: 1.6 }];
+    const applyL = p => { LA.sh.rotation.set(p[0], p[1], p[2]); LA.el.rotation.set(p[3], 0, 0); LA.wr.rotation.set(p[4], p[5], 0); };
+    function leftCost(target, guess) {
+      return p => {
+        const pp = pos(palmPt), pn = new THREE.Vector3(0, 0, 1).transformDirection(LA.wr.matrixWorld);
+        return pp.distanceToSquared(target) * 1e4 + 1.5 * (pn.dot(nW) + 1) ** 2 + reg(p, guess, 0.01);
+      };
+    }
+    const gL = [-0.7, 0.2, -0.25, -1.1, 0.5, 0];
+    const restLp = solve(LP.map((q, i) => ({ ...q, v: gL[i] })), applyL, leftCost(W(new THREE.Vector3(-o.R * 0.78, o.H / 2 + 0.03, -o.R * 0.3)), gL));
+    const muteLp = solve(LP.map((q, i) => ({ ...q, v: restLp[i] })), applyL, leftCost(W(new THREE.Vector3(-o.R * 0.32, o.H / 2 + 0.022, -0.04)), restLp));
+    const Q = (rx, ry, rz) => new THREE.Quaternion().setFromEuler(new THREE.Euler(rx, ry, rz));
+    const poseR = p => [Q(p[0], p[1], p[2]), Q(p[3], 0, 0), Q(p[4], p[6], p[5])];
+    const poseL = p => [Q(p[0], p[1], p[2]), Q(p[3], 0, 0), Q(p[4], p[5], 0)];
+    return {
+      i: o.i, g, hips, torso, headG, legs, drum, tag, num, R: o.R, H: o.H, RA, LA, malletHead, hit, contactErr,
+      P: { contact: poseR(contact), top: poseR(top), restL: poseL(restLp), muteL: poseL(muteLp) },
+      hits: [], fx: [], lastFx: -1, idle: Math.random() * 6,
+    };
   }
-  // posições ajustadas ao ângulo da câmera: 1ª à esquerda, 2ª à direita, levemente virados um para o outro
   const players = [
-    makePlayer({ i: 0, x: -0.72, ry: 0.22, R: 0.3, H: 0.58, shirt: 0xc9a24a, pants: 0x23262e, skin: 0xc68a63, cap: 0x1d1f24, hoop: 0xc9a24a, label: "1ª", labelColor: "#c9a24a", num: "1" }),
-    makePlayer({ i: 1, x: 0.72, ry: -0.22, R: 0.27, H: 0.52, shirt: 0x7fb3d5, pants: 0x23262e, skin: 0x8d5a3b, cap: 0xffffff, hoop: 0x7fb3d5, label: "2ª", labelColor: "#7fb3d5", num: "2" }),
+    makePlayer({ i: 0, x: -0.75, ry: 0.2, R: 0.28, H: 0.6, shirt: 0xc9a24a, pants: 0x262a33, skin: 0xb98060, hair: 0x231710, hoop: 0xc9a24a, label: "1ª", labelColor: "#c9a24a", num: "1" }),
+    makePlayer({ i: 1, x: 0.75, ry: -0.2, R: 0.26, H: 0.55, shirt: 0x7fb3d5, pants: 0x262a33, skin: 0x7a4b31, hair: 0x120c08, cap: 0xf2f2f2, hoop: 0x7fb3d5, label: "2ª", labelColor: "#7fb3d5", num: "2" }),
   ];
 
   // ---------- Câmeras ----------
   const VIEWS = {
-    frente: { pos: [0, 1.75, 3.9], at: [0, 0.95, 0.25] },
-    lado: { pos: [3.4, 1.6, 1.6], at: [0, 0.9, 0.2] },
-    cima: { pos: [0, 4.2, 1.5], at: [0, 0.75, 0.3] },
-    p1: { pos: [-0.3, 1.75, 2.25], at: [-0.72, 1.05, 0.3] },
-    p2: { pos: [0.3, 1.75, 2.25], at: [0.72, 1.05, 0.3] },
+    frente: { pos: [0, 1.5, 4.2], at: [0, 1.0, 0.2] },
+    lado: { pos: [3.8, 1.6, 1.8], at: [0, 1.0, 0.2] },
+    cima: { pos: [0, 4.6, 1.6], at: [0, 0.9, 0.3] },
+    p1: { pos: [-0.3, 1.6, 2.3], at: [-0.75, 1.1, 0.3] },
+    p2: { pos: [0.3, 1.6, 2.3], at: [0.75, 1.1, 0.3] },
   };
+  // atrás do músico, por cima do ombro direito: o golpe aparece como se fosse você tocando
+  players.forEach((p, i) => {
+    p.g.updateMatrixWorld(true);
+    VIEWS["a" + (i + 1)] = { pos: p.g.localToWorld(new THREE.Vector3(1.15, 2.4, -1.0)).toArray(), at: p.g.localToWorld(new THREE.Vector3(0.1, 1.0, 0.4)).toArray() };
+  });
   let camTween = null;
   function setView(v, instant) {
     const V = VIEWS[v]; if (!V) return;
@@ -913,31 +1046,29 @@ To`;
   }
   new ResizeObserver(resize).observe(host); resize();
 
-  // ---------- Animação da maceta ----------
-  // A maceta sobe antes do toque e desce acelerando até encostar na pele exatamente no instante do som.
-  // A janela do golpe se encolhe nas notas rápidas, como faz quem toca. Depois do toque, um rebote curto.
-  const REST = 0.32, TOP = 1.25;   // ângulos (rad) da maceta em repouso e no alto do golpe
-  function malletAngle(p, t) {
+  // ---------- Animação do golpe ----------
+  // fase 0 = maceta na pele, 1 = no alto. A maceta sobe antes do toque e desce acelerando até a pele no instante do som.
+  // Nas notas rápidas a janela do golpe encolhe (o braço não sobe tanto); depois do toque há um rebote.
+  const REST_K = 0.14;
+  function strikePhase(p, t) {
     let prev = null, next = null;
     for (const h of p.hits) { if (h.t <= t) prev = h; else { next = h; break; } }
-    let a = REST;
-    if (prev) { const dt = t - prev.t; if (dt < 0.16) { const q = dt / 0.16; a = REST * (1 - Math.pow(1 - q, 3)); } }
+    let k = REST_K;
+    if (prev) { const dt = t - prev.t; if (dt < 0.2) { const q = dt / 0.2; k = REST_K * (1 - Math.pow(1 - q, 3)); } }
     if (next) {
       const gap = next.t - (prev ? prev.t : next.t - 1);
-      const W = Math.min(0.34, Math.max(0.05, gap * 0.78));
-      const u = (next.t - t) / W;                              // 1 = começo do golpe, 0 = contato
+      const Wn = Math.min(0.46, Math.max(0.06, gap * 0.82));
+      const u = (next.t - t) / Wn;
       if (u <= 1) {
-        const top = REST + (TOP - REST) * Math.min(1, W / 0.34) * (0.55 + 0.45 * next.v);
-        const s = 1 - u;
-        const start = prev && t - prev.t < 0.16 ? a : REST;
-        a = s < 0.55 ? start + (top - start) * Math.sin((s / 0.55) * Math.PI / 2) : top * (1 - Math.pow((s - 0.55) / 0.45, 2));
+        const topK = Math.min(1, Math.pow(Wn / 0.46, 0.6)) * (0.62 + 0.38 * next.v);
+        const s = 1 - u, start = prev && t - prev.t < 0.2 ? k : REST_K;
+        k = s < 0.5 ? start + (Math.max(topK, start) - start) * Math.sin((s / 0.5) * Math.PI / 2) : Math.max(topK, start) * (1 - Math.pow((s - 0.5) / 0.5, 2));
       }
     }
-    return a;
+    return k;
   }
-  function addHit(i, t, v, mute) {
-    const p = players[i]; p.hits.push({ t, v, mute }); p.hits.sort((a, b) => a.t - b.t);
-  }
+  const malletAngle = strikePhase;
+  function addHit(i, t, v, mute) { const p = players[i]; p.hits.push({ t, v, mute }); p.hits.sort((a, b) => a.t - b.t); }
   function animate() {
     requestAnimationFrame(animate);
     if (exporting) return;
@@ -952,36 +1083,48 @@ To`;
     stepScene(now, wall, beatT, bq.on);
     renderer.render(scene, camera);
   }
-  // Atualiza os bonequinhos para o instante "now" (no ao vivo e em cada quadro do vídeo)
+  const _q = new THREE.Quaternion();
+  function setPose(joints, A, B, k) { joints.forEach((j, n) => j.quaternion.copy(_q.copy(A[n]).slerp(B[n], k))); }
+  const THIGH = 0.42, SHIN = 0.4, ANKLE_Y = 0.08;
+  // pernas por cinemática inversa: o quadril desce, os joelhos dobram e os pés ficam no chão
+  function setLegs(p, hipY) {
+    const D = Math.min(THIGH + SHIN - 1e-4, hipY - 0.06 - ANKLE_Y);
+    const a = Math.acos(clamp((THIGH * THIGH + D * D - SHIN * SHIN) / (2 * THIGH * D), -1, 1));
+    const bend = Math.PI - Math.acos(clamp((THIGH * THIGH + SHIN * SHIN - D * D) / (2 * THIGH * SHIN), -1, 1));
+    for (const L of p.legs) { L.hipJ.rotation.x = -a; L.knee.rotation.x = bend; L.ankle.rotation.x = a - bend; }
+  }
+  // Atualiza os músicos para o instante "now" (ao vivo e em cada quadro do vídeo)
   function stepScene(now, wall, beatT, playing) {
     for (const p of players) {
       while (p.hits.length > 2 && p.hits[1].t < now - 1) p.hits.shift();
-      // corpo: respiração e um balanço no tempo
-      const sway = playing ? Math.sin(beatT * Math.PI) * 0.03 : Math.sin(wall * 1.3 + p.idle) * 0.012;
-      p.body.rotation.z = sway; p.body.position.y = Math.abs(Math.sin(beatT * Math.PI)) * (playing ? 0.012 : 0.004);
-      p.headG.rotation.z = -sway * 0.8; p.headG.rotation.x = playing ? Math.sin(beatT * Math.PI * 2) * 0.04 : 0;
-      // maceta
-      p.swing.quaternion.setFromAxisAngle(p.axis, malletAngle(p, now));
-      // efeitos do toque no instante do contato
+      const k = strikePhase(p, now);
+      setPose([p.RA.sh, p.RA.el, p.RA.wr], p.P.contact, p.P.top, k);
+      // ginga: o corpo desce nos tempos dobrando os joelhos, gira um pouco para armar o golpe e volta no toque
+      const ph = beatT - Math.floor(beatT), bounce = playing ? 0.5 + 0.5 * Math.cos(2 * Math.PI * ph) : 0.15 + 0.1 * Math.sin(wall * 1.6 + p.idle);
+      const drop = (playing ? 0.045 : 0.012) * bounce;
+      p.hips.position.y = HIP - drop;
+      setLegs(p, HIP - drop);
+      p.torso.rotation.y = (playing ? 0.07 * Math.sin(Math.PI * beatT) : 0.02 * Math.sin(wall * 0.9 + p.idle)) + 0.12 * (k - REST_K);
+      p.torso.rotation.x = 0.05 + 0.04 * (k - REST_K) + (playing ? 0.02 * bounce : 0);
+      p.torso.rotation.z = playing ? 0.03 * Math.sin(Math.PI * beatT) : 0;
+      p.headG.rotation.x = 0.32 + (playing ? 0.07 * bounce : 0.02 * Math.sin(wall + p.idle));
+      p.headG.rotation.y = -p.torso.rotation.y * 0.5;
+      // efeitos do toque
       for (const h of p.hits) if (h.t <= now && h.t > p.lastFx) { p.lastFx = h.t; p.fx.push({ t: h.t, v: h.v, mute: h.mute }); }
       p.fx = p.fx.filter(f => now - f.t < 0.5);
       let glow = 0, squash = 0, wave = null, mute = 0;
       for (const f of p.fx) {
         const dt = now - f.t;
-        glow = Math.max(glow, Math.exp(-dt / 0.09) * f.v);
-        squash = Math.max(squash, Math.exp(-dt / 0.05) * f.v);
+        glow = Math.max(glow, Math.exp(-dt / 0.09) * f.v); squash = Math.max(squash, Math.exp(-dt / 0.05) * f.v);
         if (!wave || f.t > wave.t) wave = f;
         if (f.mute) mute = Math.max(mute, dt < 0.22 ? 1 : Math.max(0, 1 - (dt - 0.22) / 0.12));
       }
-      for (const h of p.hits) if (h.mute && h.t > now && h.t - now < 0.08) mute = Math.max(mute, 1 - (h.t - now) / 0.08);
+      for (const h of p.hits) if (h.mute && h.t > now && h.t - now < 0.1) mute = Math.max(mute, 1 - (h.t - now) / 0.1);
       p.drum.skinMat.emissiveIntensity = glow * 0.55;
-      p.drum.group.scale.set(1 + squash * 0.012, 1 - squash * 0.02, 1 + squash * 0.012);
-      if (wave) { const dt = now - wave.t, k = dt / (wave.mute ? 0.18 : 0.42); p.drum.wave.material.opacity = Math.max(0, (1 - k) * 0.8 * wave.v); const r = p.drum.R * (0.15 + 0.8 * Math.min(1, k)); p.drum.wave.scale.set(r, r, r); }
+      p.drum.group.scale.set(1 + squash * 0.01, 1 - squash * 0.008, 1 + squash * 0.01);
+      if (wave) { const dt = now - wave.t, kk = dt / (wave.mute ? 0.18 : 0.42); p.drum.wave.material.opacity = Math.max(0, (1 - kk) * 0.8 * wave.v); const r = p.drum.R * (0.15 + 0.8 * Math.min(1, kk)); p.drum.wave.scale.set(r, r, r); }
       else p.drum.wave.material.opacity = 0;
-      // mão esquerda: do aro para cima da pele no abafado
-      const hp = p.restL.clone().lerp(p.muteL, mute); hp.y += Math.sin(wall * 1.7 + p.idle) * 0.004;
-      const el = p.sL.clone().lerp(hp, 0.5).add(new THREE.Vector3(-0.1, -0.06, -0.05));
-      between(p.upperL, p.sL, el); between(p.foreL, el, hp); p.handL.position.copy(hp); p.elbowL.position.copy(el);
+      setPose([p.LA.sh, p.LA.el, p.LA.wr], p.P.restL, p.P.muteL, mute);
     }
   }
   let exporting = false;
@@ -1000,7 +1143,7 @@ To`;
 
   // ---------- Breques ----------
   const bqSel = $("bqSel"), bqTitle = $("bqTitle"), bqMeta = $("bqMeta"), scoreEl = $("score"), bpm = $("bpm"), bpmOut = $("bpmOut");
-  const metro = $("metro"), countIn = $("countIn"), bqRepeat = $("bqRepeat"), bqPos = $("bqPos"), ovWord = $("ovWord"), ovPos = $("ovPos");
+  const fsBpm = $("fsBpm"), metro = $("metro"), countIn = $("countIn"), bqRepeat = $("bqRepeat"), bqPos = $("bqPos"), ovWord = $("ovWord"), ovPos = $("ovPos");
   let current = BUILTIN[0], parsed = parseBreque(current.text), events = buildEvents(parsed), beatCells = [], barRows = [], startBar = 0;
   BUILTIN.forEach(b => bqSel.appendChild(new Option(b.name, b.id)));
   const spb = () => 60 / +bpm.value;
@@ -1008,13 +1151,13 @@ To`;
     current = BUILTIN.find(b => b.id === id) || BUILTIN[0];
     if (bq.on) stopBreque();
     parsed = parseBreque(current.text); events = buildEvents(parsed); startBar = 0;
-    bqSel.value = current.id; bpm.value = current.bpm; bpmOut.textContent = `${bpm.value} bpm`;
+    bqSel.value = current.id; bpm.value = current.bpm; bpmOut.textContent = fsBpm.textContent = `${bpm.value} bpm`;
     bqTitle.textContent = current.name; bqMeta.textContent = `${parsed.bars.length} compassos · ${current.bpm} bpm`;
     bqPos.textContent = "Começa no compasso 1"; renderScore();
     try { localStorage.setItem("surdos3d.sel", current.id); } catch (e) {}
   }
   bqSel.addEventListener("change", () => selectBreque(bqSel.value));
-  bpm.addEventListener("input", () => { bpmOut.textContent = `${bpm.value} bpm`; if (bq.on) { stopBreque(); startBreque(); } });
+  bpm.addEventListener("input", () => { bpmOut.textContent = fsBpm.textContent = `${bpm.value} bpm`; if (bq.on) { stopBreque(); startBreque(); } });
   function renderScore() {
     scoreEl.innerHTML = ""; beatCells = []; barRows = [];
     parsed.bars.forEach((bar, b) => {
@@ -1038,7 +1181,7 @@ To`;
       scoreEl.appendChild(row); barRows.push(row);
     });
   }
-  // Agendador: o som vai 0,15 s à frente; os bonequinhos recebem os toques 0,6 s antes para preparar o golpe
+  // Agendador: o som vai 0,15 s à frente; os músicos recebem os toques 0,6 s antes para preparar o golpe
   const bq = { on: false, start: 0, timer: 0, ev: [], aIdx: 0, vIdx: 0, nextClick: 0, cur: -1, sb: 0, span: 0 };
   const evTime = k => { const n = bq.ev.length, e = bq.ev[k % n], cyc = Math.floor(k / n); return bq.start + (cyc * bq.span + e.beat - bq.sb) * spb(); };
   function bqSchedule() {
@@ -1052,7 +1195,7 @@ To`;
       bq.nextClick++;
     }
     const n = bq.ev.length, limit = bqRepeat.checked ? Infinity : n;
-    while (bq.vIdx < limit && n) {   // bonequinhos: antecedência maior
+    while (bq.vIdx < limit && n) {   // músicos: antecedência maior
       const t = evTime(bq.vIdx); if (t > now + 0.6) break;
       const e = bq.ev[bq.vIdx % n];
       if (e.drums) for (const d of e.drums) if (d < 2) addHit(d, t, e.vel, e.mute);
@@ -1097,7 +1240,8 @@ To`;
     bq.start = ctx.currentTime + 0.1 + (countIn.checked ? 4 * s : 0);
     players.forEach(p => { p.hits = p.hits.filter(h => h.t < ctx.currentTime); });
     bqSchedule(); bq.timer = setInterval(bqSchedule, 25);
-    $("bqPlay").classList.add("playing"); $("bqLbl").textContent = "Parar breque"; $("bqIcon").setAttribute("d", "M3 3h8v8H3z");
+    $("bqPlay").classList.add("playing"); $("bqLbl").textContent = "Parar breque"; $("fsPlayLbl").textContent = "Parar";
+    for (const id of ["bqIcon", "fsIcon"]) $(id).setAttribute("d", "M3 3h8v8H3z");
     bqDraw();
   }
   function stopBreque() {
@@ -1107,16 +1251,57 @@ To`;
     players.forEach(p => { p.hits = p.hits.filter(h => h.t <= now); });
     if (beatCells[bq.cur]) beatCells[bq.cur].classList.remove("now");
     bq.cur = -1; ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`;
-    $("bqPlay").classList.remove("playing"); $("bqLbl").textContent = "Tocar breque"; $("bqIcon").setAttribute("d", "M3 1.5v11l9.5-5.5z");
+    $("bqPlay").classList.remove("playing"); $("bqLbl").textContent = "Tocar breque"; $("fsPlayLbl").textContent = "Tocar";
+    for (const id of ["bqIcon", "fsIcon"]) $(id).setAttribute("d", "M3 1.5v11l9.5-5.5z");
     bqPos.textContent = `Começa no compasso ${startBar + 1}`;
   }
   const toggleBreque = () => bq.on ? stopBreque() : startBreque();
   $("bqPlay").addEventListener("click", toggleBreque);
+
+  // ---------- Tela cheia e espelho ----------
+  // Tela cheia de verdade quando o navegador deixa; senão (iPhone, quadro embutido) o palco cobre a janela.
+  const fsBtn = $("fsBtn"), mirBtn = $("mirBtn");
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+  const isFs = () => host.classList.contains("is-fs");
+  function setFsUI(on) {
+    host.classList.toggle("is-fs", on); fsBtn.setAttribute("aria-pressed", String(on));
+    $("fsLbl").textContent = on ? "Sair da tela cheia" : "Tela cheia";
+    document.body.classList.toggle("no-scroll", on && host.classList.contains("fs-css"));
+    resize();
+  }
+  async function enterFs() {
+    const req = host.requestFullscreen || host.webkitRequestFullscreen;
+    if (req) { try { await req.call(host); if (fsEl() === host) return setFsUI(true); } catch (e) {} }
+    host.classList.add("fs-css"); setFsUI(true);
+  }
+  function exitFs() {
+    if (host.classList.contains("fs-css")) { host.classList.remove("fs-css"); setFsUI(false); return; }
+    const ex = document.exitFullscreen || document.webkitExitFullscreen;
+    if (fsEl() && ex) ex.call(document); else setFsUI(false);
+  }
+  const toggleFs = () => isFs() ? exitFs() : enterFs();
+  fsBtn.addEventListener("click", toggleFs);
+  $("fsExit").addEventListener("click", exitFs);
+  for (const ev of ["fullscreenchange", "webkitfullscreenchange"]) document.addEventListener(ev, () => { if (!host.classList.contains("fs-css")) setFsUI(fsEl() === host); });
+  $("fsPlay").addEventListener("click", toggleBreque);
+  const nudgeBpm = d => { bpm.value = clamp(+bpm.value + d, +bpm.min, +bpm.max); bpm.dispatchEvent(new Event("input")); };
+  $("fsSlow").addEventListener("click", () => nudgeBpm(-5));
+  $("fsFast").addEventListener("click", () => nudgeBpm(5));
+  // espelho: a imagem vira como num espelho, para copiar de frente; os rótulos somem porque o texto ficaria ao contrário
+  let mirrored = false;
+  function toggleMirror() {
+    mirrored = !mirrored; host.classList.toggle("mirror", mirrored); mirBtn.setAttribute("aria-pressed", String(mirrored));
+    players.forEach(p => { p.tag.visible = p.num.visible = !mirrored; });
+  }
+  mirBtn.addEventListener("click", toggleMirror);
   window.addEventListener("keydown", e => {
     if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.target.closest && e.target.closest("input:not([type=range]):not([type=checkbox]), select, textarea")) return;
     const k = e.key.toLowerCase();
     if (k === " " || k === "b") { e.preventDefault(); toggleBreque(); return; }
+    if (k === "f") { e.preventDefault(); toggleFs(); return; }
+    if (k === "e") { e.preventDefault(); toggleMirror(); return; }
+    if (k === "escape" && host.classList.contains("fs-css")) { exitFs(); return; }
     if (k === "a") { e.preventDefault(); playLive(0, e.shiftKey); return; }
     if (k === "s") { e.preventDefault(); playLive(1, e.shiftKey); return; }
   });
@@ -1189,7 +1374,8 @@ To`;
       draw(tv) {
         stepScene(tv, tv, (tv - r.t0) / r.s, tv >= r.t0 - 0.05);
         renderer.render(scene, camera);
-        vg.drawImage(renderer.domElement, 0, 0, VW, VH);
+        if (mirrored) { vg.save(); vg.translate(VW, 0); vg.scale(-1, 1); vg.drawImage(renderer.domElement, 0, 0, VW, VH); vg.restore(); }
+        else vg.drawImage(renderer.domElement, 0, 0, VW, VH);
         overlay(tv, r);
       },
       restore() { players.forEach((p, i) => Object.assign(p, saved[i])); renderer.setPixelRatio(pr); camera.fov = fov; resize(); },
@@ -1344,7 +1530,7 @@ To`;
         } catch (e) { if (e === "cancel") throw e; console.warn("Vídeo:", label, e); lastErr = e; exStatus.textContent = "Tentando outro método…"; exBar.style.width = "0%"; }
       }
       if (!blob) throw new Error(lastErr && lastErr.message === "mudo" ? "o arquivo saiu sem som neste aparelho" : "este navegador não consegue criar o vídeo; atualize o sistema ou tente no computador");
-      pendingFile = { name: `surdos-3d-${slug(current.name)}-${bpm.value}bpm.${ext}`, blob };
+      pendingFile = { name: `surdos-3d-${slug(current.name)}-${bpm.value}bpm${mirrored ? "-espelho" : ""}.${ext}`, blob };
       exBar.style.width = "100%"; exStatus.textContent = `Pronto (${(blob.size / 1048576).toFixed(1).replace(".", ",")} MB). Confirme o download.`; exSave.hidden = false;
       exporting = false;
       await offerSave();
@@ -1359,7 +1545,7 @@ To`;
   let last = null; try { last = localStorage.getItem("surdos3d.sel"); } catch (e) {}
   selectBreque(last && BUILTIN.some(b => b.id === last) ? last : "minus");
   ovPos.textContent = `${current.name} · pronto para tocar`;
-  window.__s3d = { players, malletAngle, addHit, get bq() { return bq; }, camera, scene, selectBreque };
+  window.__s3d = { renderer, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
 
 })();
 </script>
