@@ -852,87 +852,109 @@ To`;
   }
 
   // ---------- O músico ----------
-  // Proporções humanas (1,75 m). Braços com ombro, cotovelo e punho de verdade. As poses de contato (maceta na pele),
-  // de alto (maceta perto da cabeça) e da mão esquerda (no aro e abafando) são calculadas por cinemática inversa
-  // no início, e a animação passa de uma para a outra. No instante do toque a pose é exatamente a de contato.
+  // Manequim de desenho (como o boneco 3D dos programas de desenho): corpo inteiro liso, o volume dos músculos vem do
+  // perfil de cada parte, juntas redondas e uma linha central colorida que mostra para onde o tronco e a cabeça viram.
+  // O braço da maceta segue um caminho calculado por cinemática inversa no início: sete quadros-chave da pele até o alto,
+  // com a mão e o cabo em lugares definidos. A animação passa de um para o outro; no instante do toque a pose é a de contato.
   const HIP = 0.93;
-  function lathe(points, mat, sz = 1) { const g = new THREE.LatheGeometry(points.map(([r, y]) => new THREE.Vector2(r, y)), 28); const m = mesh(g, mat); m.scale.z = sz; return m; }
+  // parte torneada: perfil [raio, y] de baixo para cima (raio ~0 nas pontas), suavizado por spline; sx/sz achatam a seção
+  function part(prof, mat, sx = 1, sz = 1) {
+    const pts = new THREE.SplineCurve(prof.map(([r, y]) => new THREE.Vector2(r, y))).getPoints(Math.max(24, prof.length * 6));
+    pts.forEach(v => { v.x = Math.max(v.x, 1e-4); });
+    const m = mesh(new THREE.LatheGeometry(pts, 36), mat); m.scale.set(sx, 1, sz); m.userData.prof = pts; return m;
+  }
+  const ball = (r, mat, s = [1, 1, 1], p = [0, 0, 0]) => { const m = mesh(new THREE.SphereGeometry(r, 28, 20), mat); m.scale.set(...s); m.position.set(...p); return m; };
+  // linha central sobre a superfície de uma parte torneada (frente: +z, costas: -z)
+  function midLine(m, y0, y1, side, mat) {
+    const pts = m.userData.prof.filter(v => v.y >= y0 && v.y <= y1).map(v => new THREE.Vector3(0, v.y, side * (v.x * m.scale.z + 0.0015)));
+    return new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 80, 0.0028, 6), mat);
+  }
+  const PROF = {
+    pelvis: [[0.001, -0.125], [0.085, -0.118], [0.135, -0.085], [0.152, -0.02], [0.142, 0.04], [0.128, 0.085], [0.001, 0.095]],
+    torso: [[0.001, 0.015], [0.122, 0.025], [0.124, 0.1], [0.136, 0.2], [0.156, 0.3], [0.17, 0.38], [0.176, 0.44], [0.16, 0.49], [0.09, 0.535], [0.001, 0.55]],
+    neck: [[0.001, -0.08], [0.05, -0.07], [0.046, -0.02], [0.042, 0.04], [0.001, 0.06]],
+    upper: [[0.001, -0.305], [0.028, -0.296], [0.036, -0.27], [0.04, -0.22], [0.047, -0.14], [0.052, -0.06], [0.054, -0.01], [0.044, 0.03], [0.001, 0.045]],
+    fore: [[0.001, -0.262], [0.022, -0.255], [0.026, -0.235], [0.032, -0.17], [0.041, -0.085], [0.043, -0.045], [0.037, -0.005], [0.001, 0.02]],
+    thigh: [[0.001, -0.44], [0.044, -0.43], [0.051, -0.4], [0.058, -0.33], [0.071, -0.2], [0.082, -0.08], [0.084, -0.02], [0.068, 0.03], [0.001, 0.05]],
+    shin: [[0.001, -0.415], [0.029, -0.405], [0.031, -0.37], [0.036, -0.28], [0.05, -0.15], [0.054, -0.08], [0.049, -0.02], [0.038, 0.02], [0.001, 0.03]],
+  };
   function makePlayer(o) {
-    const g = new THREE.Group(); g.position.set(o.x, 0, 0); g.rotation.y = o.ry; g.scale.x = -1; scene.add(g);   // espelhado: o modelo foi feito com a maceta em +x; assim ela fica na mão direita (destro)
-    const shirt = M(o.shirt, { r: 0.8 }), pants = M(o.pants, { r: 0.85 }), skin = M(o.skin, { r: 0.55 }), hair = M(o.hair, { r: 0.9 }), dark = M(0x15161a, { r: 0.5 });
-    const shoeM = M(0xf2f2f2, { r: 0.55 });
+    const g = new THREE.Group(); g.position.set(o.x, 0, 0); g.rotation.y = o.ry; g.scale.x = -1; scene.add(g);   // espelhado: o modelo tem a maceta em +x; assim ela fica na mão direita (destro)
+    const body = M(o.body, { r: 0.62 }), line = new THREE.MeshBasicMaterial({ color: o.hoop });
     const hips = new THREE.Group(); hips.position.y = HIP; g.add(hips);
-    // quadril e pernas (as pernas dobram para o corpo descer no balanço sem tirar os pés do chão)
-    const pelvis = lathe([[0.001, -0.13], [0.13, -0.12], [0.165, -0.04], [0.16, 0.06], [0.001, 0.07]], pants, 0.72); hips.add(pelvis);
+    // quadril e pernas (as pernas dobram para o corpo descer na ginga sem tirar os pés do chão)
+    const pelvis = part(PROF.pelvis, body, 1, 0.7); hips.add(pelvis);
+    for (const sx of [-1, 1]) hips.add(ball(0.072, body, [1, 1, 0.8], [0.065 * sx, -0.055, -0.045]));
+    hips.add(midLine(pelvis, -0.11, 0.09, 1, line), midLine(pelvis, -0.11, 0.09, -1, line));
     const legs = [];
     for (const sx of [-1, 1]) {
-      const hipJ = new THREE.Group(); hipJ.position.set(0.095 * sx, -0.06, 0); hips.add(hipJ);
-      const thigh = mesh(new THREE.CylinderGeometry(0.075, 0.058, 0.42, 16), pants); thigh.position.y = -0.21; hipJ.add(thigh);
+      const hipJ = new THREE.Group(); hipJ.position.set(0.088 * sx, -0.06, 0); hips.add(hipJ);
+      hipJ.add(part(PROF.thigh, body, 1, 1.05));
       const knee = new THREE.Group(); knee.position.y = -0.42; hipJ.add(knee);
-      knee.add(mesh(new THREE.SphereGeometry(0.058, 14, 10), pants));
-      const shin = mesh(new THREE.CylinderGeometry(0.056, 0.045, 0.4, 16), pants); shin.position.y = -0.2; knee.add(shin);
+      knee.add(ball(0.05, body, [1, 1, 1.05]), part(PROF.shin, body, 1, 1.05));
+      knee.add(ball(0.03, body, [1, 0.8, 0.6], [0, 0.01, 0.045]));   // patela
       const ankle = new THREE.Group(); ankle.position.y = -0.4; knee.add(ankle);
-      const shoe = mesh(new THREE.BoxGeometry(0.1, 0.075, 0.26), shoeM); shoe.position.set(0, -0.03, 0.05); ankle.add(shoe);
-      const sole = mesh(new THREE.BoxGeometry(0.104, 0.02, 0.265), dark); sole.position.set(0, -0.07, 0.05); ankle.add(sole);
+      ankle.add(ball(0.031, body));
+      ankle.add(ball(1, body, [0.042, 0.032, 0.105], [0, -0.048, 0.055]), ball(0.034, body, [1, 1, 1.1], [0, -0.046, -0.02]), ball(1, body, [0.046, 0.02, 0.04], [0.004 * sx, -0.06, 0.145]));
       legs.push({ hipJ, knee, ankle });
     }
-    // tronco: cintura fina, peito e ombros
+    // tronco
     const torso = new THREE.Group(); hips.add(torso);
-    torso.add(lathe([[0.001, 0], [0.15, 0.0], [0.145, 0.12], [0.16, 0.26], [0.19, 0.38], [0.2, 0.45], [0.17, 0.51], [0.08, 0.55], [0.001, 0.555]], shirt, 0.66));
-    const num = label(o.num, "#0e0f12"); num.scale.set(0.14, 0.07, 1); num.position.set(0, 0.33, -0.15); torso.add(num);
-    const neck = mesh(new THREE.CylinderGeometry(0.045, 0.052, 0.1, 14), skin); neck.position.y = 0.58; torso.add(neck);
+    const chest = part(PROF.torso, body, 1, 0.66); torso.add(chest);
+    torso.add(midLine(chest, 0.03, 0.53, 1, line), midLine(chest, 0.03, 0.53, -1, line));
+    const neck = part(PROF.neck, body); neck.position.y = 0.6; torso.add(neck);
     // cabeça
     const headG = new THREE.Group(); headG.position.y = 0.63; torso.add(headG);
-    const skull = mesh(new THREE.SphereGeometry(0.1, 28, 22), skin); skull.scale.set(0.92, 1.12, 1.02); skull.position.y = 0.09; headG.add(skull);
-    const jaw = mesh(new THREE.SphereGeometry(0.075, 20, 14), skin); jaw.scale.set(1, 0.8, 1.05); jaw.position.set(0, 0.03, 0.02); headG.add(jaw);
-    const nose = mesh(new THREE.ConeGeometry(0.016, 0.042, 10), skin); nose.rotation.x = Math.PI / 2; nose.position.set(0, 0.085, 0.105); headG.add(nose);
+    headG.add(ball(0.098, body, [0.9, 1.08, 1.04], [0, 0.105, -0.008]));            // crânio
+    headG.add(ball(0.072, body, [0.88, 1.12, 0.92], [0, 0.06, 0.028]));             // rosto e queixo
+    headG.add(ball(0.014, body, [0.8, 1.6, 1.1], [0, 0.088, 0.093]));               // nariz
     for (const sx of [-1, 1]) {
-      const white = mesh(new THREE.SphereGeometry(0.013, 12, 8), M(0xf4f1ea, { r: 0.3 }), false); white.position.set(0.035 * sx, 0.11, 0.087); headG.add(white);
-      const iris = mesh(new THREE.SphereGeometry(0.0075, 10, 8), M(0x2a1a10, { r: 0.3 }), false); iris.position.set(0.035 * sx, 0.11, 0.098); headG.add(iris);
-      const brow = mesh(new THREE.BoxGeometry(0.03, 0.006, 0.01), hair, false); brow.position.set(0.035 * sx, 0.132, 0.093); brow.rotation.z = -0.12 * sx; headG.add(brow);
-      const ear = mesh(new THREE.SphereGeometry(0.022, 10, 8), skin); ear.scale.set(0.45, 1, 0.75); ear.position.set(0.092 * sx, 0.095, 0); headG.add(ear);
+      headG.add(ball(0.022, body, [0.42, 1, 0.72], [0.088 * sx, 0.095, -0.004]));   // orelha
     }
-    const lips = mesh(new THREE.BoxGeometry(0.034, 0.008, 0.01), M(0x7a3b2e, { r: 0.6 }), false); lips.position.set(0, 0.045, 0.092); headG.add(lips);
-    const hairCap = mesh(new THREE.SphereGeometry(0.104, 26, 14, 0, Math.PI * 2, 0, Math.PI * 0.5), hair); hairCap.scale.set(0.95, 1.05, 1.05); hairCap.position.set(0, 0.11, -0.006); headG.add(hairCap);
-    if (o.cap) {   // boné de aba virada para trás na 2ª
-      const capM = M(o.cap, { r: 0.75 });
-      const crown = mesh(new THREE.SphereGeometry(0.108, 26, 12, 0, Math.PI * 2, 0, Math.PI * 0.42), capM); crown.position.y = 0.125; headG.add(crown);
-      const brim = mesh(new THREE.CylinderGeometry(0.085, 0.085, 0.012, 20, 1, false, -Math.PI / 2, Math.PI), capM); brim.position.set(0, 0.15, -0.09); brim.rotation.set(-0.15, Math.PI, 0); headG.add(brim);
-    }
-    // talabarte do ombro direito até o gancho do surdo
-    const strap = limb(0.02, M(0x1d1f24, { r: 0.9 })); torso.add(strap);
-    // surdo, preso ao tronco (o talabarte segura): acompanha o corpo, então a pose de contato vale sempre
+    const hl = []; for (let a = 0.35; a <= Math.PI + 0.9; a += 0.08) hl.push(new THREE.Vector3(0, 0.105 + 0.098 * 1.08 * Math.sin(a) * 1.012, -0.008 + 0.098 * 1.04 * Math.cos(a) * 1.012));
+    headG.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(hl), 60, 0.0028, 6), line));
+    // talabarte do ombro da maceta até o gancho do surdo
+    const strap = limb(0.018, M(0x1d1f24, { r: 0.9 })); torso.add(strap);
     const drum = makeDrum(o.R, o.H, o.hoop);
-    drum.group.position.set(-0.05, 0.05 - o.H / 2, 0.16 + o.R); drum.group.rotation.x = 0.26; torso.add(drum.group);
+    drum.group.position.set(-0.05, 0.05 - o.H / 2, 0.15 + o.R); drum.group.rotation.x = 0.26; torso.add(drum.group);
     drum.group.updateMatrix();
     const dToTorso = v => v.clone().applyMatrix4(drum.group.matrix);
-    between(strap, new THREE.Vector3(0.14, 0.52, -0.02), dToTorso(new THREE.Vector3(-o.R - 0.02, o.H / 2 - 0.06, 0)));
+    between(strap, new THREE.Vector3(0.13, 0.52, -0.03), dToTorso(new THREE.Vector3(-o.R - 0.02, o.H / 2 - 0.06, 0)));
     // braços
     function arm(side) {
-      const sh = new THREE.Group(); sh.position.set(0.19 * side, 0.49, 0); torso.add(sh);
-      sh.add(mesh(new THREE.SphereGeometry(0.062, 14, 10), shirt));
-      const sleeve = mesh(new THREE.CylinderGeometry(0.064, 0.058, 0.15, 14), shirt); sleeve.position.y = -0.07; sh.add(sleeve);
-      const up = mesh(new THREE.CylinderGeometry(0.05, 0.043, 0.29, 14), skin); up.position.y = -0.15; sh.add(up);
-      const el = new THREE.Group(); el.position.y = -0.3; sh.add(el);
-      el.add(mesh(new THREE.SphereGeometry(0.044, 12, 10), skin));
-      const fore = mesh(new THREE.CylinderGeometry(0.042, 0.032, 0.26, 14), skin); fore.position.y = -0.13; el.add(fore);
-      const wr = new THREE.Group(); wr.position.y = -0.26; el.add(wr);
+      const sh = new THREE.Group(); sh.position.set(0.175 * side, 0.475, 0); torso.add(sh);
+      sh.add(ball(0.058, body, [1.08, 1, 1]), part(PROF.upper, body, 1, 0.95));
+      const el = new THREE.Group(); el.position.y = -0.29; sh.add(el);
+      el.add(ball(0.037, body), part(PROF.fore, body, 1.12, 0.88));
+      const wr = new THREE.Group(); wr.position.y = -0.25; el.add(wr);
+      wr.add(ball(0.024, body, [1.15, 1, 0.8]));
       return { sh, el, wr };
     }
     const RA = arm(1), LA = arm(-1);
-    // mão direita fechada na maceta
-    const fist = mesh(new THREE.SphereGeometry(0.045, 14, 10), skin); fist.scale.set(0.95, 1.15, 1.05); fist.position.y = -0.05; RA.wr.add(fist);
-    const thumb = mesh(new THREE.CylinderGeometry(0.012, 0.011, 0.05, 8), skin); thumb.position.set(-0.03, -0.045, 0.03); thumb.rotation.set(0.9, 0, 0.4); RA.wr.add(thumb);
+    // mão direita fechada na maceta: dedos enrolados no cabo, polegar por cima
     const malletR = 0.048, stickLen = 0.37;
-    const grip = new THREE.Group(); grip.position.y = -0.055; RA.wr.add(grip);
+    const grip = new THREE.Group(); grip.position.y = -0.062; RA.wr.add(grip);
+    RA.wr.add(ball(1, body, [0.024, 0.042, 0.04], [0, -0.04, 0]));
+    for (let f = 0; f < 4; f++) {
+      const fg = mesh(new THREE.TorusGeometry(0.02, 0.0095, 8, 14, Math.PI * 1.45), body);
+      fg.position.set(0, -0.062, -0.027 + f * 0.018); fg.rotation.z = -Math.PI * 0.12; fg.scale.setScalar(1 - Math.abs(f - 1.5) * 0.06); RA.wr.add(fg);
+    }
+    const thumb = new THREE.Group(); thumb.position.set(-0.018, -0.03, 0.018); thumb.rotation.set(1.25, 0, 0.45); RA.wr.add(thumb);
+    const tcR = mesh(new THREE.CylinderGeometry(0.0105, 0.0088, 0.048, 8), body); tcR.position.y = -0.024; thumb.add(tcR); thumb.add(ball(0.0088, body, [1, 1, 1], [0, -0.048, 0]));
     const stick = mesh(new THREE.CylinderGeometry(0.011, 0.013, stickLen + 0.07, 10), M(0xb07a43, { r: 0.55 })); stick.rotation.x = Math.PI / 2; stick.position.z = (stickLen - 0.07) / 2; grip.add(stick);
     const malletHead = new THREE.Group(); malletHead.position.z = stickLen; grip.add(malletHead);
     const felt = mesh(new THREE.CylinderGeometry(malletR, malletR, 0.075, 22), M(0xf4efe4, { r: 0.98 })); felt.rotation.z = Math.PI / 2; malletHead.add(felt);
     const band = mesh(new THREE.TorusGeometry(malletR * 0.99, 0.006, 6, 22), M(o.hoop, { m: 0.4, r: 0.4 })); band.rotation.y = Math.PI / 2; malletHead.add(band);
-    // mão esquerda aberta (palma para a frente quando o braço está solto)
-    const palm = mesh(new THREE.BoxGeometry(0.082, 0.095, 0.026), skin); palm.position.y = -0.055; LA.wr.add(palm);
-    for (let k = 0; k < 4; k++) { const f = mesh(new THREE.CylinderGeometry(0.009, 0.008, 0.07, 8), skin); f.position.set(-0.03 + k * 0.02, -0.135, 0.002); LA.wr.add(f); }
-    const thumbL = mesh(new THREE.CylinderGeometry(0.011, 0.009, 0.055, 8), skin); thumbL.position.set(0.05, -0.05, 0.01); thumbL.rotation.z = 0.7; LA.wr.add(thumbL);
+    // mão esquerda aberta: palma (normal +z) e dedos levemente curvos
+    LA.wr.add(ball(1, body, [0.04, 0.05, 0.015], [0, -0.055, 0]));
+    for (let f = 0; f < 4; f++) {
+      const x = -0.027 + f * 0.018, len = [0.062, 0.072, 0.068, 0.055][f];
+      const fj = new THREE.Group(); fj.position.set(x, -0.098, 0.002); fj.rotation.x = 0.18; LA.wr.add(fj);
+      const c = mesh(new THREE.CylinderGeometry(0.0082, 0.0074, len, 8), body); c.position.y = -len / 2; fj.add(c);
+      fj.add(ball(0.0076, body, [1, 1, 1], [0, -len, 0]), ball(0.0086, body));
+    }
+    const thumbL = new THREE.Group(); thumbL.position.set(0.035, -0.04, 0.006); thumbL.rotation.set(0.25, 0, 0.75); LA.wr.add(thumbL);
+    const tc = mesh(new THREE.CylinderGeometry(0.0105, 0.0085, 0.05, 8), body); tc.position.y = -0.025; thumbL.add(tc); thumbL.add(ball(0.0085, body, [1, 1, 1], [0, -0.05, 0]));
     const palmPt = new THREE.Object3D(); palmPt.position.set(0, -0.08, 0.016); LA.wr.add(palmPt);
     const tag = label(o.label, o.labelColor); tag.position.set(0, 2.06, 0); g.add(tag);
 
@@ -940,10 +962,12 @@ To`;
     g.updateMatrixWorld(true);
     const W = v => v.clone().applyMatrix4(drum.group.matrixWorld);
     const nW = new THREE.Vector3(0, 1, 0).transformDirection(drum.group.matrixWorld);
+    const toW = v => v.clone().applyMatrix4(g.matrixWorld), dirW = v => v.clone().normalize().transformDirection(g.matrixWorld);
+    const toM = v => g.worldToLocal(v.clone());
     const pos = o3 => new THREE.Vector3().setFromMatrixPosition(o3.matrixWorld);
-    function solve(params, apply, cost, iters = 900) {
+    function solve(params, apply, cost, root, iters = 700) {
       let p = params.map(q => q.v), step = 0.25;
-      const ev = () => { apply(p); g.updateMatrixWorld(true); return cost(p); };
+      const ev = () => { apply(p); root.updateMatrixWorld(true); return cost(p); };
       let c = ev();
       for (let it = 0; it < iters && step > 2e-5; it++) {
         let better = false;
@@ -953,66 +977,75 @@ To`;
         }
         if (!better) step *= 0.5;
       }
-      apply(p); g.updateMatrixWorld(true); return p;
+      apply(p); root.updateMatrixWorld(true); return { p, c: cost(p) };
     }
-    // várias largadas e fica a melhor (a busca local às vezes para com o cabo atravessando o surdo)
-    function best(params, guesses, apply, mk) {
-      let win = null;
-      for (const gs of guesses) {
-        const cost = mk(gs), p = solve(params.map((q, i) => ({ ...q, v: gs[i] })), apply, cost);
-        apply(p); g.updateMatrixWorld(true); const c = cost(p);
-        if (!win || c < win.c) win = { p, c };
-      }
-      apply(win.p); g.updateMatrixWorld(true); return win.p;
-    }
+    const reg = (p, guess, w) => p.reduce((a, v, i) => a + w * (v - guess[i]) ** 2, 0);
     const RP = [{ min: -3.0, max: 0.8 }, { min: -1.2, max: 1.2 }, { min: -0.4, max: 1.8 }, { min: -2.6, max: 0 }, { min: -1.4, max: 1.1 }, { min: -0.8, max: 0.8 }, { min: -1.4, max: 1.4 }];
     const applyR = p => { RA.sh.rotation.set(p[0], p[1], p[2]); RA.el.rotation.set(p[3], 0, 0); RA.wr.rotation.set(p[4], p[6], p[5]); };
-    const reg = (p, guess, w) => p.reduce((a, v, i) => a + w * (v - guess[i]) ** 2, 0);
-    // custo: cabeça da maceta (ou a mão) no alvo e o cabo na direção pedida; a mão nunca abaixo da pele
-    function rightCost(o2) {
+    const shM = toM(pos(RA.sh));
+    // custo: maceta (ou mão) no alvo, cabo na direção pedida, mão e maceta acima da pele, cotovelo para fora (nunca na frente do peito)
+    function rightCost(t) {
       return p => {
         const mh = pos(malletHead), hand = pos(grip), dir = mh.clone().sub(hand).normalize();
-        let c = dir.distanceToSquared(o2.dir) * 30 + reg(p, o2.guess, 0.003);
-        if (o2.mallet) c += mh.distanceToSquared(o2.mallet) * 1e4;
-        if (o2.hand) c += hand.distanceToSquared(o2.hand) * 2e3;
+        let c = dir.distanceToSquared(t.dir) * 30 + reg(p, t.guess, t.w);
+        if (t.mallet) c += mh.distanceToSquared(t.mallet) * 1e4;
+        if (t.hand) c += hand.distanceToSquared(t.hand) * 3e3;
         const above = hand.clone().sub(hit).dot(nW); if (above < 0.12) c += (0.12 - above) ** 2 * 3e3;
+        if (!t.mallet) { const ma = mh.clone().sub(hit).dot(nW); if (ma < 0.07) c += (0.07 - ma) ** 2 * 3e3; }
+        const elx = toM(pos(RA.el)).x; if (elx < shM.x - 0.01) c += (shM.x - 0.01 - elx) ** 2 * 1e3;
         return c;
       };
     }
     // contato: cabeça da maceta na pele, um pouco à direita do centro; o cabo vem da borda direita, descendo para a pele
     const hit = W(new THREE.Vector3(0.06, o.H / 2, -0.03)).addScaledVector(nW, malletR + 0.003);
-    const dirC = new THREE.Vector3(-0.75, -0.45, 0.35).normalize().transformDirection(drum.group.matrixWorld);
-    const contact = best(RP, [[-0.55, 0.15, 0.35, -1.25, 0.1, 0, 0], [-0.9, 0.3, 0.6, -1.5, 0.4, 0, 0.5], [-0.3, 0, 0.2, -0.9, -0.3, 0.3, -0.5], [-0.7, -0.2, 0.5, -1.0, 0.2, -0.3, 0.9]],
-      applyR, gs => rightCost({ mallet: hit, dir: dirC, guess: gs }));
+    const dirCm = new THREE.Vector3(-0.75, -0.45, 0.35).normalize().transformDirection(drum.group.matrix);
+    let win = null;
+    for (const gs of [[-0.55, 0.15, 0.35, -1.25, 0.1, 0, 0], [-0.9, 0.3, 0.6, -1.5, 0.4, 0, 0.5], [-0.3, 0, 0.2, -0.9, -0.3, 0.3, -0.5], [-0.7, -0.2, 0.5, -1.0, 0.2, -0.3, 0.9]]) {
+      const r = solve(RP.map((q, i) => ({ ...q, v: gs[i] })), applyR, rightCost({ mallet: hit, dir: dirW(dirCm), guess: gs, w: 0.003 }), RA.sh);
+      if (!win || r.c < win.c) win = r;
+    }
+    applyR(win.p); RA.sh.updateMatrixWorld(true);
     const contactErr = pos(malletHead).distanceTo(hit);
-    // alto: mão na altura do ombro, à direita e à frente, cotovelo aberto; a maceta em pé, acima da cabeça e para trás
-    const handT = new THREE.Vector3(0.34, HIP + 0.46, 0.15).applyMatrix4(g.matrixWorld);
-    const dirT = new THREE.Vector3(0.2, 1, -0.45).normalize().transformDirection(g.matrixWorld);
-    const top = best(RP, [[-1.55, 0.25, 0.75, -1.7, -0.75, 0, 0], [-1.0, 0.5, 1.0, -2.2, -0.5, 0, 0], [-1.8, 0, 0.4, -2.0, -1, 0.3, 0.5], [-0.6, 0.3, 1.2, -2.3, -0.3, 0, -0.6]],
-      applyR, gs => rightCost({ hand: handT, dir: dirT, guess: gs }));
-    const LP = [{ v: -0.5, min: -2.6, max: 0.6 }, { v: 0, min: -1.2, max: 1.2 }, { v: -0.3, min: -1.4, max: 0.4 }, { v: -1.2, min: -2.6, max: 0 }, { v: 0.3, min: -1.2, max: 1.2 }, { v: 0, min: -1.6, max: 1.6 }];
+    // caminho do golpe (no corpo): a mão sobe da borda do surdo, abrindo para fora, até a altura do ombro;
+    // o cabo gira da pele para a frente-fora e termina em pé, acima da cabeça
+    const handC = toM(pos(grip)), handT = new THREE.Vector3(0.34, HIP + 0.46, 0.15);
+    const ctrl = handC.clone().lerp(handT, 0.5).add(new THREE.Vector3(0.09, 0, 0.05));
+    const dirM = new THREE.Vector3(0.6, 0.35, 0.7).normalize(), dirT = new THREE.Vector3(0.2, 1, -0.45).normalize();
+    const KS = [0, 0.15, 0.3, 0.45, 0.6, 0.8, 1], keys = [win.p];
+    for (let n = 1; n < KS.length; n++) {
+      const k = KS[n], u = 1 - k;
+      const hand = handC.clone().multiplyScalar(u * u).addScaledVector(ctrl, 2 * u * k).addScaledVector(handT, k * k);
+      const d = k < 0.5 ? dirCm.clone().lerp(dirM, k / 0.5) : dirM.clone().lerp(dirT, (k - 0.5) / 0.5);
+      const prev = keys[n - 1];
+      keys.push(solve(RP.map((q, i) => ({ ...q, v: prev[i] })), applyR, rightCost({ hand: toW(hand), dir: dirW(d), guess: prev, w: 0.02 }), RA.sh, 400).p);
+    }
+    // mão esquerda: apoiada no aro e, no abafado, espalmada sobre a pele
+    const LP = [{ min: -2.6, max: 0.6 }, { min: -1.2, max: 1.2 }, { min: -1.4, max: 0.4 }, { min: -2.6, max: 0 }, { min: -1.2, max: 1.2 }, { min: -1.6, max: 1.6 }];
     const applyL = p => { LA.sh.rotation.set(p[0], p[1], p[2]); LA.el.rotation.set(p[3], 0, 0); LA.wr.rotation.set(p[4], p[5], 0); };
+    const shL = toM(pos(LA.sh));
     function leftCost(target, guess) {
       return p => {
         const pp = pos(palmPt), pn = new THREE.Vector3(0, 0, 1).transformDirection(LA.wr.matrixWorld);
-        return pp.distanceToSquared(target) * 1e4 + 1.5 * (pn.dot(nW) + 1) ** 2 + reg(p, guess, 0.01);
+        let c = pp.distanceToSquared(target) * 1e4 + 1.5 * (pn.dot(nW) + 1) ** 2 + reg(p, guess, 0.01);
+        const elx = toM(pos(LA.el)).x; if (elx > shL.x + 0.01) c += (elx - shL.x - 0.01) ** 2 * 1e3;
+        return c;
       };
     }
     const gL = [-0.7, 0.2, -0.25, -1.1, 0.5, 0];
-    const restLp = solve(LP.map((q, i) => ({ ...q, v: gL[i] })), applyL, leftCost(W(new THREE.Vector3(-o.R * 0.78, o.H / 2 + 0.03, -o.R * 0.3)), gL));
-    const muteLp = solve(LP.map((q, i) => ({ ...q, v: restLp[i] })), applyL, leftCost(W(new THREE.Vector3(-o.R * 0.32, o.H / 2 + 0.022, -0.04)), restLp));
+    const restLp = solve(LP.map((q, i) => ({ ...q, v: gL[i] })), applyL, leftCost(W(new THREE.Vector3(-o.R * 0.78, o.H / 2 + 0.03, -o.R * 0.3)), gL), LA.sh).p;
+    const muteLp = solve(LP.map((q, i) => ({ ...q, v: restLp[i] })), applyL, leftCost(W(new THREE.Vector3(-o.R * 0.32, o.H / 2 + 0.022, -0.04)), restLp), LA.sh).p;
     const Q = (rx, ry, rz) => new THREE.Quaternion().setFromEuler(new THREE.Euler(rx, ry, rz));
     const poseR = p => [Q(p[0], p[1], p[2]), Q(p[3], 0, 0), Q(p[4], p[6], p[5])];
     const poseL = p => [Q(p[0], p[1], p[2]), Q(p[3], 0, 0), Q(p[4], p[5], 0)];
     return {
-      i: o.i, g, hips, torso, headG, legs, drum, tag, num, R: o.R, H: o.H, RA, LA, malletHead, hit, contactErr,
-      P: { contact: poseR(contact), top: poseR(top), restL: poseL(restLp), muteL: poseL(muteLp) },
+      i: o.i, g, hips, torso, headG, legs, drum, tag, R: o.R, H: o.H, RA, LA, malletHead, hit, contactErr,
+      P: { KS, R: keys.map(poseR), restL: poseL(restLp), muteL: poseL(muteLp) },
       hits: [], fx: [], lastFx: -1, idle: Math.random() * 6,
     };
   }
   const players = [
-    makePlayer({ i: 0, x: -0.75, ry: 0.2, R: 0.28, H: 0.6, shirt: 0xc9a24a, pants: 0x262a33, skin: 0xb98060, hair: 0x231710, hoop: 0xc9a24a, label: "1ª", labelColor: "#c9a24a", num: "1" }),
-    makePlayer({ i: 1, x: 0.75, ry: -0.2, R: 0.26, H: 0.55, shirt: 0x7fb3d5, pants: 0x262a33, skin: 0x7a4b31, hair: 0x120c08, cap: 0xf2f2f2, hoop: 0x7fb3d5, label: "2ª", labelColor: "#7fb3d5", num: "2" }),
+    makePlayer({ i: 0, x: -0.75, ry: 0.2, R: 0.28, H: 0.6, body: 0xa59e94, hoop: 0xc9a24a, label: "1ª", labelColor: "#c9a24a" }),
+    makePlayer({ i: 1, x: 0.75, ry: -0.2, R: 0.26, H: 0.55, body: 0x98a0a9, hoop: 0x7fb3d5, label: "2ª", labelColor: "#7fb3d5" }),
   ];
 
   // ---------- Câmeras ----------
@@ -1084,6 +1117,12 @@ To`;
     renderer.render(scene, camera);
   }
   const _q = new THREE.Quaternion();
+  // braço da maceta na fase k: entre os dois quadros-chave vizinhos do caminho do golpe
+  function setArm(p, k) {
+    const K = p.P.KS; k = clamp(k, 0, 1);
+    let n = 0; while (n < K.length - 2 && k > K[n + 1]) n++;
+    setPose([p.RA.sh, p.RA.el, p.RA.wr], p.P.R[n], p.P.R[n + 1], (k - K[n]) / (K[n + 1] - K[n]));
+  }
   function setPose(joints, A, B, k) { joints.forEach((j, n) => j.quaternion.copy(_q.copy(A[n]).slerp(B[n], k))); }
   const THIGH = 0.42, SHIN = 0.4, ANKLE_Y = 0.08;
   // pernas por cinemática inversa: o quadril desce, os joelhos dobram e os pés ficam no chão
@@ -1098,7 +1137,7 @@ To`;
     for (const p of players) {
       while (p.hits.length > 2 && p.hits[1].t < now - 1) p.hits.shift();
       const k = strikePhase(p, now);
-      setPose([p.RA.sh, p.RA.el, p.RA.wr], p.P.contact, p.P.top, k);
+      setArm(p, k);
       // ginga: o corpo desce nos tempos dobrando os joelhos, gira um pouco para armar o golpe e volta no toque
       const ph = beatT - Math.floor(beatT), bounce = playing ? 0.5 + 0.5 * Math.cos(2 * Math.PI * ph) : 0.15 + 0.1 * Math.sin(wall * 1.6 + p.idle);
       const drop = (playing ? 0.045 : 0.012) * bounce;
@@ -1291,7 +1330,7 @@ To`;
   let mirrored = false;
   function toggleMirror() {
     mirrored = !mirrored; host.classList.toggle("mirror", mirrored); mirBtn.setAttribute("aria-pressed", String(mirrored));
-    players.forEach(p => { p.tag.visible = p.num.visible = !mirrored; });
+    players.forEach(p => { p.tag.visible = !mirrored; });
   }
   mirBtn.addEventListener("click", toggleMirror);
   window.addEventListener("keydown", e => {
@@ -1545,7 +1584,7 @@ To`;
   let last = null; try { last = localStorage.getItem("surdos3d.sel"); } catch (e) {}
   selectBreque(last && BUILTIN.some(b => b.id === last) ? last : "minus");
   ovPos.textContent = `${current.name} · pronto para tocar`;
-  window.__s3d = { renderer, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
+  window.__s3d = { renderer, setArm, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
 
 })();
 </script>
