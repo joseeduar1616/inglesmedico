@@ -90,6 +90,9 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 .ripple.acc-r { stroke: #ff6b4a; }
 .big-label.acc-l { color: #ff6b4a; }
 .sy.acc { text-decoration: underline 2px; text-underline-offset: 3px; }
+.force-st { flex-basis: 100%; text-align: center; font-size: 12px; color: var(--muted); }
+.force-meter { display: inline-block; width: 70px; height: 6px; border-radius: 3px; background: var(--line); vertical-align: middle; margin-left: 6px; overflow: hidden; }
+.force-meter i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .08s; }
 .controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 18px; font-size: 13px; color: var(--muted); }
 .controls label { display: flex; align-items: center; gap: 8px; }
 .controls input[type=range] { width: 130px; accent-color: var(--accent); }
@@ -217,10 +220,14 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
         <span><b>Centro</b> Ta forte</span>
         <span><b>Perto do aro</b> tic fraco</span>
         <span><b>Arraste para baixo</b> Prum (rufada)</span>
-        <span><b>Acento</b> ligado: o Ta sai acentuado</span>
+        <span><b>Bata mais forte</b> Ta acentuado</span>
         <span><kbd>J</kbd> <kbd>K</kbd> forte · <kbd>U</kbd> <kbd>I</kbd> acento · <kbd>F</kbd> <kbd>D</kbd> fraco · <kbd>Espaço</kbd> rufada</span>
       </div>
-      <div class="controls"><button class="acc" id="accBtn" type="button" aria-pressed="false" title="Toque para ligar/desligar · segure para acentuar só enquanto segura">Acento</button></div>
+      <div class="controls">
+        <button class="acc" id="forceBtn" type="button" aria-pressed="false">Força da batida</button>
+        <button class="acc" id="accBtn" type="button" aria-pressed="false" title="Toque para ligar/desligar · segure para acentuar só enquanto segura">Acento</button>
+        <span class="force-st" id="forceSt">Ligue “Força da batida”: bata mais forte no centro e o Ta sai acentuado, como na caixa de verdade.</span>
+      </div>
       <div class="controls">
         <label for="vol">Volume <input type="range" id="vol" min="0" max="1.2" step="0.01" value="0.8"></label>
         <label for="snare">Esteira <input type="range" id="snare" min="0.3" max="1.5" step="0.01" value="1"></label>
@@ -745,12 +752,78 @@ To`;
   accBtn.addEventListener("pointerup", accUp);
   accBtn.addEventListener("pointercancel", accUp);
   accBtn.addEventListener("click", e => { if (e.detail === 0) { acc.latch = !acc.latch; accRender(); } });
-  function hit(strong, x = 200, y = 200, accent = strong && accOn()) {
+  // vel: força da batida (1 = normal). Acima de ~1.25 conta como acento.
+  function hit(strong, x = 200, y = 200, accent = strong && accOn(), vel = null) {
     ensure();
     const t = ctx.currentTime;
-    if (accent) eng.stroke(t, 1.45, 1.15, 1.35); else if (strong) eng.stroke(t, 1, 1, 1); else eng.stroke(t, 0.55, 0.35, 1.45);
+    if (strong && vel != null && !accOn()) {
+      accent = vel >= 1.25;
+      eng.stroke(t, vel, 0.9 + 0.2 * Math.min(1, vel), 0.85 + 0.45 * Math.max(0, vel - 0.8));
+    } else if (accent) eng.stroke(t, 1.45, 1.15, 1.35);
+    else if (strong) eng.stroke(t, 1, 1, 1);
+    else eng.stroke(t, 0.55, 0.35, 1.45);
     showHit(x, y, strong, accent ? "TA!" : undefined, accent);
     karaokeHit(strong);
+  }
+
+  // ---------- Força da batida ----------
+  // O ecrã não mede força. Usa-se o que o telemóvel dá: o tranco no acelerómetro (iPhone/Android)
+  // ou, se não houver, a pressão/área do dedo. Cada medida é comparada com as batidas recentes,
+  // por isso não precisa de calibrar: bater bem mais forte que o normal = acento.
+  const forceBtn = $("forceBtn"), forceSt = $("forceSt");
+  const F = { on: false, motion: false, buf: [], hist: [], prev: null, lastEv: 0 };
+  function onMotion(e) {
+    const a = e.acceleration && e.acceleration.x != null ? e.acceleration : e.accelerationIncludingGravity;
+    if (!a || a.x == null) return;
+    const now = performance.now();
+    const v = [a.x, a.y, a.z];
+    if (F.prev) {
+      const m = Math.hypot(v[0] - F.prev[0], v[1] - F.prev[1], v[2] - F.prev[2]);
+      F.buf.push({ t: now, m }); if (F.buf.length > 60) F.buf.shift();
+    }
+    F.prev = v; F.lastEv = now; F.motion = true;
+  }
+  const median = arr => { const s = arr.slice().sort((a, b) => a - b); return s[s.length >> 1]; };
+  function velFrom(raw) {
+    // compara com as batidas recentes (mediana = batida "normal")
+    const ref = F.hist.length >= 3 ? median(F.hist) : raw;
+    F.hist.push(raw); if (F.hist.length > 16) F.hist.shift();
+    const r = raw / Math.max(1e-6, ref);
+    return Math.max(0.7, Math.min(1.5, 1 + 0.37 * Math.log2(r)));
+  }
+  function forceMsg(txt) { forceSt.textContent = txt; }
+  async function forceToggle() {
+    if (F.on) { F.on = false; forceBtn.setAttribute("aria-pressed", "false"); forceMsg("Força da batida desligada."); return; }
+    try {
+      if (typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function") {
+        const r = await DeviceMotionEvent.requestPermission();
+        if (r !== "granted") { forceMsg("Sem acesso ao sensor de movimento. Use o botão Acento."); return; }
+      }
+    } catch (e) { /* dentro do Claude o pedido pode falhar: tenta-se na mesma */ }
+    window.addEventListener("devicemotion", onMotion);
+    F.on = true; F.hist = []; forceBtn.setAttribute("aria-pressed", "true");
+    forceMsg("Ligado. Toque normal = Ta; bata bem mais forte = TA! (acento).");
+    setTimeout(() => {
+      if (F.on && !F.motion) forceMsg("Este ecrã não deixa ler o sensor de movimento (dentro do app do Claude fica bloqueado). Vou usar a pressão do dedo quando o aparelho a der; senão, abra a versão do site ou use o botão Acento.");
+    }, 1500);
+  }
+  forceBtn.addEventListener("click", forceToggle);
+  // Toque no centro com a força ligada: espera ~30 ms pelo tranco do acelerómetro e decide.
+  function forceHit(e, x, y) {
+    const t0 = performance.now();
+    if (F.motion && t0 - F.lastEv < 500) {
+      setTimeout(() => {
+        let peak = 0;
+        for (const s of F.buf) if (s.t >= t0 - 45 && s.t <= t0 + 35 && s.m > peak) peak = s.m;
+        hit(true, x, y, false, velFrom(peak + 0.02));
+      }, 30);
+      return;
+    }
+    const area = (e.width || 0) * (e.height || 0);
+    const pr = e.pressure;
+    const raw = area > 4 ? area : (pr > 0 && pr !== 0.5 && pr !== 1) ? pr : 0;
+    if (raw) hit(true, x, y, false, velFrom(raw));
+    else hit(true, x, y);
   }
 
   // ---------- Toque e arraste (rato e touch) ----------
@@ -767,7 +840,7 @@ To`;
     const p = toSvg(e);
     const d = Math.hypot(p.x - 200, p.y - 200);
     if (d > 182) return;
-    hit(d < 122, p.x, p.y);
+    if (d < 122 && F.on && !accOn()) forceHit(e, p.x, p.y); else hit(d < 122, p.x, p.y);
     ptrs.set(e.pointerId, { y: e.clientY, t: performance.now(), v: 0, down: 0, back: 0, last: 0, rolling: false });
   });
   svg.addEventListener("pointermove", e => {
