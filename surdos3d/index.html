@@ -413,7 +413,11 @@ To .-E-To Bo-E-To E-To-bo
 To 1 2 3
 To .-.-To Bo-E-To E-To-bo
 To .-.-To Bo-E-To E-To-bo
-To`;
+To Po Pa Po
+
+To Po Pa Po
+To Po Pa Po
+To To To-.-.-to .-.-to-.`;
   const SOMA_TXT = `1 2 3 To-To
 To-.-.-Po Pa To-.-.-Pa Po-To
 To E-To E-To E-To
@@ -606,7 +610,8 @@ To 1 E-To To
 To 1 E-To E-To
 To-To E-To E-To E-To
 To-.-.-To E-To Pa-Po Pa-Po
-To`;
+To-To To 1 To-to
+To To To To-to`;
   const MINUS_TXT = `To E-To To To-To
 To Po-Pa Po-Pa 1
 E-Po Po-Pa Pa-Po 1
@@ -667,14 +672,227 @@ To Pa Po To-To
 To Po Pa Po
 Pa Po To To
 To`;
+  // Brahma (legenda do PDF: primeira = po, segunda = pa, dois = to). Onde a partitura separa o tempo com tracinhos
+  // (To | To |, E | | To) são tercinas: o tempo dividido em três.
+  const BRAHMA_TXT = `To-To Po-Pa To To-To
+Po-Pa To 1 2
+To-To Po-Pa To To-To
+Po-Pa To To To
+To-To Po-Pa To To-To
+Po-Pa To 1 2
+To-To Po-Pa To To-To
+
+To-To To To-To-. To-To-.
+
+To E-Pa E-Po To
+E-Po Pa-Po To-.-.-To E-To
+
+To E To E-.-To
+To E To To-.-To
+To E To E-.-To
+To E To To-.-To
+To E To To-.-To
+To E To To-.-To
+
+To . To .-.-To
+bo-To-. E-To-E To To
+
+To E To To
+To E To-To To-To
+To To To E
+To To To To
+E-To To E-To E-To
+To`;
+  // Aine: compassos de 3/4 e 2/4 misturados (cada linha tem os tempos que o compasso tem), depois 4/4
+  const AINE_TXT = `1 2 3
+2 2 3
+
+To To To
+To To To
+Po-Pa Po-Pa
+To To To
+To To E-To
+To To
+To E-to E
+To E-to E
+Pa-Po Pa-Po
+To E-to E
+To E-to E
+Pa-Po Pa-Po
+
+To 2 3 To-To
+To 2 3 Pa-Po
+Pa 2 3 To
+To 2 To 4
+
+1 2 3 4
+2 2 3 4
+3 2 3 4
+4 2 3 4
+
+To To To-to To-to
+To`;
+  // Cerberus: po1, po2, po3, po4 = a série numerada da partitura
+  const CERBERUS_TXT = `To-to E-po Pa-po Pa
+To-to E To To
+To-to E-po Pa-po Pa
+To To To To
+To 2 3 4
+
+E-to E-to E-to E-to
+To 2 3 4
+E-to E-to E-to E-to
+
+To To-to To To-to
+To E-to To-to E-to
+To 2 3 To
+To To To To
+To E-to E-to E-po
+
+Pa po1 Pa po2
+Pa po3 To E
+Pa po1 Pa po2
+Pa po3 Pa po4
+
+To To-to E-to E-po
+
+Pa po1 Pa po2
+Pa po3 Po-Pa Pa-Po
+Pa po1 Pa po2
+Pa po3 Pa-Po Pa-Po
+
+Pa-.-.-Pa E-Po To To
+To To E-Pa Po-Pa
+To 1 2 Po-Pa
+Po 1 E-Pa Pa-Po
+Pa 2 E-Pa Pa-Po
+Pa To To To
+
+Po-.-.-Po E-Pa Po-.-.-Po E-Pa
+
+To Po Pa po1
+Pa po2 Pa po3
+To E-Po Pa 1
+
+2 3 4 5
+
+6 To-ro To-ro To-ro
+1 2 3 4
+5 To-ro To-ro To-ro
+To To 1 E-.-To-ro
+ti-to-.-. 1 To To
+
+Pa po1 Pa po2
+Pa po3 Pa-Po Pa-Po
+
+To 2 To E-.-.-To
+ro Po Pa po1
+To Po Pa po1
+To 2 To E-.-.-to
+ro Po Pa po3
+
+Pa E-Pa Po E-Po
+Pa E-Pa Po-.-.-Po E-Po
+Pa E-Pa Po E-Po
+Pa E-Pa Po-.-.-Po E-Po
+Pa`;
+  // Nikê: o 1º compasso é a chamada ("ri" na partitura); os surdos só contam
+  const NIKE_TXT = `1 2 3 E
+
+To To-to To-.-Po-ro Pa-to
+To-to To-to To-to To
+To-to To-Po Pa-Po Pa
+
+To-.-.-to .-.-to-ro to-.-to-ro .-to-.-.
+To-.-.-to .-.-to-ro to-.-to-ro .-to-.-.
+To To To To-to
+To 2 3 4
+
+To To To Po-Pa
+Po 2 3 4
+E To To To-go-ro-go
+To To-Pa Pa-Pa To
+
+1 2 3 4
+To-.-.-to .-.-to-ro to-.-to-ro .-to-.-.
+E-to E-to E-to-.-to E-to
+To`;
+  // Caravan: nos compassos 13 e 14 (marcados "volume") cada tempo vira tercina: To | ti | po
+  const CARAVAN_TXT = `To 2 3 4
+1 2 3 4
+2 2 3 4
+4 2 3 4
+
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+
+To-ti-po ti-po-ti To-ti-Pa ti-Pa-ti
+To-.-. E-.-. To-ti-to ti-to-ti
+To E-To E To
+E-to E To 4
+To 2 To To-.-to-go
+ro-to 2 3 4
+
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+To-.-.-po E-Pa E-.-.-Pa E-po
+
+To 2 3 4
+To-.-.-to E-to To-.-.-to E-to
+To-.-.-to E-to-to-. To E-to
+to-to 1 2 E-to
+To 2 3 E-to
+To-to 3 4 E-to
+To To To-.-.-to E-to`;
+  // Cactus: compassos 7 a 12 são o maracatu
+  const CACTUS_TXT = `1 2 3 4
+5 6 Po-Pa Po-Pa
+
+To 1 To-ro-.-to to-to
+To 2 Po-Pa Po-Pa
+To 3 To-ro-.-to to-to
+To 4 Po-Pa Po-Pa
+
+Pa Po Pa Po
+Pa-Po Pa-Po Pa-Po Pa-Po
+To-.-.-to .-.-.-to ro-to-.-to to-to
+To-.-.-to .-.-.-to ro-to-.-to to-to
+To-.-.-to .-.-.-to ro-to-.-to to-to
+Po-Pa Po-Pa Po-Pa-.-Pa Po-Pa
+
+To To To To-to
+To E-to ti-to-.-. To
+To E-to E-to To
+To E-to ti-to-.-. To
+Po-Pa Po-Pa Po-Pa-.-Pa Po-Pa
+
+To 1 E-Pa Po-Pa
+To 2 To To
+To 3 E-Pa Po-Pa
+To To To-to To-to`;
   const BUILTIN = [
-    { id: "ganesha", name: "Ganesha", bpm: 150, text: GANESHA_TXT, builtin: true },
-    { id: "soma", name: "Soma", bpm: 130, text: SOMA_TXT, builtin: true },
-    { id: "dagon", name: "Dagon", bpm: 140, text: DAGON_TXT, builtin: true },
-    { id: "hecate", name: "Hécate", bpm: 130, text: HECATE_TXT, builtin: true },
-    { id: "wukong", name: "Wukong", bpm: 130, text: WUKONG_TXT, builtin: true },
+    { id: "brahma", name: "Brahma", bpm: 130, text: BRAHMA_TXT, builtin: true },
+    { id: "aine", name: "Aine", bpm: 130, text: AINE_TXT, builtin: true },
+    { id: "cerberus", name: "Cerberus", bpm: 130, text: CERBERUS_TXT, builtin: true },
     { id: "shady", name: "Shady", bpm: 130, text: SHADY_TXT, builtin: true },
+    { id: "nike", name: "Nikê", bpm: 130, text: NIKE_TXT, builtin: true },
+    { id: "caravan", name: "Caravan", bpm: 130, text: CARAVAN_TXT, builtin: true },
+    { id: "dagon", name: "Dagon", bpm: 140, text: DAGON_TXT, builtin: true },
+    { id: "cactus", name: "Cactus", bpm: 130, text: CACTUS_TXT, builtin: true },
+    { id: "soma", name: "Soma", bpm: 130, text: SOMA_TXT, builtin: true },
     { id: "minus", name: "Minus", bpm: 130, text: MINUS_TXT, builtin: true },
+    { id: "hecate", name: "Hécate", bpm: 130, text: HECATE_TXT, builtin: true },
+    { id: "ganesha", name: "Ganesha", bpm: 150, text: GANESHA_TXT, builtin: true },
+    { id: "wukong", name: "Wukong", bpm: 130, text: WUKONG_TXT, builtin: true },
   ];
   const SEC_COLORS = ["#ff9a4a", "#3fc18a", "#b7d65a", "#3fc1d6", "#e070b0", "#9f8cff"];
   // Toque → tambores [1ª, 2ª], força, abafado, palavra falada, volume da voz
