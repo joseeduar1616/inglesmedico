@@ -880,7 +880,7 @@ To`;
   const exBtnA = $("exAudio"), exBtnV = $("exVideo"), exCancel = $("exCancel"), exStatus = $("exStatus"), exBar = $("exBar"), exWrap = $("exProgress");
   const exDrums = $("exDrums"), exMonitor = $("exMonitor"), canvas = $("vidCanvas"), vidBox = $("vidBox");
   let exporting = null, downloadsApi;
-  (async () => { try { downloadsApi = window.claude && claude.use ? await claude.use("downloads") : null; } catch (e) { downloadsApi = null; } if (!downloadsApi) $("exNote").textContent = "Nesta vista não é possível descarregar ficheiros. Abra a página no claude.ai para exportar."; })();
+  (async () => { try { downloadsApi = window.claude && claude.use ? await claude.use("downloads") : null; } catch (e) { downloadsApi = null; }  })();
   const toastEl = $("toast");
   function toast(msg) { toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastEl._t); toastEl._t = setTimeout(() => { toastEl.hidden = true; }, 3500); }
 
@@ -1133,7 +1133,12 @@ To`;
   const exSave = $("exSave");
   async function offerSave() {
     if (!pendingFile) return;
-    if (!downloadsApi) { exStatus.textContent = "Nesta vista não é possível descarregar ficheiros. Abra a página no claude.ai."; return; }
+    if (!downloadsApi) {
+      // fora do Claude: download normal do navegador
+      const a = document.createElement("a"); a.href = URL.createObjectURL(pendingFile.blob); a.download = pendingFile.name;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 60000);
+      exStatus.textContent = `Guardado: ${pendingFile.name}`; exSave.hidden = true; pendingFile = null; return;
+    }
     exSave.disabled = true;
     try {
       await downloadsApi.save({ filename: pendingFile.name, data: pendingFile.blob });
@@ -1164,7 +1169,6 @@ To`;
   async function exportMedia(kind) {
     if (exporting) return;
     if (kind === "audio" && !voiceSel.value && !exDrums.checked) { toast("Escolha uma voz ou inclua a caixa."); return; }
-    if (downloadsApi === null) { toast("Nesta vista não é possível descarregar ficheiros."); return; }
     ensure();
     if (bq.on) stopBreque();
     const job = exporting = { cancelled: false };
