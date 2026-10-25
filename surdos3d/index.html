@@ -58,6 +58,13 @@ h1 span { color: var(--brass); }
 .stage3d.is-fs .hint3d { display: none; }
 .stage3d.is-fs .topbar { top: max(10px, env(safe-area-inset-top, 0px)); left: max(10px, env(safe-area-inset-left, 0px)); right: max(10px, env(safe-area-inset-right, 0px)); }
 .stage3d.mirror canvas { transform: scaleX(-1); }
+.ov-talk { left: 50%; transform: translateX(-50%); bottom: 48px; width: min(calc(100% - 24px), 720px); display: flex; flex-direction: column; gap: 2px; padding: 9px 13px; border-radius: 12px; background: rgba(14,15,18,.88); border: 1px solid var(--line); font-size: 15px; line-height: 1.4; text-wrap: pretty; }
+.ov-talk b { font: 800 14px var(--f-display); text-transform: uppercase; letter-spacing: .06em; }
+.stage3d.is-fs .ov-talk { bottom: calc(max(12px, env(safe-area-inset-bottom, 0px)) + 92px); }
+.lesson { display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px solid var(--line); }
+.btn.playing#lsStart { border-color: var(--d2); background: color-mix(in srgb, var(--d2) 14%, var(--stage)); }
+.bar-row.lesson-part .cells { border-color: var(--d2); box-shadow: 0 0 0 1px var(--d2); }
+@media (max-width: 640px) { .ov-talk { font-size: 13.5px; bottom: 44px; } .fsbar { flex-wrap: wrap; justify-content: center; border-radius: 16px; max-width: calc(100% - 20px); } }
 body.no-scroll { overflow: hidden; }
 .hint3d { right: 12px; bottom: 12px; font-size: 11.5px; color: var(--muted); background: rgba(14,15,18,.7); padding: 4px 8px; border-radius: 6px; }
 @media (max-width: 640px) {
@@ -142,11 +149,14 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
     </div>
     <div class="ov ov-pos" id="ovPos">Escolha um breque e toque em Tocar breque</div>
     <div class="ov hint3d">arraste para girar · pinça ou roda para aproximar</div>
+    <div class="ov ov-talk" id="ovTalk" hidden aria-live="polite"><b id="talkWho"></b><span id="talkText"></span></div>
     <div class="fsbar" id="fsBar">
       <button type="button" id="fsPlay" class="wide"><svg viewBox="0 0 14 14" aria-hidden="true"><path id="fsIcon" d="M3 1.5v11l9.5-5.5z" fill="currentColor"/></svg><span id="fsPlayLbl">Tocar</span></button>
       <button type="button" id="fsSlow" aria-label="Mais devagar">−</button>
       <output id="fsBpm">150 bpm</output>
       <button type="button" id="fsFast" aria-label="Mais rápido">+</button>
+      <button type="button" id="fsLesson">Aula</button>
+      <button type="button" id="fsSkip" hidden>Pular</button>
       <button type="button" id="fsExit">Sair</button>
     </div>
     <p class="err" id="err3d" hidden style="position:absolute;inset:auto 16px 50% 16px;text-align:center"></p>
@@ -169,6 +179,17 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
       <label for="bqRepeat"><input type="checkbox" id="bqRepeat"> Repetir</label>
       <label for="vol">Volume <input type="range" id="vol" min="0" max="1" step="0.01" value="0.7"></label>
       <span id="bqPos" class="bq-meta">Começa no compasso 1</span>
+    </div>
+    <div class="lesson">
+      <div class="row">
+        <button class="btn" id="lsStart" type="button"><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="1.8" y="3.5" width="10.4" height="8" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="5.2" cy="7.5" r="1.1" fill="currentColor"/><circle cx="8.8" cy="7.5" r="1.1" fill="currentColor"/><path d="M7 1v2.5" stroke="currentColor" stroke-width="1.5"/></svg><span id="lsStartLbl">Aula com os robôs</span></button>
+        <button class="btn" id="lsPause" type="button" hidden>Pausar</button>
+        <button class="btn" id="lsSkip" type="button" hidden>Pular</button>
+        <label for="lsVoice"><input type="checkbox" id="lsVoice" checked> Voz dos robôs</label>
+        <label for="lsSlow"><input type="checkbox" id="lsSlow" checked> Mostrar devagar antes</label>
+      </div>
+      <div class="ex-progress" id="lsProgress" hidden><div class="ex-track"><i id="lsBar"></i></div><span id="lsStatus"></span></div>
+      <p class="note">A Ritma (professora) e o Tuco (aluno) conversam sobre o breque escolhido, parte por parte: quem toca, tempo a tempo, e o que quer dizer cada símbolo. Depois de cada explicação os músicos tocam o trecho, primeiro devagar e depois no andamento, e a parte da partitura fica marcada. Pular passa para a próxima fala ou trecho.</p>
     </div>
     <div class="export">
       <div class="row">
@@ -1081,6 +1102,20 @@ To To To-to To-to`;
     pts.forEach(v => { v.x = Math.max(v.x, 1e-4); });
     const m = mesh(new THREE.LatheGeometry(pts, 36), mat); m.scale.set(sx, 1, sz); m.userData.prof = pts; return m;
   }
+  // faixa chata ao longo de uma curva (largura no plano da superfície do corpo)
+  function ribbon(pts, width, mat) {
+    const curve = new THREE.CatmullRomCurve3(pts, false, "centripetal"), N = 90, pos = [], idx = [];
+    const T = new THREE.Vector3(), out = new THREE.Vector3(), side = new THREE.Vector3();
+    for (let n = 0; n <= N; n++) {
+      const p = curve.getPointAt(n / N); curve.getTangentAt(n / N, T);
+      out.set(p.x, 0, p.z); if (out.lengthSq() < 1e-6) out.set(0, 1, 0); out.normalize();
+      side.crossVectors(T, out).normalize().multiplyScalar(width / 2);
+      pos.push(p.x - side.x, p.y - side.y, p.z - side.z, p.x + side.x, p.y + side.y, p.z + side.z);
+      if (n < N) { const a = 2 * n; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+    }
+    const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
+    return mesh(g, mat);
+  }
   const ball = (r, mat, s = [1, 1, 1], p = [0, 0, 0]) => { const m = mesh(new THREE.SphereGeometry(r, 28, 20), mat); m.scale.set(...s); m.position.set(...p); return m; };
   // linha central sobre a superfície de uma parte torneada (frente: +z, costas: -z)
   function midLine(m, y0, y1, side, mat) {
@@ -1131,13 +1166,19 @@ To To To-to To-to`;
     }
     const hl = []; for (let a = 0.35; a <= Math.PI + 0.9; a += 0.08) hl.push(new THREE.Vector3(0, 0.105 + 0.098 * 1.08 * Math.sin(a) * 1.012, -0.008 + 0.098 * 1.04 * Math.cos(a) * 1.012));
     headG.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(hl), 60, 0.0028, 6), line));
-    // talabarte do ombro da maceta até o gancho do surdo
-    const strap = limb(0.018, M(0x1d1f24, { r: 0.9 })); torso.add(strap);
     const drum = makeDrum(o.R, o.H, o.hoop);
     drum.group.position.set(-0.05, 0.05 - o.H / 2, 0.15 + o.R); drum.group.rotation.x = 0.26; torso.add(drum.group);
     drum.group.updateMatrix();
     const dToTorso = v => v.clone().applyMatrix4(drum.group.matrix);
-    between(strap, new THREE.Vector3(0.13, 0.52, -0.03), dToTorso(new THREE.Vector3(-o.R - 0.02, o.H / 2 - 0.06, 0)));
+    // talabarte: faixa chata que sai do gancho do surdo, cruza o peito, passa por cima do ombro da maceta e desce pelas costas
+    const tp = chest.userData.prof, rAt = y => { for (let n = 1; n < tp.length; n++) if (tp[n].y >= y) { const a = tp[n - 1], b = tp[n], u = (y - a.y) / (b.y - a.y || 1); return a.x + (b.x - a.x) * u; } return 0; };
+    const onTorso = (x, y, side) => new THREE.Vector3(x, y, side * (chest.scale.z * Math.sqrt(Math.max(0, rAt(y) ** 2 - x * x)) + 0.012));
+    const hookF = dToTorso(new THREE.Vector3(-o.R * 0.95, o.H / 2 - 0.09, -o.R * 0.42)), hookB = dToTorso(new THREE.Vector3(-o.R * 0.62, o.H / 2 - 0.09, -o.R * 0.86));
+    const strapPts = [hookF, onTorso(-0.12, 0.17, 1), onTorso(-0.05, 0.28, 1), onTorso(0.03, 0.37, 1), onTorso(0.09, 0.45, 1), new THREE.Vector3(0.125, 0.545, 0),
+      onTorso(0.09, 0.45, -1), onTorso(0.0, 0.34, -1), onTorso(-0.08, 0.24, -1), onTorso(-0.13, 0.14, -1), hookB];
+    torso.add(ribbon(strapPts, 0.042, M(0x2a2e38, { r: 0.85, extra: { side: THREE.DoubleSide } })));
+    const ringM = M(0xc9ccd2, { m: 0.85, r: 0.3 });
+    for (const hk of [hookF, hookB]) { const r = mesh(new THREE.TorusGeometry(0.016, 0.004, 6, 14), ringM); r.position.copy(hk); torso.add(r); }
     // braços
     function arm(side) {
       const sh = new THREE.Group(); sh.position.set(0.175 * side, 0.475, 0); torso.add(sh);
@@ -1281,7 +1322,7 @@ To To To-to To-to`;
   });
   let camTween = null;
   function setView(v, instant) {
-    const V = VIEWS[v]; if (!V) return;
+    const V = v === "aula" && camera.aspect < 1 ? VIEWS.aulaRetrato : VIEWS[v]; if (!V) return;
     document.querySelectorAll("#views button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
     const to = { pos: new THREE.Vector3(...V.pos), at: new THREE.Vector3(...V.at) };
     if (instant) { camera.position.copy(to.pos); controls.target.copy(to.at); controls.update(); return; }
@@ -1332,6 +1373,7 @@ To To To-to To-to`;
     controls.update();
     const beatT = bq.on ? (now - bq.start) / spb() : wall * 0.9;
     stepScene(now, wall, beatT, bq.on);
+    stepRobots(wall, beatT);
     renderer.render(scene, camera);
   }
   const _q = new THREE.Quaternion();
@@ -1403,8 +1445,9 @@ To To To-to To-to`;
   const fsBpm = $("fsBpm"), metro = $("metro"), countIn = $("countIn"), bqRepeat = $("bqRepeat"), bqPos = $("bqPos"), ovWord = $("ovWord"), ovPos = $("ovPos");
   let current = BUILTIN[0], parsed = parseBreque(current.text), events = buildEvents(parsed), beatCells = [], barRows = [], startBar = 0;
   BUILTIN.forEach(b => bqSel.appendChild(new Option(b.name, b.id)));
-  const spb = () => 60 / +bpm.value;
+  const spb = () => 60 / (bq.on && bq.bpmOv ? bq.bpmOv : +bpm.value);
   function selectBreque(id) {
+    if (lesson.on) endLesson();
     current = BUILTIN.find(b => b.id === id) || BUILTIN[0];
     if (bq.on) stopBreque();
     parsed = parseBreque(current.text); events = buildEvents(parsed); startBar = 0;
@@ -1439,19 +1482,21 @@ To To To-to To-to`;
     });
   }
   // Agendador: o som vai 0,15 s à frente; os músicos recebem os toques 0,6 s antes para preparar o golpe
-  const bq = { on: false, start: 0, timer: 0, ev: [], aIdx: 0, vIdx: 0, nextClick: 0, cur: -1, sb: 0, span: 0 };
+  const bq = { on: false, start: 0, timer: 0, ev: [], aIdx: 0, vIdx: 0, nextClick: 0, cur: -1, sb: 0, span: 0, range: false, bpmOv: 0, cnt: true, onEnd: null };
+  const rep = () => bqRepeat.checked && !bq.range;   // trechos da aula nunca repetem
+  const lesson = { on: false, steps: [], i: 0, token: 0, paused: false, repeat: false, skipFn: null, resume: null };
   const evTime = k => { const n = bq.ev.length, e = bq.ev[k % n], cyc = Math.floor(k / n); return bq.start + (cyc * bq.span + e.beat - bq.sb) * spb(); };
   function bqSchedule() {
     const s = spb(), now = ctx.currentTime, total = parsed.total;
     while (true) {   // contagem e metrônomo
       const t = bq.start + bq.nextClick * s; if (t > now + 0.15) break;
       const inCount = bq.nextClick < 0, pos = bq.sb + bq.nextClick;
-      if (!bqRepeat.checked && pos >= total) break;
-      if (inCount && countIn.checked) eng.click(t, bq.nextClick === -4, "bq");
+      if (!rep() && pos >= bq.sb + bq.span) break;
+      if (inCount && bq.cnt) eng.click(t, bq.nextClick === -4, "bq");
       else if (!inCount && metro.checked) { const n = total || 1; eng.click(t, parsed.beatInBar[((pos % n) + n) % n] === 0, "bq"); }
       bq.nextClick++;
     }
-    const n = bq.ev.length, limit = bqRepeat.checked ? Infinity : n;
+    const n = bq.ev.length, limit = rep() ? Infinity : n;
     while (bq.vIdx < limit && n) {   // músicos: antecedência maior
       const t = evTime(bq.vIdx); if (t > now + 0.6) break;
       const e = bq.ev[bq.vIdx % n];
@@ -1464,13 +1509,13 @@ To To To-to To-to`;
       if (t >= now - 0.01 && e.drums) for (const d of e.drums) { if (d > 1) continue; eng.trigger(d, false, Math.max(t, now), "bq", e.vel); if (e.mute) eng.stopVoices(d, t + 0.13, 0.035); }
       bq.aIdx++;
     }
-    if (!bqRepeat.checked && bq.aIdx >= n && now > bq.start + (bq.span + 0.6) * s) stopBreque();
+    if (!rep() && bq.aIdx >= n && now > bq.start + (bq.span + 0.6) * s) stopBreque(true);
   }
   function bqDraw() {
     if (!bq.on) return;
     const s = spb(), now = audibleNow(), rel = (now - bq.start) / s;
     let gi = -1;
-    if (rel >= 0) { const r = Math.floor(rel); gi = bq.sb + (bqRepeat.checked ? r % bq.span : r); }
+    if (rel >= 0) { const r = Math.floor(rel); gi = bq.sb + (rep() ? r % bq.span : r); }
     if (gi !== bq.cur) {
       if (beatCells[bq.cur]) beatCells[bq.cur].classList.remove("now");
       bq.cur = gi; const c = beatCells[gi];
@@ -1478,31 +1523,36 @@ To To To-to To-to`;
     }
     // sílaba do momento, grande sobre o palco
     let word = "", col = "#8d8f98";
-    if (rel < 0 && countIn.checked) word = String(Math.max(1, Math.min(4, Math.floor(rel + 5))));
+    if (rel < 0 && bq.cnt) word = String(Math.max(1, Math.min(4, Math.floor(rel + 5))));
     else {
-      const b = bq.sb + (bqRepeat.checked ? ((rel % bq.span) + bq.span) % bq.span : rel);
+      const b = bq.sb + (rep() ? ((rel % bq.span) + bq.span) % bq.span : rel);
       for (let k = events.length - 1; k >= 0; k--) { const e = events[k]; if (e.beat <= b + 1e-6) { if (b - e.beat < Math.max(e.slot, 0.35)) { word = e.count ? String(+e.say?.slice(1) || "") : (e.label || ""); col = e.count ? "#6b6e78" : e.rest ? "#ff6b6b" : ({ Pa: "#3fc1b0", po: "#ff9a4a", ro: "#ff9a4a", go: "#ff9a4a", ra: "#3fc1b0", ga: "#3fc1b0" })[e.label] || "#6ea8ff"; } break; } }
     }
     ovWord.textContent = word; ovWord.style.color = col;
     requestAnimationFrame(bqDraw);
   }
-  function startBreque() {
+  // opt (aula): { from, to } compassos do trecho, bpm do trecho, onEnd(acabouSozinho); sempre com contagem
+  function startBreque(opt = {}) {
     if (!parsed.bars.length) return;
     ensureCtx();
-    const s = spb();
-    bq.sb = parsed.barStart[startBar] || 0; bq.span = parsed.total - bq.sb;
-    bq.ev = events.filter(e => e.beat >= bq.sb);
-    bq.on = true; bq.aIdx = 0; bq.vIdx = 0; bq.cur = -1;
-    bq.nextClick = countIn.checked ? -4 : 0;
-    bq.start = ctx.currentTime + 0.1 + (countIn.checked ? 4 * s : 0);
+    const b0 = opt.from ?? startBar, b1 = Math.min(opt.to ?? parsed.bars.length, parsed.bars.length);
+    bq.range = opt.from != null; bq.bpmOv = opt.bpm || 0; bq.onEnd = opt.onEnd || null; bq.cnt = bq.range || countIn.checked;
+    bq.on = true;
+    const s = spb(), eb = b1 < parsed.bars.length ? parsed.barStart[b1] : parsed.total;
+    bq.sb = parsed.barStart[b0] || 0; bq.span = eb - bq.sb;
+    bq.ev = events.filter(e => e.beat >= bq.sb && e.beat < eb);
+    bq.aIdx = 0; bq.vIdx = 0; bq.cur = -1;
+    bq.nextClick = bq.cnt ? -4 : 0;
+    bq.start = ctx.currentTime + 0.1 + (bq.cnt ? 4 * s : 0);
     players.forEach(p => { p.hits = p.hits.filter(h => h.t < ctx.currentTime); });
     bqSchedule(); bq.timer = setInterval(bqSchedule, 25);
     $("bqPlay").classList.add("playing"); $("bqLbl").textContent = "Parar breque"; $("fsPlayLbl").textContent = "Parar";
     for (const id of ["bqIcon", "fsIcon"]) $(id).setAttribute("d", "M3 3h8v8H3z");
     bqDraw();
   }
-  function stopBreque() {
+  function stopBreque(natural) {
     bq.on = false; clearInterval(bq.timer);
+    const cb = bq.onEnd; bq.onEnd = null; bq.range = false; bq.bpmOv = 0;
     if (eng) eng.cancelTagged("bq", ctx.currentTime);
     const now = ctx ? ctx.currentTime : 0;
     players.forEach(p => { p.hits = p.hits.filter(h => h.t <= now); });
@@ -1511,6 +1561,7 @@ To To To-to To-to`;
     $("bqPlay").classList.remove("playing"); $("bqLbl").textContent = "Tocar breque"; $("fsPlayLbl").textContent = "Tocar";
     for (const id of ["bqIcon", "fsIcon"]) $(id).setAttribute("d", "M3 1.5v11l9.5-5.5z");
     bqPos.textContent = `Começa no compasso ${startBar + 1}`;
+    if (cb) cb(!!natural);
   }
   const toggleBreque = () => bq.on ? stopBreque() : startBreque();
   $("bqPlay").addEventListener("click", toggleBreque);
@@ -1548,7 +1599,7 @@ To To To-to To-to`;
   let mirrored = false;
   function toggleMirror() {
     mirrored = !mirrored; host.classList.toggle("mirror", mirrored); mirBtn.setAttribute("aria-pressed", String(mirrored));
-    players.forEach(p => { p.tag.visible = !mirrored; });
+    players.forEach(p => { p.tag.visible = !mirrored; }); robots.forEach(r => { r.tag.visible = !mirrored; });
   }
   mirBtn.addEventListener("click", toggleMirror);
   window.addEventListener("keydown", e => {
@@ -1563,6 +1614,317 @@ To To To-to To-to`;
     if (k === "s") { e.preventDefault(); playLive(1, e.shiftKey); return; }
   });
   document.addEventListener("visibilitychange", () => { if (document.hidden && bq.on) stopBreque(); });
+
+  // ---------- Aula com os robôs ----------
+  // Dois robôs, a Ritma (professora) e o Tuco (aluno), conversam sobre o breque escolhido parte por parte: quem toca,
+  // tempo a tempo, o que quer dizer cada símbolo. Depois de cada explicação os músicos tocam o trecho, primeiro devagar e
+  // depois no andamento. A fala usa a voz do navegador em português quando existe; a legenda aparece sempre.
+  function makeRobot(o) {
+    const g = new THREE.Group(); g.position.set(o.x, 0, o.z); g.rotation.y = o.ry; g.visible = false; scene.add(g);
+    const shell = M(0xeef0f3, { r: 0.28, m: 0.2 }), dark = M(0x10131a, { r: 0.15, m: 0.4 }), acc = M(o.color, { r: 0.4, m: 0.3 });
+    const glow = new THREE.MeshBasicMaterial({ color: o.color });
+    const ring = new THREE.Mesh(new THREE.RingGeometry(0.16, 0.24, 40), new THREE.MeshBasicMaterial({ color: o.color, transparent: true, opacity: 0.5, side: THREE.DoubleSide, depthWrite: false }));
+    ring.rotation.x = -Math.PI / 2; ring.position.y = 0.01; g.add(ring);
+    const bodyG = new THREE.Group(); g.add(bodyG);
+    // corpo em gota, sem pernas: ele flutua
+    bodyG.add(part([[0.001, 0.3], [0.05, 0.34], [0.12, 0.45], [0.17, 0.6], [0.18, 0.72], [0.165, 0.82], [0.12, 0.88], [0.001, 0.9]], shell, 1, 0.85));
+    const belt = mesh(new THREE.TorusGeometry(0.176, 0.012, 8, 40), acc); belt.rotation.x = Math.PI / 2; belt.position.y = 0.66; belt.scale.set(1, 0.85, 1); bodyG.add(belt);
+    const chestLight = new THREE.Mesh(new THREE.CircleGeometry(0.035, 24), glow); chestLight.position.set(0, 0.76, 0.152); chestLight.rotation.x = -0.25; bodyG.add(chestLight);
+    bodyG.add(ball(0.045, dark, [1, 0.8, 1], [0, 0.92, 0]));
+    // cabeça: casco claro e uma tela escura com olhos e boca de luz
+    const head = new THREE.Group(); head.position.y = 0.98; bodyG.add(head);
+    head.add(ball(0.17, shell, [1.1, 0.88, 0.95], [0, 0.07, 0]));
+    head.add(ball(0.15, dark, [1.0, 0.72, 0.75], [0, 0.07, 0.07]));
+    const eyes = [];
+    for (const sx of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(0.024, 16, 12), glow); e.scale.set(0.8, 1.15, 0.4); e.position.set(0.055 * sx, 0.095, 0.178); head.add(e); eyes.push(e); }
+    const mouth = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.012, 0.01), glow); mouth.position.set(0, 0.04, 0.176); head.add(mouth);
+    for (const sx of [-1, 1]) head.add(ball(0.035, acc, [0.5, 1, 1], [0.185 * sx, 0.07, 0]));
+    const ant = mesh(new THREE.CylinderGeometry(0.006, 0.006, 0.1, 6), dark); ant.position.y = 0.245; head.add(ant);
+    const antTip = new THREE.Mesh(new THREE.SphereGeometry(0.02, 12, 10), glow); antTip.position.y = 0.3; head.add(antTip);
+    const arms = [];
+    for (const sx of [-1, 1]) {
+      const sh = new THREE.Group(); sh.position.set(0.19 * sx, 0.8, 0); bodyG.add(sh);
+      sh.add(ball(0.045, acc));
+      const up = mesh(new THREE.CylinderGeometry(0.03, 0.026, 0.2, 10), shell); up.position.y = -0.11; sh.add(up);
+      const el = new THREE.Group(); el.position.y = -0.22; sh.add(el);
+      el.add(ball(0.03, dark));
+      const fo = mesh(new THREE.CylinderGeometry(0.026, 0.022, 0.18, 10), shell); fo.position.y = -0.1; el.add(fo);
+      el.add(ball(0.04, acc, [1, 1.1, 0.8], [0, -0.21, 0]));
+      arms.push({ sh, el, sx });
+    }
+    const tag = label(o.name, o.css); tag.position.y = 1.5; g.add(tag);
+    return { ...o, g, bodyG, head, eyes, mouth, antTip, arms, ring, tag, talk: 0, seed: Math.random() * 10 };
+  }
+  const robots = [
+    makeRobot({ name: "Ritma", css: "#c9a24a", color: 0xc9a24a, x: -1.6, z: 1.05, ry: 0.55, look: 0.5 }),
+    makeRobot({ name: "Tuco", css: "#3fc1d6", color: 0x3fc1d6, x: 1.6, z: 1.05, ry: -0.55, look: -0.5 }),
+  ];
+  const [ritma, tuco] = robots, WHO = { R: ritma, T: tuco };
+  VIEWS.aula = { pos: [0, 1.85, 5.3], at: [0, 0.9, 0.55] };
+  VIEWS.aulaRetrato = { pos: [0, 2.05, 6.4], at: [0, 0.62, 0.5] };
+  // os robôs flutuam, mexem a boca quando falam, olham para quem fala e marcam o tempo quando os músicos tocam
+  function stepRobots(wall, beatT) {
+    const playing = bq.on && lesson.on;
+    for (const r of robots) {
+      if (!r.g.visible) continue;
+      const t = wall + r.seed, other = r === ritma ? tuco : ritma;
+      r.bodyG.position.y = 0.06 + Math.sin(t * 1.8) * 0.025;
+      r.ring.material.opacity = 0.32 + 0.18 * Math.sin(t * 1.8);
+      const talking = r.talk > 0, pulse = playing ? Math.pow(Math.max(0, Math.cos(2 * Math.PI * beatT)), 6) : 0;
+      r.mouth.scale.set(talking ? 0.8 : 1, talking ? 0.6 + 2.8 * Math.abs(Math.sin(t * 13) * Math.sin(t * 5.3 + 1)) : 1, 1);
+      r.antTip.scale.setScalar(talking ? 1 + 0.45 * Math.abs(Math.sin(t * 9)) : 1 + 0.6 * pulse);
+      const blink = ((t * 0.27) % 1) < 0.035 ? 0.12 : 1;
+      r.eyes.forEach(e => { e.scale.y = 1.15 * blink; });
+      // cabeça: fala olhando para a câmera, escuta olhando para o outro, nos trechos olha os músicos e balança no tempo
+      const ly = playing ? -r.look * 0.9 : talking ? 0.12 * Math.sin(t * 1.3) : other.talk > 0 ? r.look : 0.1 * Math.sin(t * 0.7);
+      r.head.rotation.y += (ly - r.head.rotation.y) * 0.12;
+      r.head.rotation.x = playing ? 0.18 * pulse : talking ? 0.05 * Math.sin(t * 2.1) : 0;
+      for (const a of r.arms) {
+        let sx = 0.1, sz = 0.12 * a.sx, ex = -0.25;
+        if (talking && a.sx > 0) { sx = -0.55 - 0.3 * Math.sin(t * 2.2); ex = -0.9 - 0.25 * Math.sin(t * 3.1); sz = 0.25; }
+        else if (talking) { sx = -0.15 - 0.1 * Math.sin(t * 1.7); }
+        else if (playing && r === ritma) { sx = -1.0 + 0.35 * pulse; ex = -0.6; sz = 0.35 * a.sx; }   // rege
+        else if (playing) { sx = -0.4 - 0.5 * pulse; ex = -1.2; }                                     // marca o tempo
+        a.sh.rotation.set(sx, 0, sz); a.el.rotation.x = ex;
+      }
+    }
+  }
+  // ---- voz ----
+  const tts = window.speechSynthesis || null;
+  let ptVoices = [];
+  function loadVoices() { if (!tts) return; const all = tts.getVoices(); ptVoices = all.filter(v => /^pt[-_]BR/i.test(v.lang)); if (!ptVoices.length) ptVoices = all.filter(v => /^pt/i.test(v.lang)); }
+  if (tts) { loadVoices(); try { tts.addEventListener("voiceschanged", loadVoices); } catch (e) { tts.onvoiceschanged = loadVoices; } }
+  function voiceFor(r) {
+    if (!ptVoices.length) return null;
+    const fem = ptVoices.find(v => /luciana|francisca|thalita|maria|vit[oó]ria|female|feminin/i.test(v.name)), other = ptVoices.find(v => v !== fem);
+    return r === ritma ? (fem || ptVoices[0]) : (other || ptVoices[0]);
+  }
+  const lsVoice = $("lsVoice"), lsSlow = $("lsSlow");
+  const useVoice = () => !!tts && lsVoice.checked;
+  // legenda → texto falado (as sílabas dos toques com a pronúncia certa)
+  function speakable(s) {
+    return s.replace(/“E”/g, "é").replace(/[“”]/g, "").replace(/1ª/g, "primeira").replace(/2ª/g, "segunda").replace(/\bbpm\b/g, "batidas por minuto")
+      .replace(/\b(To|to)(\d*)\b/g, (m, a, d) => "tô" + (d ? " " + d : "")).replace(/\b(Po|po)(\d*)\b/g, (m, a, d) => "pô" + (d ? " " + d : ""))
+      .replace(/\b(Pa|pa)(\d*)\b/g, (m, a, d) => "pá" + (d ? " " + d : "")).replace(/\b(Bo|bo)\b/g, "bô").replace(/\bro\b/g, "rô").replace(/\bgo\b/g, "gô")
+      .replace(/\bra\b/g, "rá").replace(/\bga\b/g, "gá").replace(/\bti\b/g, "tí");
+  }
+  const ovTalk = $("ovTalk"), talkWho = $("talkWho"), talkText = $("talkText");
+  function showTalk(r, text) {
+    if (!text) { ovTalk.hidden = true; return; }
+    ovTalk.hidden = false; talkWho.textContent = r ? r.name : "Músicos"; talkWho.style.color = r ? r.css : "#ecebe6"; talkText.textContent = text;
+  }
+  function say(r, text) {
+    return new Promise(res => {
+      showTalk(r, text); r.talk = 1;
+      const t0 = performance.now(), est = 900 + text.length * 60;
+      let done = false, to = 0;
+      const fin = () => { if (done) return; done = true; r.talk = 0; clearTimeout(to); lesson.skipFn = null; res(); };
+      // sem voz (ou se ela falhar) a legenda fica o tempo de leitura
+      const byTime = ms => { clearTimeout(to); to = setTimeout(fin, ms); };
+      lesson.skipFn = () => { if (tts) tts.cancel(); fin(); };
+      if (useVoice()) {
+        const u = new SpeechSynthesisUtterance(speakable(text)); u.lang = "pt-BR";
+        const v = voiceFor(r); if (v) u.voice = v;
+        u.pitch = r === ritma ? 1.0 : 1.45; u.rate = r === ritma ? 1.03 : 1.1;
+        u.onend = () => byTime(Math.max(250, est * 0.45 - (performance.now() - t0)));
+        u.onerror = () => byTime(Math.max(300, est - (performance.now() - t0)));
+        byTime(est + 9000);
+        tts.speak(u);
+      } else byTime(est);
+    });
+  }
+  function wait(ms) { return new Promise(res => { const t = setTimeout(() => { lesson.skipFn = null; res(); }, ms); lesson.skipFn = () => { clearTimeout(t); lesson.skipFn = null; res(); }; }); }
+  function playPart(p) {
+    return new Promise(res => {
+      showTalk(null, p.caption);
+      markBars(p.from, p.to);
+      lesson.skipFn = () => { if (bq.on) stopBreque(); else { lesson.skipFn = null; res(); } };
+      startBreque({ from: p.from, to: p.to, bpm: p.bpm, onEnd: () => { lesson.skipFn = null; setTimeout(res, 450); } });
+    });
+  }
+  function markBars(a, b) {
+    barRows.forEach((row, i) => row.classList.toggle("lesson-part", a != null && i >= a && i < b));
+    const row = barRows[a]; if (row && a != null) { const top = row.offsetTop - scoreEl.offsetTop; if (top < scoreEl.scrollTop || top + row.offsetHeight > scoreEl.scrollTop + scoreEl.clientHeight) scoreEl.scrollTop = top - 8; }
+  }
+
+  // ---- o roteiro da aula, montado a partir da partitura ----
+  function tokInfo(tok) {
+    if (!tok) return { kind: "rest" };
+    if (tok.startsWith("#")) return { kind: "count", n: tok.slice(1) };
+    const { base, sup } = tokParts(tok);
+    if (RESTS[base]) return { kind: "say", base, label: base };
+    const h = HITS[base];
+    return { kind: "hit", base, label: base + (sup || ""), sup, drums: h.drums, mute: h.mute, light: h.vel < 1 && !h.mute };
+  }
+  const word = i => i.kind === "count" ? `conta ${i.n}` : i.kind === "say" ? `“${i.label}” falado` : i.label;
+  const POS4 = ["", "logo depois", "no meio", "no finzinho"];
+  function describeBeat(beat) {
+    const n = beat.length, items = beat.map((t, j) => ({ j, i: tokInfo(t) })).filter(x => x.i.kind !== "rest");
+    if (!items.length) return "silêncio";
+    if (n === 1) return word(items[0].i);
+    if (n === 3) return "tercina: " + beat.map(t => { const i = tokInfo(t); return i.kind === "rest" ? "pausa" : word(i); }).join(", ");
+    if (n === 2) return items.map(x => x.j === 0 ? word(x.i) : `${word(x.i)} no meio`).join(" e ");
+    if (n === 4) return items.map(x => x.j === 0 ? word(x.i) : `${word(x.i)} ${POS4[x.j]}`).join(" e ");
+    return items.map(x => x.j === 0 ? word(x.i) : `${word(x.i)} no pedaço ${x.j + 1} de ${n}`).join(" e ");
+  }
+  // o último compasso com um tempo só é o toque final, não uma mudança de compasso
+  const isFinal = b => b === parsed.bars.length - 1 && parsed.bars[b].length === 1;
+  const describeBar = (bar, b) => isFinal(b) ? `Compasso ${b + 1}: só o ${describeBeat(bar[0])} final, no tempo 1, e acabou.`
+    : `Compasso ${b + 1}${bar.length !== 4 ? `, que tem ${bar.length} tempos` : ""}: ` + bar.map((beat, k) => `tempo ${k + 1}, ${describeBeat(beat)}`).join("; ") + ".";
+  const sig = bar => bar.map(b => b.join("-")).join(" ");
+  const listNums = a => a.length === 1 ? String(a[0]) : a.slice(0, -1).join(", ") + " e " + a[a.length - 1];
+  function chunks() {
+    const out = []; let cur = null;
+    parsed.bars.forEach((bar, b) => { if (!cur || parsed.section[b] !== cur.sec) { cur = { sec: parsed.section[b], bars: [] }; out.push(cur); } cur.bars.push(b); });
+    // partes longas viram pedaços de até 6 compassos
+    return out.flatMap(c => { const n = Math.ceil(c.bars.length / 6), size = Math.ceil(c.bars.length / n), r = []; for (let k = 0; k < c.bars.length; k += size) r.push(c.bars.slice(k, k + size)); return r; });
+  }
+  const TUCO_OK = ["Anotado!", "Hum, esse é fácil.", "Deixa eu ver se entendi…", "Tá, vou contar junto.", "Esse eu preciso ver tocando.", "Beleza, próximo!"];
+  const TUCO_GO = ["Agora no andamento de verdade!", "E rápido, como fica?", "Agora na velocidade normal!", "Bora no andamento!"];
+  function buildLesson() {
+    const steps = [], P = chunks(), bpmN = +bpm.value, slowBpm = Math.max(60, Math.round(bpmN * 0.7 / 5) * 5);
+    const seen = new Map(), told = new Set();
+    let tk = 0, gk = 0, part = 0;
+    const R = (text, extra) => steps.push({ who: "R", say: text, part, ...extra }), T = text => steps.push({ who: "T", say: text, part });
+    const view = v => steps.push({ view: v, part });
+    const hasAny = (bars, f) => bars.some(b => parsed.bars[b].some((beat, k) => beat.some((t, j) => f(tokInfo(t), beat, j, parsed.bars[b]))));
+    // abertura
+    view("aula");
+    R(`Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o ${current.name}: ${parsed.bars.length} compassos, que eu dividi em ${P.length} partes.`);
+    T("Oi! Eu ainda confundo os nomes dos toques. Me lembra?");
+    R("To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.");
+    R(`O andamento é ${bpmN} bpm. Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando.`);
+    P.forEach((bars, pi) => {
+      part = pi + 1;
+      const a = bars[0], z = bars[bars.length - 1], range = a === z ? `compasso ${a + 1}` : `compassos ${a + 1} a ${z + 1}`;
+      const infos = bars.flatMap(b => parsed.bars[b].flat().map(tokInfo)), hits = infos.filter(i => i.kind === "hit");
+      steps.push({ mark: [a, z + 1], part });
+      if (!hits.length) {
+        const first = parsed.bars[a].map(beat => beat.map(tokInfo).filter(i => i.kind !== "rest").map(word).join(" ") || "silêncio").join(", ");
+        const lead = new Set(bars.map(b => sig([parsed.bars[b][0]])));
+        R(`Parte ${part}, ${range}. Aqui ninguém toca: é só contar. ${bars.length > 1 ? "No primeiro" : "Fica assim"}: ${first}.${bars.length > 1 && lead.size > 1 ? " Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está." : ""}`);
+        if (!told.has("count")) { told.add("count"); T("Pra que contar, se ninguém toca?"); R("Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."); }
+        R("Escuta e conta junto.");
+        steps.push({ play: { from: a, to: z + 1, caption: `Contando os ${range}` }, part });
+        return;
+      }
+      // quem toca nesta parte
+      const both = hits.filter(i => i.drums.length === 2).length, p1 = hits.filter(i => i.drums.length === 1 && i.drums[0] === 0).length, p2 = hits.filter(i => i.drums.length === 1 && i.drums[0] === 1).length;
+      let who;
+      if (both && !p1 && !p2) who = "as duas tocam juntas o tempo todo, só To.";
+      else if (both) who = "as duas tocam juntas no To e também conversam: " + (p1 && p2 ? "a 1ª faz po e a 2ª responde com pa." : p1 ? "a 1ª aparece sozinha no po." : "a 2ª aparece sozinha no pa.");
+      else who = p1 && p2 ? "é uma conversa: a 1ª faz po e a 2ª responde pa, uma de cada vez." : p1 ? "só a 1ª toca." : "só a 2ª toca.";
+      R(`Parte ${part}, ${range}. Nesta parte ${who}`);
+      // cada compasso novo, tempo a tempo; os repetidos só são apontados
+      const old = bars.filter(b => seen.has(sig(parsed.bars[b])));   // iguais a compassos de partes anteriores
+      if (old.length === 1) R(`O compasso ${old[0] + 1} é igual ao compasso ${seen.get(sig(parsed.bars[old[0]])) + 1}, que você já viu.`);
+      else if (old.length) R(`Os compassos ${listNums(old.map(x => x + 1))} repetem compassos que você já viu: ${listNums([...new Set(old.map(b => seen.get(sig(parsed.bars[b])) + 1))].map(n => `o ${n}`))}.`);
+      const fresh = [];
+      bars.forEach(b => { const s = sig(parsed.bars[b]); if (seen.has(s)) return; seen.set(s, b); fresh.push(b); });
+      fresh.forEach((b, n) => {
+        R(describeBar(parsed.bars[b], b));
+        const same = bars.filter(x => x > b && sig(parsed.bars[x]) === sig(parsed.bars[b]));
+        if (same.length) R(same.length === 1 ? `O compasso ${same[0] + 1} é igualzinho a esse.` : `Os compassos ${listNums(same.map(x => x + 1))} são iguaizinhos a esse.`);
+        if (n % 2 === 1 && n < fresh.length - 1) T(TUCO_OK[tk++ % TUCO_OK.length]);
+      });
+      // o que aparece pela primeira vez nesta parte
+      const feat = (key, test, q, ans) => { if (!told.has(key) && hasAny(bars, test)) { told.add(key); T(q); R(ans); } };
+      feat("e", i => i.kind === "say", "Por que a gente fala “E” sem tocar?", "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.");
+      feat("cnt", (i, beat, j, bar) => i.kind === "count" && bar.some(bt => bt.some(t => tokInfo(t).kind === "hit")), "E esses números no meio dos toques?", "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.");
+      feat("off2", (i, beat, j) => i.kind === "hit" && beat.length === 2 && j === 1, "E o toque que cai no meio do tempo?", "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.");
+      feat("off4", (i, beat, j) => i.kind === "hit" && beat.length === 4 && j > 0, "Tem toque no finzinho do tempo, né?", "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.");
+      feat("tri", (i, beat) => beat.length === 3 && i.kind !== "rest", "Ué, aqui o tempo tem três divisões?", "É tercina: três notas iguais dentro de um tempo só. Fale tri-pa-ti em cada tempo para encaixar.");
+      feat("mute", i => i.kind === "hit" && i.mute, "O que é esse Bo?", "Bo é abafado: os dois tocam, e a outra mão segura a pele na hora, pro som morrer curto.");
+      feat("light", i => i.kind === "hit" && i.light, "Por que alguns toques estão escritos em minúsculo?", "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.");
+      feat("ser", i => i.kind === "hit" && i.sup, "E os numerinhos colados nos toques?", "É a série: po1, po2, po3 contam as repetições. Ajudam a não perder a conta no meio da conversa.");
+      if (bars.some(b => parsed.bars[b].length !== 4 && !isFinal(b)) && !told.has("meter")) {
+        told.add("meter"); const odd = bars.find(b => parsed.bars[b].length !== 4 && !isFinal(b)), n = parsed.bars[odd].length;
+        T(`Espera, o compasso ${odd + 1} tem ${n} tempos?`); R(`Tem. Conte até ${n} e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem.`);
+      }
+      // tocar
+      if (lsSlow.checked && slowBpm < bpmN) {
+        const v = p2 > p1 ? "a2" : "a1";
+        R(gk++ === 0 ? `Vou pedir pros músicos tocarem devagar, a ${slowBpm} bpm. Olhe por trás da ${v === "a1" ? "1ª" : "2ª"}, como se fosse você tocando.` : `Primeiro devagar, a ${slowBpm} bpm.`);
+        view(v);
+        steps.push({ play: { from: a, to: z + 1, bpm: slowBpm, caption: `Tocando devagar · ${range}` }, part });
+        view("frente");
+        T(TUCO_GO[part % TUCO_GO.length]);
+        steps.push({ play: { from: a, to: z + 1, caption: `No andamento · ${range}` }, part });
+      } else {
+        R("Escuta e repara no braço da maceta.");
+        view("frente");
+        steps.push({ play: { from: a, to: z + 1, caption: `Tocando · ${range}` }, part });
+      }
+      view("aula");
+    });
+    part = P.length + 1;
+    steps.push({ mark: [0, parsed.bars.length], part });
+    R(`Muito bem! Agora o ${current.name} inteiro, do começo ao fim.`);
+    view("frente");
+    steps.push({ play: { from: 0, to: parsed.bars.length, caption: `${current.name} inteiro` }, part });
+    view("aula");
+    T("Ufa! Consegui acompanhar!");
+    R("Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.");
+    return steps;
+  }
+
+  // ---- andamento da aula ----
+  const lsStart = $("lsStart"), lsPause = $("lsPause"), lsSkip = $("lsSkip"), lsStatus = $("lsStatus"), lsBar = $("lsBar");
+  async function runLesson() {
+    const tk = lesson.token;
+    while (lesson.on && tk === lesson.token && lesson.i < lesson.steps.length) {
+      if (lesson.paused) { await new Promise(r => { lesson.resume = r; }); continue; }
+      const st = lesson.steps[lesson.i]; lesson.repeat = false;
+      lessonUI();
+      if (st.say) await say(WHO[st.who], st.say);
+      else if (st.view) { setView(st.view); await wait(650); }
+      else if (st.mark) markBars(st.mark[0], st.mark[1]);
+      else if (st.play) await playPart(st.play);
+      if (tk !== lesson.token) return;
+      if (!lesson.repeat) lesson.i++;
+    }
+    if (tk === lesson.token && lesson.on) endLesson();
+  }
+  function startLesson() {
+    if (lesson.on || job) return;
+    ensureCtx(); if (bq.on) stopBreque();
+    if (useVoice()) { try { tts.cancel(); const u = new SpeechSynthesisUtterance(" "); u.volume = 0; tts.speak(u); } catch (e) {} }   // libera a voz no iPhone dentro do toque
+    lesson.steps = buildLesson(); lesson.on = true; lesson.paused = false; lesson.i = 0; lesson.token++;
+    robots.forEach(r => { r.g.visible = true; r.tag.visible = !mirrored; });
+    runLesson();
+  }
+  function endLesson() {
+    if (!lesson.on) return;
+    lesson.on = false; lesson.token++; lesson.paused = false;
+    if (lesson.resume) { lesson.resume(); lesson.resume = null; }
+    if (tts) tts.cancel();
+    if (lesson.skipFn) lesson.skipFn(); lesson.skipFn = null;
+    if (bq.on) stopBreque();
+    robots.forEach(r => { r.g.visible = false; r.talk = 0; });
+    showTalk(null, ""); markBars(null);
+    setView("frente"); lessonUI();
+  }
+  function pauseLesson() {
+    if (!lesson.on) return;
+    if (lesson.paused) { lesson.paused = false; if (lesson.resume) { const r = lesson.resume; lesson.resume = null; r(); } }
+    else { lesson.paused = true; lesson.repeat = true; if (tts) tts.cancel(); if (lesson.skipFn) lesson.skipFn(); showTalk(null, "Aula pausada. Toque em Continuar quando quiser."); }
+    lessonUI();
+  }
+  const skipStep = () => { if (lesson.on && !lesson.paused && lesson.skipFn) lesson.skipFn(); };
+  function lessonUI() {
+    const on = lesson.on, st = lesson.steps[lesson.i], total = lesson.steps.length ? lesson.steps[lesson.steps.length - 1].part : 0;
+    $("lsStartLbl").textContent = on ? "Sair da aula" : "Aula com os robôs"; lsStart.classList.toggle("playing", on);
+    lsPause.hidden = lsSkip.hidden = !on; lsPause.textContent = lesson.paused ? "Continuar" : "Pausar";
+    $("lsProgress").hidden = !on;
+    if (on && st) { lsBar.style.width = `${(100 * lesson.i / lesson.steps.length).toFixed(1)}%`; lsStatus.textContent = st.part > total - 1 ? "Breque inteiro" : st.part ? `Parte ${st.part} de ${total - 1}` : "Começando"; }
+    $("fsLesson").textContent = on ? "Sair da aula" : "Aula"; $("fsSkip").hidden = !on;
+  }
+  lsStart.addEventListener("click", () => lesson.on ? endLesson() : startLesson());
+  $("fsLesson").addEventListener("click", () => lesson.on ? endLesson() : startLesson());
+  lsPause.addEventListener("click", pauseLesson);
+  lsSkip.addEventListener("click", skipStep); $("fsSkip").addEventListener("click", skipStep);
+  lsVoice.addEventListener("change", () => { if (!lsVoice.checked && tts) tts.cancel(); });
+  if (!tts) { lsVoice.checked = false; lsVoice.disabled = true; lsVoice.parentElement.title = "Este navegador não tem voz sintetizada; a aula fica só com legenda."; }
 
   // ---------- Baixar vídeo ----------
   // 1) o som do breque inteiro é sintetizado num OfflineAudioContext; 2) cada quadro da cena 3D é desenhado no instante
@@ -1762,7 +2124,7 @@ To To To-to To-to`;
   async function exportVideo() {
     if (job) return;
     if (!parsed.bars.length) return;
-    ensureCtx(); if (bq.on) stopBreque();
+    ensureCtx(); if (lesson.on) endLesson(); if (bq.on) stopBreque();
     job = { cancelled: false }; pendingFile = null; exSave.hidden = true;
     exBtn.disabled = true; exCancel.hidden = false; exWrap.hidden = false; exBar.style.width = "0%"; exStatus.textContent = "Preparando o som do breque…";
     exporting = true;
@@ -1802,7 +2164,7 @@ To To To-to To-to`;
   let last = null; try { last = localStorage.getItem("surdos3d.sel"); } catch (e) {}
   selectBreque(last && BUILTIN.some(b => b.id === last) ? last : "minus");
   ovPos.textContent = `${current.name} · pronto para tocar`;
-  window.__s3d = { renderer, setArm, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
+  window.__s3d = { renderer, setArm, buildLesson, lesson, robots, startLesson, endLesson, skipStep, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
 
 })();
 </script>
