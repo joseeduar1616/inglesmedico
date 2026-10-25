@@ -61,6 +61,7 @@ h1 span { color: var(--brass); }
 .ov-talk { left: 50%; transform: translateX(-50%); bottom: 48px; width: min(calc(100% - 24px), 720px); display: flex; flex-direction: column; gap: 2px; padding: 9px 13px; border-radius: 12px; background: rgba(14,15,18,.88); border: 1px solid var(--line); font-size: 15px; line-height: 1.4; text-wrap: pretty; }
 .ov-talk b { font: 800 14px var(--f-display); text-transform: uppercase; letter-spacing: .06em; }
 .stage3d.is-fs .ov-talk { bottom: calc(max(12px, env(safe-area-inset-bottom, 0px)) + 92px); }
+#lsVoices .sel { max-width: min(240px, 60vw); }
 .lesson { display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px solid var(--line); }
 .btn.playing#lsStart { border-color: var(--d2); background: color-mix(in srgb, var(--d2) 14%, var(--stage)); }
 .bar-row.lesson-part .cells { border-color: var(--d2); box-shadow: 0 0 0 1px var(--d2); }
@@ -188,6 +189,12 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
         <label for="lsVoice"><input type="checkbox" id="lsVoice" checked> Voz dos robôs</label>
         <label for="lsSlow"><input type="checkbox" id="lsSlow" checked> Mostrar devagar antes</label>
       </div>
+      <div class="row" id="lsVoices">
+        <label for="vRitma">Voz da Ritma <select id="vRitma" class="sel"></select></label>
+        <label for="vTuco">Voz do Tuco <select id="vTuco" class="sel"></select></label>
+        <button class="btn" id="vTest" type="button">Ouvir as vozes</button>
+      </div>
+      <p class="note" id="vHint" hidden>Para a voz soar mais humana, baixe uma voz de melhor qualidade no aparelho. No iPhone: Ajustes › Acessibilidade › Conteúdo Falado › Vozes › Português (Brasil), e baixe a Luciana e o Felipe na versão Aprimorada ou Premium. Depois recarregue esta página. No computador, o navegador Edge já traz vozes "Natural" (Francisca, Thalita, Antonio). As vozes marcadas com ★ são as melhores.</p>
       <div class="ex-progress" id="lsProgress" hidden><div class="ex-track"><i id="lsBar"></i></div><span id="lsStatus"></span></div>
       <p class="note">A Ritma (professora) e o Tuco (aluno) conversam sobre o breque escolhido, parte por parte: quem toca, tempo a tempo, e o que quer dizer cada símbolo. Depois de cada explicação os músicos tocam o trecho, primeiro devagar e depois no andamento, e a parte da partitura fica marcada. Pular passa para a próxima fala ou trecho.</p>
     </div>
@@ -1690,15 +1697,44 @@ To To To-to To-to`;
     }
   }
   // ---- voz ----
+  // Usa as vozes do próprio aparelho. Escolhe as mais naturais (Aprimorada, Premium, Natural, Neural), uma feminina para a
+  // Ritma e uma masculina para o Tuco, sem mexer no tom. Dá para trocar nos seletores; a escolha fica guardada.
   const tts = window.speechSynthesis || null;
   let ptVoices = [];
-  function loadVoices() { if (!tts) return; const all = tts.getVoices(); ptVoices = all.filter(v => /^pt[-_]BR/i.test(v.lang)); if (!ptVoices.length) ptVoices = all.filter(v => /^pt/i.test(v.lang)); }
-  if (tts) { loadVoices(); try { tts.addEventListener("voiceschanged", loadVoices); } catch (e) { tts.onvoiceschanged = loadVoices; } }
-  function voiceFor(r) {
-    if (!ptVoices.length) return null;
-    const fem = ptVoices.find(v => /luciana|francisca|thalita|maria|vit[oó]ria|female|feminin/i.test(v.name)), other = ptVoices.find(v => v !== fem);
-    return r === ritma ? (fem || ptVoices[0]) : (other || ptVoices[0]);
+  const FEM = /luciana|francisca|thalita|maria|vit[oó]ria|joana|fernanda|raquel|camila|let[ií]cia|yara|brenda|elza|giovanna|leila|manuela|helena|google portugu|female|feminin/i;
+  const MAS = /felipe|ant[oô]nio|daniel|f[aá]bio|humberto|j[uú]lio|nicolau|val[eé]rio|donato|ricardo|male\b|masculin/i;
+  const GOOD = /natural|neural|premium|enhanced|aprimorad|wavenet|studio|online/i, NOVELTY = /compact|eloquence|espeak|grandma|grandpa|rocko|shelley|sandy|reed|\bflo\b|eddy|bad news|bells|bubbles|cellos|organ|whisper|zarvox|trinoids|albert|jester|superstar|boing|wobble/i;
+  const quality = v => (GOOD.test(v.name) ? 4 : 0) + (/google/i.test(v.name) ? 1 : 0) + (/^pt[-_]BR/i.test(v.lang) ? 2 : 0) - (NOVELTY.test(v.name) ? 6 : 0);
+  const vSel = { R: $("vRitma"), T: $("vTuco") };
+  let chosen = { R: null, T: null };
+  try { chosen = { ...chosen, ...JSON.parse(localStorage.getItem("surdos3d.vozes") || "{}") }; } catch (e) {}
+  function loadVoices() {
+    if (!tts) return;
+    const all = tts.getVoices();
+    ptVoices = all.filter(v => /^pt/i.test(v.lang)).sort((x, y) => quality(y) - quality(x));
+    for (const k of ["R", "T"]) {
+      const s = vSel[k], keep = chosen[k]; s.innerHTML = "";
+      s.appendChild(new Option("Automática (a mais natural)", ""));
+      ptVoices.forEach(v => s.appendChild(new Option(`${v.name}${GOOD.test(v.name) ? " ★" : ""} · ${v.lang}`, v.name)));
+      s.value = ptVoices.some(v => v.name === keep) ? keep : "";
+    }
+    $("vHint").hidden = ptVoices.some(v => GOOD.test(v.name) && !NOVELTY.test(v.name));
   }
+  if (tts) { loadVoices(); try { tts.addEventListener("voiceschanged", loadVoices); } catch (e) { tts.onvoiceschanged = loadVoices; } }
+  function autoVoice(k) {
+    if (!ptVoices.length) return null;
+    const want = k === "R" ? FEM : MAS, avoid = k === "R" ? MAS : FEM;
+    const score = v => quality(v) + (want.test(v.name) ? 3 : 0) - (avoid.test(v.name) ? 3 : 0);
+    return [...ptVoices].sort((x, y) => score(y) - score(x))[0];
+  }
+  function voiceFor(r) {
+    const k = r === ritma ? "R" : "T";
+    return ptVoices.find(v => v.name === chosen[k]) || autoVoice(k);
+  }
+  for (const k of ["R", "T"]) vSel[k].addEventListener("change", () => {
+    chosen[k] = vSel[k].value || null;
+    try { localStorage.setItem("surdos3d.vozes", JSON.stringify(chosen)); } catch (e) {}
+  });
   const lsVoice = $("lsVoice"), lsSlow = $("lsSlow");
   const useVoice = () => !!tts && lsVoice.checked;
   // legenda → texto falado (as sílabas dos toques com a pronúncia certa)
@@ -1706,7 +1742,17 @@ To To To-to To-to`;
     return s.replace(/“E”/g, "é").replace(/[“”]/g, "").replace(/1ª/g, "primeira").replace(/2ª/g, "segunda").replace(/\bbpm\b/g, "batidas por minuto")
       .replace(/\b(To|to)(\d*)\b/g, (m, a, d) => "tô" + (d ? " " + d : "")).replace(/\b(Po|po)(\d*)\b/g, (m, a, d) => "pô" + (d ? " " + d : ""))
       .replace(/\b(Pa|pa)(\d*)\b/g, (m, a, d) => "pá" + (d ? " " + d : "")).replace(/\b(Bo|bo)\b/g, "bô").replace(/\bro\b/g, "rô").replace(/\bgo\b/g, "gô")
-      .replace(/\bra\b/g, "rá").replace(/\bga\b/g, "gá").replace(/\bti\b/g, "tí");
+      .replace(/\bra\b/g, "rá").replace(/\bga\b/g, "gá").replace(/\bti\b/g, "tí").replace(/;\s*/g, ". ").replace(/\s*:\s*/g, ": ");
+  }
+  // uma frase por vez: a entonação fica mais natural e o navegador não corta falas longas
+  const sentences = s => (s.match(/[^.!?…]+[.!?…]*/g) || [s]).map(x => x.trim()).filter(Boolean);
+  function utter(r, text) {
+    const u = new SpeechSynthesisUtterance(text); u.lang = "pt-BR";
+    const v = voiceFor(r); if (v) { u.voice = v; u.lang = v.lang; }
+    // só quando os dois acabam com a mesma voz o Tuco fala um pouquinho mais alto e rápido, para dar para distinguir
+    const same = voiceFor(ritma) === voiceFor(tuco);
+    u.pitch = r === tuco && same ? 1.12 : 1; u.rate = r === tuco ? 1.04 : 0.98;
+    return u;
   }
   const ovTalk = $("ovTalk"), talkWho = $("talkWho"), talkText = $("talkText");
   function showTalk(r, text) {
@@ -1723,13 +1769,14 @@ To To To-to To-to`;
       const byTime = ms => { clearTimeout(to); to = setTimeout(fin, ms); };
       lesson.skipFn = () => { if (tts) tts.cancel(); fin(); };
       if (useVoice()) {
-        const u = new SpeechSynthesisUtterance(speakable(text)); u.lang = "pt-BR";
-        const v = voiceFor(r); if (v) u.voice = v;
-        u.pitch = r === ritma ? 1.0 : 1.45; u.rate = r === ritma ? 1.03 : 1.1;
-        u.onend = () => byTime(Math.max(250, est * 0.45 - (performance.now() - t0)));
-        u.onerror = () => byTime(Math.max(300, est - (performance.now() - t0)));
-        byTime(est + 9000);
-        tts.speak(u);
+        const parts = sentences(speakable(text));
+        parts.forEach((p, n) => {
+          const u = utter(r, p);
+          if (n === parts.length - 1) u.onend = () => byTime(Math.max(250, est * 0.45 - (performance.now() - t0)));
+          u.onerror = () => byTime(Math.max(300, est - (performance.now() - t0)));
+          tts.speak(u);
+        });
+        byTime(est + 12000);
       } else byTime(est);
     });
   }
@@ -1923,8 +1970,14 @@ To To To-to To-to`;
   $("fsLesson").addEventListener("click", () => lesson.on ? endLesson() : startLesson());
   lsPause.addEventListener("click", pauseLesson);
   lsSkip.addEventListener("click", skipStep); $("fsSkip").addEventListener("click", skipStep);
-  lsVoice.addEventListener("change", () => { if (!lsVoice.checked && tts) tts.cancel(); });
-  if (!tts) { lsVoice.checked = false; lsVoice.disabled = true; lsVoice.parentElement.title = "Este navegador não tem voz sintetizada; a aula fica só com legenda."; }
+  lsVoice.addEventListener("change", () => { if (!lsVoice.checked && tts) tts.cancel(); $("lsVoices").hidden = !lsVoice.checked; });
+  $("vTest").addEventListener("click", () => {
+    if (!tts) return;
+    tts.cancel();
+    tts.speak(utter(ritma, "Oi, eu sou a Ritma. Vamos aprender o breque juntos?"));
+    tts.speak(utter(tuco, "E eu sou o Tuco. Bora tocar!"));
+  });
+  if (!tts) { $("lsVoices").hidden = true; lsVoice.checked = false; lsVoice.disabled = true; lsVoice.parentElement.title = "Este navegador não tem voz sintetizada; a aula fica só com legenda."; }
 
   // ---------- Baixar vídeo ----------
   // 1) o som do breque inteiro é sintetizado num OfflineAudioContext; 2) cada quadro da cena 3D é desenhado no instante
