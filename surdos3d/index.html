@@ -1788,7 +1788,8 @@ To To To-to To-to`;
     return s.replace(/“E”/g, "é").replace(/[“”]/g, "").replace(/1ª/g, "primeira").replace(/2ª/g, "segunda").replace(/\bbpm\b/g, "batidas por minuto")
       .replace(/\b(To|to)(\d*)\b/g, (m, a, d) => "tô" + (d ? " " + d : "")).replace(/\b(Po|po)(\d*)\b/g, (m, a, d) => "pô" + (d ? " " + d : ""))
       .replace(/\b(Pa|pa)(\d*)\b/g, (m, a, d) => "pá" + (d ? " " + d : "")).replace(/\b(Bo|bo)\b/g, "bô").replace(/\bro\b/g, "rô").replace(/\bgo\b/g, "gô")
-      .replace(/\bra\b/g, "rá").replace(/\bga\b/g, "gá").replace(/\bti\b/g, "tí").replace(/;\s*/g, ". ").replace(/\s*:\s*/g, ": ");
+      .replace(/\bra\b/g, "rá").replace(/\bga\b/g, "gá").replace(/\bti\b/g, "tí").replace(/;\s*/g, ". ").replace(/\s*:\s*/g, ": ")
+      .replace(/(^|[.!?…]\s+)([a-zà-ú])/g, (m, a, b) => a + b.toUpperCase());   // frase começa com maiúscula: a entonação sai melhor
   }
   // uma frase por vez: a entonação fica mais natural e o navegador não corta falas longas
   const sentences = s => (s.match(/[^.!?…]+[.!?…]*/g) || [s]).map(x => x.trim()).filter(Boolean);

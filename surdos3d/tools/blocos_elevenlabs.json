@@ -1,0 +1,2157 @@
+[
+{
+"who": "R",
+"lines": [
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Brahma: 24 compassos, que eu dividi em 7 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Brahma: 24 compassos, que eu dividi em 7 partes."
+],
+[
+"Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca.",
+"Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+],
+[
+"Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+"Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+],
+[
+"Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 1: tempo 1, tô e tô no meio. Tempo 2, pô e pá no meio. Tempo 3, tô. Tempo 4, tô e tô no meio.",
+"Compasso 1: tempo 1, tô e tô no meio. Tempo 2, pô e pá no meio. Tempo 3, tô. Tempo 4, tô e tô no meio."
+],
+[
+"O compasso 3 é igualzinho a esse.",
+"O compasso 3 é igualzinho a esse."
+],
+[
+"Compasso 2: tempo 1, pô e pá no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, conta 2.",
+"Compasso 2: tempo 1, pô e pá no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, conta 2."
+],
+[
+"Compasso 4: tempo 1, pô e pá no meio. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 4: tempo 1, pô e pá no meio. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+"São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+],
+[
+"É o contratempo. Conte um-e, dois-e: o toque do meio cai no e.",
+"É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+],
+[
+"Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando.",
+"Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+],
+[
+"Parte 2, compassos 5 a 7. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 2, compassos 5 a 7. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Os compassos 5, 6 e 7 repetem compassos que você já viu: o 1 e o 2.",
+"Os compassos 5, 6 e 7 repetem compassos que você já viu: o 1 e o 2."
+],
+[
+"Primeiro devagar.",
+"Primeiro devagar."
+],
+[
+"Parte 3, compasso 8. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 3, compasso 8. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 8: tempo 1, tô e tô no meio. Tempo 2, tô. Tempo 3, tercina: tô, tô, pausa. Tempo 4, tercina: tô, tô, pausa.",
+"Compasso 8: tempo 1, tô e tô no meio. Tempo 2, tô. Tempo 3, tercina: tô, tô, pausa. Tempo 4, tercina: tô, tô, pausa."
+],
+[
+"É tercina: três notas iguais dentro de um tempo só. Fale tri-pá-tí em cada tempo para encaixar.",
+"É tercina: três notas iguais dentro de um tempo só. Fale tri-pá-tí em cada tempo para encaixar."
+],
+[
+"Parte 4, compassos 9 a 10. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 4, compassos 9 a 10. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 9: tempo 1, tô. Tempo 2, é falado e pá no meio. Tempo 3, é falado e pô no meio. Tempo 4, tô.",
+"Compasso 9: tempo 1, tô. Tempo 2, é falado e pá no meio. Tempo 3, é falado e pô no meio. Tempo 4, tô."
+],
+[
+"Compasso 10: tempo 1, é falado e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio.",
+"Compasso 10: tempo 1, é falado e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
+]
+],
+"id": 0,
+"prompt": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Brahma: 24 compassos, que eu dividi em 7 partes. [long pause] Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca. [long pause] Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco. [long pause] Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 1: tempo 1, tô e tô no meio. Tempo 2, pô e pá no meio. Tempo 3, tô. Tempo 4, tô e tô no meio. [long pause] O compasso 3 é igualzinho a esse. [long pause] Compasso 2: tempo 1, pô e pá no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, conta 2. [long pause] Compasso 4: tempo 1, pô e pá no meio. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô. [long pause] São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque. [long pause] É o contratempo. Conte um-e, dois-e: o toque do meio cai no e. [long pause] Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando. [long pause] Parte 2, compassos 5 a 7. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Os compassos 5, 6 e 7 repetem compassos que você já viu: o 1 e o 2. [long pause] Primeiro devagar. [long pause] Parte 3, compasso 8. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 8: tempo 1, tô e tô no meio. Tempo 2, tô. Tempo 3, tercina: tô, tô, pausa. Tempo 4, tercina: tô, tô, pausa. [long pause] É tercina: três notas iguais dentro de um tempo só. Fale tri-pá-tí em cada tempo para encaixar. [long pause] Parte 4, compassos 9 a 10. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 9: tempo 1, tô. Tempo 2, é falado e pá no meio. Tempo 3, é falado e pô no meio. Tempo 4, tô. [long pause] Compasso 10: tempo 1, é falado e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
+},
+{
+"who": "R",
+"lines": [
+[
+"É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+"É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+],
+[
+"Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+"Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+],
+[
+"Parte 5, compassos 11 a 16. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 5, compassos 11 a 16. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 11: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô.",
+"Compasso 11: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô."
+],
+[
+"O compasso 13 é igualzinho a esse.",
+"O compasso 13 é igualzinho a esse."
+],
+[
+"Compasso 12: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tercina: tô, pausa, tô.",
+"Compasso 12: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tercina: tô, pausa, tô."
+],
+[
+"Os compassos 14, 15 e 16 são iguaizinhos a esse.",
+"Os compassos 14, 15 e 16 são iguaizinhos a esse."
+],
+[
+"Parte 6, compassos 17 a 18. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 6, compassos 17 a 18. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 17: tempo 1, tô. Tempo 2, silêncio. Tempo 3, tô. Tempo 4, tercina: pausa, pausa, tô.",
+"Compasso 17: tempo 1, tô. Tempo 2, silêncio. Tempo 3, tô. Tempo 4, tercina: pausa, pausa, tô."
+],
+[
+"Compasso 18: tempo 1, tercina: bô, tô, pausa. Tempo 2, tercina: é falado, tô, é falado. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 18: tempo 1, tercina: bô, tô, pausa. Tempo 2, tercina: é falado, tô, é falado. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+"Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+],
+[
+"Parte 7, compassos 19 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 7, compassos 19 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 19: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 19: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Compasso 20: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 20: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 21: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado.",
+"Compasso 21: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado."
+],
+[
+"Compasso 22: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 22: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Compasso 23: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio.",
+"Compasso 23: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 24: só o tô final, no tempo 1, e acabou.",
+"Compasso 24: só o tô final, no tempo 1, e acabou."
+],
+[
+"Muito bem! Agora o Brahma inteiro, do começo ao fim.",
+"Muito bem! Agora o Brahma inteiro, do começo ao fim."
+],
+[
+"Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+"Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+],
+[
+"Escuta e repara no braço da maceta.",
+"Escuta e repara no braço da maceta."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Aine: 24 compassos, que eu dividi em 6 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Aine: 24 compassos, que eu dividi em 6 partes."
+]
+],
+"id": 1,
+"prompt": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa. [long pause] Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro. [long pause] Parte 5, compassos 11 a 16. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 11: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô. [long pause] O compasso 13 é igualzinho a esse. [long pause] Compasso 12: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tercina: tô, pausa, tô. [long pause] Os compassos 14, 15 e 16 são iguaizinhos a esse. [long pause] Parte 6, compassos 17 a 18. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 17: tempo 1, tô. Tempo 2, silêncio. Tempo 3, tô. Tempo 4, tercina: pausa, pausa, tô. [long pause] Compasso 18: tempo 1, tercina: bô, tô, pausa. Tempo 2, tercina: é falado, tô, é falado. Tempo 3, tô. Tempo 4, tô. [long pause] Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes. [long pause] Parte 7, compassos 19 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 19: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tô. [long pause] Compasso 20: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio. [long pause] Compasso 21: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado. [long pause] Compasso 22: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô. [long pause] Compasso 23: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio. [long pause] Compasso 24: só o tô final, no tempo 1, e acabou. [long pause] Muito bem! Agora o Brahma inteiro, do começo ao fim. [long pause] Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo. [long pause] Escuta e repara no braço da maceta. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Aine: 24 compassos, que eu dividi em 6 partes."
+},
+{
+"who": "R",
+"lines": [
+[
+"Parte 1, compassos 1 a 2. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+"Parte 1, compassos 1 a 2. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+],
+[
+"Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé.",
+"Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."
+],
+[
+"Escuta e conta junto.",
+"Escuta e conta junto."
+],
+[
+"Parte 2, compassos 3 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 2, compassos 3 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 3, que tem 3 tempos: tempo 1, tô. Tempo 2, tô. Tempo 3, tô.",
+"Compasso 3, que tem 3 tempos: tempo 1, tô. Tempo 2, tô. Tempo 3, tô."
+],
+[
+"Os compassos 4 e 6 são iguaizinhos a esse.",
+"Os compassos 4 e 6 são iguaizinhos a esse."
+],
+[
+"Compasso 5, que tem 2 tempos: tempo 1, pô e pá no meio. Tempo 2, pô e pá no meio.",
+"Compasso 5, que tem 2 tempos: tempo 1, pô e pá no meio. Tempo 2, pô e pá no meio."
+],
+[
+"Compasso 7, que tem 3 tempos: tempo 1, tô. Tempo 2, tô. Tempo 3, é falado e tô no meio.",
+"Compasso 7, que tem 3 tempos: tempo 1, tô. Tempo 2, tô. Tempo 3, é falado e tô no meio."
+],
+[
+"Compasso 8, que tem 2 tempos: tempo 1, tô. Tempo 2, tô.",
+"Compasso 8, que tem 2 tempos: tempo 1, tô. Tempo 2, tô."
+],
+[
+"Tem. Conte até 3 e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem.",
+"Tem. Conte até 3 e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem."
+],
+[
+"Parte 3, compassos 9 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 3, compassos 9 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 9, que tem 3 tempos: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado.",
+"Compasso 9, que tem 3 tempos: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado."
+],
+[
+"Os compassos 10, 12 e 13 são iguaizinhos a esse.",
+"Os compassos 10, 12 e 13 são iguaizinhos a esse."
+],
+[
+"Compasso 11, que tem 2 tempos: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio.",
+"Compasso 11, que tem 2 tempos: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio."
+],
+[
+"O compasso 14 é igualzinho a esse.",
+"O compasso 14 é igualzinho a esse."
+],
+[
+"Parte 4, compassos 15 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 4, compassos 15 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 15: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô e tô no meio.",
+"Compasso 15: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 16: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, pá e pô no meio.",
+"Compasso 16: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, pá e pô no meio."
+],
+[
+"Compasso 17: tempo 1, pá. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô.",
+"Compasso 17: tempo 1, pá. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô."
+],
+[
+"Compasso 18: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, conta 4.",
+"Compasso 18: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, conta 4."
+],
+[
+"Parte 5, compassos 19 a 22. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+"Parte 5, compassos 19 a 22. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+]
+],
+"id": 2,
+"prompt": "Parte 1, compassos 1 a 2. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está. [long pause] Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé. [long pause] Escuta e conta junto. [long pause] Parte 2, compassos 3 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 3, que tem 3 tempos: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. [long pause] Os compassos 4 e 6 são iguaizinhos a esse. [long pause] Compasso 5, que tem 2 tempos: tempo 1, pô e pá no meio. Tempo 2, pô e pá no meio. [long pause] Compasso 7, que tem 3 tempos: tempo 1, tô. Tempo 2, tô. Tempo 3, é falado e tô no meio. [long pause] Compasso 8, que tem 2 tempos: tempo 1, tô. Tempo 2, tô. [long pause] Tem. Conte até 3 e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem. [long pause] Parte 3, compassos 9 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 9, que tem 3 tempos: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado. [long pause] Os compassos 10, 12 e 13 são iguaizinhos a esse. [long pause] Compasso 11, que tem 2 tempos: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. [long pause] O compasso 14 é igualzinho a esse. [long pause] Parte 4, compassos 15 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 15: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô e tô no meio. [long pause] Compasso 16: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, pá e pô no meio. [long pause] Compasso 17: tempo 1, pá. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô. [long pause] Compasso 18: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, conta 4. [long pause] Parte 5, compassos 19 a 22. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+},
+{
+"who": "R",
+"lines": [
+[
+"Parte 6, compassos 23 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 6, compassos 23 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 23: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 23: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Muito bem! Agora o Aine inteiro, do começo ao fim.",
+"Muito bem! Agora o Aine inteiro, do começo ao fim."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Cerberus: 50 compassos, que eu dividi em 14 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Cerberus: 50 compassos, que eu dividi em 14 partes."
+],
+[
+"Parte 1, compassos 1 a 5. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 1, compassos 1 a 5. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 1: tempo 1, tô e tô no meio. Tempo 2, é falado e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá.",
+"Compasso 1: tempo 1, tô e tô no meio. Tempo 2, é falado e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá."
+],
+[
+"Compasso 2: tempo 1, tô e tô no meio. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 2: tempo 1, tô e tô no meio. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Compasso 4: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 4: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Compasso 5: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 5: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Parte 2, compassos 6 a 8. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 2, compassos 6 a 8. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"O compasso 7 é igual ao compasso 5, que você já viu.",
+"O compasso 7 é igual ao compasso 5, que você já viu."
+],
+[
+"Compasso 6: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio.",
+"Compasso 6: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
+],
+[
+"O compasso 8 é igualzinho a esse.",
+"O compasso 8 é igualzinho a esse."
+],
+[
+"Parte 3, compassos 9 a 13. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô.",
+"Parte 3, compassos 9 a 13. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+],
+[
+"O compasso 12 é igual ao compasso 4, que você já viu.",
+"O compasso 12 é igual ao compasso 4, que você já viu."
+],
+[
+"Compasso 9: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio.",
+"Compasso 9: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 10: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio.",
+"Compasso 10: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 11: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô.",
+"Compasso 11: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô."
+],
+[
+"Compasso 13: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e pô no meio.",
+"Compasso 13: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e pô no meio."
+],
+[
+"Parte 4, compassos 14 a 17. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 4, compassos 14 a 17. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 14: tempo 1, pá. Tempo 2, pô 1. Tempo 3, pá. Tempo 4, pô 2.",
+"Compasso 14: tempo 1, pá. Tempo 2, pô 1. Tempo 3, pá. Tempo 4, pô 2."
+],
+[
+"O compasso 16 é igualzinho a esse.",
+"O compasso 16 é igualzinho a esse."
+],
+[
+"Compasso 15: tempo 1, pá. Tempo 2, pô 3. Tempo 3, tô. Tempo 4, é falado.",
+"Compasso 15: tempo 1, pá. Tempo 2, pô 3. Tempo 3, tô. Tempo 4, é falado."
+]
+],
+"id": 3,
+"prompt": "Parte 6, compassos 23 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 23: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio. [long pause] Muito bem! Agora o Aine inteiro, do começo ao fim. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Cerberus: 50 compassos, que eu dividi em 14 partes. [long pause] Parte 1, compassos 1 a 5. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 1: tempo 1, tô e tô no meio. Tempo 2, é falado e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá. [long pause] Compasso 2: tempo 1, tô e tô no meio. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tô. [long pause] Compasso 4: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô. [long pause] Compasso 5: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Parte 2, compassos 6 a 8. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] O compasso 7 é igual ao compasso 5, que você já viu. [long pause] Compasso 6: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio. [long pause] O compasso 8 é igualzinho a esse. [long pause] Parte 3, compassos 9 a 13. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô. [long pause] O compasso 12 é igual ao compasso 4, que você já viu. [long pause] Compasso 9: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio. [long pause] Compasso 10: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio. [long pause] Compasso 11: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô. [long pause] Compasso 13: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e pô no meio. [long pause] Parte 4, compassos 14 a 17. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 14: tempo 1, pá. Tempo 2, pô 1. Tempo 3, pá. Tempo 4, pô 2. [long pause] O compasso 16 é igualzinho a esse. [long pause] Compasso 15: tempo 1, pá. Tempo 2, pô 3. Tempo 3, tô. Tempo 4, é falado."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 17: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pá. Tempo 4, pô 4.",
+"Compasso 17: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pá. Tempo 4, pô 4."
+],
+[
+"É a série: pô 1, pô 2, pô 3 contam as repetições. Ajudam a não perder a conta no meio da conversa.",
+"É a série: pô 1, pô 2, pô 3 contam as repetições. Ajudam a não perder a conta no meio da conversa."
+],
+[
+"Parte 5, compasso 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô.",
+"Parte 5, compasso 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+],
+[
+"Compasso 18: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e pô no meio.",
+"Compasso 18: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e pô no meio."
+],
+[
+"Parte 6, compassos 19 a 22. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez.",
+"Parte 6, compassos 19 a 22. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+],
+[
+"Os compassos 19 e 21 repetem compassos que você já viu: o 14.",
+"Os compassos 19 e 21 repetem compassos que você já viu: o 14."
+],
+[
+"Compasso 20: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pô e pá no meio. Tempo 4, pá e pô no meio.",
+"Compasso 20: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pô e pá no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Compasso 22: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 22: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Parte 7, compassos 23 a 28. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 7, compassos 23 a 28. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 23: tempo 1, pá e pá no finzinho. Tempo 2, é falado e pô no meio. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 23: tempo 1, pá e pá no finzinho. Tempo 2, é falado e pô no meio. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Compasso 24: tempo 1, tô. Tempo 2, tô. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio.",
+"Compasso 24: tempo 1, tô. Tempo 2, tô. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio."
+],
+[
+"Compasso 25: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, pô e pá no meio.",
+"Compasso 25: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, pô e pá no meio."
+],
+[
+"Compasso 26: tempo 1, pô. Tempo 2, conta 1. Tempo 3, é falado e pá no meio. Tempo 4, pá e pô no meio.",
+"Compasso 26: tempo 1, pô. Tempo 2, conta 1. Tempo 3, é falado e pá no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Compasso 27: tempo 1, pá. Tempo 2, conta 2. Tempo 3, é falado e pá no meio. Tempo 4, pá e pô no meio.",
+"Compasso 27: tempo 1, pá. Tempo 2, conta 2. Tempo 3, é falado e pá no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Compasso 28: tempo 1, pá. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 28: tempo 1, pá. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Parte 8, compasso 29. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez.",
+"Parte 8, compasso 29. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+],
+[
+"Compasso 29: tempo 1, pô e pô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pá no meio.",
+"Compasso 29: tempo 1, pô e pô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pá no meio."
+],
+[
+"Parte 9, compassos 30 a 32. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 9, compassos 30 a 32. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 30: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 1.",
+"Compasso 30: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 1."
+],
+[
+"Compasso 31: tempo 1, pá. Tempo 2, pô 2. Tempo 3, pá. Tempo 4, pô 3.",
+"Compasso 31: tempo 1, pá. Tempo 2, pô 2. Tempo 3, pá. Tempo 4, pô 3."
+]
+],
+"id": 4,
+"prompt": "Compasso 17: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pá. Tempo 4, pô 4. [long pause] É a série: pô 1, pô 2, pô 3 contam as repetições. Ajudam a não perder a conta no meio da conversa. [long pause] Parte 5, compasso 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô. [long pause] Compasso 18: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e pô no meio. [long pause] Parte 6, compassos 19 a 22. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez. [long pause] Os compassos 19 e 21 repetem compassos que você já viu: o 14. [long pause] Compasso 20: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pô e pá no meio. Tempo 4, pá e pô no meio. [long pause] Compasso 22: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio. [long pause] Parte 7, compassos 23 a 28. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 23: tempo 1, pá e pá no finzinho. Tempo 2, é falado e pô no meio. Tempo 3, tô. Tempo 4, tô. [long pause] Compasso 24: tempo 1, tô. Tempo 2, tô. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio. [long pause] Compasso 25: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, pô e pá no meio. [long pause] Compasso 26: tempo 1, pô. Tempo 2, conta 1. Tempo 3, é falado e pá no meio. Tempo 4, pá e pô no meio. [long pause] Compasso 27: tempo 1, pá. Tempo 2, conta 2. Tempo 3, é falado e pá no meio. Tempo 4, pá e pô no meio. [long pause] Compasso 28: tempo 1, pá. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô. [long pause] Parte 8, compasso 29. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez. [long pause] Compasso 29: tempo 1, pô e pô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pá no meio. [long pause] Parte 9, compassos 30 a 32. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 30: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 1. [long pause] Compasso 31: tempo 1, pá. Tempo 2, pô 2. Tempo 3, pá. Tempo 4, pô 3."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 32: tempo 1, tô. Tempo 2, é falado e pô no meio. Tempo 3, pá. Tempo 4, conta 1.",
+"Compasso 32: tempo 1, tô. Tempo 2, é falado e pô no meio. Tempo 3, pá. Tempo 4, conta 1."
+],
+[
+"Parte 10, compasso 33. Aqui ninguém toca: é só contar. Fica assim: conta 2, conta 3, conta 4, conta 5.",
+"Parte 10, compasso 33. Aqui ninguém toca: é só contar. Fica assim: conta 2, conta 3, conta 4, conta 5."
+],
+[
+"Parte 11, compassos 34 a 38. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô.",
+"Parte 11, compassos 34 a 38. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+],
+[
+"Compasso 34: tempo 1, conta 6. Tempo 2, tô e rô no meio. Tempo 3, tô e rô no meio. Tempo 4, tô e rô no meio.",
+"Compasso 34: tempo 1, conta 6. Tempo 2, tô e rô no meio. Tempo 3, tô e rô no meio. Tempo 4, tô e rô no meio."
+],
+[
+"Compasso 35: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 35: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Compasso 36: tempo 1, conta 5. Tempo 2, tô e rô no meio. Tempo 3, tô e rô no meio. Tempo 4, tô e rô no meio.",
+"Compasso 36: tempo 1, conta 5. Tempo 2, tô e rô no meio. Tempo 3, tô e rô no meio. Tempo 4, tô e rô no meio."
+],
+[
+"Compasso 37: tempo 1, tô. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, é falado e tô no meio e rô no finzinho.",
+"Compasso 37: tempo 1, tô. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, é falado e tô no meio e rô no finzinho."
+],
+[
+"Compasso 38: tempo 1, tí falado e tô logo depois. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 38: tempo 1, tí falado e tô logo depois. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Parte 12, compassos 39 a 40. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez.",
+"Parte 12, compassos 39 a 40. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+],
+[
+"Os compassos 39 e 40 repetem compassos que você já viu: o 14 e o 22.",
+"Os compassos 39 e 40 repetem compassos que você já viu: o 14 e o 22."
+],
+[
+"Parte 13, compassos 41 a 45. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 13, compassos 41 a 45. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"O compasso 43 é igual ao compasso 30, que você já viu.",
+"O compasso 43 é igual ao compasso 30, que você já viu."
+],
+[
+"Compasso 41: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, é falado e tô no finzinho.",
+"Compasso 41: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, é falado e tô no finzinho."
+],
+[
+"Compasso 42: tempo 1, rô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 1.",
+"Compasso 42: tempo 1, rô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 1."
+],
+[
+"Compasso 44: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, é falado e tô no finzinho.",
+"Compasso 44: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, é falado e tô no finzinho."
+],
+[
+"Compasso 45: tempo 1, rô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 3.",
+"Compasso 45: tempo 1, rô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 3."
+],
+[
+"Parte 14, compassos 46 a 50. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez.",
+"Parte 14, compassos 46 a 50. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+],
+[
+"Compasso 46: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô. Tempo 4, é falado e pô no meio.",
+"Compasso 46: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô. Tempo 4, é falado e pô no meio."
+],
+[
+"O compasso 48 é igualzinho a esse.",
+"O compasso 48 é igualzinho a esse."
+],
+[
+"Compasso 47: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pô no meio.",
+"Compasso 47: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pô no meio."
+],
+[
+"O compasso 49 é igualzinho a esse.",
+"O compasso 49 é igualzinho a esse."
+],
+[
+"Compasso 50: só o pá final, no tempo 1, e acabou.",
+"Compasso 50: só o pá final, no tempo 1, e acabou."
+]
+],
+"id": 5,
+"prompt": "Compasso 32: tempo 1, tô. Tempo 2, é falado e pô no meio. Tempo 3, pá. Tempo 4, conta 1. [long pause] Parte 10, compasso 33. Aqui ninguém toca: é só contar. Fica assim: conta 2, conta 3, conta 4, conta 5. [long pause] Parte 11, compassos 34 a 38. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô. [long pause] Compasso 34: tempo 1, conta 6. Tempo 2, tô e rô no meio. Tempo 3, tô e rô no meio. Tempo 4, tô e rô no meio. [long pause] Compasso 35: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Compasso 36: tempo 1, conta 5. Tempo 2, tô e rô no meio. Tempo 3, tô e rô no meio. Tempo 4, tô e rô no meio. [long pause] Compasso 37: tempo 1, tô. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, é falado e tô no meio e rô no finzinho. [long pause] Compasso 38: tempo 1, tí falado e tô logo depois. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, tô. [long pause] Parte 12, compassos 39 a 40. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez. [long pause] Os compassos 39 e 40 repetem compassos que você já viu: o 14 e o 22. [long pause] Parte 13, compassos 41 a 45. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] O compasso 43 é igual ao compasso 30, que você já viu. [long pause] Compasso 41: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, é falado e tô no finzinho. [long pause] Compasso 42: tempo 1, rô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 1. [long pause] Compasso 44: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, é falado e tô no finzinho. [long pause] Compasso 45: tempo 1, rô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 3. [long pause] Parte 14, compassos 46 a 50. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez. [long pause] Compasso 46: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô. Tempo 4, é falado e pô no meio. [long pause] O compasso 48 é igualzinho a esse. [long pause] Compasso 47: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pô no meio. [long pause] O compasso 49 é igualzinho a esse. [long pause] Compasso 50: só o pá final, no tempo 1, e acabou."
+},
+{
+"who": "R",
+"lines": [
+[
+"Muito bem! Agora o Cerberus inteiro, do começo ao fim.",
+"Muito bem! Agora o Cerberus inteiro, do começo ao fim."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Shady: 45 compassos, que eu dividi em 11 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Shady: 45 compassos, que eu dividi em 11 partes."
+],
+[
+"Parte 1, compassos 1 a 2. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez.",
+"Parte 1, compassos 1 a 2. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+],
+[
+"Compasso 1: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô. Tempo 4, é falado e pô no meio.",
+"Compasso 1: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô. Tempo 4, é falado e pô no meio."
+],
+[
+"Compasso 2: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pô no meio.",
+"Compasso 2: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pô no meio."
+],
+[
+"Parte 2, compassos 3 a 6. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 2, compassos 3 a 6. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 3: tempo 1, tô. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, é falado.",
+"Compasso 3: tempo 1, tô. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, é falado."
+],
+[
+"Compasso 4: tempo 1, tô e pô no meio e rô no finzinho. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, é falado.",
+"Compasso 4: tempo 1, tô e pô no meio e rô no finzinho. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, é falado."
+],
+[
+"Compasso 5: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô.",
+"Compasso 5: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô."
+],
+[
+"Compasso 6: tempo 1, tô. Tempo 2, tô e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 6: tempo 1, tô. Tempo 2, tô e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Parte 3, compassos 7 a 10. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 3, compassos 7 a 10. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 7: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, é falado e tô no meio.",
+"Compasso 7: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 8: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, pá. Tempo 4, pô.",
+"Compasso 8: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, pá. Tempo 4, pô."
+],
+[
+"Compasso 9: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e tô no meio. Tempo 4, tô.",
+"Compasso 9: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e tô no meio. Tempo 4, tô."
+],
+[
+"Compasso 10: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 10: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Parte 4, compassos 11 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 4, compassos 11 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 11: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 11: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 12: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, pá. Tempo 4, pô.",
+"Compasso 12: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, pá. Tempo 4, pô."
+],
+[
+"Compasso 13: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 13: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e pô no meio. Tempo 4, pá e pô no meio."
+]
+],
+"id": 6,
+"prompt": "Muito bem! Agora o Cerberus inteiro, do começo ao fim. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Shady: 45 compassos, que eu dividi em 11 partes. [long pause] Parte 1, compassos 1 a 2. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez. [long pause] Compasso 1: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô. Tempo 4, é falado e pô no meio. [long pause] Compasso 2: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pô no meio. [long pause] Parte 2, compassos 3 a 6. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 3: tempo 1, tô. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, é falado. [long pause] Compasso 4: tempo 1, tô e pô no meio e rô no finzinho. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, é falado. [long pause] Compasso 5: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô. [long pause] Compasso 6: tempo 1, tô. Tempo 2, tô e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio. [long pause] Parte 3, compassos 7 a 10. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 7: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, é falado e tô no meio. [long pause] Compasso 8: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, pá. Tempo 4, pô. [long pause] Compasso 9: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e tô no meio. Tempo 4, tô. [long pause] Compasso 10: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio. [long pause] Parte 4, compassos 11 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 11: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio. [long pause] Compasso 12: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, pá. Tempo 4, pô. [long pause] Compasso 13: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e pô no meio. Tempo 4, pá e pô no meio."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 14: tempo 1, tô e pô no meio e rô no finzinho. Tempo 2, pá e pô no meio. Tempo 3, é falado e pô no meio e rô no finzinho. Tempo 4, pá e pô no meio.",
+"Compasso 14: tempo 1, tô e pô no meio e rô no finzinho. Tempo 2, pá e pô no meio. Tempo 3, é falado e pô no meio e rô no finzinho. Tempo 4, pá e pô no meio."
+],
+[
+"Parte 5, compassos 15 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 5, compassos 15 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 15: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pô e pô no meio e rô no finzinho. Tempo 3, pá e pá no meio e rá no finzinho. Tempo 4, pô e tô no meio.",
+"Compasso 15: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pô e pô no meio e rô no finzinho. Tempo 3, pá e pá no meio e rá no finzinho. Tempo 4, pô e tô no meio."
+],
+[
+"Compasso 16: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pô e tô logo depois e pá no meio e pá no finzinho. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio.",
+"Compasso 16: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pô e tô logo depois e pá no meio e pá no finzinho. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio."
+],
+[
+"Compasso 17: tempo 1, tô e pá no meio e gá no finzinho. Tempo 2, rá e gá logo depois e pô no meio e gô no finzinho. Tempo 3, rô e gô logo depois e pá no meio e rá no finzinho. Tempo 4, pá e tô no meio.",
+"Compasso 17: tempo 1, tô e pá no meio e gá no finzinho. Tempo 2, rá e gá logo depois e pô no meio e gô no finzinho. Tempo 3, rô e gô logo depois e pá no meio e rá no finzinho. Tempo 4, pá e tô no meio."
+],
+[
+"Compasso 18: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pá e pô no meio e rô no finzinho. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio.",
+"Compasso 18: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pá e pô no meio e rô no finzinho. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio."
+],
+[
+"Parte 6, compassos 19 a 21. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 6, compassos 19 a 21. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 19: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, conta 2.",
+"Compasso 19: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, conta 2."
+],
+[
+"Compasso 20: tempo 1, conta 3. Tempo 2, conta 4. Tempo 3, conta 5. Tempo 4, conta 6.",
+"Compasso 20: tempo 1, conta 3. Tempo 2, conta 4. Tempo 3, conta 5. Tempo 4, conta 6."
+],
+[
+"Compasso 21: tempo 1, conta 7. Tempo 2, conta 8. Tempo 3, tô. Tempo 4, conta 1.",
+"Compasso 21: tempo 1, conta 7. Tempo 2, conta 8. Tempo 3, tô. Tempo 4, conta 1."
+],
+[
+"Parte 7, compassos 22 a 27. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 7, compassos 22 a 27. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 22: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1.",
+"Compasso 22: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1."
+],
+[
+"O compasso 24 é igualzinho a esse.",
+"O compasso 24 é igualzinho a esse."
+],
+[
+"Compasso 23: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 2.",
+"Compasso 23: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 2."
+],
+[
+"Compasso 25: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio.",
+"Compasso 25: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 26: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 26: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 27: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, é falado e tô no meio.",
+"Compasso 27: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, é falado e tô no meio."
+]
+],
+"id": 7,
+"prompt": "Compasso 14: tempo 1, tô e pô no meio e rô no finzinho. Tempo 2, pá e pô no meio. Tempo 3, é falado e pô no meio e rô no finzinho. Tempo 4, pá e pô no meio. [long pause] Parte 5, compassos 15 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 15: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pô e pô no meio e rô no finzinho. Tempo 3, pá e pá no meio e rá no finzinho. Tempo 4, pô e tô no meio. [long pause] Compasso 16: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pô e tô logo depois e pá no meio e pá no finzinho. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio. [long pause] Compasso 17: tempo 1, tô e pá no meio e gá no finzinho. Tempo 2, rá e gá logo depois e pô no meio e gô no finzinho. Tempo 3, rô e gô logo depois e pá no meio e rá no finzinho. Tempo 4, pá e tô no meio. [long pause] Compasso 18: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pá e pô no meio e rô no finzinho. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio. [long pause] Parte 6, compassos 19 a 21. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 19: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, conta 2. [long pause] Compasso 20: tempo 1, conta 3. Tempo 2, conta 4. Tempo 3, conta 5. Tempo 4, conta 6. [long pause] Compasso 21: tempo 1, conta 7. Tempo 2, conta 8. Tempo 3, tô. Tempo 4, conta 1. [long pause] Parte 7, compassos 22 a 27. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 22: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1. [long pause] O compasso 24 é igualzinho a esse. [long pause] Compasso 23: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 2. [long pause] Compasso 25: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio. [long pause] Compasso 26: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio. [long pause] Compasso 27: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, é falado e tô no meio."
+},
+{
+"who": "R",
+"lines": [
+[
+"Parte 8, compassos 28 a 32. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 8, compassos 28 a 32. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"O compasso 28 é igual ao compasso 22, que você já viu.",
+"O compasso 28 é igual ao compasso 22, que você já viu."
+],
+[
+"Compasso 29: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio.",
+"Compasso 29: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 30: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô.",
+"Compasso 30: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô."
+],
+[
+"Compasso 31: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio.",
+"Compasso 31: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 32: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 32: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Parte 9, compassos 33 a 36. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+"Parte 9, compassos 33 a 36. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+],
+[
+"Parte 10, compassos 37 a 39. Aqui ninguém toca: é só contar. No primeiro: conta 5, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+"Parte 10, compassos 37 a 39. Aqui ninguém toca: é só contar. No primeiro: conta 5, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+],
+[
+"Parte 11, compassos 40 a 45. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 11, compassos 40 a 45. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"O compasso 40 é igual ao compasso 30, que você já viu.",
+"O compasso 40 é igual ao compasso 30, que você já viu."
+],
+[
+"Compasso 41: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio.",
+"Compasso 41: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 42: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio.",
+"Compasso 42: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 43: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 43: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Compasso 44: tempo 1, tô e tô no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, tô e tô no meio.",
+"Compasso 44: tempo 1, tô e tô no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 45: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio.",
+"Compasso 45: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
+],
+[
+"Muito bem! Agora o Shady inteiro, do começo ao fim.",
+"Muito bem! Agora o Shady inteiro, do começo ao fim."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Nikê: 16 compassos, que eu dividi em 5 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Nikê: 16 compassos, que eu dividi em 5 partes."
+],
+[
+"Parte 1, compasso 1. Aqui ninguém toca: é só contar. Fica assim: conta 1, conta 2, conta 3, é falado.",
+"Parte 1, compasso 1. Aqui ninguém toca: é só contar. Fica assim: conta 1, conta 2, conta 3, é falado."
+]
+],
+"id": 8,
+"prompt": "Parte 8, compassos 28 a 32. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] O compasso 28 é igual ao compasso 22, que você já viu. [long pause] Compasso 29: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio. [long pause] Compasso 30: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô. [long pause] Compasso 31: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio. [long pause] Compasso 32: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Parte 9, compassos 33 a 36. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está. [long pause] Parte 10, compassos 37 a 39. Aqui ninguém toca: é só contar. No primeiro: conta 5, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está. [long pause] Parte 11, compassos 40 a 45. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] O compasso 40 é igual ao compasso 30, que você já viu. [long pause] Compasso 41: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio. [long pause] Compasso 42: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio. [long pause] Compasso 43: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio. [long pause] Compasso 44: tempo 1, tô e tô no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, tô e tô no meio. [long pause] Compasso 45: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio. [long pause] Muito bem! Agora o Shady inteiro, do começo ao fim. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Nikê: 16 compassos, que eu dividi em 5 partes. [long pause] Parte 1, compasso 1. Aqui ninguém toca: é só contar. Fica assim: conta 1, conta 2, conta 3, é falado."
+},
+{
+"who": "R",
+"lines": [
+[
+"Parte 2, compassos 2 a 4. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 2, compassos 2 a 4. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 2: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio.",
+"Compasso 2: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio."
+],
+[
+"Compasso 3: tempo 1, tô e tô no meio. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô.",
+"Compasso 3: tempo 1, tô e tô no meio. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô."
+],
+[
+"Compasso 4: tempo 1, tô e tô no meio. Tempo 2, tô e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá.",
+"Compasso 4: tempo 1, tô e tô no meio. Tempo 2, tô e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá."
+],
+[
+"Parte 3, compassos 5 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô.",
+"Parte 3, compassos 5 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+],
+[
+"Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, tô no meio e rô no finzinho. Tempo 3, tô e tô no meio e rô no finzinho. Tempo 4, tô logo depois.",
+"Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, tô no meio e rô no finzinho. Tempo 3, tô e tô no meio e rô no finzinho. Tempo 4, tô logo depois."
+],
+[
+"O compasso 6 é igualzinho a esse.",
+"O compasso 6 é igualzinho a esse."
+],
+[
+"Compasso 7: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio.",
+"Compasso 7: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 8: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 8: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Parte 4, compassos 9 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 4, compassos 9 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 9: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, pô e pá no meio.",
+"Compasso 9: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, pô e pá no meio."
+],
+[
+"Compasso 10: tempo 1, pô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 10: tempo 1, pô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Compasso 11: tempo 1, é falado. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e gô logo depois e rô no meio e gô no finzinho.",
+"Compasso 11: tempo 1, é falado. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e gô logo depois e rô no meio e gô no finzinho."
+],
+[
+"Compasso 12: tempo 1, tô. Tempo 2, tô e pá no meio. Tempo 3, pá e pá no meio. Tempo 4, tô.",
+"Compasso 12: tempo 1, tô. Tempo 2, tô e pá no meio. Tempo 3, pá e pá no meio. Tempo 4, tô."
+],
+[
+"Parte 5, compassos 13 a 16. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô.",
+"Parte 5, compassos 13 a 16. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+],
+[
+"O compasso 14 é igual ao compasso 5, que você já viu.",
+"O compasso 14 é igual ao compasso 5, que você já viu."
+],
+[
+"Compasso 13: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 13: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Compasso 15: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô logo depois e tô no finzinho. Tempo 4, é falado e tô no meio.",
+"Compasso 15: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô logo depois e tô no finzinho. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 16: só o tô final, no tempo 1, e acabou.",
+"Compasso 16: só o tô final, no tempo 1, e acabou."
+],
+[
+"Muito bem! Agora o Nikê inteiro, do começo ao fim.",
+"Muito bem! Agora o Nikê inteiro, do começo ao fim."
+]
+],
+"id": 9,
+"prompt": "Parte 2, compassos 2 a 4. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 2: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio. [long pause] Compasso 3: tempo 1, tô e tô no meio. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô. [long pause] Compasso 4: tempo 1, tô e tô no meio. Tempo 2, tô e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá. [long pause] Parte 3, compassos 5 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô. [long pause] Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, tô no meio e rô no finzinho. Tempo 3, tô e tô no meio e rô no finzinho. Tempo 4, tô logo depois. [long pause] O compasso 6 é igualzinho a esse. [long pause] Compasso 7: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio. [long pause] Compasso 8: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Parte 4, compassos 9 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 9: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, pô e pá no meio. [long pause] Compasso 10: tempo 1, pô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Compasso 11: tempo 1, é falado. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e gô logo depois e rô no meio e gô no finzinho. [long pause] Compasso 12: tempo 1, tô. Tempo 2, tô e pá no meio. Tempo 3, pá e pá no meio. Tempo 4, tô. [long pause] Parte 5, compassos 13 a 16. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô. [long pause] O compasso 14 é igual ao compasso 5, que você já viu. [long pause] Compasso 13: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Compasso 15: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô logo depois e tô no finzinho. Tempo 4, é falado e tô no meio. [long pause] Compasso 16: só o tô final, no tempo 1, e acabou. [long pause] Muito bem! Agora o Nikê inteiro, do começo ao fim."
+},
+{
+"who": "R",
+"lines": [
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Caravan: 30 compassos, que eu dividi em 7 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Caravan: 30 compassos, que eu dividi em 7 partes."
+],
+[
+"Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 1: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 1: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Compasso 2: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 2: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Compasso 3: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 3: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Compasso 4: tempo 1, conta 4. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 4: tempo 1, conta 4. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Parte 2, compassos 5 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 2, compassos 5 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 5: tempo 1, tô e pô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, é falado e pá no finzinho. Tempo 4, é falado e pô no meio.",
+"Compasso 5: tempo 1, tô e pô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, é falado e pá no finzinho. Tempo 4, é falado e pô no meio."
+],
+[
+"O compasso 7 é igualzinho a esse.",
+"O compasso 7 é igualzinho a esse."
+],
+[
+"Compasso 6: tempo 1, pá. Tempo 2, é falado e pô no meio. Tempo 3, pá e pô no finzinho. Tempo 4, é falado e pá no meio.",
+"Compasso 6: tempo 1, pá. Tempo 2, é falado e pô no meio. Tempo 3, pá e pô no finzinho. Tempo 4, é falado e pá no meio."
+],
+[
+"Parte 3, compassos 9 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 3, compassos 9 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Os compassos 9, 10, 11 e 12 repetem compassos que você já viu: o 5 e o 6.",
+"Os compassos 9, 10, 11 e 12 repetem compassos que você já viu: o 5 e o 6."
+],
+[
+"Parte 4, compassos 13 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 4, compassos 13 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 13: tempo 1, tercina: tô, tí falado, pô. Tempo 2, tercina: tí falado, pô, tí falado. Tempo 3, tercina: tô, tí falado, pá. Tempo 4, tercina: tí falado, pá, tí falado.",
+"Compasso 13: tempo 1, tercina: tô, tí falado, pô. Tempo 2, tercina: tí falado, pô, tí falado. Tempo 3, tercina: tô, tí falado, pá. Tempo 4, tercina: tí falado, pá, tí falado."
+],
+[
+"Compasso 14: tempo 1, tercina: tô, pausa, pausa. Tempo 2, tercina: é falado, pausa, pausa. Tempo 3, tercina: tô, tí falado, tô. Tempo 4, tercina: tí falado, tô, tí falado.",
+"Compasso 14: tempo 1, tercina: tô, pausa, pausa. Tempo 2, tercina: é falado, pausa, pausa. Tempo 3, tercina: tô, tí falado, tô. Tempo 4, tercina: tí falado, tô, tí falado."
+],
+[
+"Compasso 15: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado. Tempo 4, tô.",
+"Compasso 15: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado. Tempo 4, tô."
+],
+[
+"Compasso 16: tempo 1, é falado e tô no meio. Tempo 2, é falado. Tempo 3, tô. Tempo 4, conta 4.",
+"Compasso 16: tempo 1, é falado e tô no meio. Tempo 2, é falado. Tempo 3, tô. Tempo 4, conta 4."
+],
+[
+"Compasso 17: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tô e tô no meio e gô no finzinho.",
+"Compasso 17: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tô e tô no meio e gô no finzinho."
+],
+[
+"Compasso 18: tempo 1, rô e tô no meio. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 18: tempo 1, rô e tô no meio. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+]
+],
+"id": 10,
+"prompt": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Caravan: 30 compassos, que eu dividi em 7 partes. [long pause] Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 1: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Compasso 2: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Compasso 3: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Compasso 4: tempo 1, conta 4. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Parte 2, compassos 5 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 5: tempo 1, tô e pô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, é falado e pá no finzinho. Tempo 4, é falado e pô no meio. [long pause] O compasso 7 é igualzinho a esse. [long pause] Compasso 6: tempo 1, pá. Tempo 2, é falado e pô no meio. Tempo 3, pá e pô no finzinho. Tempo 4, é falado e pá no meio. [long pause] Parte 3, compassos 9 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Os compassos 9, 10, 11 e 12 repetem compassos que você já viu: o 5 e o 6. [long pause] Parte 4, compassos 13 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 13: tempo 1, tercina: tô, tí falado, pô. Tempo 2, tercina: tí falado, pô, tí falado. Tempo 3, tercina: tô, tí falado, pá. Tempo 4, tercina: tí falado, pá, tí falado. [long pause] Compasso 14: tempo 1, tercina: tô, pausa, pausa. Tempo 2, tercina: é falado, pausa, pausa. Tempo 3, tercina: tô, tí falado, tô. Tempo 4, tercina: tí falado, tô, tí falado. [long pause] Compasso 15: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado. Tempo 4, tô. [long pause] Compasso 16: tempo 1, é falado e tô no meio. Tempo 2, é falado. Tempo 3, tô. Tempo 4, conta 4. [long pause] Compasso 17: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tô e tô no meio e gô no finzinho. [long pause] Compasso 18: tempo 1, rô e tô no meio. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+},
+{
+"who": "R",
+"lines": [
+[
+"Parte 5, compassos 19 a 23. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 5, compassos 19 a 23. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Os compassos 19, 20, 21, 22 e 23 repetem compassos que você já viu: o 5 e o 6.",
+"Os compassos 19, 20, 21, 22 e 23 repetem compassos que você já viu: o 5 e o 6."
+],
+[
+"Parte 6, compassos 24 a 27. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 6, compassos 24 a 27. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"O compasso 24 é igual ao compasso 1, que você já viu.",
+"O compasso 24 é igual ao compasso 1, que você já viu."
+],
+[
+"Compasso 25: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio.",
+"Compasso 25: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 26: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô logo depois e tô no meio. Tempo 3, tô. Tempo 4, é falado e tô no meio.",
+"Compasso 26: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô logo depois e tô no meio. Tempo 3, tô. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 27: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio.",
+"Compasso 27: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio."
+],
+[
+"Parte 7, compassos 28 a 30. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 7, compassos 28 a 30. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 28: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, é falado e tô no meio.",
+"Compasso 28: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 29: tempo 1, tô e tô no meio. Tempo 2, conta 3. Tempo 3, conta 4. Tempo 4, é falado e tô no meio.",
+"Compasso 29: tempo 1, tô e tô no meio. Tempo 2, conta 3. Tempo 3, conta 4. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 30: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio.",
+"Compasso 30: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
+],
+[
+"Muito bem! Agora o Caravan inteiro, do começo ao fim.",
+"Muito bem! Agora o Caravan inteiro, do começo ao fim."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Dagon: 39 compassos, que eu dividi em 13 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Dagon: 39 compassos, que eu dividi em 13 partes."
+],
+[
+"Compasso 1: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois.",
+"Compasso 1: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
+],
+[
+"Compasso 2: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio. Tempo 4, é falado.",
+"Compasso 2: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio. Tempo 4, é falado."
+],
+[
+"Compasso 3: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois.",
+"Compasso 3: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
+],
+[
+"Compasso 4: tempo 1, tô. Tempo 2, conta 4. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois.",
+"Compasso 4: tempo 1, tô. Tempo 2, conta 4. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
+],
+[
+"Parte 2, compassos 5 a 9. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô.",
+"Parte 2, compassos 5 a 9. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+],
+[
+"Compasso 5: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio.",
+"Compasso 5: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio."
+]
+],
+"id": 11,
+"prompt": "Parte 5, compassos 19 a 23. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Os compassos 19, 20, 21, 22 e 23 repetem compassos que você já viu: o 5 e o 6. [long pause] Parte 6, compassos 24 a 27. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] O compasso 24 é igual ao compasso 1, que você já viu. [long pause] Compasso 25: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio. [long pause] Compasso 26: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô logo depois e tô no meio. Tempo 3, tô. Tempo 4, é falado e tô no meio. [long pause] Compasso 27: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio. [long pause] Parte 7, compassos 28 a 30. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 28: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, é falado e tô no meio. [long pause] Compasso 29: tempo 1, tô e tô no meio. Tempo 2, conta 3. Tempo 3, conta 4. Tempo 4, é falado e tô no meio. [long pause] Compasso 30: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio. [long pause] Muito bem! Agora o Caravan inteiro, do começo ao fim. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Dagon: 39 compassos, que eu dividi em 13 partes. [long pause] Compasso 1: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois. [long pause] Compasso 2: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio. Tempo 4, é falado. [long pause] Compasso 3: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois. [long pause] Compasso 4: tempo 1, tô. Tempo 2, conta 4. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois. [long pause] Parte 2, compassos 5 a 9. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô. [long pause] Compasso 5: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 6: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio.",
+"Compasso 6: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio."
+],
+[
+"Compasso 7: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio.",
+"Compasso 7: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio."
+],
+[
+"Compasso 8: tempo 1, tô. Tempo 2, conta 4. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois.",
+"Compasso 8: tempo 1, tô. Tempo 2, conta 4. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
+],
+[
+"Compasso 9: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 9: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Parte 3, compassos 10 a 13. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 3, compassos 10 a 13. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 10: tempo 1, tô e tô logo depois e tô no finzinho. Tempo 2, é falado e tô no meio e tô no finzinho. Tempo 3, tô logo depois e tô no meio. Tempo 4, tí falado e tô logo depois e tô no finzinho.",
+"Compasso 10: tempo 1, tô e tô logo depois e tô no finzinho. Tempo 2, é falado e tô no meio e tô no finzinho. Tempo 3, tô logo depois e tô no meio. Tempo 4, tí falado e tô logo depois e tô no finzinho."
+],
+[
+"O compasso 12 é igualzinho a esse.",
+"O compasso 12 é igualzinho a esse."
+],
+[
+"Compasso 11: tempo 1, tô e tô no meio e tô no finzinho. Tempo 2, tô logo depois e tô no meio. Tempo 3, tô e tô logo depois e tô no finzinho. Tempo 4, é falado.",
+"Compasso 11: tempo 1, tô e tô no meio e tô no finzinho. Tempo 2, tô logo depois e tô no meio. Tempo 3, tô e tô logo depois e tô no finzinho. Tempo 4, é falado."
+],
+[
+"Compasso 13: tempo 1, tô e tô no meio e tô no finzinho. Tempo 2, tô logo depois e tô no meio. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 13: tempo 1, tô e tô no meio e tô no finzinho. Tempo 2, tô logo depois e tô no meio. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Parte 4, compassos 14 a 17. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 4, compassos 14 a 17. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Os compassos 14, 15, 16 e 17 repetem compassos que você já viu: o 10, o 11 e o 13.",
+"Os compassos 14, 15, 16 e 17 repetem compassos que você já viu: o 10, o 11 e o 13."
+],
+[
+"Parte 5, compassos 18 a 19. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 5, compassos 18 a 19. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 18: tempo 1, tô e tô no finzinho. Tempo 2, conta 1. Tempo 3, tô e tô no finzinho. Tempo 4, conta 2.",
+"Compasso 18: tempo 1, tô e tô no finzinho. Tempo 2, conta 1. Tempo 3, tô e tô no finzinho. Tempo 4, conta 2."
+],
+[
+"Compasso 19: tempo 1, tô e tô no finzinho. Tempo 2, conta 3. Tempo 3, tô e tô no finzinho. Tempo 4, conta 4.",
+"Compasso 19: tempo 1, tô e tô no finzinho. Tempo 2, conta 3. Tempo 3, tô e tô no finzinho. Tempo 4, conta 4."
+],
+[
+"Parte 6, compassos 20 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 6, compassos 20 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 20: tempo 1, tô e tô no finzinho. Tempo 2, tí falado e tô logo depois. Tempo 3, tô e tô no finzinho. Tempo 4, tí falado e tô logo depois.",
+"Compasso 20: tempo 1, tô e tô no finzinho. Tempo 2, tí falado e tô logo depois. Tempo 3, tô e tô no finzinho. Tempo 4, tí falado e tô logo depois."
+],
+[
+"Os compassos 21, 23 e 24 são iguaizinhos a esse.",
+"Os compassos 21, 23 e 24 são iguaizinhos a esse."
+],
+[
+"Compasso 22: tempo 1, tô e tô no finzinho. Tempo 2, tí falado e tô logo depois. Tempo 3, tô e tô no finzinho. Tempo 4, conta 1.",
+"Compasso 22: tempo 1, tô e tô no finzinho. Tempo 2, tí falado e tô logo depois. Tempo 3, tô e tô no finzinho. Tempo 4, conta 1."
+],
+[
+"Parte 7, compassos 25 a 26. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 7, compassos 25 a 26. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Os compassos 25 e 26 repetem compassos que você já viu: o 20.",
+"Os compassos 25 e 26 repetem compassos que você já viu: o 20."
+]
+],
+"id": 12,
+"prompt": "Compasso 6: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio. [long pause] Compasso 7: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio. [long pause] Compasso 8: tempo 1, tô. Tempo 2, conta 4. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois. [long pause] Compasso 9: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Parte 3, compassos 10 a 13. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 10: tempo 1, tô e tô logo depois e tô no finzinho. Tempo 2, é falado e tô no meio e tô no finzinho. Tempo 3, tô logo depois e tô no meio. Tempo 4, tí falado e tô logo depois e tô no finzinho. [long pause] O compasso 12 é igualzinho a esse. [long pause] Compasso 11: tempo 1, tô e tô no meio e tô no finzinho. Tempo 2, tô logo depois e tô no meio. Tempo 3, tô e tô logo depois e tô no finzinho. Tempo 4, é falado. [long pause] Compasso 13: tempo 1, tô e tô no meio e tô no finzinho. Tempo 2, tô logo depois e tô no meio. Tempo 3, tô. Tempo 4, tô. [long pause] Parte 4, compassos 14 a 17. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Os compassos 14, 15, 16 e 17 repetem compassos que você já viu: o 10, o 11 e o 13. [long pause] Parte 5, compassos 18 a 19. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 18: tempo 1, tô e tô no finzinho. Tempo 2, conta 1. Tempo 3, tô e tô no finzinho. Tempo 4, conta 2. [long pause] Compasso 19: tempo 1, tô e tô no finzinho. Tempo 2, conta 3. Tempo 3, tô e tô no finzinho. Tempo 4, conta 4. [long pause] Parte 6, compassos 20 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 20: tempo 1, tô e tô no finzinho. Tempo 2, tí falado e tô logo depois. Tempo 3, tô e tô no finzinho. Tempo 4, tí falado e tô logo depois. [long pause] Os compassos 21, 23 e 24 são iguaizinhos a esse. [long pause] Compasso 22: tempo 1, tô e tô no finzinho. Tempo 2, tí falado e tô logo depois. Tempo 3, tô e tô no finzinho. Tempo 4, conta 1. [long pause] Parte 7, compassos 25 a 26. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Os compassos 25 e 26 repetem compassos que você já viu: o 20."
+},
+{
+"who": "R",
+"lines": [
+[
+"Parte 8, compasso 27. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 8, compasso 27. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"O compasso 27 é igual ao compasso 9, que você já viu.",
+"O compasso 27 é igual ao compasso 9, que você já viu."
+],
+[
+"Parte 9, compasso 28. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 9, compasso 28. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"O compasso 28 é igual ao compasso 20, que você já viu.",
+"O compasso 28 é igual ao compasso 20, que você já viu."
+],
+[
+"Parte 10, compassos 29 a 33. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 10, compassos 29 a 33. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 29: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô.",
+"Compasso 29: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô."
+],
+[
+"Os compassos 30, 31, 32 e 33 são iguaizinhos a esse.",
+"Os compassos 30, 31, 32 e 33 são iguaizinhos a esse."
+],
+[
+"Parte 11, compasso 34. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 11, compasso 34. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 34: tempo 1, tô e tô no meio. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 34: tempo 1, tô e tô no meio. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Parte 12, compassos 35 a 36. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô.",
+"Parte 12, compassos 35 a 36. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+],
+[
+"O compasso 35 é igual ao compasso 6, que você já viu.",
+"O compasso 35 é igual ao compasso 6, que você já viu."
+],
+[
+"Compasso 36: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio.",
+"Compasso 36: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio."
+],
+[
+"Parte 13, compassos 37 a 39. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 13, compassos 37 a 39. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"O compasso 38 é igual ao compasso 3, que você já viu.",
+"O compasso 38 é igual ao compasso 3, que você já viu."
+],
+[
+"Compasso 37: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois.",
+"Compasso 37: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
+],
+[
+"Compasso 39: só o tô final, no tempo 1, e acabou.",
+"Compasso 39: só o tô final, no tempo 1, e acabou."
+],
+[
+"Muito bem! Agora o Dagon inteiro, do começo ao fim.",
+"Muito bem! Agora o Dagon inteiro, do começo ao fim."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Cactus: 21 compassos, que eu dividi em 5 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Cactus: 21 compassos, que eu dividi em 5 partes."
+],
+[
+"Compasso 1: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 1: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Compasso 2: tempo 1, conta 5. Tempo 2, conta 6. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio.",
+"Compasso 2: tempo 1, conta 5. Tempo 2, conta 6. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio."
+],
+[
+"Compasso 3: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e rô logo depois e tô no finzinho. Tempo 4, tô e tô no meio.",
+"Compasso 3: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e rô logo depois e tô no finzinho. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 4: tempo 1, tô. Tempo 2, conta 2. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio.",
+"Compasso 4: tempo 1, tô. Tempo 2, conta 2. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio."
+],
+[
+"Compasso 5: tempo 1, tô. Tempo 2, conta 3. Tempo 3, tô e rô logo depois e tô no finzinho. Tempo 4, tô e tô no meio.",
+"Compasso 5: tempo 1, tô. Tempo 2, conta 3. Tempo 3, tô e rô logo depois e tô no finzinho. Tempo 4, tô e tô no meio."
+]
+],
+"id": 13,
+"prompt": "Parte 8, compasso 27. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] O compasso 27 é igual ao compasso 9, que você já viu. [long pause] Parte 9, compasso 28. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] O compasso 28 é igual ao compasso 20, que você já viu. [long pause] Parte 10, compassos 29 a 33. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 29: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô. [long pause] Os compassos 30, 31, 32 e 33 são iguaizinhos a esse. [long pause] Parte 11, compasso 34. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 34: tempo 1, tô e tô no meio. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio. [long pause] Parte 12, compassos 35 a 36. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô. [long pause] O compasso 35 é igual ao compasso 6, que você já viu. [long pause] Compasso 36: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio. [long pause] Parte 13, compassos 37 a 39. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] O compasso 38 é igual ao compasso 3, que você já viu. [long pause] Compasso 37: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois. [long pause] Compasso 39: só o tô final, no tempo 1, e acabou. [long pause] Muito bem! Agora o Dagon inteiro, do começo ao fim. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Cactus: 21 compassos, que eu dividi em 5 partes. [long pause] Compasso 1: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Compasso 2: tempo 1, conta 5. Tempo 2, conta 6. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio. [long pause] Compasso 3: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e rô logo depois e tô no finzinho. Tempo 4, tô e tô no meio. [long pause] Compasso 4: tempo 1, tô. Tempo 2, conta 2. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio. [long pause] Compasso 5: tempo 1, tô. Tempo 2, conta 3. Tempo 3, tô e rô logo depois e tô no finzinho. Tempo 4, tô e tô no meio."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 6: tempo 1, tô. Tempo 2, conta 4. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio.",
+"Compasso 6: tempo 1, tô. Tempo 2, conta 4. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio."
+],
+[
+"Parte 3, compassos 7 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 3, compassos 7 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 7: tempo 1, pá. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô.",
+"Compasso 7: tempo 1, pá. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô."
+],
+[
+"Compasso 8: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 8: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Compasso 9: tempo 1, tô e tô no finzinho. Tempo 2, tô no finzinho. Tempo 3, rô e tô logo depois e tô no finzinho. Tempo 4, tô e tô no meio.",
+"Compasso 9: tempo 1, tô e tô no finzinho. Tempo 2, tô no finzinho. Tempo 3, rô e tô logo depois e tô no finzinho. Tempo 4, tô e tô no meio."
+],
+[
+"Os compassos 10 e 11 são iguaizinhos a esse.",
+"Os compassos 10 e 11 são iguaizinhos a esse."
+],
+[
+"Compasso 12: tempo 1, pô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pá logo depois e pá no finzinho. Tempo 4, pô e pá no meio.",
+"Compasso 12: tempo 1, pô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pá logo depois e pá no finzinho. Tempo 4, pô e pá no meio."
+],
+[
+"Parte 4, compassos 13 a 17. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 4, compassos 13 a 17. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"O compasso 17 é igual ao compasso 12, que você já viu.",
+"O compasso 17 é igual ao compasso 12, que você já viu."
+],
+[
+"Compasso 13: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio.",
+"Compasso 13: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 14: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tí falado e tô logo depois. Tempo 4, tô.",
+"Compasso 14: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tí falado e tô logo depois. Tempo 4, tô."
+],
+[
+"Compasso 15: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô.",
+"Compasso 15: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô."
+],
+[
+"Parte 5, compassos 18 a 21. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 5, compassos 18 a 21. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 18: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio.",
+"Compasso 18: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio."
+],
+[
+"Compasso 19: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 19: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Compasso 20: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio.",
+"Compasso 20: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio."
+],
+[
+"Compasso 21: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 21: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Muito bem! Agora o Cactus inteiro, do começo ao fim.",
+"Muito bem! Agora o Cactus inteiro, do começo ao fim."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Soma: 14 compassos, que eu dividi em 4 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Soma: 14 compassos, que eu dividi em 4 partes."
+],
+[
+"Compasso 1: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô e tô no meio.",
+"Compasso 1: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô e tô no meio."
+]
+],
+"id": 14,
+"prompt": "Compasso 6: tempo 1, tô. Tempo 2, conta 4. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio. [long pause] Parte 3, compassos 7 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 7: tempo 1, pá. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô. [long pause] Compasso 8: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio. [long pause] Compasso 9: tempo 1, tô e tô no finzinho. Tempo 2, tô no finzinho. Tempo 3, rô e tô logo depois e tô no finzinho. Tempo 4, tô e tô no meio. [long pause] Os compassos 10 e 11 são iguaizinhos a esse. [long pause] Compasso 12: tempo 1, pô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pá logo depois e pá no finzinho. Tempo 4, pô e pá no meio. [long pause] Parte 4, compassos 13 a 17. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] O compasso 17 é igual ao compasso 12, que você já viu. [long pause] Compasso 13: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio. [long pause] Compasso 14: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tí falado e tô logo depois. Tempo 4, tô. [long pause] Compasso 15: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô. [long pause] Parte 5, compassos 18 a 21. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 18: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio. [long pause] Compasso 19: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tô. [long pause] Compasso 20: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio. [long pause] Compasso 21: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio. [long pause] Muito bem! Agora o Cactus inteiro, do começo ao fim. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Soma: 14 compassos, que eu dividi em 4 partes. [long pause] Compasso 1: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô e tô no meio."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 2: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e pá no finzinho. Tempo 4, pô e tô no meio.",
+"Compasso 2: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e pá no finzinho. Tempo 4, pô e tô no meio."
+],
+[
+"Compasso 3: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio.",
+"Compasso 3: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 4: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e pá no finzinho. Tempo 4, pô.",
+"Compasso 4: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e pá no finzinho. Tempo 4, pô."
+],
+[
+"Compasso 5: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 5: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 6: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, conta 1.",
+"Compasso 6: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, conta 1."
+],
+[
+"Compasso 7: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, conta 1. Tempo 4, tô.",
+"Compasso 7: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, conta 1. Tempo 4, tô."
+],
+[
+"Compasso 8: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio.",
+"Compasso 8: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
+],
+[
+"Parte 3, compassos 9 a 11. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 3, compassos 9 a 11. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 9: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio.",
+"Compasso 9: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
+],
+[
+"O compasso 11 é igualzinho a esse.",
+"O compasso 11 é igualzinho a esse."
+],
+[
+"Compasso 10: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 10: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Parte 4, compassos 12 a 14. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 4, compassos 12 a 14. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 12: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1.",
+"Compasso 12: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1."
+],
+[
+"Compasso 13: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, conta 1.",
+"Compasso 13: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, conta 1."
+],
+[
+"Compasso 14: só o tô final, no tempo 1, e acabou.",
+"Compasso 14: só o tô final, no tempo 1, e acabou."
+],
+[
+"Muito bem! Agora o Soma inteiro, do começo ao fim.",
+"Muito bem! Agora o Soma inteiro, do começo ao fim."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Minus: 51 compassos, que eu dividi em 12 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Minus: 51 compassos, que eu dividi em 12 partes."
+],
+[
+"Parte 1, compassos 1 a 6. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 1, compassos 1 a 6. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 1: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio.",
+"Compasso 1: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 2: tempo 1, tô. Tempo 2, pô e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, conta 1.",
+"Compasso 2: tempo 1, tô. Tempo 2, pô e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, conta 1."
+],
+[
+"Compasso 3: tempo 1, é falado e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, conta 1.",
+"Compasso 3: tempo 1, é falado e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, conta 1."
+]
+],
+"id": 15,
+"prompt": "Compasso 2: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e pá no finzinho. Tempo 4, pô e tô no meio. [long pause] Compasso 3: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio. [long pause] Compasso 4: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e pá no finzinho. Tempo 4, pô. [long pause] Compasso 5: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio. [long pause] Compasso 6: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, conta 1. [long pause] Compasso 7: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, conta 1. Tempo 4, tô. [long pause] Compasso 8: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio. [long pause] Parte 3, compassos 9 a 11. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 9: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio. [long pause] O compasso 11 é igualzinho a esse. [long pause] Compasso 10: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio. Tempo 4, pá e pô no meio. [long pause] Parte 4, compassos 12 a 14. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 12: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1. [long pause] Compasso 13: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, conta 1. [long pause] Compasso 14: só o tô final, no tempo 1, e acabou. [long pause] Muito bem! Agora o Soma inteiro, do começo ao fim. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Minus: 51 compassos, que eu dividi em 12 partes. [long pause] Parte 1, compassos 1 a 6. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 1: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio. [long pause] Compasso 2: tempo 1, tô. Tempo 2, pô e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, conta 1. [long pause] Compasso 3: tempo 1, é falado e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, conta 1."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 4: tempo 1, tô e tô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, conta 1.",
+"Compasso 4: tempo 1, tô e tô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, conta 1."
+],
+[
+"Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Compasso 6: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 6: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Parte 2, compassos 7 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô.",
+"Parte 2, compassos 7 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+],
+[
+"Compasso 7: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 7: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Compasso 8: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, é falado e tô no meio.",
+"Compasso 8: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 9: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio.",
+"Compasso 9: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio."
+],
+[
+"O compasso 10 é igualzinho a esse.",
+"O compasso 10 é igualzinho a esse."
+],
+[
+"Compasso 11: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 11: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 12: tempo 1, tô e tô no meio e rô no finzinho. Tempo 2, tô. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, conta 1.",
+"Compasso 12: tempo 1, tô e tô no meio e rô no finzinho. Tempo 2, tô. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, conta 1."
+],
+[
+"Parte 3, compassos 13 a 16. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 3, compassos 13 a 16. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 13: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô.",
+"Compasso 13: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô."
+],
+[
+"O compasso 15 é igualzinho a esse.",
+"O compasso 15 é igualzinho a esse."
+],
+[
+"Compasso 14: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 14: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Compasso 16: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 16: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Parte 4, compassos 17 a 20. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 4, compassos 17 a 20. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 17: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio.",
+"Compasso 17: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio."
+],
+[
+"Os compassos 18 e 19 são iguaizinhos a esse.",
+"Os compassos 18 e 19 são iguaizinhos a esse."
+],
+[
+"Compasso 20: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio.",
+"Compasso 20: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio."
+],
+[
+"Parte 5, compassos 21 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 5, compassos 21 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+]
+],
+"id": 16,
+"prompt": "Compasso 4: tempo 1, tô e tô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, conta 1. [long pause] Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio. [long pause] Compasso 6: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Parte 2, compassos 7 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô. [long pause] Compasso 7: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Compasso 8: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, é falado e tô no meio. [long pause] Compasso 9: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio. [long pause] O compasso 10 é igualzinho a esse. [long pause] Compasso 11: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio. [long pause] Compasso 12: tempo 1, tô e tô no meio e rô no finzinho. Tempo 2, tô. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, conta 1. [long pause] Parte 3, compassos 13 a 16. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 13: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô. [long pause] O compasso 15 é igualzinho a esse. [long pause] Compasso 14: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô. [long pause] Compasso 16: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio. [long pause] Parte 4, compassos 17 a 20. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 17: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio. [long pause] Os compassos 18 e 19 são iguaizinhos a esse. [long pause] Compasso 20: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio. [long pause] Parte 5, compassos 21 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 21: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no finzinho. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois.",
+"Compasso 21: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no finzinho. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
+],
+[
+"Os compassos 22 e 23 são iguaizinhos a esse.",
+"Os compassos 22 e 23 são iguaizinhos a esse."
+],
+[
+"Compasso 24: tempo 1, tô e tô no meio. Tempo 2, tô no finzinho. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 24: tempo 1, tô e tô no meio. Tempo 2, tô no finzinho. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Parte 6, compassos 25 a 28. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 6, compassos 25 a 28. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 25: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1.",
+"Compasso 25: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1."
+],
+[
+"O compasso 26 é igualzinho a esse.",
+"O compasso 26 é igualzinho a esse."
+],
+[
+"Compasso 27: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, é falado e tô no meio.",
+"Compasso 27: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 28: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado.",
+"Compasso 28: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado."
+],
+[
+"Parte 7, compassos 29 a 32. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+"Parte 7, compassos 29 a 32. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+],
+[
+"Parte 8, compassos 33 a 34. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 8, compassos 33 a 34. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 33: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô e tô no meio.",
+"Compasso 33: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 34: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, conta 2.",
+"Compasso 34: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, conta 2."
+],
+[
+"Parte 9, compassos 35 a 39. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 9, compassos 35 a 39. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 35: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô.",
+"Compasso 35: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô."
+],
+[
+"Compasso 36: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 36: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 37: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, conta 1.",
+"Compasso 37: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, conta 1."
+],
+[
+"Os compassos 38 e 39 são iguaizinhos a esse.",
+"Os compassos 38 e 39 são iguaizinhos a esse."
+],
+[
+"Parte 10, compassos 40 a 44. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 10, compassos 40 a 44. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Os compassos 41, 42 e 43 repetem compassos que você já viu: o 37.",
+"Os compassos 41, 42 e 43 repetem compassos que você já viu: o 37."
+],
+[
+"Compasso 40: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 40: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"O compasso 44 é igualzinho a esse.",
+"O compasso 44 é igualzinho a esse."
+],
+[
+"Parte 11, compassos 45 a 48. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 11, compassos 45 a 48. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+]
+],
+"id": 17,
+"prompt": "Compasso 21: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no finzinho. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois. [long pause] Os compassos 22 e 23 são iguaizinhos a esse. [long pause] Compasso 24: tempo 1, tô e tô no meio. Tempo 2, tô no finzinho. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio. [long pause] Parte 6, compassos 25 a 28. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 25: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1. [long pause] O compasso 26 é igualzinho a esse. [long pause] Compasso 27: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, é falado e tô no meio. [long pause] Compasso 28: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado. [long pause] Parte 7, compassos 29 a 32. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está. [long pause] Parte 8, compassos 33 a 34. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 33: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô e tô no meio. [long pause] Compasso 34: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, conta 2. [long pause] Parte 9, compassos 35 a 39. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 35: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô. [long pause] Compasso 36: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio. [long pause] Compasso 37: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, conta 1. [long pause] Os compassos 38 e 39 são iguaizinhos a esse. [long pause] Parte 10, compassos 40 a 44. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Os compassos 41, 42 e 43 repetem compassos que você já viu: o 37. [long pause] Compasso 40: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô. [long pause] O compasso 44 é igualzinho a esse. [long pause] Parte 11, compassos 45 a 48. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 45: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, é falado e tô no meio.",
+"Compasso 45: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 46: tempo 1, tô. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, tô.",
+"Compasso 46: tempo 1, tô. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, tô."
+],
+[
+"Compasso 47: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô e tô no meio.",
+"Compasso 47: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 48: tempo 1, tô. Tempo 2, pá. Tempo 3, pô. Tempo 4, tô e tô no meio.",
+"Compasso 48: tempo 1, tô. Tempo 2, pá. Tempo 3, pô. Tempo 4, tô e tô no meio."
+],
+[
+"Parte 12, compassos 49 a 51. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 12, compassos 49 a 51. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 49: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô.",
+"Compasso 49: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô."
+],
+[
+"Compasso 50: tempo 1, pá. Tempo 2, pô. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 50: tempo 1, pá. Tempo 2, pô. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Compasso 51: só o tô final, no tempo 1, e acabou.",
+"Compasso 51: só o tô final, no tempo 1, e acabou."
+],
+[
+"Muito bem! Agora o Minus inteiro, do começo ao fim.",
+"Muito bem! Agora o Minus inteiro, do começo ao fim."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Hécate: 24 compassos, que eu dividi em 8 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Hécate: 24 compassos, que eu dividi em 8 partes."
+],
+[
+"Parte 1, compassos 1 a 4. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+"Parte 1, compassos 1 a 4. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+],
+[
+"Parte 2, compassos 5 a 8. Aqui ninguém toca: é só contar. No primeiro: conta 5, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+"Parte 2, compassos 5 a 8. Aqui ninguém toca: é só contar. No primeiro: conta 5, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+],
+[
+"Compasso 9: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô.",
+"Compasso 9: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô."
+],
+[
+"Compasso 12: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio.",
+"Compasso 12: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
+],
+[
+"Parte 4, compassos 13 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 4, compassos 13 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 13, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, é falado e pô no meio. Tempo 6, pá. Tempo 7, pá.",
+"Compasso 13, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, é falado e pô no meio. Tempo 6, pá. Tempo 7, pá."
+],
+[
+"Compasso 14, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, pô no meio. Tempo 6, pá. Tempo 7, pá.",
+"Compasso 14, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, pô no meio. Tempo 6, pá. Tempo 7, pá."
+],
+[
+"Tem. Conte até 7 e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem.",
+"Tem. Conte até 7 e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem."
+],
+[
+"Parte 5, compasso 15. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 5, compasso 15. Nesta parte as duas tocam juntas o tempo todo, só tô."
+]
+],
+"id": 18,
+"prompt": "Compasso 45: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, é falado e tô no meio. [long pause] Compasso 46: tempo 1, tô. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, tô. [long pause] Compasso 47: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô e tô no meio. [long pause] Compasso 48: tempo 1, tô. Tempo 2, pá. Tempo 3, pô. Tempo 4, tô e tô no meio. [long pause] Parte 12, compassos 49 a 51. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 49: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô. [long pause] Compasso 50: tempo 1, pá. Tempo 2, pô. Tempo 3, tô. Tempo 4, tô. [long pause] Compasso 51: só o tô final, no tempo 1, e acabou. [long pause] Muito bem! Agora o Minus inteiro, do começo ao fim. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Hécate: 24 compassos, que eu dividi em 8 partes. [long pause] Parte 1, compassos 1 a 4. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está. [long pause] Parte 2, compassos 5 a 8. Aqui ninguém toca: é só contar. No primeiro: conta 5, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está. [long pause] Compasso 9: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô. [long pause] Compasso 12: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio. [long pause] Parte 4, compassos 13 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 13, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, é falado e pô no meio. Tempo 6, pá. Tempo 7, pá. [long pause] Compasso 14, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, pô no meio. Tempo 6, pá. Tempo 7, pá. [long pause] Tem. Conte até 7 e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem. [long pause] Parte 5, compasso 15. Nesta parte as duas tocam juntas o tempo todo, só tô."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 15, que tem 7 tempos: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, conta 2. Tempo 5, tô. Tempo 6, conta 3. Tempo 7, tô e tô no meio.",
+"Compasso 15, que tem 7 tempos: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, conta 2. Tempo 5, tô. Tempo 6, conta 3. Tempo 7, tô e tô no meio."
+],
+[
+"Parte 6, compassos 16 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 6, compassos 16 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Os compassos 16 e 17 repetem compassos que você já viu: o 13.",
+"Os compassos 16 e 17 repetem compassos que você já viu: o 13."
+],
+[
+"Compasso 18, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô.",
+"Compasso 18, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô."
+],
+[
+"Parte 7, compassos 19 a 21. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 7, compassos 19 a 21. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 19, que tem 7 tempos: tempo 1, tô e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, pô e pá no meio. Tempo 5, pá e pô no meio. Tempo 6, pô e pá no meio. Tempo 7, pô e pá no meio.",
+"Compasso 19, que tem 7 tempos: tempo 1, tô e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, pô e pá no meio. Tempo 5, pá e pô no meio. Tempo 6, pô e pá no meio. Tempo 7, pô e pá no meio."
+],
+[
+"O compasso 20 é igualzinho a esse.",
+"O compasso 20 é igualzinho a esse."
+],
+[
+"Compasso 21, que tem 7 tempos: tempo 1, tô e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, pô e pô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô.",
+"Compasso 21, que tem 7 tempos: tempo 1, tô e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, pô e pô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô."
+],
+[
+"Parte 8, compassos 22 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 8, compassos 22 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 22, que tem 7 tempos: tempo 1, é falado e tô no meio. Tempo 2, conta 1 e tô no meio. Tempo 3, conta 2 e tô no meio. Tempo 4, conta 3 e tô no meio. Tempo 5, conta 4 e tô no meio. Tempo 6, conta 5 e tô no meio. Tempo 7, conta 6 e tô no meio.",
+"Compasso 22, que tem 7 tempos: tempo 1, é falado e tô no meio. Tempo 2, conta 1 e tô no meio. Tempo 3, conta 2 e tô no meio. Tempo 4, conta 3 e tô no meio. Tempo 5, conta 4 e tô no meio. Tempo 6, conta 5 e tô no meio. Tempo 7, conta 6 e tô no meio."
+],
+[
+"Compasso 23, que tem 7 tempos: tempo 1, é falado e tô no meio. Tempo 2, conta 1 e tô no meio. Tempo 3, conta 2 e tô no meio. Tempo 4, conta 3 e tô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô.",
+"Compasso 23, que tem 7 tempos: tempo 1, é falado e tô no meio. Tempo 2, conta 1 e tô no meio. Tempo 3, conta 2 e tô no meio. Tempo 4, conta 3 e tô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô."
+],
+[
+"Muito bem! Agora o Hécate inteiro, do começo ao fim.",
+"Muito bem! Agora o Hécate inteiro, do começo ao fim."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Ganesha: 35 compassos, que eu dividi em 9 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Ganesha: 35 compassos, que eu dividi em 9 partes."
+],
+[
+"Parte 1, compassos 1 a 6. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 1, compassos 1 a 6. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 2: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô e tô no meio.",
+"Compasso 2: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 3: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 3. Tempo 4, tô e tô no meio.",
+"Compasso 3: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 3. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 4: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 4. Tempo 4, tô e tô no meio.",
+"Compasso 4: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 4. Tempo 4, tô e tô no meio."
+]
+],
+"id": 19,
+"prompt": "Compasso 15, que tem 7 tempos: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, conta 2. Tempo 5, tô. Tempo 6, conta 3. Tempo 7, tô e tô no meio. [long pause] Parte 6, compassos 16 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Os compassos 16 e 17 repetem compassos que você já viu: o 13. [long pause] Compasso 18, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô. [long pause] Parte 7, compassos 19 a 21. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 19, que tem 7 tempos: tempo 1, tô e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, pô e pá no meio. Tempo 5, pá e pô no meio. Tempo 6, pô e pá no meio. Tempo 7, pô e pá no meio. [long pause] O compasso 20 é igualzinho a esse. [long pause] Compasso 21, que tem 7 tempos: tempo 1, tô e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, pô e pô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô. [long pause] Parte 8, compassos 22 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 22, que tem 7 tempos: tempo 1, é falado e tô no meio. Tempo 2, conta 1 e tô no meio. Tempo 3, conta 2 e tô no meio. Tempo 4, conta 3 e tô no meio. Tempo 5, conta 4 e tô no meio. Tempo 6, conta 5 e tô no meio. Tempo 7, conta 6 e tô no meio. [long pause] Compasso 23, que tem 7 tempos: tempo 1, é falado e tô no meio. Tempo 2, conta 1 e tô no meio. Tempo 3, conta 2 e tô no meio. Tempo 4, conta 3 e tô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô. [long pause] Muito bem! Agora o Hécate inteiro, do começo ao fim. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Ganesha: 35 compassos, que eu dividi em 9 partes. [long pause] Parte 1, compassos 1 a 6. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 2: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô e tô no meio. [long pause] Compasso 3: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 3. Tempo 4, tô e tô no meio. [long pause] Compasso 4: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 4. Tempo 4, tô e tô no meio."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 5: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 5. Tempo 4, tô e tô no meio.",
+"Compasso 5: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 5. Tempo 4, tô e tô no meio."
+],
+[
+"Compasso 6: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 6. Tempo 4, tô e tô no meio.",
+"Compasso 6: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 6. Tempo 4, tô e tô no meio."
+],
+[
+"Parte 2, compassos 7 a 10. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 2, compassos 7 a 10. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 7: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado e tô no meio.",
+"Compasso 7: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 8: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô.",
+"Compasso 8: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô."
+],
+[
+"Compasso 9: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 3. Tempo 4, tô.",
+"Compasso 9: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 3. Tempo 4, tô."
+],
+[
+"Compasso 10: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 4. Tempo 4, tô 1.",
+"Compasso 10: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 4. Tempo 4, tô 1."
+],
+[
+"Parte 3, compassos 11 a 16. Nesta parte as duas tocam juntas no tô e também conversam: a segunda aparece sozinha no pá.",
+"Parte 3, compassos 11 a 16. Nesta parte as duas tocam juntas no tô e também conversam: a segunda aparece sozinha no pá."
+],
+[
+"Compasso 11: tempo 1, tô 2. Tempo 2, tô 3. Tempo 3, tô 4. Tempo 4, tô 5.",
+"Compasso 11: tempo 1, tô 2. Tempo 2, tô 3. Tempo 3, tô 4. Tempo 4, tô 5."
+],
+[
+"Compasso 12: tempo 1, tô 6. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, pá.",
+"Compasso 12: tempo 1, tô 6. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, pá."
+],
+[
+"Compasso 14: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, conta 3.",
+"Compasso 14: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, conta 3."
+],
+[
+"Compasso 15: tempo 1, tô 1. Tempo 2, tô 2. Tempo 3, tô 3. Tempo 4, tô 4.",
+"Compasso 15: tempo 1, tô 1. Tempo 2, tô 2. Tempo 3, tô 3. Tempo 4, tô 4."
+],
+[
+"Compasso 16: tempo 1, tô 5. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 16: tempo 1, tô 5. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Parte 4, compassos 17 a 19. Aqui ninguém toca: é só contar. No primeiro: conta 2, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+"Parte 4, compassos 17 a 19. Aqui ninguém toca: é só contar. No primeiro: conta 2, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+],
+[
+"Parte 5, compassos 20 a 22. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 5, compassos 20 a 22. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"O compasso 22 é igual ao compasso 11, que você já viu.",
+"O compasso 22 é igual ao compasso 11, que você já viu."
+],
+[
+"Compasso 20: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô.",
+"Compasso 20: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô."
+],
+[
+"Compasso 21: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô 1.",
+"Compasso 21: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô 1."
+],
+[
+"Parte 6, compassos 23 a 26. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 6, compassos 23 a 26. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 23: tempo 1, tô 6. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô.",
+"Compasso 23: tempo 1, tô 6. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô."
+],
+[
+"Compasso 24: tempo 1, bô. Tempo 2, conta 1. Tempo 3, tercina: tô, é falado, tô. Tempo 4, tercina: é falado, pausa, pausa.",
+"Compasso 24: tempo 1, bô. Tempo 2, conta 1. Tempo 3, tercina: tô, é falado, tô. Tempo 4, tercina: é falado, pausa, pausa."
+],
+[
+"Compasso 25: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô.",
+"Compasso 25: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô."
+]
+],
+"id": 20,
+"prompt": "Compasso 5: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 5. Tempo 4, tô e tô no meio. [long pause] Compasso 6: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 6. Tempo 4, tô e tô no meio. [long pause] Parte 2, compassos 7 a 10. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 7: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado e tô no meio. [long pause] Compasso 8: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô. [long pause] Compasso 9: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 3. Tempo 4, tô. [long pause] Compasso 10: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 4. Tempo 4, tô 1. [long pause] Parte 3, compassos 11 a 16. Nesta parte as duas tocam juntas no tô e também conversam: a segunda aparece sozinha no pá. [long pause] Compasso 11: tempo 1, tô 2. Tempo 2, tô 3. Tempo 3, tô 4. Tempo 4, tô 5. [long pause] Compasso 12: tempo 1, tô 6. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, pá. [long pause] Compasso 14: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, conta 3. [long pause] Compasso 15: tempo 1, tô 1. Tempo 2, tô 2. Tempo 3, tô 3. Tempo 4, tô 4. [long pause] Compasso 16: tempo 1, tô 5. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Parte 4, compassos 17 a 19. Aqui ninguém toca: é só contar. No primeiro: conta 2, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está. [long pause] Parte 5, compassos 20 a 22. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] O compasso 22 é igual ao compasso 11, que você já viu. [long pause] Compasso 20: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô. [long pause] Compasso 21: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô 1. [long pause] Parte 6, compassos 23 a 26. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 23: tempo 1, tô 6. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô. [long pause] Compasso 24: tempo 1, bô. Tempo 2, conta 1. Tempo 3, tercina: tô, é falado, tô. Tempo 4, tercina: é falado, pausa, pausa. [long pause] Compasso 25: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 26: tempo 1, bô. Tempo 2, conta 2. Tempo 3, tercina: tô, é falado, tô. Tempo 4, tercina: é falado, tô, bô.",
+"Compasso 26: tempo 1, bô. Tempo 2, conta 2. Tempo 3, tercina: tô, é falado, tô. Tempo 4, tercina: é falado, tô, bô."
+],
+[
+"Bô é abafado: os dois tocam, e a outra mão segura a pele na hora, pro som morrer curto.",
+"Bô é abafado: os dois tocam, e a outra mão segura a pele na hora, pro som morrer curto."
+],
+[
+"Parte 7, compasso 27. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 7, compasso 27. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"O compasso 27 é igual ao compasso 14, que você já viu.",
+"O compasso 27 é igual ao compasso 14, que você já viu."
+],
+[
+"Parte 8, compassos 28 a 32. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 8, compassos 28 a 32. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"O compasso 29 é igual ao compasso 14, que você já viu.",
+"O compasso 29 é igual ao compasso 14, que você já viu."
+],
+[
+"Compasso 28: tempo 1, tô. Tempo 2, tercina: pausa, é falado, tô. Tempo 3, tercina: bô, é falado, tô. Tempo 4, tercina: é falado, tô, bô.",
+"Compasso 28: tempo 1, tô. Tempo 2, tercina: pausa, é falado, tô. Tempo 3, tercina: bô, é falado, tô. Tempo 4, tercina: é falado, tô, bô."
+],
+[
+"Compasso 30: tempo 1, tô. Tempo 2, tercina: pausa, pausa, tô. Tempo 3, tercina: bô, é falado, tô. Tempo 4, tercina: é falado, tô, bô.",
+"Compasso 30: tempo 1, tô. Tempo 2, tercina: pausa, pausa, tô. Tempo 3, tercina: bô, é falado, tô. Tempo 4, tercina: é falado, tô, bô."
+],
+[
+"O compasso 31 é igualzinho a esse.",
+"O compasso 31 é igualzinho a esse."
+],
+[
+"Compasso 32: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô.",
+"Compasso 32: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô."
+],
+[
+"Parte 9, compassos 33 a 35. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 9, compassos 33 a 35. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Os compassos 33 e 34 repetem compassos que você já viu: o 32.",
+"Os compassos 33 e 34 repetem compassos que você já viu: o 32."
+],
+[
+"Compasso 35: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, tô no meio.",
+"Compasso 35: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, tô no meio."
+],
+[
+"Muito bem! Agora o Ganesha inteiro, do começo ao fim.",
+"Muito bem! Agora o Ganesha inteiro, do começo ao fim."
+],
+[
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Wukong: 34 compassos, que eu dividi em 9 partes.",
+"Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Wukong: 34 compassos, que eu dividi em 9 partes."
+],
+[
+"Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, é falado. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e pá no meio.",
+"Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, é falado. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e pá no meio."
+],
+[
+"Compasso 6: tempo 1, tô e tô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio.",
+"Compasso 6: tempo 1, tô e tô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio."
+],
+[
+"Compasso 8: tempo 1, pô. Tempo 2, pá e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio.",
+"Compasso 8: tempo 1, pô. Tempo 2, pá e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio."
+],
+[
+"Vou pedir pros músicos tocarem bem devagar. Olhe por trás da segunda, como se fosse você tocando.",
+"Vou pedir pros músicos tocarem bem devagar. Olhe por trás da segunda, como se fosse você tocando."
+],
+[
+"Parte 3, compassos 9 a 11. Nesta parte as duas tocam juntas o tempo todo, só tô.",
+"Parte 3, compassos 9 a 11. Nesta parte as duas tocam juntas o tempo todo, só tô."
+],
+[
+"Compasso 10: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 10: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+]
+],
+"id": 21,
+"prompt": "Compasso 26: tempo 1, bô. Tempo 2, conta 2. Tempo 3, tercina: tô, é falado, tô. Tempo 4, tercina: é falado, tô, bô. [long pause] Bô é abafado: os dois tocam, e a outra mão segura a pele na hora, pro som morrer curto. [long pause] Parte 7, compasso 27. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] O compasso 27 é igual ao compasso 14, que você já viu. [long pause] Parte 8, compassos 28 a 32. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] O compasso 29 é igual ao compasso 14, que você já viu. [long pause] Compasso 28: tempo 1, tô. Tempo 2, tercina: pausa, é falado, tô. Tempo 3, tercina: bô, é falado, tô. Tempo 4, tercina: é falado, tô, bô. [long pause] Compasso 30: tempo 1, tô. Tempo 2, tercina: pausa, pausa, tô. Tempo 3, tercina: bô, é falado, tô. Tempo 4, tercina: é falado, tô, bô. [long pause] O compasso 31 é igualzinho a esse. [long pause] Compasso 32: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô. [long pause] Parte 9, compassos 33 a 35. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Os compassos 33 e 34 repetem compassos que você já viu: o 32. [long pause] Compasso 35: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, tô no meio. [long pause] Muito bem! Agora o Ganesha inteiro, do começo ao fim. [long pause] Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Wukong: 34 compassos, que eu dividi em 9 partes. [long pause] Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, é falado. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e pá no meio. [long pause] Compasso 6: tempo 1, tô e tô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio. [long pause] Compasso 8: tempo 1, pô. Tempo 2, pá e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio. [long pause] Vou pedir pros músicos tocarem bem devagar. Olhe por trás da segunda, como se fosse você tocando. [long pause] Parte 3, compassos 9 a 11. Nesta parte as duas tocam juntas o tempo todo, só tô. [long pause] Compasso 10: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 11: tempo 1, conta 3. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4.",
+"Compasso 11: tempo 1, conta 3. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
+],
+[
+"Parte 4, compassos 12 a 15. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô.",
+"Parte 4, compassos 12 a 15. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+],
+[
+"Compasso 12: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio. Tempo 4, tô.",
+"Compasso 12: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio. Tempo 4, tô."
+],
+[
+"Compasso 13: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio.",
+"Compasso 13: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio."
+],
+[
+"Compasso 14: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô.",
+"Compasso 14: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô."
+],
+[
+"Parte 5, compassos 16 a 19. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 5, compassos 16 a 19. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 16: tempo 1, tô e tô no meio. Tempo 2, é falado. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 16: tempo 1, tô e tô no meio. Tempo 2, é falado. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Compasso 17: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio.",
+"Compasso 17: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
+],
+[
+"O compasso 19 é igualzinho a esse.",
+"O compasso 19 é igualzinho a esse."
+],
+[
+"Compasso 18: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, conta 1. Tempo 4, conta 2.",
+"Compasso 18: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, conta 1. Tempo 4, conta 2."
+],
+[
+"Parte 6, compassos 20 a 23. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 6, compassos 20 a 23. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Os compassos 20, 21, 22 e 23 repetem compassos que você já viu: o 18 e o 17.",
+"Os compassos 20, 21, 22 e 23 repetem compassos que você já viu: o 18 e o 17."
+],
+[
+"Parte 7, compassos 24 a 25. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 7, compassos 24 a 25. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 24: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, tô. Tempo 4, é falado.",
+"Compasso 24: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, tô. Tempo 4, é falado."
+],
+[
+"Compasso 25: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio.",
+"Compasso 25: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
+],
+[
+"Parte 8, compassos 26 a 30. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 8, compassos 26 a 30. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"Compasso 26: tempo 1, tô e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 26: tempo 1, tô e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"O compasso 28 é igualzinho a esse.",
+"O compasso 28 é igualzinho a esse."
+],
+[
+"Compasso 27: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 27: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Compasso 29: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio.",
+"Compasso 29: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
+]
+],
+"id": 22,
+"prompt": "Compasso 11: tempo 1, conta 3. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4. [long pause] Parte 4, compassos 12 a 15. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô. [long pause] Compasso 12: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio. Tempo 4, tô. [long pause] Compasso 13: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio. [long pause] Compasso 14: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô. [long pause] Parte 5, compassos 16 a 19. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 16: tempo 1, tô e tô no meio. Tempo 2, é falado. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio. [long pause] Compasso 17: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio. [long pause] O compasso 19 é igualzinho a esse. [long pause] Compasso 18: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, conta 1. Tempo 4, conta 2. [long pause] Parte 6, compassos 20 a 23. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Os compassos 20, 21, 22 e 23 repetem compassos que você já viu: o 18 e o 17. [long pause] Parte 7, compassos 24 a 25. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 24: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, tô. Tempo 4, é falado. [long pause] Compasso 25: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio. [long pause] Parte 8, compassos 26 a 30. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] Compasso 26: tempo 1, tô e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio. [long pause] O compasso 28 é igualzinho a esse. [long pause] Compasso 27: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio. [long pause] Compasso 29: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
+},
+{
+"who": "R",
+"lines": [
+[
+"Compasso 30: tempo 1, tô e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, tô.",
+"Compasso 30: tempo 1, tô e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, tô."
+],
+[
+"Parte 9, compassos 31 a 34. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá.",
+"Parte 9, compassos 31 a 34. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+],
+[
+"O compasso 33 é igual ao compasso 29, que você já viu.",
+"O compasso 33 é igual ao compasso 29, que você já viu."
+],
+[
+"Compasso 31: tempo 1, é falado e tô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio.",
+"Compasso 31: tempo 1, é falado e tô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio."
+],
+[
+"Compasso 32: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pô no meio. Tempo 4, tô.",
+"Compasso 32: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pô no meio. Tempo 4, tô."
+],
+[
+"Compasso 34: só o tô final, no tempo 1, e acabou.",
+"Compasso 34: só o tô final, no tempo 1, e acabou."
+],
+[
+"Muito bem! Agora o Wukong inteiro, do começo ao fim.",
+"Muito bem! Agora o Wukong inteiro, do começo ao fim."
+]
+],
+"id": 23,
+"prompt": "Compasso 30: tempo 1, tô e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, tô. [long pause] Parte 9, compassos 31 a 34. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá. [long pause] O compasso 33 é igual ao compasso 29, que você já viu. [long pause] Compasso 31: tempo 1, é falado e tô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio. [long pause] Compasso 32: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pô no meio. Tempo 4, tô. [long pause] Compasso 34: só o tô final, no tempo 1, e acabou. [long pause] Muito bem! Agora o Wukong inteiro, do começo ao fim."
+},
+{
+"who": "T",
+"lines": [
+[
+"Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+"Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+],
+[
+"Anotado!",
+"Anotado!"
+],
+[
+"E esses números no meio dos toques?",
+"E esses números no meio dos toques?"
+],
+[
+"E o toque que cai no meio do tempo?",
+"E o toque que cai no meio do tempo?"
+],
+[
+"E rápido, como fica?",
+"E rápido, como fica?"
+],
+[
+"Agora na velocidade normal!",
+"Agora na velocidade normal!"
+],
+[
+"Ué, aqui o tempo tem três divisões?",
+"Ué, aqui o tempo tem três divisões?"
+],
+[
+"Bora no andamento!",
+"Bora no andamento!"
+],
+[
+"Por que a gente fala é sem tocar?",
+"Por que a gente fala é sem tocar?"
+],
+[
+"Tem toque no finzinho do tempo, né?",
+"Tem toque no finzinho do tempo, né?"
+],
+[
+"Agora no andamento de verdade!",
+"Agora no andamento de verdade!"
+],
+[
+"Por que alguns toques estão escritos em minúsculo?",
+"Por que alguns toques estão escritos em minúsculo?"
+],
+[
+"Hum, esse é fácil.",
+"Hum, esse é fácil."
+],
+[
+"Deixa eu ver se entendi…",
+"Deixa eu ver se entendi…"
+],
+[
+"Ufa! Consegui acompanhar!",
+"Ufa! Consegui acompanhar!"
+],
+[
+"Pra que contar, se ninguém toca?",
+"Pra que contar, se ninguém toca?"
+],
+[
+"Espera, o compasso 3 tem 3 tempos?",
+"Espera, o compasso 3 tem 3 tempos?"
+],
+[
+"E os numerinhos colados nos toques?",
+"E os numerinhos colados nos toques?"
+],
+[
+"Tá, vou contar junto.",
+"Tá, vou contar junto."
+],
+[
+"Esse eu preciso ver tocando.",
+"Esse eu preciso ver tocando."
+],
+[
+"Beleza, próximo!",
+"Beleza, próximo!"
+],
+[
+"Espera, o compasso 13 tem 7 tempos?",
+"Espera, o compasso 13 tem 7 tempos?"
+],
+[
+"O que é esse bô?",
+"O que é esse bô?"
+]
+],
+"id": 24,
+"prompt": "Oi! Eu ainda confundo os nomes dos toques. Me lembra? [long pause] Anotado! [long pause] E esses números no meio dos toques? [long pause] E o toque que cai no meio do tempo? [long pause] E rápido, como fica? [long pause] Agora na velocidade normal! [long pause] Ué, aqui o tempo tem três divisões? [long pause] Bora no andamento! [long pause] Por que a gente fala é sem tocar? [long pause] Tem toque no finzinho do tempo, né? [long pause] Agora no andamento de verdade! [long pause] Por que alguns toques estão escritos em minúsculo? [long pause] Hum, esse é fácil. [long pause] Deixa eu ver se entendi… [long pause] Ufa! Consegui acompanhar! [long pause] Pra que contar, se ninguém toca? [long pause] Espera, o compasso 3 tem 3 tempos? [long pause] E os numerinhos colados nos toques? [long pause] Tá, vou contar junto. [long pause] Esse eu preciso ver tocando. [long pause] Beleza, próximo! [long pause] Espera, o compasso 13 tem 7 tempos? [long pause] O que é esse bô?"
+}
+]

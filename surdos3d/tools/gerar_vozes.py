@@ -64,16 +64,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--teste", action="store_true", help="bipes no lugar da ElevenLabs")
     ap.add_argument("--so", help="só estes breques (ids separados por vírgula)")
+    ap.add_argument("--montar", metavar="VOZES", help="não gera nada: monta os pacotes com as falas já cortadas em .cache_vozes/el (separar_falas.py); VOZES = 'Ritma: nome; Tuco: nome' para a página mostrar")
     a = ap.parse_args()
     falas = json.load(open(os.path.join(VOZ, "falas.json")))["breques"]
     if a.so:
         falas = {k: v for k, v in falas.items() if k in a.so.split(",")}
     key, modelo = os.environ.get("ELEVENLABS_API_KEY", ""), os.environ.get("ELEVEN_MODELO", "eleven_multilingual_v2")
-    if not a.teste and not key:
+    if not a.teste and not a.montar and not key:
         sys.exit("Defina ELEVENLABS_API_KEY (ou use --teste).")
     os.makedirs(CACHE, exist_ok=True)
     vozes, nomes = {}, {}
-    if not a.teste:
+    if not a.teste and not a.montar:
         for who, gen, nome, env in (("R", "female", "Ritma", "ELEVEN_VOZ_RITMA"), ("T", "male", "Tuco", "ELEVEN_VOZ_TUCO")):
             vozes[who], nomes[who] = (os.environ[env], os.environ[env]) if os.environ.get(env) else escolher_voz(key, gen, nome)
     gerados = caracteres = 0
@@ -81,9 +82,14 @@ def main():
     for bid, b in falas.items():
         partes, linhas, pos = [], {}, 0
         for l in b["lines"]:
-            voz = "teste" if a.teste else vozes[l["who"]]
-            h = hashlib.sha1(f"{voz}|{modelo}|{l['speech']}".encode()).hexdigest()[:16]
-            wav = os.path.join(CACHE, h + ".wav")
+            if a.montar:
+                wav = os.path.join(CACHE, "el", hashlib.sha1(f"{l['who']}|{l['speech']}".encode()).hexdigest()[:16] + ".wav")
+                if not os.path.exists(wav):
+                    sys.exit(f"{bid}: falta a fala {l['who']}: {l['speech'][:60]}")
+            else:
+                voz = "teste" if a.teste else vozes[l["who"]]
+                h = hashlib.sha1(f"{voz}|{modelo}|{l['speech']}".encode()).hexdigest()[:16]
+                wav = os.path.join(CACHE, h + ".wav")
             if not os.path.exists(wav):
                 if a.teste:
                     bipe(l["speech"], wav)
@@ -118,6 +124,9 @@ def main():
     idx["breques"] = sorted(set(idx.get("breques", [])) | set(feitos)) if not a.teste else feitos
     if nomes:
         idx["vozes"] = nomes
+    if a.montar:
+        idx["vozes"] = dict(p.split(": ", 1) for p in a.montar.split("; "))
+        idx["vozes"] = {"R": idx["vozes"].get("Ritma", ""), "T": idx["vozes"].get("Tuco", "")}
     if a.teste:
         idx["teste"] = True
     json.dump(idx, open(idx_path, "w"), ensure_ascii=False)

@@ -16,7 +16,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -31,7 +31,7 @@
     {
      "who": "R",
      "text": "Compasso 1: tempo 1, To e To no meio; tempo 2, po e Pa no meio; tempo 3, To; tempo 4, To e To no meio.",
-     "speech": "Compasso 1: tempo 1, tô e tô no meio. tempo 2, pô e pá no meio. tempo 3, tô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 1: tempo 1, tô e tô no meio. Tempo 2, pô e pá no meio. Tempo 3, tô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -41,7 +41,7 @@
     {
      "who": "R",
      "text": "Compasso 2: tempo 1, po e Pa no meio; tempo 2, To; tempo 3, conta 1; tempo 4, conta 2.",
-     "speech": "Compasso 2: tempo 1, pô e pá no meio. tempo 2, tô. tempo 3, conta 1. tempo 4, conta 2."
+     "speech": "Compasso 2: tempo 1, pô e pá no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, conta 2."
     },
     {
      "who": "T",
@@ -51,7 +51,7 @@
     {
      "who": "R",
      "text": "Compasso 4: tempo 1, po e Pa no meio; tempo 2, To; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 4: tempo 1, pô e pá no meio. tempo 2, tô. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 4: tempo 1, pô e pá no meio. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -111,7 +111,7 @@
     {
      "who": "R",
      "text": "Compasso 8: tempo 1, To e To no meio; tempo 2, To; tempo 3, tercina: To, To, pausa; tempo 4, tercina: To, To, pausa.",
-     "speech": "Compasso 8: tempo 1, tô e tô no meio. tempo 2, tô. tempo 3, tercina: tô, tô, pausa. tempo 4, tercina: tô, tô, pausa."
+     "speech": "Compasso 8: tempo 1, tô e tô no meio. Tempo 2, tô. Tempo 3, tercina: tô, tô, pausa. Tempo 4, tercina: tô, tô, pausa."
     },
     {
      "who": "T",
@@ -136,12 +136,12 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To; tempo 2, “E” falado e Pa no meio; tempo 3, “E” falado e po no meio; tempo 4, To.",
-     "speech": "Compasso 9: tempo 1, tô. tempo 2, é falado e pá no meio. tempo 3, é falado e pô no meio. tempo 4, tô."
+     "speech": "Compasso 9: tempo 1, tô. Tempo 2, é falado e pá no meio. Tempo 3, é falado e pô no meio. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 10: tempo 1, “E” falado e po no meio; tempo 2, Pa e po no meio; tempo 3, To e To no finzinho; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 10: tempo 1, é falado e pô no meio. tempo 2, pá e pô no meio. tempo 3, tô e tô no finzinho. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 10: tempo 1, é falado e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "T",
@@ -176,7 +176,7 @@
     {
      "who": "R",
      "text": "Compasso 11: tempo 1, To; tempo 2, “E” falado; tempo 3, To; tempo 4, tercina: “E” falado, pausa, To.",
-     "speech": "Compasso 11: tempo 1, tô. tempo 2, é falado. tempo 3, tô. tempo 4, tercina: é falado, pausa, tô."
+     "speech": "Compasso 11: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô."
     },
     {
      "who": "R",
@@ -186,7 +186,7 @@
     {
      "who": "R",
      "text": "Compasso 12: tempo 1, To; tempo 2, “E” falado; tempo 3, To; tempo 4, tercina: To, pausa, To.",
-     "speech": "Compasso 12: tempo 1, tô. tempo 2, é falado. tempo 3, tô. tempo 4, tercina: tô, pausa, tô."
+     "speech": "Compasso 12: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tercina: tô, pausa, tô."
     },
     {
      "who": "R",
@@ -201,12 +201,12 @@
     {
      "who": "R",
      "text": "Compasso 17: tempo 1, To; tempo 2, silêncio; tempo 3, To; tempo 4, tercina: pausa, pausa, To.",
-     "speech": "Compasso 17: tempo 1, tô. tempo 2, silêncio. tempo 3, tô. tempo 4, tercina: pausa, pausa, tô."
+     "speech": "Compasso 17: tempo 1, tô. Tempo 2, silêncio. Tempo 3, tô. Tempo 4, tercina: pausa, pausa, tô."
     },
     {
      "who": "R",
      "text": "Compasso 18: tempo 1, tercina: bo, To, pausa; tempo 2, tercina: “E” falado, To, “E” falado; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 18: tempo 1, tercina: bô, tô, pausa. tempo 2, tercina: é falado, tô, é falado. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 18: tempo 1, tercina: bô, tô, pausa. Tempo 2, tercina: é falado, tô, é falado. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -226,12 +226,12 @@
     {
      "who": "R",
      "text": "Compasso 19: tempo 1, To; tempo 2, “E” falado; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 19: tempo 1, tô. tempo 2, é falado. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 19: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 20: tempo 1, To; tempo 2, “E” falado; tempo 3, To e To no meio; tempo 4, To e To no meio.",
-     "speech": "Compasso 20: tempo 1, tô. tempo 2, é falado. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 20: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "T",
@@ -241,12 +241,12 @@
     {
      "who": "R",
      "text": "Compasso 21: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, “E” falado.",
-     "speech": "Compasso 21: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, é falado."
+     "speech": "Compasso 21: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado."
     },
     {
      "who": "R",
      "text": "Compasso 22: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 22: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 22: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -256,7 +256,7 @@
     {
      "who": "R",
      "text": "Compasso 23: tempo 1, “E” falado e To no meio; tempo 2, To; tempo 3, “E” falado e To no meio; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 23: tempo 1, é falado e tô no meio. tempo 2, tô. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 23: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
@@ -301,7 +301,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -336,7 +336,7 @@
     {
      "who": "R",
      "text": "Compasso 3, que tem 3 tempos: tempo 1, To; tempo 2, To; tempo 3, To.",
-     "speech": "Compasso 3, que tem 3 tempos: tempo 1, tô. tempo 2, tô. tempo 3, tô."
+     "speech": "Compasso 3, que tem 3 tempos: tempo 1, tô. Tempo 2, tô. Tempo 3, tô."
     },
     {
      "who": "R",
@@ -346,7 +346,7 @@
     {
      "who": "R",
      "text": "Compasso 5, que tem 2 tempos: tempo 1, po e Pa no meio; tempo 2, po e Pa no meio.",
-     "speech": "Compasso 5, que tem 2 tempos: tempo 1, pô e pá no meio. tempo 2, pô e pá no meio."
+     "speech": "Compasso 5, que tem 2 tempos: tempo 1, pô e pá no meio. Tempo 2, pô e pá no meio."
     },
     {
      "who": "T",
@@ -356,12 +356,12 @@
     {
      "who": "R",
      "text": "Compasso 7, que tem 3 tempos: tempo 1, To; tempo 2, To; tempo 3, “E” falado e To no meio.",
-     "speech": "Compasso 7, que tem 3 tempos: tempo 1, tô. tempo 2, tô. tempo 3, é falado e tô no meio."
+     "speech": "Compasso 7, que tem 3 tempos: tempo 1, tô. Tempo 2, tô. Tempo 3, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 8, que tem 2 tempos: tempo 1, To; tempo 2, To.",
-     "speech": "Compasso 8, que tem 2 tempos: tempo 1, tô. tempo 2, tô."
+     "speech": "Compasso 8, que tem 2 tempos: tempo 1, tô. Tempo 2, tô."
     },
     {
      "who": "T",
@@ -411,7 +411,7 @@
     {
      "who": "R",
      "text": "Compasso 9, que tem 3 tempos: tempo 1, To; tempo 2, “E” falado e to no meio; tempo 3, “E” falado.",
-     "speech": "Compasso 9, que tem 3 tempos: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, é falado."
+     "speech": "Compasso 9, que tem 3 tempos: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado."
     },
     {
      "who": "R",
@@ -421,7 +421,7 @@
     {
      "who": "R",
      "text": "Compasso 11, que tem 2 tempos: tempo 1, Pa e po no meio; tempo 2, Pa e po no meio.",
-     "speech": "Compasso 11, que tem 2 tempos: tempo 1, pá e pô no meio. tempo 2, pá e pô no meio."
+     "speech": "Compasso 11, que tem 2 tempos: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio."
     },
     {
      "who": "R",
@@ -456,12 +456,12 @@
     {
      "who": "R",
      "text": "Compasso 15: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, To e To no meio.",
-     "speech": "Compasso 15: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, tô e tô no meio."
+     "speech": "Compasso 15: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 16: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 16: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, pá e pô no meio."
+     "speech": "Compasso 16: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, pá e pô no meio."
     },
     {
      "who": "T",
@@ -471,12 +471,12 @@
     {
      "who": "R",
      "text": "Compasso 17: tempo 1, Pa; tempo 2, conta 2; tempo 3, conta 3; tempo 4, To.",
-     "speech": "Compasso 17: tempo 1, pá. tempo 2, conta 2. tempo 3, conta 3. tempo 4, tô."
+     "speech": "Compasso 17: tempo 1, pá. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 18: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, conta 4.",
-     "speech": "Compasso 18: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, conta 4."
+     "speech": "Compasso 18: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -506,7 +506,7 @@
     {
      "who": "R",
      "text": "Compasso 23: tempo 1, To; tempo 2, To; tempo 3, To e to no meio; tempo 4, To e to no meio.",
-     "speech": "Compasso 23: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 23: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -551,7 +551,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -566,7 +566,7 @@
     {
      "who": "R",
      "text": "Compasso 1: tempo 1, To e to no meio; tempo 2, “E” falado e po no meio; tempo 3, Pa e po no meio; tempo 4, Pa.",
-     "speech": "Compasso 1: tempo 1, tô e tô no meio. tempo 2, é falado e pô no meio. tempo 3, pá e pô no meio. tempo 4, pá."
+     "speech": "Compasso 1: tempo 1, tô e tô no meio. Tempo 2, é falado e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá."
     },
     {
      "who": "R",
@@ -576,7 +576,7 @@
     {
      "who": "R",
      "text": "Compasso 2: tempo 1, To e to no meio; tempo 2, “E” falado; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 2: tempo 1, tô e tô no meio. tempo 2, é falado. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 2: tempo 1, tô e tô no meio. Tempo 2, é falado. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -586,12 +586,12 @@
     {
      "who": "R",
      "text": "Compasso 4: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 4: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 4: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 5: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 5: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 5: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -656,7 +656,7 @@
     {
      "who": "R",
      "text": "Compasso 6: tempo 1, “E” falado e to no meio; tempo 2, “E” falado e to no meio; tempo 3, “E” falado e to no meio; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 6: tempo 1, é falado e tô no meio. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 6: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
@@ -686,12 +686,12 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To; tempo 2, To e to no meio; tempo 3, To; tempo 4, To e to no meio.",
-     "speech": "Compasso 9: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, tô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 9: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 10: tempo 1, To; tempo 2, “E” falado e to no meio; tempo 3, To e to no meio; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 10: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tô e tô no meio. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 10: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "T",
@@ -701,12 +701,12 @@
     {
      "who": "R",
      "text": "Compasso 11: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, To.",
-     "speech": "Compasso 11: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, tô."
+     "speech": "Compasso 11: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 13: tempo 1, To; tempo 2, “E” falado e to no meio; tempo 3, “E” falado e to no meio; tempo 4, “E” falado e po no meio.",
-     "speech": "Compasso 13: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e pô no meio."
+     "speech": "Compasso 13: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e pô no meio."
     },
     {
      "who": "T",
@@ -721,7 +721,7 @@
     {
      "who": "R",
      "text": "Compasso 14: tempo 1, Pa; tempo 2, po1; tempo 3, Pa; tempo 4, po2.",
-     "speech": "Compasso 14: tempo 1, pá. tempo 2, pô 1. tempo 3, pá. tempo 4, pô 2."
+     "speech": "Compasso 14: tempo 1, pá. Tempo 2, pô 1. Tempo 3, pá. Tempo 4, pô 2."
     },
     {
      "who": "R",
@@ -731,7 +731,7 @@
     {
      "who": "R",
      "text": "Compasso 15: tempo 1, Pa; tempo 2, po3; tempo 3, To; tempo 4, “E” falado.",
-     "speech": "Compasso 15: tempo 1, pá. tempo 2, pô 3. tempo 3, tô. tempo 4, é falado."
+     "speech": "Compasso 15: tempo 1, pá. Tempo 2, pô 3. Tempo 3, tô. Tempo 4, é falado."
     },
     {
      "who": "T",
@@ -741,7 +741,7 @@
     {
      "who": "R",
      "text": "Compasso 17: tempo 1, Pa; tempo 2, po3; tempo 3, Pa; tempo 4, po4.",
-     "speech": "Compasso 17: tempo 1, pá. tempo 2, pô 3. tempo 3, pá. tempo 4, pô 4."
+     "speech": "Compasso 17: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pá. Tempo 4, pô 4."
     },
     {
      "who": "T",
@@ -766,7 +766,7 @@
     {
      "who": "R",
      "text": "Compasso 18: tempo 1, To; tempo 2, To e to no meio; tempo 3, “E” falado e to no meio; tempo 4, “E” falado e po no meio.",
-     "speech": "Compasso 18: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e pô no meio."
+     "speech": "Compasso 18: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e pô no meio."
     },
     {
      "who": "R",
@@ -781,12 +781,12 @@
     {
      "who": "R",
      "text": "Compasso 20: tempo 1, Pa; tempo 2, po3; tempo 3, po e Pa no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 20: tempo 1, pá. tempo 2, pô 3. tempo 3, pô e pá no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 20: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pô e pá no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 22: tempo 1, Pa; tempo 2, po3; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 22: tempo 1, pá. tempo 2, pô 3. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 22: tempo 1, pá. Tempo 2, pô 3. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "R",
@@ -796,12 +796,12 @@
     {
      "who": "R",
      "text": "Compasso 23: tempo 1, Pa e Pa no finzinho; tempo 2, “E” falado e po no meio; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 23: tempo 1, pá e pá no finzinho. tempo 2, é falado e pô no meio. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 23: tempo 1, pá e pá no finzinho. Tempo 2, é falado e pô no meio. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 24: tempo 1, To; tempo 2, To; tempo 3, “E” falado e Pa no meio; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 24: tempo 1, tô. tempo 2, tô. tempo 3, é falado e pá no meio. tempo 4, pô e pá no meio."
+     "speech": "Compasso 24: tempo 1, tô. Tempo 2, tô. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio."
     },
     {
      "who": "T",
@@ -811,12 +811,12 @@
     {
      "who": "R",
      "text": "Compasso 25: tempo 1, To; tempo 2, conta 1; tempo 3, conta 2; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 25: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 2. tempo 4, pô e pá no meio."
+     "speech": "Compasso 25: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, pô e pá no meio."
     },
     {
      "who": "R",
      "text": "Compasso 26: tempo 1, po; tempo 2, conta 1; tempo 3, “E” falado e Pa no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 26: tempo 1, pô. tempo 2, conta 1. tempo 3, é falado e pá no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 26: tempo 1, pô. Tempo 2, conta 1. Tempo 3, é falado e pá no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "T",
@@ -826,12 +826,12 @@
     {
      "who": "R",
      "text": "Compasso 27: tempo 1, Pa; tempo 2, conta 2; tempo 3, “E” falado e Pa no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 27: tempo 1, pá. tempo 2, conta 2. tempo 3, é falado e pá no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 27: tempo 1, pá. Tempo 2, conta 2. Tempo 3, é falado e pá no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 28: tempo 1, Pa; tempo 2, To; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 28: tempo 1, pá. tempo 2, tô. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 28: tempo 1, pá. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -851,7 +851,7 @@
     {
      "who": "R",
      "text": "Compasso 29: tempo 1, po e po no finzinho; tempo 2, “E” falado e Pa no meio; tempo 3, po e po no finzinho; tempo 4, “E” falado e Pa no meio.",
-     "speech": "Compasso 29: tempo 1, pô e pô no finzinho. tempo 2, é falado e pá no meio. tempo 3, pô e pô no finzinho. tempo 4, é falado e pá no meio."
+     "speech": "Compasso 29: tempo 1, pô e pô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pá no meio."
     },
     {
      "who": "R",
@@ -861,12 +861,12 @@
     {
      "who": "R",
      "text": "Compasso 30: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, po1.",
-     "speech": "Compasso 30: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, pô 1."
+     "speech": "Compasso 30: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 1."
     },
     {
      "who": "R",
      "text": "Compasso 31: tempo 1, Pa; tempo 2, po2; tempo 3, Pa; tempo 4, po3.",
-     "speech": "Compasso 31: tempo 1, pá. tempo 2, pô 2. tempo 3, pá. tempo 4, pô 3."
+     "speech": "Compasso 31: tempo 1, pá. Tempo 2, pô 2. Tempo 3, pá. Tempo 4, pô 3."
     },
     {
      "who": "T",
@@ -876,7 +876,7 @@
     {
      "who": "R",
      "text": "Compasso 32: tempo 1, To; tempo 2, “E” falado e po no meio; tempo 3, Pa; tempo 4, conta 1.",
-     "speech": "Compasso 32: tempo 1, tô. tempo 2, é falado e pô no meio. tempo 3, pá. tempo 4, conta 1."
+     "speech": "Compasso 32: tempo 1, tô. Tempo 2, é falado e pô no meio. Tempo 3, pá. Tempo 4, conta 1."
     },
     {
      "who": "R",
@@ -906,27 +906,27 @@
     {
      "who": "R",
      "text": "Compasso 34: tempo 1, conta 6; tempo 2, To e ro no meio; tempo 3, To e ro no meio; tempo 4, To e ro no meio.",
-     "speech": "Compasso 34: tempo 1, conta 6. tempo 2, tô e rô no meio. tempo 3, tô e rô no meio. tempo 4, tô e rô no meio."
+     "speech": "Compasso 34: tempo 1, conta 6. Tempo 2, tô e rô no meio. Tempo 3, tô e rô no meio. Tempo 4, tô e rô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 35: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 35: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 35: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "R",
      "text": "Compasso 36: tempo 1, conta 5; tempo 2, To e ro no meio; tempo 3, To e ro no meio; tempo 4, To e ro no meio.",
-     "speech": "Compasso 36: tempo 1, conta 5. tempo 2, tô e rô no meio. tempo 3, tô e rô no meio. tempo 4, tô e rô no meio."
+     "speech": "Compasso 36: tempo 1, conta 5. Tempo 2, tô e rô no meio. Tempo 3, tô e rô no meio. Tempo 4, tô e rô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 37: tempo 1, To; tempo 2, To; tempo 3, conta 1; tempo 4, “E” falado e To no meio e ro no finzinho.",
-     "speech": "Compasso 37: tempo 1, tô. tempo 2, tô. tempo 3, conta 1. tempo 4, é falado e tô no meio e rô no finzinho."
+     "speech": "Compasso 37: tempo 1, tô. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, é falado e tô no meio e rô no finzinho."
     },
     {
      "who": "R",
      "text": "Compasso 38: tempo 1, “ti” falado e to logo depois; tempo 2, conta 1; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 38: tempo 1, tí falado e tô logo depois. tempo 2, conta 1. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 38: tempo 1, tí falado e tô logo depois. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "R",
@@ -951,22 +951,22 @@
     {
      "who": "R",
      "text": "Compasso 41: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, “E” falado e To no finzinho.",
-     "speech": "Compasso 41: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, é falado e tô no finzinho."
+     "speech": "Compasso 41: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, é falado e tô no finzinho."
     },
     {
      "who": "R",
      "text": "Compasso 42: tempo 1, ro; tempo 2, po; tempo 3, Pa; tempo 4, po1.",
-     "speech": "Compasso 42: tempo 1, rô. tempo 2, pô. tempo 3, pá. tempo 4, pô 1."
+     "speech": "Compasso 42: tempo 1, rô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 1."
     },
     {
      "who": "R",
      "text": "Compasso 44: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, “E” falado e to no finzinho.",
-     "speech": "Compasso 44: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, é falado e tô no finzinho."
+     "speech": "Compasso 44: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, é falado e tô no finzinho."
     },
     {
      "who": "R",
      "text": "Compasso 45: tempo 1, ro; tempo 2, po; tempo 3, Pa; tempo 4, po3.",
-     "speech": "Compasso 45: tempo 1, rô. tempo 2, pô. tempo 3, pá. tempo 4, pô 3."
+     "speech": "Compasso 45: tempo 1, rô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô 3."
     },
     {
      "who": "R",
@@ -976,7 +976,7 @@
     {
      "who": "R",
      "text": "Compasso 46: tempo 1, Pa; tempo 2, “E” falado e Pa no meio; tempo 3, po; tempo 4, “E” falado e po no meio.",
-     "speech": "Compasso 46: tempo 1, pá. tempo 2, é falado e pá no meio. tempo 3, pô. tempo 4, é falado e pô no meio."
+     "speech": "Compasso 46: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô. Tempo 4, é falado e pô no meio."
     },
     {
      "who": "R",
@@ -986,7 +986,7 @@
     {
      "who": "R",
      "text": "Compasso 47: tempo 1, Pa; tempo 2, “E” falado e Pa no meio; tempo 3, po e po no finzinho; tempo 4, “E” falado e po no meio.",
-     "speech": "Compasso 47: tempo 1, pá. tempo 2, é falado e pá no meio. tempo 3, pô e pô no finzinho. tempo 4, é falado e pô no meio."
+     "speech": "Compasso 47: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pô no meio."
     },
     {
      "who": "R",
@@ -1036,7 +1036,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -1051,12 +1051,12 @@
     {
      "who": "R",
      "text": "Compasso 1: tempo 1, Pa; tempo 2, “E” falado e Pa no meio; tempo 3, po; tempo 4, “E” falado e po no meio.",
-     "speech": "Compasso 1: tempo 1, pá. tempo 2, é falado e pá no meio. tempo 3, pô. tempo 4, é falado e pô no meio."
+     "speech": "Compasso 1: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô. Tempo 4, é falado e pô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 2: tempo 1, Pa; tempo 2, “E” falado e Pa no meio; tempo 3, po e po no finzinho; tempo 4, “E” falado e po no meio.",
-     "speech": "Compasso 2: tempo 1, pá. tempo 2, é falado e pá no meio. tempo 3, pô e pô no finzinho. tempo 4, é falado e pô no meio."
+     "speech": "Compasso 2: tempo 1, pá. Tempo 2, é falado e pá no meio. Tempo 3, pô e pô no finzinho. Tempo 4, é falado e pô no meio."
     },
     {
      "who": "T",
@@ -1106,12 +1106,12 @@
     {
      "who": "R",
      "text": "Compasso 3: tempo 1, To; tempo 2, Pa e po no meio; tempo 3, Pa; tempo 4, “E” falado.",
-     "speech": "Compasso 3: tempo 1, tô. tempo 2, pá e pô no meio. tempo 3, pá. tempo 4, é falado."
+     "speech": "Compasso 3: tempo 1, tô. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, é falado."
     },
     {
      "who": "R",
      "text": "Compasso 4: tempo 1, To e po no meio e ro no finzinho; tempo 2, Pa e po no meio; tempo 3, Pa; tempo 4, “E” falado.",
-     "speech": "Compasso 4: tempo 1, tô e pô no meio e rô no finzinho. tempo 2, pá e pô no meio. tempo 3, pá. tempo 4, é falado."
+     "speech": "Compasso 4: tempo 1, tô e pô no meio e rô no finzinho. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, é falado."
     },
     {
      "who": "T",
@@ -1121,12 +1121,12 @@
     {
      "who": "R",
      "text": "Compasso 5: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, po.",
-     "speech": "Compasso 5: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, pô."
+     "speech": "Compasso 5: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô."
     },
     {
      "who": "R",
      "text": "Compasso 6: tempo 1, To; tempo 2, To e po no meio; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 6: tempo 1, tô. tempo 2, tô e pô no meio. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 6: tempo 1, tô. Tempo 2, tô e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "T",
@@ -1156,12 +1156,12 @@
     {
      "who": "R",
      "text": "Compasso 7: tempo 1, To; tempo 2, “E” falado; tempo 3, To; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 7: tempo 1, tô. tempo 2, é falado. tempo 3, tô. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 7: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 8: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, Pa; tempo 4, po.",
-     "speech": "Compasso 8: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, pá. tempo 4, pô."
+     "speech": "Compasso 8: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, pá. Tempo 4, pô."
     },
     {
      "who": "T",
@@ -1171,12 +1171,12 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To; tempo 2, “E” falado; tempo 3, To e To no meio; tempo 4, To.",
-     "speech": "Compasso 9: tempo 1, tô. tempo 2, é falado. tempo 3, tô e tô no meio. tempo 4, tô."
+     "speech": "Compasso 9: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e tô no meio. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 10: tempo 1, “E” falado e To no meio; tempo 2, “E” falado e To no meio; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 10: tempo 1, é falado e tô no meio. tempo 2, é falado e tô no meio. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 10: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "T",
@@ -1191,12 +1191,12 @@
     {
      "who": "R",
      "text": "Compasso 11: tempo 1, To e To no meio; tempo 2, conta 1; tempo 3, “E” falado e To no meio; tempo 4, To e To no meio.",
-     "speech": "Compasso 11: tempo 1, tô e tô no meio. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 11: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 12: tempo 1, “E” falado e To no meio; tempo 2, “E” falado e To no meio; tempo 3, Pa; tempo 4, po.",
-     "speech": "Compasso 12: tempo 1, é falado e tô no meio. tempo 2, é falado e tô no meio. tempo 3, pá. tempo 4, pô."
+     "speech": "Compasso 12: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, pá. Tempo 4, pô."
     },
     {
      "who": "T",
@@ -1206,12 +1206,12 @@
     {
      "who": "R",
      "text": "Compasso 13: tempo 1, To; tempo 2, “E” falado; tempo 3, To e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 13: tempo 1, tô. tempo 2, é falado. tempo 3, tô e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 13: tempo 1, tô. Tempo 2, é falado. Tempo 3, tô e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 14: tempo 1, To e po no meio e ro no finzinho; tempo 2, Pa e po no meio; tempo 3, “E” falado e po no meio e ro no finzinho; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 14: tempo 1, tô e pô no meio e rô no finzinho. tempo 2, pá e pô no meio. tempo 3, é falado e pô no meio e rô no finzinho. tempo 4, pá e pô no meio."
+     "speech": "Compasso 14: tempo 1, tô e pô no meio e rô no finzinho. Tempo 2, pá e pô no meio. Tempo 3, é falado e pô no meio e rô no finzinho. Tempo 4, pá e pô no meio."
     },
     {
      "who": "T",
@@ -1236,12 +1236,12 @@
     {
      "who": "R",
      "text": "Compasso 15: tempo 1, To e Pa no meio e ra no finzinho; tempo 2, po e po no meio e ro no finzinho; tempo 3, Pa e Pa no meio e ra no finzinho; tempo 4, po e To no meio.",
-     "speech": "Compasso 15: tempo 1, tô e pá no meio e rá no finzinho. tempo 2, pô e pô no meio e rô no finzinho. tempo 3, pá e pá no meio e rá no finzinho. tempo 4, pô e tô no meio."
+     "speech": "Compasso 15: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pô e pô no meio e rô no finzinho. Tempo 3, pá e pá no meio e rá no finzinho. Tempo 4, pô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 16: tempo 1, To e Pa no meio e ra no finzinho; tempo 2, po e to logo depois e Pa no meio e Pa no finzinho; tempo 3, To e po no meio e ro no finzinho; tempo 4, Pa e To no meio.",
-     "speech": "Compasso 16: tempo 1, tô e pá no meio e rá no finzinho. tempo 2, pô e tô logo depois e pá no meio e pá no finzinho. tempo 3, tô e pô no meio e rô no finzinho. tempo 4, pá e tô no meio."
+     "speech": "Compasso 16: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pô e tô logo depois e pá no meio e pá no finzinho. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio."
     },
     {
      "who": "T",
@@ -1251,12 +1251,12 @@
     {
      "who": "R",
      "text": "Compasso 17: tempo 1, To e Pa no meio e ga no finzinho; tempo 2, ra e ga logo depois e po no meio e go no finzinho; tempo 3, ro e go logo depois e Pa no meio e ra no finzinho; tempo 4, Pa e To no meio.",
-     "speech": "Compasso 17: tempo 1, tô e pá no meio e gá no finzinho. tempo 2, rá e gá logo depois e pô no meio e gô no finzinho. tempo 3, rô e gô logo depois e pá no meio e rá no finzinho. tempo 4, pá e tô no meio."
+     "speech": "Compasso 17: tempo 1, tô e pá no meio e gá no finzinho. Tempo 2, rá e gá logo depois e pô no meio e gô no finzinho. Tempo 3, rô e gô logo depois e pá no meio e rá no finzinho. Tempo 4, pá e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 18: tempo 1, To e Pa no meio e ra no finzinho; tempo 2, Pa e po no meio e ro no finzinho; tempo 3, To e To no meio; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 18: tempo 1, tô e pá no meio e rá no finzinho. tempo 2, pá e pô no meio e rô no finzinho. tempo 3, tô e tô no meio. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 18: tempo 1, tô e pá no meio e rá no finzinho. Tempo 2, pá e pô no meio e rô no finzinho. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
@@ -1266,12 +1266,12 @@
     {
      "who": "R",
      "text": "Compasso 19: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, conta 1; tempo 4, conta 2.",
-     "speech": "Compasso 19: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, conta 1. tempo 4, conta 2."
+     "speech": "Compasso 19: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, conta 2."
     },
     {
      "who": "R",
      "text": "Compasso 20: tempo 1, conta 3; tempo 2, conta 4; tempo 3, conta 5; tempo 4, conta 6.",
-     "speech": "Compasso 20: tempo 1, conta 3. tempo 2, conta 4. tempo 3, conta 5. tempo 4, conta 6."
+     "speech": "Compasso 20: tempo 1, conta 3. Tempo 2, conta 4. Tempo 3, conta 5. Tempo 4, conta 6."
     },
     {
      "who": "T",
@@ -1281,7 +1281,7 @@
     {
      "who": "R",
      "text": "Compasso 21: tempo 1, conta 7; tempo 2, conta 8; tempo 3, To; tempo 4, conta 1.",
-     "speech": "Compasso 21: tempo 1, conta 7. tempo 2, conta 8. tempo 3, tô. tempo 4, conta 1."
+     "speech": "Compasso 21: tempo 1, conta 7. Tempo 2, conta 8. Tempo 3, tô. Tempo 4, conta 1."
     },
     {
      "who": "R",
@@ -1291,7 +1291,7 @@
     {
      "who": "R",
      "text": "Compasso 22: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, conta 1.",
-     "speech": "Compasso 22: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, conta 1."
+     "speech": "Compasso 22: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1."
     },
     {
      "who": "R",
@@ -1301,7 +1301,7 @@
     {
      "who": "R",
      "text": "Compasso 23: tempo 1, To e To no meio; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, conta 2.",
-     "speech": "Compasso 23: tempo 1, tô e tô no meio. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, conta 2."
+     "speech": "Compasso 23: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 2."
     },
     {
      "who": "T",
@@ -1311,17 +1311,17 @@
     {
      "who": "R",
      "text": "Compasso 25: tempo 1, To e To no meio; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, To e To no meio.",
-     "speech": "Compasso 25: tempo 1, tô e tô no meio. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 25: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 26: tempo 1, “E” falado e To no meio; tempo 2, To; tempo 3, To e To no meio; tempo 4, To e To no meio.",
-     "speech": "Compasso 26: tempo 1, é falado e tô no meio. tempo 2, tô. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 26: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 27: tempo 1, “E” falado e To no meio; tempo 2, “E” falado e To no meio; tempo 3, conta 1; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 27: tempo 1, é falado e tô no meio. tempo 2, é falado e tô no meio. tempo 3, conta 1. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 27: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
@@ -1336,22 +1336,22 @@
     {
      "who": "R",
      "text": "Compasso 29: tempo 1, To; tempo 2, To e To no meio; tempo 3, To e To no meio; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 29: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, tô e tô no meio. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 29: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 30: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e To no meio; tempo 4, To.",
-     "speech": "Compasso 30: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, tô."
+     "speech": "Compasso 30: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 31: tempo 1, To; tempo 2, conta 1; tempo 3, To e To no finzinho; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 31: tempo 1, tô. tempo 2, conta 1. tempo 3, tô e tô no finzinho. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 31: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 32: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 32: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 32: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "R",
@@ -1391,27 +1391,27 @@
     {
      "who": "R",
      "text": "Compasso 41: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e To no meio; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 41: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 41: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 42: tempo 1, To e To no meio; tempo 2, “E” falado e To no meio; tempo 3, “E” falado e To no meio; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 42: tempo 1, tô e tô no meio. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 42: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 43: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 43: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 43: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 44: tempo 1, To e To no meio; tempo 2, To; tempo 3, conta 1; tempo 4, To e to no meio.",
-     "speech": "Compasso 44: tempo 1, tô e tô no meio. tempo 2, tô. tempo 3, conta 1. tempo 4, tô e tô no meio."
+     "speech": "Compasso 44: tempo 1, tô e tô no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 45: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To e to no meio.",
-     "speech": "Compasso 45: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 45: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -1451,7 +1451,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -1486,12 +1486,12 @@
     {
      "who": "R",
      "text": "Compasso 2: tempo 1, To; tempo 2, To e to no meio; tempo 3, To e po no meio e ro no finzinho; tempo 4, Pa e to no meio.",
-     "speech": "Compasso 2: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, tô e pô no meio e rô no finzinho. tempo 4, pá e tô no meio."
+     "speech": "Compasso 2: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 3: tempo 1, To e to no meio; tempo 2, To e to no meio; tempo 3, To e to no meio; tempo 4, To.",
-     "speech": "Compasso 3: tempo 1, tô e tô no meio. tempo 2, tô e tô no meio. tempo 3, tô e tô no meio. tempo 4, tô."
+     "speech": "Compasso 3: tempo 1, tô e tô no meio. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -1501,7 +1501,7 @@
     {
      "who": "R",
      "text": "Compasso 4: tempo 1, To e to no meio; tempo 2, To e po no meio; tempo 3, Pa e po no meio; tempo 4, Pa.",
-     "speech": "Compasso 4: tempo 1, tô e tô no meio. tempo 2, tô e pô no meio. tempo 3, pá e pô no meio. tempo 4, pá."
+     "speech": "Compasso 4: tempo 1, tô e tô no meio. Tempo 2, tô e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá."
     },
     {
      "who": "T",
@@ -1551,7 +1551,7 @@
     {
      "who": "R",
      "text": "Compasso 5: tempo 1, To e to no finzinho; tempo 2, to no meio e ro no finzinho; tempo 3, to e to no meio e ro no finzinho; tempo 4, to logo depois.",
-     "speech": "Compasso 5: tempo 1, tô e tô no finzinho. tempo 2, tô no meio e rô no finzinho. tempo 3, tô e tô no meio e rô no finzinho. tempo 4, tô logo depois."
+     "speech": "Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, tô no meio e rô no finzinho. Tempo 3, tô e tô no meio e rô no finzinho. Tempo 4, tô logo depois."
     },
     {
      "who": "R",
@@ -1561,7 +1561,7 @@
     {
      "who": "R",
      "text": "Compasso 7: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To e to no meio.",
-     "speech": "Compasso 7: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 7: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "T",
@@ -1571,7 +1571,7 @@
     {
      "who": "R",
      "text": "Compasso 8: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 8: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 8: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -1601,12 +1601,12 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 9: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, pô e pá no meio."
+     "speech": "Compasso 9: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, pô e pá no meio."
     },
     {
      "who": "R",
      "text": "Compasso 10: tempo 1, po; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 10: tempo 1, pô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 10: tempo 1, pô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -1616,12 +1616,12 @@
     {
      "who": "R",
      "text": "Compasso 11: tempo 1, “E” falado; tempo 2, To; tempo 3, To; tempo 4, To e go logo depois e ro no meio e go no finzinho.",
-     "speech": "Compasso 11: tempo 1, é falado. tempo 2, tô. tempo 3, tô. tempo 4, tô e gô logo depois e rô no meio e gô no finzinho."
+     "speech": "Compasso 11: tempo 1, é falado. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e gô logo depois e rô no meio e gô no finzinho."
     },
     {
      "who": "R",
      "text": "Compasso 12: tempo 1, To; tempo 2, To e Pa no meio; tempo 3, Pa e Pa no meio; tempo 4, To.",
-     "speech": "Compasso 12: tempo 1, tô. tempo 2, tô e pá no meio. tempo 3, pá e pá no meio. tempo 4, tô."
+     "speech": "Compasso 12: tempo 1, tô. Tempo 2, tô e pá no meio. Tempo 3, pá e pá no meio. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -1651,12 +1651,12 @@
     {
      "who": "R",
      "text": "Compasso 13: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 13: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 13: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "R",
      "text": "Compasso 15: tempo 1, “E” falado e to no meio; tempo 2, “E” falado e to no meio; tempo 3, “E” falado e to logo depois e to no finzinho; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 15: tempo 1, é falado e tô no meio. tempo 2, é falado e tô no meio. tempo 3, é falado e tô logo depois e tô no finzinho. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 15: tempo 1, é falado e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô logo depois e tô no finzinho. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "T",
@@ -1711,7 +1711,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -1726,12 +1726,12 @@
     {
      "who": "R",
      "text": "Compasso 1: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 1: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 1: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "R",
      "text": "Compasso 2: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 2: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 2: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -1741,12 +1741,12 @@
     {
      "who": "R",
      "text": "Compasso 3: tempo 1, conta 2; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 3: tempo 1, conta 2. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 3: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "R",
      "text": "Compasso 4: tempo 1, conta 4; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 4: tempo 1, conta 4. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 4: tempo 1, conta 4. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -1776,7 +1776,7 @@
     {
      "who": "R",
      "text": "Compasso 5: tempo 1, To e po no finzinho; tempo 2, “E” falado e Pa no meio; tempo 3, “E” falado e Pa no finzinho; tempo 4, “E” falado e po no meio.",
-     "speech": "Compasso 5: tempo 1, tô e pô no finzinho. tempo 2, é falado e pá no meio. tempo 3, é falado e pá no finzinho. tempo 4, é falado e pô no meio."
+     "speech": "Compasso 5: tempo 1, tô e pô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, é falado e pá no finzinho. Tempo 4, é falado e pô no meio."
     },
     {
      "who": "R",
@@ -1786,7 +1786,7 @@
     {
      "who": "R",
      "text": "Compasso 6: tempo 1, Pa; tempo 2, “E” falado e po no meio; tempo 3, Pa e po no finzinho; tempo 4, “E” falado e Pa no meio.",
-     "speech": "Compasso 6: tempo 1, pá. tempo 2, é falado e pô no meio. tempo 3, pá e pô no finzinho. tempo 4, é falado e pá no meio."
+     "speech": "Compasso 6: tempo 1, pá. Tempo 2, é falado e pô no meio. Tempo 3, pá e pô no finzinho. Tempo 4, é falado e pá no meio."
     },
     {
      "who": "R",
@@ -1856,12 +1856,12 @@
     {
      "who": "R",
      "text": "Compasso 13: tempo 1, tercina: To, “ti” falado, po; tempo 2, tercina: “ti” falado, po, “ti” falado; tempo 3, tercina: To, “ti” falado, Pa; tempo 4, tercina: “ti” falado, Pa, “ti” falado.",
-     "speech": "Compasso 13: tempo 1, tercina: tô, tí falado, pô. tempo 2, tercina: tí falado, pô, tí falado. tempo 3, tercina: tô, tí falado, pá. tempo 4, tercina: tí falado, pá, tí falado."
+     "speech": "Compasso 13: tempo 1, tercina: tô, tí falado, pô. Tempo 2, tercina: tí falado, pô, tí falado. Tempo 3, tercina: tô, tí falado, pá. Tempo 4, tercina: tí falado, pá, tí falado."
     },
     {
      "who": "R",
      "text": "Compasso 14: tempo 1, tercina: To, pausa, pausa; tempo 2, tercina: “E” falado, pausa, pausa; tempo 3, tercina: To, “ti” falado, to; tempo 4, tercina: “ti” falado, to, “ti” falado.",
-     "speech": "Compasso 14: tempo 1, tercina: tô, pausa, pausa. tempo 2, tercina: é falado, pausa, pausa. tempo 3, tercina: tô, tí falado, tô. tempo 4, tercina: tí falado, tô, tí falado."
+     "speech": "Compasso 14: tempo 1, tercina: tô, pausa, pausa. Tempo 2, tercina: é falado, pausa, pausa. Tempo 3, tercina: tô, tí falado, tô. Tempo 4, tercina: tí falado, tô, tí falado."
     },
     {
      "who": "T",
@@ -1871,12 +1871,12 @@
     {
      "who": "R",
      "text": "Compasso 15: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, “E” falado; tempo 4, To.",
-     "speech": "Compasso 15: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, é falado. tempo 4, tô."
+     "speech": "Compasso 15: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 16: tempo 1, “E” falado e to no meio; tempo 2, “E” falado; tempo 3, To; tempo 4, conta 4.",
-     "speech": "Compasso 16: tempo 1, é falado e tô no meio. tempo 2, é falado. tempo 3, tô. tempo 4, conta 4."
+     "speech": "Compasso 16: tempo 1, é falado e tô no meio. Tempo 2, é falado. Tempo 3, tô. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -1886,12 +1886,12 @@
     {
      "who": "R",
      "text": "Compasso 17: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, To e to no meio e go no finzinho.",
-     "speech": "Compasso 17: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, tô e tô no meio e gô no finzinho."
+     "speech": "Compasso 17: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tô e tô no meio e gô no finzinho."
     },
     {
      "who": "R",
      "text": "Compasso 18: tempo 1, ro e to no meio; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 18: tempo 1, rô e tô no meio. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 18: tempo 1, rô e tô no meio. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -1941,12 +1941,12 @@
     {
      "who": "R",
      "text": "Compasso 25: tempo 1, To e to no finzinho; tempo 2, “E” falado e to no meio; tempo 3, To e to no finzinho; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 25: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô e tô no finzinho. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 25: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 26: tempo 1, To e to no finzinho; tempo 2, “E” falado e to logo depois e to no meio; tempo 3, To; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 26: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô logo depois e tô no meio. tempo 3, tô. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 26: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô logo depois e tô no meio. Tempo 3, tô. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "T",
@@ -1956,7 +1956,7 @@
     {
      "who": "R",
      "text": "Compasso 27: tempo 1, to e to no meio; tempo 2, conta 1; tempo 3, conta 2; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 27: tempo 1, tô e tô no meio. tempo 2, conta 1. tempo 3, conta 2. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 27: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
@@ -1966,12 +1966,12 @@
     {
      "who": "R",
      "text": "Compasso 28: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 28: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 28: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 29: tempo 1, To e to no meio; tempo 2, conta 3; tempo 3, conta 4; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 29: tempo 1, tô e tô no meio. tempo 2, conta 3. tempo 3, conta 4. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 29: tempo 1, tô e tô no meio. Tempo 2, conta 3. Tempo 3, conta 4. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "T",
@@ -1981,7 +1981,7 @@
     {
      "who": "R",
      "text": "Compasso 30: tempo 1, To; tempo 2, To; tempo 3, To e to no finzinho; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 30: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no finzinho. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 30: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
@@ -2021,7 +2021,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -2036,12 +2036,12 @@
     {
      "who": "R",
      "text": "Compasso 1: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e to no meio; tempo 4, to logo depois.",
-     "speech": "Compasso 1: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+     "speech": "Compasso 1: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
     },
     {
      "who": "R",
      "text": "Compasso 2: tempo 1, To; tempo 2, conta 2; tempo 3, “E” falado e to no meio; tempo 4, “E” falado.",
-     "speech": "Compasso 2: tempo 1, tô. tempo 2, conta 2. tempo 3, é falado e tô no meio. tempo 4, é falado."
+     "speech": "Compasso 2: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio. Tempo 4, é falado."
     },
     {
      "who": "T",
@@ -2051,12 +2051,12 @@
     {
      "who": "R",
      "text": "Compasso 3: tempo 1, To; tempo 2, conta 3; tempo 3, “E” falado e to no meio; tempo 4, to logo depois.",
-     "speech": "Compasso 3: tempo 1, tô. tempo 2, conta 3. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+     "speech": "Compasso 3: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
     },
     {
      "who": "R",
      "text": "Compasso 4: tempo 1, To; tempo 2, conta 4; tempo 3, “E” falado e to no meio; tempo 4, to logo depois.",
-     "speech": "Compasso 4: tempo 1, tô. tempo 2, conta 4. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+     "speech": "Compasso 4: tempo 1, tô. Tempo 2, conta 4. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
     },
     {
      "who": "T",
@@ -2116,12 +2116,12 @@
     {
      "who": "R",
      "text": "Compasso 5: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e to no meio e ro no finzinho; tempo 4, to logo depois e ro no meio.",
-     "speech": "Compasso 5: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio e rô no finzinho. tempo 4, tô logo depois e rô no meio."
+     "speech": "Compasso 5: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 6: tempo 1, To; tempo 2, conta 2; tempo 3, “E” falado e to no meio e ro no finzinho; tempo 4, to logo depois e ro no meio.",
-     "speech": "Compasso 6: tempo 1, tô. tempo 2, conta 2. tempo 3, é falado e tô no meio e rô no finzinho. tempo 4, tô logo depois e rô no meio."
+     "speech": "Compasso 6: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio."
     },
     {
      "who": "T",
@@ -2131,12 +2131,12 @@
     {
      "who": "R",
      "text": "Compasso 7: tempo 1, To; tempo 2, conta 3; tempo 3, “E” falado e to no meio e ro no finzinho; tempo 4, to logo depois e ro no meio.",
-     "speech": "Compasso 7: tempo 1, tô. tempo 2, conta 3. tempo 3, é falado e tô no meio e rô no finzinho. tempo 4, tô logo depois e rô no meio."
+     "speech": "Compasso 7: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 8: tempo 1, To; tempo 2, conta 4; tempo 3, “E” falado e To no meio; tempo 4, To logo depois.",
-     "speech": "Compasso 8: tempo 1, tô. tempo 2, conta 4. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+     "speech": "Compasso 8: tempo 1, tô. Tempo 2, conta 4. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
     },
     {
      "who": "T",
@@ -2146,7 +2146,7 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 9: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 9: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "R",
@@ -2166,7 +2166,7 @@
     {
      "who": "R",
      "text": "Compasso 10: tempo 1, To e to logo depois e to no finzinho; tempo 2, “E” falado e to no meio e to no finzinho; tempo 3, to logo depois e to no meio; tempo 4, “ti” falado e to logo depois e to no finzinho.",
-     "speech": "Compasso 10: tempo 1, tô e tô logo depois e tô no finzinho. tempo 2, é falado e tô no meio e tô no finzinho. tempo 3, tô logo depois e tô no meio. tempo 4, tí falado e tô logo depois e tô no finzinho."
+     "speech": "Compasso 10: tempo 1, tô e tô logo depois e tô no finzinho. Tempo 2, é falado e tô no meio e tô no finzinho. Tempo 3, tô logo depois e tô no meio. Tempo 4, tí falado e tô logo depois e tô no finzinho."
     },
     {
      "who": "R",
@@ -2176,7 +2176,7 @@
     {
      "who": "R",
      "text": "Compasso 11: tempo 1, to e to no meio e to no finzinho; tempo 2, to logo depois e to no meio; tempo 3, to e To logo depois e to no finzinho; tempo 4, “E” falado.",
-     "speech": "Compasso 11: tempo 1, tô e tô no meio e tô no finzinho. tempo 2, tô logo depois e tô no meio. tempo 3, tô e tô logo depois e tô no finzinho. tempo 4, é falado."
+     "speech": "Compasso 11: tempo 1, tô e tô no meio e tô no finzinho. Tempo 2, tô logo depois e tô no meio. Tempo 3, tô e tô logo depois e tô no finzinho. Tempo 4, é falado."
     },
     {
      "who": "T",
@@ -2186,7 +2186,7 @@
     {
      "who": "R",
      "text": "Compasso 13: tempo 1, to e to no meio e to no finzinho; tempo 2, to logo depois e to no meio; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 13: tempo 1, tô e tô no meio e tô no finzinho. tempo 2, tô logo depois e tô no meio. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 13: tempo 1, tô e tô no meio e tô no finzinho. Tempo 2, tô logo depois e tô no meio. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -2216,12 +2216,12 @@
     {
      "who": "R",
      "text": "Compasso 18: tempo 1, To e to no finzinho; tempo 2, conta 1; tempo 3, To e to no finzinho; tempo 4, conta 2.",
-     "speech": "Compasso 18: tempo 1, tô e tô no finzinho. tempo 2, conta 1. tempo 3, tô e tô no finzinho. tempo 4, conta 2."
+     "speech": "Compasso 18: tempo 1, tô e tô no finzinho. Tempo 2, conta 1. Tempo 3, tô e tô no finzinho. Tempo 4, conta 2."
     },
     {
      "who": "R",
      "text": "Compasso 19: tempo 1, To e to no finzinho; tempo 2, conta 3; tempo 3, To e to no finzinho; tempo 4, conta 4.",
-     "speech": "Compasso 19: tempo 1, tô e tô no finzinho. tempo 2, conta 3. tempo 3, tô e tô no finzinho. tempo 4, conta 4."
+     "speech": "Compasso 19: tempo 1, tô e tô no finzinho. Tempo 2, conta 3. Tempo 3, tô e tô no finzinho. Tempo 4, conta 4."
     },
     {
      "who": "R",
@@ -2231,7 +2231,7 @@
     {
      "who": "R",
      "text": "Compasso 20: tempo 1, To e to no finzinho; tempo 2, “ti” falado e to logo depois; tempo 3, To e to no finzinho; tempo 4, “ti” falado e to logo depois.",
-     "speech": "Compasso 20: tempo 1, tô e tô no finzinho. tempo 2, tí falado e tô logo depois. tempo 3, tô e tô no finzinho. tempo 4, tí falado e tô logo depois."
+     "speech": "Compasso 20: tempo 1, tô e tô no finzinho. Tempo 2, tí falado e tô logo depois. Tempo 3, tô e tô no finzinho. Tempo 4, tí falado e tô logo depois."
     },
     {
      "who": "R",
@@ -2241,7 +2241,7 @@
     {
      "who": "R",
      "text": "Compasso 22: tempo 1, To e to no finzinho; tempo 2, “ti” falado e to logo depois; tempo 3, To e to no finzinho; tempo 4, conta 1.",
-     "speech": "Compasso 22: tempo 1, tô e tô no finzinho. tempo 2, tí falado e tô logo depois. tempo 3, tô e tô no finzinho. tempo 4, conta 1."
+     "speech": "Compasso 22: tempo 1, tô e tô no finzinho. Tempo 2, tí falado e tô logo depois. Tempo 3, tô e tô no finzinho. Tempo 4, conta 1."
     },
     {
      "who": "R",
@@ -2281,7 +2281,7 @@
     {
      "who": "R",
      "text": "Compasso 29: tempo 1, To e to no meio; tempo 2, “E” falado e to no meio; tempo 3, “E” falado e to no meio; tempo 4, To.",
-     "speech": "Compasso 29: tempo 1, tô e tô no meio. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, tô."
+     "speech": "Compasso 29: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô."
     },
     {
      "who": "R",
@@ -2296,7 +2296,7 @@
     {
      "who": "R",
      "text": "Compasso 34: tempo 1, To e to no meio; tempo 2, To e to no meio; tempo 3, To e to no meio; tempo 4, To e to no meio.",
-     "speech": "Compasso 34: tempo 1, tô e tô no meio. tempo 2, tô e tô no meio. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 34: tempo 1, tô e tô no meio. Tempo 2, tô e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -2311,7 +2311,7 @@
     {
      "who": "R",
      "text": "Compasso 36: tempo 1, To; tempo 2, conta 1; tempo 3, To e to no meio e ro no finzinho; tempo 4, to logo depois e ro no meio.",
-     "speech": "Compasso 36: tempo 1, tô. tempo 2, conta 1. tempo 3, tô e tô no meio e rô no finzinho. tempo 4, tô logo depois e rô no meio."
+     "speech": "Compasso 36: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e tô no meio e rô no finzinho. Tempo 4, tô logo depois e rô no meio."
     },
     {
      "who": "R",
@@ -2326,7 +2326,7 @@
     {
      "who": "R",
      "text": "Compasso 37: tempo 1, To; tempo 2, conta 2; tempo 3, “E” falado e to no meio; tempo 4, to logo depois.",
-     "speech": "Compasso 37: tempo 1, tô. tempo 2, conta 2. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+     "speech": "Compasso 37: tempo 1, tô. Tempo 2, conta 2. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
     },
     {
      "who": "R",
@@ -2371,7 +2371,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -2386,12 +2386,12 @@
     {
      "who": "R",
      "text": "Compasso 1: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 1: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 1: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "R",
      "text": "Compasso 2: tempo 1, conta 5; tempo 2, conta 6; tempo 3, po e Pa no meio; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 2: tempo 1, conta 5. tempo 2, conta 6. tempo 3, pô e pá no meio. tempo 4, pô e pá no meio."
+     "speech": "Compasso 2: tempo 1, conta 5. Tempo 2, conta 6. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio."
     },
     {
      "who": "T",
@@ -2431,12 +2431,12 @@
     {
      "who": "R",
      "text": "Compasso 3: tempo 1, To; tempo 2, conta 1; tempo 3, To e ro logo depois e to no finzinho; tempo 4, to e to no meio.",
-     "speech": "Compasso 3: tempo 1, tô. tempo 2, conta 1. tempo 3, tô e rô logo depois e tô no finzinho. tempo 4, tô e tô no meio."
+     "speech": "Compasso 3: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô e rô logo depois e tô no finzinho. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 4: tempo 1, To; tempo 2, conta 2; tempo 3, po e Pa no meio; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 4: tempo 1, tô. tempo 2, conta 2. tempo 3, pô e pá no meio. tempo 4, pô e pá no meio."
+     "speech": "Compasso 4: tempo 1, tô. Tempo 2, conta 2. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio."
     },
     {
      "who": "T",
@@ -2446,12 +2446,12 @@
     {
      "who": "R",
      "text": "Compasso 5: tempo 1, To; tempo 2, conta 3; tempo 3, To e ro logo depois e to no finzinho; tempo 4, to e to no meio.",
-     "speech": "Compasso 5: tempo 1, tô. tempo 2, conta 3. tempo 3, tô e rô logo depois e tô no finzinho. tempo 4, tô e tô no meio."
+     "speech": "Compasso 5: tempo 1, tô. Tempo 2, conta 3. Tempo 3, tô e rô logo depois e tô no finzinho. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 6: tempo 1, To; tempo 2, conta 4; tempo 3, po e Pa no meio; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 6: tempo 1, tô. tempo 2, conta 4. tempo 3, pô e pá no meio. tempo 4, pô e pá no meio."
+     "speech": "Compasso 6: tempo 1, tô. Tempo 2, conta 4. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio."
     },
     {
      "who": "T",
@@ -2491,12 +2491,12 @@
     {
      "who": "R",
      "text": "Compasso 7: tempo 1, Pa; tempo 2, po; tempo 3, Pa; tempo 4, po.",
-     "speech": "Compasso 7: tempo 1, pá. tempo 2, pô. tempo 3, pá. tempo 4, pô."
+     "speech": "Compasso 7: tempo 1, pá. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô."
     },
     {
      "who": "R",
      "text": "Compasso 8: tempo 1, Pa e po no meio; tempo 2, Pa e po no meio; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 8: tempo 1, pá e pô no meio. tempo 2, pá e pô no meio. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 8: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "T",
@@ -2506,7 +2506,7 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To e to no finzinho; tempo 2, to no finzinho; tempo 3, ro e to logo depois e to no finzinho; tempo 4, to e to no meio.",
-     "speech": "Compasso 9: tempo 1, tô e tô no finzinho. tempo 2, tô no finzinho. tempo 3, rô e tô logo depois e tô no finzinho. tempo 4, tô e tô no meio."
+     "speech": "Compasso 9: tempo 1, tô e tô no finzinho. Tempo 2, tô no finzinho. Tempo 3, rô e tô logo depois e tô no finzinho. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -2516,7 +2516,7 @@
     {
      "who": "R",
      "text": "Compasso 12: tempo 1, po e Pa no meio; tempo 2, po e Pa no meio; tempo 3, po e Pa logo depois e Pa no finzinho; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 12: tempo 1, pô e pá no meio. tempo 2, pô e pá no meio. tempo 3, pô e pá logo depois e pá no finzinho. tempo 4, pô e pá no meio."
+     "speech": "Compasso 12: tempo 1, pô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pá logo depois e pá no finzinho. Tempo 4, pô e pá no meio."
     },
     {
      "who": "T",
@@ -2536,12 +2536,12 @@
     {
      "who": "R",
      "text": "Compasso 13: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To e to no meio.",
-     "speech": "Compasso 13: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 13: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 14: tempo 1, To; tempo 2, “E” falado e to no meio; tempo 3, “ti” falado e to logo depois; tempo 4, To.",
-     "speech": "Compasso 14: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tí falado e tô logo depois. tempo 4, tô."
+     "speech": "Compasso 14: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tí falado e tô logo depois. Tempo 4, tô."
     },
     {
      "who": "R",
@@ -2556,7 +2556,7 @@
     {
      "who": "R",
      "text": "Compasso 15: tempo 1, To; tempo 2, “E” falado e to no meio; tempo 3, “E” falado e to no meio; tempo 4, To.",
-     "speech": "Compasso 15: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, tô."
+     "speech": "Compasso 15: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -2581,12 +2581,12 @@
     {
      "who": "R",
      "text": "Compasso 18: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e Pa no meio; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 18: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e pá no meio. tempo 4, pô e pá no meio."
+     "speech": "Compasso 18: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio."
     },
     {
      "who": "R",
      "text": "Compasso 19: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 19: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 19: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -2596,12 +2596,12 @@
     {
      "who": "R",
      "text": "Compasso 20: tempo 1, To; tempo 2, conta 3; tempo 3, “E” falado e Pa no meio; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 20: tempo 1, tô. tempo 2, conta 3. tempo 3, é falado e pá no meio. tempo 4, pô e pá no meio."
+     "speech": "Compasso 20: tempo 1, tô. Tempo 2, conta 3. Tempo 3, é falado e pá no meio. Tempo 4, pô e pá no meio."
     },
     {
      "who": "R",
      "text": "Compasso 21: tempo 1, To; tempo 2, To; tempo 3, To e to no meio; tempo 4, To e to no meio.",
-     "speech": "Compasso 21: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 21: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -2641,7 +2641,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -2656,12 +2656,12 @@
     {
      "who": "R",
      "text": "Compasso 1: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, To e To no meio.",
-     "speech": "Compasso 1: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, tô e tô no meio."
+     "speech": "Compasso 1: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 2: tempo 1, To e po no finzinho; tempo 2, Pa; tempo 3, To e Pa no finzinho; tempo 4, po e To no meio.",
-     "speech": "Compasso 2: tempo 1, tô e pô no finzinho. tempo 2, pá. tempo 3, tô e pá no finzinho. tempo 4, pô e tô no meio."
+     "speech": "Compasso 2: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e pá no finzinho. Tempo 4, pô e tô no meio."
     },
     {
      "who": "T",
@@ -2671,12 +2671,12 @@
     {
      "who": "R",
      "text": "Compasso 3: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, “E” falado e To no meio; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 3: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 3: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 4: tempo 1, To e po no finzinho; tempo 2, Pa; tempo 3, To e Pa no finzinho; tempo 4, po.",
-     "speech": "Compasso 4: tempo 1, tô e pô no finzinho. tempo 2, pá. tempo 3, tô e pá no finzinho. tempo 4, pô."
+     "speech": "Compasso 4: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e pá no finzinho. Tempo 4, pô."
     },
     {
      "who": "T",
@@ -2686,7 +2686,7 @@
     {
      "who": "R",
      "text": "Compasso 5: tempo 1, To e po no finzinho; tempo 2, Pa; tempo 3, To e To no meio; tempo 4, To e To no meio.",
-     "speech": "Compasso 5: tempo 1, tô e pô no finzinho. tempo 2, pá. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 5: tempo 1, tô e pô no finzinho. Tempo 2, pá. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "T",
@@ -2746,12 +2746,12 @@
     {
      "who": "R",
      "text": "Compasso 6: tempo 1, To; tempo 2, To e To no meio; tempo 3, “E” falado e To no meio; tempo 4, conta 1.",
-     "speech": "Compasso 6: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, é falado e tô no meio. tempo 4, conta 1."
+     "speech": "Compasso 6: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, conta 1."
     },
     {
      "who": "R",
      "text": "Compasso 7: tempo 1, To; tempo 2, To e To no meio; tempo 3, conta 1; tempo 4, To.",
-     "speech": "Compasso 7: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, conta 1. tempo 4, tô."
+     "speech": "Compasso 7: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, conta 1. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -2761,7 +2761,7 @@
     {
      "who": "R",
      "text": "Compasso 8: tempo 1, To; tempo 2, To e To no meio; tempo 3, “E” falado e To no meio; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 8: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 8: tempo 1, tô. Tempo 2, tô e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
@@ -2781,7 +2781,7 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To e To no meio.",
-     "speech": "Compasso 9: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 9: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -2791,7 +2791,7 @@
     {
      "who": "R",
      "text": "Compasso 10: tempo 1, To; tempo 2, To; tempo 3, To e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 10: tempo 1, tô. tempo 2, tô. tempo 3, tô e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 10: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "T",
@@ -2806,12 +2806,12 @@
     {
      "who": "R",
      "text": "Compasso 12: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, conta 1.",
-     "speech": "Compasso 12: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, conta 1."
+     "speech": "Compasso 12: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1."
     },
     {
      "who": "R",
      "text": "Compasso 13: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, conta 1.",
-     "speech": "Compasso 13: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, conta 1."
+     "speech": "Compasso 13: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, conta 1."
     },
     {
      "who": "T",
@@ -2866,7 +2866,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -2881,12 +2881,12 @@
     {
      "who": "R",
      "text": "Compasso 1: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, To e To no meio.",
-     "speech": "Compasso 1: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 1: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 2: tempo 1, To; tempo 2, po e Pa no meio; tempo 3, po e Pa no meio; tempo 4, conta 1.",
-     "speech": "Compasso 2: tempo 1, tô. tempo 2, pô e pá no meio. tempo 3, pô e pá no meio. tempo 4, conta 1."
+     "speech": "Compasso 2: tempo 1, tô. Tempo 2, pô e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, conta 1."
     },
     {
      "who": "T",
@@ -2896,12 +2896,12 @@
     {
      "who": "R",
      "text": "Compasso 3: tempo 1, “E” falado e po no meio; tempo 2, po e Pa no meio; tempo 3, Pa e po no meio; tempo 4, conta 1.",
-     "speech": "Compasso 3: tempo 1, é falado e pô no meio. tempo 2, pô e pá no meio. tempo 3, pá e pô no meio. tempo 4, conta 1."
+     "speech": "Compasso 3: tempo 1, é falado e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, conta 1."
     },
     {
      "who": "R",
      "text": "Compasso 4: tempo 1, To e To no finzinho; tempo 2, “E” falado e Pa no meio; tempo 3, Pa e po no meio; tempo 4, conta 1.",
-     "speech": "Compasso 4: tempo 1, tô e tô no finzinho. tempo 2, é falado e pá no meio. tempo 3, pá e pô no meio. tempo 4, conta 1."
+     "speech": "Compasso 4: tempo 1, tô e tô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, conta 1."
     },
     {
      "who": "T",
@@ -2911,12 +2911,12 @@
     {
      "who": "R",
      "text": "Compasso 5: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 5: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 6: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 6: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 6: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -2976,12 +2976,12 @@
     {
      "who": "R",
      "text": "Compasso 7: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 7: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 7: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "R",
      "text": "Compasso 8: tempo 1, conta 2; tempo 2, conta 2; tempo 3, conta 3; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 8: tempo 1, conta 2. tempo 2, conta 2. tempo 3, conta 3. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 8: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "T",
@@ -2991,7 +2991,7 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To e To no meio; tempo 2, conta 1; tempo 3, conta 2; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 9: tempo 1, tô e tô no meio. tempo 2, conta 1. tempo 3, conta 2. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 9: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
@@ -3001,7 +3001,7 @@
     {
      "who": "R",
      "text": "Compasso 11: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, To e To no meio; tempo 4, To e To no meio.",
-     "speech": "Compasso 11: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 11: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "T",
@@ -3011,7 +3011,7 @@
     {
      "who": "R",
      "text": "Compasso 12: tempo 1, To e To no meio e ro no finzinho; tempo 2, to; tempo 3, “E” falado e to no meio e ro no finzinho; tempo 4, conta 1.",
-     "speech": "Compasso 12: tempo 1, tô e tô no meio e rô no finzinho. tempo 2, tô. tempo 3, é falado e tô no meio e rô no finzinho. tempo 4, conta 1."
+     "speech": "Compasso 12: tempo 1, tô e tô no meio e rô no finzinho. Tempo 2, tô. Tempo 3, é falado e tô no meio e rô no finzinho. Tempo 4, conta 1."
     },
     {
      "who": "T",
@@ -3041,7 +3041,7 @@
     {
      "who": "R",
      "text": "Compasso 13: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, “E” falado e To no meio; tempo 4, To.",
-     "speech": "Compasso 13: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, tô."
+     "speech": "Compasso 13: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, é falado e tô no meio. Tempo 4, tô."
     },
     {
      "who": "R",
@@ -3051,7 +3051,7 @@
     {
      "who": "R",
      "text": "Compasso 14: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 14: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 14: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -3061,7 +3061,7 @@
     {
      "who": "R",
      "text": "Compasso 16: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e To no meio; tempo 4, To e To no meio.",
-     "speech": "Compasso 16: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 16: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "T",
@@ -3076,7 +3076,7 @@
     {
      "who": "R",
      "text": "Compasso 17: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, To e To no meio.",
-     "speech": "Compasso 17: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 17: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -3086,7 +3086,7 @@
     {
      "who": "R",
      "text": "Compasso 20: tempo 1, To; tempo 2, To; tempo 3, To e po no meio e ro no finzinho; tempo 4, Pa e To no meio.",
-     "speech": "Compasso 20: tempo 1, tô. tempo 2, tô. tempo 3, tô e pô no meio e rô no finzinho. tempo 4, pá e tô no meio."
+     "speech": "Compasso 20: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio e rô no finzinho. Tempo 4, pá e tô no meio."
     },
     {
      "who": "T",
@@ -3101,7 +3101,7 @@
     {
      "who": "R",
      "text": "Compasso 21: tempo 1, To e To no meio; tempo 2, “E” falado e To no finzinho; tempo 3, “E” falado e To no meio; tempo 4, To logo depois.",
-     "speech": "Compasso 21: tempo 1, tô e tô no meio. tempo 2, é falado e tô no finzinho. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+     "speech": "Compasso 21: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no finzinho. Tempo 3, é falado e tô no meio. Tempo 4, tô logo depois."
     },
     {
      "who": "R",
@@ -3111,7 +3111,7 @@
     {
      "who": "R",
      "text": "Compasso 24: tempo 1, To e To no meio; tempo 2, To no finzinho; tempo 3, “E” falado e To no meio; tempo 4, To e To no meio.",
-     "speech": "Compasso 24: tempo 1, tô e tô no meio. tempo 2, tô no finzinho. tempo 3, é falado e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 24: tempo 1, tô e tô no meio. Tempo 2, tô no finzinho. Tempo 3, é falado e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -3121,7 +3121,7 @@
     {
      "who": "R",
      "text": "Compasso 25: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, conta 1.",
-     "speech": "Compasso 25: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, conta 1."
+     "speech": "Compasso 25: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, conta 1."
     },
     {
      "who": "R",
@@ -3131,7 +3131,7 @@
     {
      "who": "R",
      "text": "Compasso 27: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 27: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 27: tempo 1, tô e tô no finzinho. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "T",
@@ -3141,7 +3141,7 @@
     {
      "who": "R",
      "text": "Compasso 28: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, “E” falado.",
-     "speech": "Compasso 28: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, é falado."
+     "speech": "Compasso 28: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado."
     },
     {
      "who": "R",
@@ -3171,12 +3171,12 @@
     {
      "who": "R",
      "text": "Compasso 33: tempo 1, To; tempo 2, conta 1; tempo 3, conta 2; tempo 4, To e To no meio.",
-     "speech": "Compasso 33: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 2. tempo 4, tô e tô no meio."
+     "speech": "Compasso 33: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 34: tempo 1, “E” falado e To no meio; tempo 2, To; tempo 3, conta 1; tempo 4, conta 2.",
-     "speech": "Compasso 34: tempo 1, é falado e tô no meio. tempo 2, tô. tempo 3, conta 1. tempo 4, conta 2."
+     "speech": "Compasso 34: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, conta 1. Tempo 4, conta 2."
     },
     {
      "who": "R",
@@ -3186,17 +3186,17 @@
     {
      "who": "R",
      "text": "Compasso 35: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e To no meio; tempo 4, To.",
-     "speech": "Compasso 35: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, tô."
+     "speech": "Compasso 35: tempo 1, tô. Tempo 2, conta 1. Tempo 3, é falado e tô no meio. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 36: tempo 1, “E” falado e To no meio; tempo 2, To; tempo 3, To e To no meio; tempo 4, To e To no meio.",
-     "speech": "Compasso 36: tempo 1, é falado e tô no meio. tempo 2, tô. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 36: tempo 1, é falado e tô no meio. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 37: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, To e To no meio; tempo 4, conta 1.",
-     "speech": "Compasso 37: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tô e tô no meio. tempo 4, conta 1."
+     "speech": "Compasso 37: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, tô e tô no meio. Tempo 4, conta 1."
     },
     {
      "who": "R",
@@ -3216,7 +3216,7 @@
     {
      "who": "R",
      "text": "Compasso 40: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 40: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 40: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "R",
@@ -3231,22 +3231,22 @@
     {
      "who": "R",
      "text": "Compasso 45: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, conta 1; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 45: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, conta 1. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 45: tempo 1, tô. Tempo 2, é falado e tô no meio. Tempo 3, conta 1. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 46: tempo 1, To; tempo 2, Pa e po no meio; tempo 3, Pa; tempo 4, To.",
-     "speech": "Compasso 46: tempo 1, tô. tempo 2, pá e pô no meio. tempo 3, pá. tempo 4, tô."
+     "speech": "Compasso 46: tempo 1, tô. Tempo 2, pá e pô no meio. Tempo 3, pá. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 47: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, To e To no meio.",
-     "speech": "Compasso 47: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, tô e tô no meio."
+     "speech": "Compasso 47: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 48: tempo 1, To; tempo 2, Pa; tempo 3, po; tempo 4, To e To no meio.",
-     "speech": "Compasso 48: tempo 1, tô. tempo 2, pá. tempo 3, pô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 48: tempo 1, tô. Tempo 2, pá. Tempo 3, pô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -3256,12 +3256,12 @@
     {
      "who": "R",
      "text": "Compasso 49: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, po.",
-     "speech": "Compasso 49: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, pô."
+     "speech": "Compasso 49: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô."
     },
     {
      "who": "R",
      "text": "Compasso 50: tempo 1, Pa; tempo 2, po; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 50: tempo 1, pá. tempo 2, pô. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 50: tempo 1, pá. Tempo 2, pô. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "R",
@@ -3306,7 +3306,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -3346,7 +3346,7 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, po.",
-     "speech": "Compasso 9: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, pô."
+     "speech": "Compasso 9: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô."
     },
     {
      "who": "R",
@@ -3356,7 +3356,7 @@
     {
      "who": "R",
      "text": "Compasso 12: tempo 1, To; tempo 2, To; tempo 3, To e to no finzinho; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 12: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no finzinho. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 12: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "T",
@@ -3406,12 +3406,12 @@
     {
      "who": "R",
      "text": "Compasso 13, que tem 7 tempos: tempo 1, To; tempo 2, Pa; tempo 3, Pa; tempo 4, Pa e po no meio; tempo 5, “E” falado e po no meio; tempo 6, Pa; tempo 7, Pa.",
-     "speech": "Compasso 13, que tem 7 tempos: tempo 1, tô. tempo 2, pá. tempo 3, pá. tempo 4, pá e pô no meio. tempo 5, é falado e pô no meio. tempo 6, pá. tempo 7, pá."
+     "speech": "Compasso 13, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, é falado e pô no meio. Tempo 6, pá. Tempo 7, pá."
     },
     {
      "who": "R",
      "text": "Compasso 14, que tem 7 tempos: tempo 1, To; tempo 2, Pa; tempo 3, Pa; tempo 4, Pa e po no meio; tempo 5, po no meio; tempo 6, Pa; tempo 7, Pa.",
-     "speech": "Compasso 14, que tem 7 tempos: tempo 1, tô. tempo 2, pá. tempo 3, pá. tempo 4, pá e pô no meio. tempo 5, pô no meio. tempo 6, pá. tempo 7, pá."
+     "speech": "Compasso 14, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, pô no meio. Tempo 6, pá. Tempo 7, pá."
     },
     {
      "who": "T",
@@ -3451,7 +3451,7 @@
     {
      "who": "R",
      "text": "Compasso 15, que tem 7 tempos: tempo 1, To; tempo 2, conta 1; tempo 3, To; tempo 4, conta 2; tempo 5, To; tempo 6, conta 3; tempo 7, To e To no meio.",
-     "speech": "Compasso 15, que tem 7 tempos: tempo 1, tô. tempo 2, conta 1. tempo 3, tô. tempo 4, conta 2. tempo 5, tô. tempo 6, conta 3. tempo 7, tô e tô no meio."
+     "speech": "Compasso 15, que tem 7 tempos: tempo 1, tô. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, conta 2. Tempo 5, tô. Tempo 6, conta 3. Tempo 7, tô e tô no meio."
     },
     {
      "who": "T",
@@ -3481,7 +3481,7 @@
     {
      "who": "R",
      "text": "Compasso 18, que tem 7 tempos: tempo 1, To; tempo 2, Pa; tempo 3, Pa; tempo 4, Pa e po no meio; tempo 5, To; tempo 6, To; tempo 7, To.",
-     "speech": "Compasso 18, que tem 7 tempos: tempo 1, tô. tempo 2, pá. tempo 3, pá. tempo 4, pá e pô no meio. tempo 5, tô. tempo 6, tô. tempo 7, tô."
+     "speech": "Compasso 18, que tem 7 tempos: tempo 1, tô. Tempo 2, pá. Tempo 3, pá. Tempo 4, pá e pô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô."
     },
     {
      "who": "T",
@@ -3496,7 +3496,7 @@
     {
      "who": "R",
      "text": "Compasso 19, que tem 7 tempos: tempo 1, To e po no meio; tempo 2, po e Pa no meio; tempo 3, Pa e po no meio; tempo 4, po e Pa no meio; tempo 5, Pa e po no meio; tempo 6, po e Pa no meio; tempo 7, po e Pa no meio.",
-     "speech": "Compasso 19, que tem 7 tempos: tempo 1, tô e pô no meio. tempo 2, pô e pá no meio. tempo 3, pá e pô no meio. tempo 4, pô e pá no meio. tempo 5, pá e pô no meio. tempo 6, pô e pá no meio. tempo 7, pô e pá no meio."
+     "speech": "Compasso 19, que tem 7 tempos: tempo 1, tô e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, pô e pá no meio. Tempo 5, pá e pô no meio. Tempo 6, pô e pá no meio. Tempo 7, pô e pá no meio."
     },
     {
      "who": "R",
@@ -3506,7 +3506,7 @@
     {
      "who": "R",
      "text": "Compasso 21, que tem 7 tempos: tempo 1, To e po no meio; tempo 2, po e Pa no meio; tempo 3, Pa e po no meio; tempo 4, po e po no meio; tempo 5, To; tempo 6, To; tempo 7, To.",
-     "speech": "Compasso 21, que tem 7 tempos: tempo 1, tô e pô no meio. tempo 2, pô e pá no meio. tempo 3, pá e pô no meio. tempo 4, pô e pô no meio. tempo 5, tô. tempo 6, tô. tempo 7, tô."
+     "speech": "Compasso 21, que tem 7 tempos: tempo 1, tô e pô no meio. Tempo 2, pô e pá no meio. Tempo 3, pá e pô no meio. Tempo 4, pô e pô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô."
     },
     {
      "who": "R",
@@ -3516,12 +3516,12 @@
     {
      "who": "R",
      "text": "Compasso 22, que tem 7 tempos: tempo 1, “E” falado e to no meio; tempo 2, conta 1 e to no meio; tempo 3, conta 2 e to no meio; tempo 4, conta 3 e to no meio; tempo 5, conta 4 e to no meio; tempo 6, conta 5 e to no meio; tempo 7, conta 6 e to no meio.",
-     "speech": "Compasso 22, que tem 7 tempos: tempo 1, é falado e tô no meio. tempo 2, conta 1 e tô no meio. tempo 3, conta 2 e tô no meio. tempo 4, conta 3 e tô no meio. tempo 5, conta 4 e tô no meio. tempo 6, conta 5 e tô no meio. tempo 7, conta 6 e tô no meio."
+     "speech": "Compasso 22, que tem 7 tempos: tempo 1, é falado e tô no meio. Tempo 2, conta 1 e tô no meio. Tempo 3, conta 2 e tô no meio. Tempo 4, conta 3 e tô no meio. Tempo 5, conta 4 e tô no meio. Tempo 6, conta 5 e tô no meio. Tempo 7, conta 6 e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 23, que tem 7 tempos: tempo 1, “E” falado e to no meio; tempo 2, conta 1 e to no meio; tempo 3, conta 2 e to no meio; tempo 4, conta 3 e to no meio; tempo 5, To; tempo 6, To; tempo 7, To.",
-     "speech": "Compasso 23, que tem 7 tempos: tempo 1, é falado e tô no meio. tempo 2, conta 1 e tô no meio. tempo 3, conta 2 e tô no meio. tempo 4, conta 3 e tô no meio. tempo 5, tô. tempo 6, tô. tempo 7, tô."
+     "speech": "Compasso 23, que tem 7 tempos: tempo 1, é falado e tô no meio. Tempo 2, conta 1 e tô no meio. Tempo 3, conta 2 e tô no meio. Tempo 4, conta 3 e tô no meio. Tempo 5, tô. Tempo 6, tô. Tempo 7, tô."
     },
     {
      "who": "T",
@@ -3571,7 +3571,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -3586,12 +3586,12 @@
     {
      "who": "R",
      "text": "Compasso 1: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, To e To no meio.",
-     "speech": "Compasso 1: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, tô e tô no meio."
+     "speech": "Compasso 1: tempo 1, conta 1. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 2: tempo 1, To; tempo 2, conta 1; tempo 3, conta 2; tempo 4, To e To no meio.",
-     "speech": "Compasso 2: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 2. tempo 4, tô e tô no meio."
+     "speech": "Compasso 2: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô e tô no meio."
     },
     {
      "who": "T",
@@ -3601,12 +3601,12 @@
     {
      "who": "R",
      "text": "Compasso 3: tempo 1, To; tempo 2, conta 1; tempo 3, conta 3; tempo 4, To e To no meio.",
-     "speech": "Compasso 3: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 3. tempo 4, tô e tô no meio."
+     "speech": "Compasso 3: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 3. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 4: tempo 1, To; tempo 2, conta 1; tempo 3, conta 4; tempo 4, To e To no meio.",
-     "speech": "Compasso 4: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 4. tempo 4, tô e tô no meio."
+     "speech": "Compasso 4: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 4. Tempo 4, tô e tô no meio."
     },
     {
      "who": "T",
@@ -3616,12 +3616,12 @@
     {
      "who": "R",
      "text": "Compasso 5: tempo 1, To; tempo 2, conta 1; tempo 3, conta 5; tempo 4, To e To no meio.",
-     "speech": "Compasso 5: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 5. tempo 4, tô e tô no meio."
+     "speech": "Compasso 5: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 5. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 6: tempo 1, To; tempo 2, conta 1; tempo 3, conta 6; tempo 4, To e To no meio.",
-     "speech": "Compasso 6: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 6. tempo 4, tô e tô no meio."
+     "speech": "Compasso 6: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 6. Tempo 4, tô e tô no meio."
     },
     {
      "who": "T",
@@ -3661,12 +3661,12 @@
     {
      "who": "R",
      "text": "Compasso 7: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, “E” falado e To no meio.",
-     "speech": "Compasso 7: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 7: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 8: tempo 1, To; tempo 2, conta 1; tempo 3, conta 2; tempo 4, To.",
-     "speech": "Compasso 8: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 2. tempo 4, tô."
+     "speech": "Compasso 8: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -3676,12 +3676,12 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To; tempo 2, conta 1; tempo 3, conta 3; tempo 4, To.",
-     "speech": "Compasso 9: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 3. tempo 4, tô."
+     "speech": "Compasso 9: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 3. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 10: tempo 1, To; tempo 2, conta 1; tempo 3, conta 4; tempo 4, To1.",
-     "speech": "Compasso 10: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 4. tempo 4, tô 1."
+     "speech": "Compasso 10: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 4. Tempo 4, tô 1."
     },
     {
      "who": "T",
@@ -3721,12 +3721,12 @@
     {
      "who": "R",
      "text": "Compasso 11: tempo 1, To2; tempo 2, To3; tempo 3, To4; tempo 4, To5.",
-     "speech": "Compasso 11: tempo 1, tô 2. tempo 2, tô 3. tempo 3, tô 4. tempo 4, tô 5."
+     "speech": "Compasso 11: tempo 1, tô 2. Tempo 2, tô 3. Tempo 3, tô 4. Tempo 4, tô 5."
     },
     {
      "who": "R",
      "text": "Compasso 12: tempo 1, To6; tempo 2, conta 1; tempo 3, conta 2; tempo 4, Pa.",
-     "speech": "Compasso 12: tempo 1, tô 6. tempo 2, conta 1. tempo 3, conta 2. tempo 4, pá."
+     "speech": "Compasso 12: tempo 1, tô 6. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, pá."
     },
     {
      "who": "T",
@@ -3736,12 +3736,12 @@
     {
      "who": "R",
      "text": "Compasso 13: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, conta 1.",
-     "speech": "Compasso 13: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, conta 1."
+     "speech": "Compasso 13: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, conta 1."
     },
     {
      "who": "R",
      "text": "Compasso 14: tempo 1, To; tempo 2, conta 1; tempo 3, conta 2; tempo 4, conta 3.",
-     "speech": "Compasso 14: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 2. tempo 4, conta 3."
+     "speech": "Compasso 14: tempo 1, tô. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, conta 3."
     },
     {
      "who": "T",
@@ -3751,12 +3751,12 @@
     {
      "who": "R",
      "text": "Compasso 15: tempo 1, To1; tempo 2, To2; tempo 3, To3; tempo 4, To4.",
-     "speech": "Compasso 15: tempo 1, tô 1. tempo 2, tô 2. tempo 3, tô 3. tempo 4, tô 4."
+     "speech": "Compasso 15: tempo 1, tô 1. Tempo 2, tô 2. Tempo 3, tô 3. Tempo 4, tô 4."
     },
     {
      "who": "R",
      "text": "Compasso 16: tempo 1, To5; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 16: tempo 1, tô 5. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 16: tempo 1, tô 5. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -3796,12 +3796,12 @@
     {
      "who": "R",
      "text": "Compasso 20: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, To.",
-     "speech": "Compasso 20: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, tô."
+     "speech": "Compasso 20: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 21: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, To1.",
-     "speech": "Compasso 21: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, tô 1."
+     "speech": "Compasso 21: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, tô 1."
     },
     {
      "who": "R",
@@ -3811,12 +3811,12 @@
     {
      "who": "R",
      "text": "Compasso 23: tempo 1, To6; tempo 2, conta 1; tempo 3, To; tempo 4, tercina: “E” falado, pausa, To.",
-     "speech": "Compasso 23: tempo 1, tô 6. tempo 2, conta 1. tempo 3, tô. tempo 4, tercina: é falado, pausa, tô."
+     "speech": "Compasso 23: tempo 1, tô 6. Tempo 2, conta 1. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô."
     },
     {
      "who": "R",
      "text": "Compasso 24: tempo 1, Bo; tempo 2, conta 1; tempo 3, tercina: To, “E” falado, To; tempo 4, tercina: “E” falado, pausa, pausa.",
-     "speech": "Compasso 24: tempo 1, bô. tempo 2, conta 1. tempo 3, tercina: tô, é falado, tô. tempo 4, tercina: é falado, pausa, pausa."
+     "speech": "Compasso 24: tempo 1, bô. Tempo 2, conta 1. Tempo 3, tercina: tô, é falado, tô. Tempo 4, tercina: é falado, pausa, pausa."
     },
     {
      "who": "T",
@@ -3826,12 +3826,12 @@
     {
      "who": "R",
      "text": "Compasso 25: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, tercina: “E” falado, pausa, To.",
-     "speech": "Compasso 25: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, tercina: é falado, pausa, tô."
+     "speech": "Compasso 25: tempo 1, tô. Tempo 2, conta 2. Tempo 3, tô. Tempo 4, tercina: é falado, pausa, tô."
     },
     {
      "who": "R",
      "text": "Compasso 26: tempo 1, Bo; tempo 2, conta 2; tempo 3, tercina: To, “E” falado, To; tempo 4, tercina: “E” falado, To, bo.",
-     "speech": "Compasso 26: tempo 1, bô. tempo 2, conta 2. tempo 3, tercina: tô, é falado, tô. tempo 4, tercina: é falado, tô, bô."
+     "speech": "Compasso 26: tempo 1, bô. Tempo 2, conta 2. Tempo 3, tercina: tô, é falado, tô. Tempo 4, tercina: é falado, tô, bô."
     },
     {
      "who": "T",
@@ -3851,7 +3851,7 @@
     {
      "who": "R",
      "text": "Bo é abafado: os dois tocam, e a outra mão segura a pele na hora, pro som morrer curto.",
-     "speech": "bô é abafado: os dois tocam, e a outra mão segura a pele na hora, pro som morrer curto."
+     "speech": "Bô é abafado: os dois tocam, e a outra mão segura a pele na hora, pro som morrer curto."
     },
     {
      "who": "T",
@@ -3886,12 +3886,12 @@
     {
      "who": "R",
      "text": "Compasso 28: tempo 1, To; tempo 2, tercina: pausa, “E” falado, To; tempo 3, tercina: Bo, “E” falado, To; tempo 4, tercina: “E” falado, To, bo.",
-     "speech": "Compasso 28: tempo 1, tô. tempo 2, tercina: pausa, é falado, tô. tempo 3, tercina: bô, é falado, tô. tempo 4, tercina: é falado, tô, bô."
+     "speech": "Compasso 28: tempo 1, tô. Tempo 2, tercina: pausa, é falado, tô. Tempo 3, tercina: bô, é falado, tô. Tempo 4, tercina: é falado, tô, bô."
     },
     {
      "who": "R",
      "text": "Compasso 30: tempo 1, To; tempo 2, tercina: pausa, pausa, To; tempo 3, tercina: Bo, “E” falado, To; tempo 4, tercina: “E” falado, To, bo.",
-     "speech": "Compasso 30: tempo 1, tô. tempo 2, tercina: pausa, pausa, tô. tempo 3, tercina: bô, é falado, tô. tempo 4, tercina: é falado, tô, bô."
+     "speech": "Compasso 30: tempo 1, tô. Tempo 2, tercina: pausa, pausa, tô. Tempo 3, tercina: bô, é falado, tô. Tempo 4, tercina: é falado, tô, bô."
     },
     {
      "who": "R",
@@ -3901,7 +3901,7 @@
     {
      "who": "R",
      "text": "Compasso 32: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, po.",
-     "speech": "Compasso 32: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, pô."
+     "speech": "Compasso 32: tempo 1, tô. Tempo 2, pô. Tempo 3, pá. Tempo 4, pô."
     },
     {
      "who": "T",
@@ -3921,7 +3921,7 @@
     {
      "who": "R",
      "text": "Compasso 35: tempo 1, To; tempo 2, To; tempo 3, To e to no finzinho; tempo 4, to no meio.",
-     "speech": "Compasso 35: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no finzinho. tempo 4, tô no meio."
+     "speech": "Compasso 35: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no finzinho. Tempo 4, tô no meio."
     },
     {
      "who": "T",
@@ -3971,7 +3971,7 @@
     {
      "who": "R",
      "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
-     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+     "speech": "Tô é a primeira e a segunda juntas. Pô é só a primeira, o surdo grave, à esquerda. Pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
     },
     {
      "who": "R",
@@ -4006,7 +4006,7 @@
     {
      "who": "R",
      "text": "Compasso 5: tempo 1, To e to no finzinho; tempo 2, “E” falado; tempo 3, To e to no finzinho; tempo 4, “E” falado e Pa no meio.",
-     "speech": "Compasso 5: tempo 1, tô e tô no finzinho. tempo 2, é falado. tempo 3, tô e tô no finzinho. tempo 4, é falado e pá no meio."
+     "speech": "Compasso 5: tempo 1, tô e tô no finzinho. Tempo 2, é falado. Tempo 3, tô e tô no finzinho. Tempo 4, é falado e pá no meio."
     },
     {
      "who": "R",
@@ -4016,7 +4016,7 @@
     {
      "who": "R",
      "text": "Compasso 6: tempo 1, To e to no finzinho; tempo 2, “E” falado e Pa no meio; tempo 3, po e Pa no meio; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 6: tempo 1, tô e tô no finzinho. tempo 2, é falado e pá no meio. tempo 3, pô e pá no meio. tempo 4, pô e pá no meio."
+     "speech": "Compasso 6: tempo 1, tô e tô no finzinho. Tempo 2, é falado e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio."
     },
     {
      "who": "T",
@@ -4026,7 +4026,7 @@
     {
      "who": "R",
      "text": "Compasso 8: tempo 1, po; tempo 2, Pa e Pa no meio; tempo 3, po e Pa no meio; tempo 4, po e Pa no meio.",
-     "speech": "Compasso 8: tempo 1, pô. tempo 2, pá e pá no meio. tempo 3, pô e pá no meio. tempo 4, pô e pá no meio."
+     "speech": "Compasso 8: tempo 1, pô. Tempo 2, pá e pá no meio. Tempo 3, pô e pá no meio. Tempo 4, pô e pá no meio."
     },
     {
      "who": "T",
@@ -4086,12 +4086,12 @@
     {
      "who": "R",
      "text": "Compasso 9: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 9: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 9: tempo 1, tô. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "R",
      "text": "Compasso 10: tempo 1, conta 2; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 10: tempo 1, conta 2. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 10: tempo 1, conta 2. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -4101,7 +4101,7 @@
     {
      "who": "R",
      "text": "Compasso 11: tempo 1, conta 3; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
-     "speech": "Compasso 11: tempo 1, conta 3. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+     "speech": "Compasso 11: tempo 1, conta 3. Tempo 2, conta 2. Tempo 3, conta 3. Tempo 4, conta 4."
     },
     {
      "who": "T",
@@ -4131,12 +4131,12 @@
     {
      "who": "R",
      "text": "Compasso 12: tempo 1, To; tempo 2, To; tempo 3, To e po no meio; tempo 4, To.",
-     "speech": "Compasso 12: tempo 1, tô. tempo 2, tô. tempo 3, tô e pô no meio. tempo 4, tô."
+     "speech": "Compasso 12: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e pô no meio. Tempo 4, tô."
     },
     {
      "who": "R",
      "text": "Compasso 13: tempo 1, To e to no meio; tempo 2, conta 1; tempo 3, conta 2; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 13: tempo 1, tô e tô no meio. tempo 2, conta 1. tempo 3, conta 2. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 13: tempo 1, tô e tô no meio. Tempo 2, conta 1. Tempo 3, conta 2. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
@@ -4151,7 +4151,7 @@
     {
      "who": "R",
      "text": "Compasso 14: tempo 1, To e to no meio; tempo 2, “E” falado e to no meio; tempo 3, To; tempo 4, To.",
-     "speech": "Compasso 14: tempo 1, tô e tô no meio. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, tô."
+     "speech": "Compasso 14: tempo 1, tô e tô no meio. Tempo 2, é falado e tô no meio. Tempo 3, tô. Tempo 4, tô."
     },
     {
      "who": "T",
@@ -4166,12 +4166,12 @@
     {
      "who": "R",
      "text": "Compasso 16: tempo 1, To e to no meio; tempo 2, “E” falado; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 16: tempo 1, tô e tô no meio. tempo 2, é falado. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 16: tempo 1, tô e tô no meio. Tempo 2, é falado. Tempo 3, pá e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 17: tempo 1, To e Pa no meio; tempo 2, po e Pa no meio; tempo 3, “E” falado e to no meio; tempo 4, “E” falado e to no meio.",
-     "speech": "Compasso 17: tempo 1, tô e pá no meio. tempo 2, pô e pá no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+     "speech": "Compasso 17: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, é falado e tô no meio. Tempo 4, é falado e tô no meio."
     },
     {
      "who": "R",
@@ -4186,7 +4186,7 @@
     {
      "who": "R",
      "text": "Compasso 18: tempo 1, Pa e po no meio; tempo 2, Pa e po no meio; tempo 3, conta 1; tempo 4, conta 2.",
-     "speech": "Compasso 18: tempo 1, pá e pô no meio. tempo 2, pá e pô no meio. tempo 3, conta 1. tempo 4, conta 2."
+     "speech": "Compasso 18: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, conta 1. Tempo 4, conta 2."
     },
     {
      "who": "T",
@@ -4211,12 +4211,12 @@
     {
      "who": "R",
      "text": "Compasso 24: tempo 1, Pa e po no meio; tempo 2, Pa e po no meio; tempo 3, To; tempo 4, “E” falado.",
-     "speech": "Compasso 24: tempo 1, pá e pô no meio. tempo 2, pá e pô no meio. tempo 3, tô. tempo 4, é falado."
+     "speech": "Compasso 24: tempo 1, pá e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, tô. Tempo 4, é falado."
     },
     {
      "who": "R",
      "text": "Compasso 25: tempo 1, To; tempo 2, To; tempo 3, To e to no meio; tempo 4, To e to no meio.",
-     "speech": "Compasso 25: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+     "speech": "Compasso 25: tempo 1, tô. Tempo 2, tô. Tempo 3, tô e tô no meio. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
@@ -4226,7 +4226,7 @@
     {
      "who": "R",
      "text": "Compasso 26: tempo 1, To e po no meio; tempo 2, Pa e po no meio; tempo 3, po e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 26: tempo 1, tô e pô no meio. tempo 2, pá e pô no meio. tempo 3, pô e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 26: tempo 1, tô e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "R",
@@ -4236,7 +4236,7 @@
     {
      "who": "R",
      "text": "Compasso 27: tempo 1, To e Pa no meio; tempo 2, po e Pa no meio; tempo 3, po e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 27: tempo 1, tô e pá no meio. tempo 2, pô e pá no meio. tempo 3, pô e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 27: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "T",
@@ -4246,12 +4246,12 @@
     {
      "who": "R",
      "text": "Compasso 29: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To e to no meio.",
-     "speech": "Compasso 29: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô e tô no meio."
+     "speech": "Compasso 29: tempo 1, tô. Tempo 2, tô. Tempo 3, tô. Tempo 4, tô e tô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 30: tempo 1, To e po no meio; tempo 2, Pa e po no meio; tempo 3, po e po no meio; tempo 4, to.",
-     "speech": "Compasso 30: tempo 1, tô e pô no meio. tempo 2, pá e pô no meio. tempo 3, pô e pô no meio. tempo 4, tô."
+     "speech": "Compasso 30: tempo 1, tô e pô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, tô."
     },
     {
      "who": "R",
@@ -4266,12 +4266,12 @@
     {
      "who": "R",
      "text": "Compasso 31: tempo 1, “E” falado e to no meio; tempo 2, Pa e po no meio; tempo 3, po e po no meio; tempo 4, Pa e po no meio.",
-     "speech": "Compasso 31: tempo 1, é falado e tô no meio. tempo 2, pá e pô no meio. tempo 3, pô e pô no meio. tempo 4, pá e pô no meio."
+     "speech": "Compasso 31: tempo 1, é falado e tô no meio. Tempo 2, pá e pô no meio. Tempo 3, pô e pô no meio. Tempo 4, pá e pô no meio."
     },
     {
      "who": "R",
      "text": "Compasso 32: tempo 1, To e Pa no meio; tempo 2, po e Pa no meio; tempo 3, po e po no meio; tempo 4, To.",
-     "speech": "Compasso 32: tempo 1, tô e pá no meio. tempo 2, pô e pá no meio. tempo 3, pô e pô no meio. tempo 4, tô."
+     "speech": "Compasso 32: tempo 1, tô e pá no meio. Tempo 2, pô e pá no meio. Tempo 3, pô e pô no meio. Tempo 4, tô."
     },
     {
      "who": "T",
