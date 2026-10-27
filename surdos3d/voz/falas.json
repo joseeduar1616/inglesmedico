@@ -1,0 +1,4309 @@
+{
+ "breques": {
+  "brahma": {
+   "name": "Brahma",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Brahma: 24 compassos, que eu dividi em 7 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Brahma: 24 compassos, que eu dividi em 7 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 1: tempo 1, To e To no meio; tempo 2, po e Pa no meio; tempo 3, To; tempo 4, To e To no meio.",
+     "speech": "Compasso 1: tempo 1, tô e tô no meio. tempo 2, pô e pá no meio. tempo 3, tô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 3 é igualzinho a esse.",
+     "speech": "O compasso 3 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 2: tempo 1, po e Pa no meio; tempo 2, To; tempo 3, conta 1; tempo 4, conta 2.",
+     "speech": "Compasso 2: tempo 1, pô e pá no meio. tempo 2, tô. tempo 3, conta 1. tempo 4, conta 2."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 4: tempo 1, po e Pa no meio; tempo 2, To; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 4: tempo 1, pô e pá no meio. tempo 2, tô. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 5 a 7. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 2, compassos 5 a 7. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 5, 6 e 7 repetem compassos que você já viu: o 1 e o 2.",
+     "speech": "Os compassos 5, 6 e 7 repetem compassos que você já viu: o 1 e o 2."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compasso 8. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 3, compasso 8. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 8: tempo 1, To e To no meio; tempo 2, To; tempo 3, tercina: To, To, pausa; tempo 4, tercina: To, To, pausa.",
+     "speech": "Compasso 8: tempo 1, tô e tô no meio. tempo 2, tô. tempo 3, tercina: tô, tô, pausa. tempo 4, tercina: tô, tô, pausa."
+    },
+    {
+     "who": "T",
+     "text": "Ué, aqui o tempo tem três divisões?",
+     "speech": "Ué, aqui o tempo tem três divisões?"
+    },
+    {
+     "who": "R",
+     "text": "É tercina: três notas iguais dentro de um tempo só. Fale tri-pa-ti em cada tempo para encaixar.",
+     "speech": "É tercina: três notas iguais dentro de um tempo só. Fale tri-pá-tí em cada tempo para encaixar."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 9 a 10. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 4, compassos 9 a 10. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To; tempo 2, “E” falado e Pa no meio; tempo 3, “E” falado e po no meio; tempo 4, To.",
+     "speech": "Compasso 9: tempo 1, tô. tempo 2, é falado e pá no meio. tempo 3, é falado e pô no meio. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 10: tempo 1, “E” falado e po no meio; tempo 2, Pa e po no meio; tempo 3, To e To no finzinho; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 10: tempo 1, é falado e pô no meio. tempo 2, pá e pô no meio. tempo 3, tô e tô no finzinho. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compassos 11 a 16. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 5, compassos 11 a 16. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 11: tempo 1, To; tempo 2, “E” falado; tempo 3, To; tempo 4, tercina: “E” falado, pausa, To.",
+     "speech": "Compasso 11: tempo 1, tô. tempo 2, é falado. tempo 3, tô. tempo 4, tercina: é falado, pausa, tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 13 é igualzinho a esse.",
+     "speech": "O compasso 13 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 12: tempo 1, To; tempo 2, “E” falado; tempo 3, To; tempo 4, tercina: To, pausa, To.",
+     "speech": "Compasso 12: tempo 1, tô. tempo 2, é falado. tempo 3, tô. tempo 4, tercina: tô, pausa, tô."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 14, 15 e 16 são iguaizinhos a esse.",
+     "speech": "Os compassos 14, 15 e 16 são iguaizinhos a esse."
+    },
+    {
+     "who": "R",
+     "text": "Parte 6, compassos 17 a 18. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 6, compassos 17 a 18. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 17: tempo 1, To; tempo 2, silêncio; tempo 3, To; tempo 4, tercina: pausa, pausa, To.",
+     "speech": "Compasso 17: tempo 1, tô. tempo 2, silêncio. tempo 3, tô. tempo 4, tercina: pausa, pausa, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 18: tempo 1, tercina: bo, To, pausa; tempo 2, tercina: “E” falado, To, “E” falado; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 18: tempo 1, tercina: bô, tô, pausa. tempo 2, tercina: é falado, tô, é falado. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Parte 7, compassos 19 a 24. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 7, compassos 19 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 19: tempo 1, To; tempo 2, “E” falado; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 19: tempo 1, tô. tempo 2, é falado. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 20: tempo 1, To; tempo 2, “E” falado; tempo 3, To e To no meio; tempo 4, To e To no meio.",
+     "speech": "Compasso 20: tempo 1, tô. tempo 2, é falado. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 21: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, “E” falado.",
+     "speech": "Compasso 21: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, é falado."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 22: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 22: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 23: tempo 1, “E” falado e To no meio; tempo 2, To; tempo 3, “E” falado e To no meio; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 23: tempo 1, é falado e tô no meio. tempo 2, tô. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 24: só o To final, no tempo 1, e acabou.",
+     "speech": "Compasso 24: só o tô final, no tempo 1, e acabou."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Brahma inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Brahma inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "aine": {
+   "name": "Aine",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Aine: 24 compassos, que eu dividi em 6 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Aine: 24 compassos, que eu dividi em 6 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 2. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+     "speech": "Parte 1, compassos 1 a 2. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+    },
+    {
+     "who": "T",
+     "text": "Pra que contar, se ninguém toca?",
+     "speech": "Pra que contar, se ninguém toca?"
+    },
+    {
+     "who": "R",
+     "text": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé.",
+     "speech": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e conta junto.",
+     "speech": "Escuta e conta junto."
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 3 a 8. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 2, compassos 3 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 3, que tem 3 tempos: tempo 1, To; tempo 2, To; tempo 3, To.",
+     "speech": "Compasso 3, que tem 3 tempos: tempo 1, tô. tempo 2, tô. tempo 3, tô."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 4 e 6 são iguaizinhos a esse.",
+     "speech": "Os compassos 4 e 6 são iguaizinhos a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5, que tem 2 tempos: tempo 1, po e Pa no meio; tempo 2, po e Pa no meio.",
+     "speech": "Compasso 5, que tem 2 tempos: tempo 1, pô e pá no meio. tempo 2, pô e pá no meio."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 7, que tem 3 tempos: tempo 1, To; tempo 2, To; tempo 3, “E” falado e To no meio.",
+     "speech": "Compasso 7, que tem 3 tempos: tempo 1, tô. tempo 2, tô. tempo 3, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 8, que tem 2 tempos: tempo 1, To; tempo 2, To.",
+     "speech": "Compasso 8, que tem 2 tempos: tempo 1, tô. tempo 2, tô."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "T",
+     "text": "Espera, o compasso 3 tem 3 tempos?",
+     "speech": "Espera, o compasso 3 tem 3 tempos?"
+    },
+    {
+     "who": "R",
+     "text": "Tem. Conte até 3 e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem.",
+     "speech": "Tem. Conte até 3 e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 9 a 14. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 3, compassos 9 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9, que tem 3 tempos: tempo 1, To; tempo 2, “E” falado e to no meio; tempo 3, “E” falado.",
+     "speech": "Compasso 9, que tem 3 tempos: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, é falado."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 10, 12 e 13 são iguaizinhos a esse.",
+     "speech": "Os compassos 10, 12 e 13 são iguaizinhos a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 11, que tem 2 tempos: tempo 1, Pa e po no meio; tempo 2, Pa e po no meio.",
+     "speech": "Compasso 11, que tem 2 tempos: tempo 1, pá e pô no meio. tempo 2, pá e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 14 é igualzinho a esse.",
+     "speech": "O compasso 14 é igualzinho a esse."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 15 a 18. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 4, compassos 15 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 15: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, To e To no meio.",
+     "speech": "Compasso 15: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 16: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 16: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 17: tempo 1, Pa; tempo 2, conta 2; tempo 3, conta 3; tempo 4, To.",
+     "speech": "Compasso 17: tempo 1, pá. tempo 2, conta 2. tempo 3, conta 3. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 18: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, conta 4.",
+     "speech": "Compasso 18: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compassos 19 a 22. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+     "speech": "Parte 5, compassos 19 a 22. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+    },
+    {
+     "who": "R",
+     "text": "Parte 6, compassos 23 a 24. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 6, compassos 23 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 23: tempo 1, To; tempo 2, To; tempo 3, To e to no meio; tempo 4, To e to no meio.",
+     "speech": "Compasso 23: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 24: só o To final, no tempo 1, e acabou.",
+     "speech": "Compasso 24: só o tô final, no tempo 1, e acabou."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Aine inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Aine inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "cerberus": {
+   "name": "Cerberus",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Cerberus: 50 compassos, que eu dividi em 14 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Cerberus: 50 compassos, que eu dividi em 14 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 5. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 1, compassos 1 a 5. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 1: tempo 1, To e to no meio; tempo 2, “E” falado e po no meio; tempo 3, Pa e po no meio; tempo 4, Pa.",
+     "speech": "Compasso 1: tempo 1, tô e tô no meio. tempo 2, é falado e pô no meio. tempo 3, pá e pô no meio. tempo 4, pá."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 3 é igualzinho a esse.",
+     "speech": "O compasso 3 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 2: tempo 1, To e to no meio; tempo 2, “E” falado; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 2: tempo 1, tô e tô no meio. tempo 2, é falado. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 4: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 4: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 5: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 6 a 8. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 2, compassos 6 a 8. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 7 é igual ao compasso 5, que você já viu.",
+     "speech": "O compasso 7 é igual ao compasso 5, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 6: tempo 1, “E” falado e to no meio; tempo 2, “E” falado e to no meio; tempo 3, “E” falado e to no meio; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 6: tempo 1, é falado e tô no meio. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 8 é igualzinho a esse.",
+     "speech": "O compasso 8 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 9 a 13. Nesta parte as duas tocam juntas no To e também conversam: a 1ª aparece sozinha no po.",
+     "speech": "Parte 3, compassos 9 a 13. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 12 é igual ao compasso 4, que você já viu.",
+     "speech": "O compasso 12 é igual ao compasso 4, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To; tempo 2, To e to no meio; tempo 3, To; tempo 4, To e to no meio.",
+     "speech": "Compasso 9: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, tô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 10: tempo 1, To; tempo 2, “E” falado e to no meio; tempo 3, To e to no meio; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 10: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tô e tô no meio. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 11: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, To.",
+     "speech": "Compasso 11: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13: tempo 1, To; tempo 2, “E” falado e to no meio; tempo 3, “E” falado e to no meio; tempo 4, “E” falado e po no meio.",
+     "speech": "Compasso 13: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e pô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 14 a 17. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 4, compassos 14 a 17. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 14: tempo 1, Pa; tempo 2, po1; tempo 3, Pa; tempo 4, po2.",
+     "speech": "Compasso 14: tempo 1, pá. tempo 2, pô 1. tempo 3, pá. tempo 4, pô 2."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 16 é igualzinho a esse.",
+     "speech": "O compasso 16 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 15: tempo 1, Pa; tempo 2, po3; tempo 3, To; tempo 4, “E” falado.",
+     "speech": "Compasso 15: tempo 1, pá. tempo 2, pô 3. tempo 3, tô. tempo 4, é falado."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 17: tempo 1, Pa; tempo 2, po3; tempo 3, Pa; tempo 4, po4.",
+     "speech": "Compasso 17: tempo 1, pá. tempo 2, pô 3. tempo 3, pá. tempo 4, pô 4."
+    },
+    {
+     "who": "T",
+     "text": "E os numerinhos colados nos toques?",
+     "speech": "E os numerinhos colados nos toques?"
+    },
+    {
+     "who": "R",
+     "text": "É a série: po1, po2, po3 contam as repetições. Ajudam a não perder a conta no meio da conversa.",
+     "speech": "É a série: pô 1, pô 2, pô 3 contam as repetições. Ajudam a não perder a conta no meio da conversa."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compasso 18. Nesta parte as duas tocam juntas no To e também conversam: a 1ª aparece sozinha no po.",
+     "speech": "Parte 5, compasso 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 18: tempo 1, To; tempo 2, To e to no meio; tempo 3, “E” falado e to no meio; tempo 4, “E” falado e po no meio.",
+     "speech": "Compasso 18: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 6, compassos 19 a 22. Nesta parte é uma conversa: a 1ª faz po e a 2ª responde pa, uma de cada vez.",
+     "speech": "Parte 6, compassos 19 a 22. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 19 e 21 repetem compassos que você já viu: o 14.",
+     "speech": "Os compassos 19 e 21 repetem compassos que você já viu: o 14."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 20: tempo 1, Pa; tempo 2, po3; tempo 3, po e Pa no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 20: tempo 1, pá. tempo 2, pô 3. tempo 3, pô e pá no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 22: tempo 1, Pa; tempo 2, po3; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 22: tempo 1, pá. tempo 2, pô 3. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 7, compassos 23 a 28. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 7, compassos 23 a 28. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 23: tempo 1, Pa e Pa no finzinho; tempo 2, “E” falado e po no meio; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 23: tempo 1, pá e pá no finzinho. tempo 2, é falado e pô no meio. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 24: tempo 1, To; tempo 2, To; tempo 3, “E” falado e Pa no meio; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 24: tempo 1, tô. tempo 2, tô. tempo 3, é falado e pá no meio. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "T",
+     "text": "Tá, vou contar junto.",
+     "speech": "Tá, vou contar junto."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 25: tempo 1, To; tempo 2, conta 1; tempo 3, conta 2; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 25: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 2. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 26: tempo 1, po; tempo 2, conta 1; tempo 3, “E” falado e Pa no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 26: tempo 1, pô. tempo 2, conta 1. tempo 3, é falado e pá no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Esse eu preciso ver tocando.",
+     "speech": "Esse eu preciso ver tocando."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 27: tempo 1, Pa; tempo 2, conta 2; tempo 3, “E” falado e Pa no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 27: tempo 1, pá. tempo 2, conta 2. tempo 3, é falado e pá no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 28: tempo 1, Pa; tempo 2, To; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 28: tempo 1, pá. tempo 2, tô. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "R",
+     "text": "Parte 8, compasso 29. Nesta parte é uma conversa: a 1ª faz po e a 2ª responde pa, uma de cada vez.",
+     "speech": "Parte 8, compasso 29. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 29: tempo 1, po e po no finzinho; tempo 2, “E” falado e Pa no meio; tempo 3, po e po no finzinho; tempo 4, “E” falado e Pa no meio.",
+     "speech": "Compasso 29: tempo 1, pô e pô no finzinho. tempo 2, é falado e pá no meio. tempo 3, pô e pô no finzinho. tempo 4, é falado e pá no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 9, compassos 30 a 32. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 9, compassos 30 a 32. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 30: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, po1.",
+     "speech": "Compasso 30: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, pô 1."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 31: tempo 1, Pa; tempo 2, po2; tempo 3, Pa; tempo 4, po3.",
+     "speech": "Compasso 31: tempo 1, pá. tempo 2, pô 2. tempo 3, pá. tempo 4, pô 3."
+    },
+    {
+     "who": "T",
+     "text": "Beleza, próximo!",
+     "speech": "Beleza, próximo!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 32: tempo 1, To; tempo 2, “E” falado e po no meio; tempo 3, Pa; tempo 4, conta 1.",
+     "speech": "Compasso 32: tempo 1, tô. tempo 2, é falado e pô no meio. tempo 3, pá. tempo 4, conta 1."
+    },
+    {
+     "who": "R",
+     "text": "Parte 10, compasso 33. Aqui ninguém toca: é só contar. Fica assim: conta 2, conta 3, conta 4, conta 5.",
+     "speech": "Parte 10, compasso 33. Aqui ninguém toca: é só contar. Fica assim: conta 2, conta 3, conta 4, conta 5."
+    },
+    {
+     "who": "T",
+     "text": "Pra que contar, se ninguém toca?",
+     "speech": "Pra que contar, se ninguém toca?"
+    },
+    {
+     "who": "R",
+     "text": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé.",
+     "speech": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e conta junto.",
+     "speech": "Escuta e conta junto."
+    },
+    {
+     "who": "R",
+     "text": "Parte 11, compassos 34 a 38. Nesta parte as duas tocam juntas no To e também conversam: a 1ª aparece sozinha no po.",
+     "speech": "Parte 11, compassos 34 a 38. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 34: tempo 1, conta 6; tempo 2, To e ro no meio; tempo 3, To e ro no meio; tempo 4, To e ro no meio.",
+     "speech": "Compasso 34: tempo 1, conta 6. tempo 2, tô e rô no meio. tempo 3, tô e rô no meio. tempo 4, tô e rô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 35: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 35: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 36: tempo 1, conta 5; tempo 2, To e ro no meio; tempo 3, To e ro no meio; tempo 4, To e ro no meio.",
+     "speech": "Compasso 36: tempo 1, conta 5. tempo 2, tô e rô no meio. tempo 3, tô e rô no meio. tempo 4, tô e rô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 37: tempo 1, To; tempo 2, To; tempo 3, conta 1; tempo 4, “E” falado e To no meio e ro no finzinho.",
+     "speech": "Compasso 37: tempo 1, tô. tempo 2, tô. tempo 3, conta 1. tempo 4, é falado e tô no meio e rô no finzinho."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 38: tempo 1, “ti” falado e to logo depois; tempo 2, conta 1; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 38: tempo 1, tí falado e tô logo depois. tempo 2, conta 1. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Parte 12, compassos 39 a 40. Nesta parte é uma conversa: a 1ª faz po e a 2ª responde pa, uma de cada vez.",
+     "speech": "Parte 12, compassos 39 a 40. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 39 e 40 repetem compassos que você já viu: o 14 e o 22.",
+     "speech": "Os compassos 39 e 40 repetem compassos que você já viu: o 14 e o 22."
+    },
+    {
+     "who": "R",
+     "text": "Parte 13, compassos 41 a 45. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 13, compassos 41 a 45. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 43 é igual ao compasso 30, que você já viu.",
+     "speech": "O compasso 43 é igual ao compasso 30, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 41: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, “E” falado e To no finzinho.",
+     "speech": "Compasso 41: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, é falado e tô no finzinho."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 42: tempo 1, ro; tempo 2, po; tempo 3, Pa; tempo 4, po1.",
+     "speech": "Compasso 42: tempo 1, rô. tempo 2, pô. tempo 3, pá. tempo 4, pô 1."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 44: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, “E” falado e to no finzinho.",
+     "speech": "Compasso 44: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, é falado e tô no finzinho."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 45: tempo 1, ro; tempo 2, po; tempo 3, Pa; tempo 4, po3.",
+     "speech": "Compasso 45: tempo 1, rô. tempo 2, pô. tempo 3, pá. tempo 4, pô 3."
+    },
+    {
+     "who": "R",
+     "text": "Parte 14, compassos 46 a 50. Nesta parte é uma conversa: a 1ª faz po e a 2ª responde pa, uma de cada vez.",
+     "speech": "Parte 14, compassos 46 a 50. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 46: tempo 1, Pa; tempo 2, “E” falado e Pa no meio; tempo 3, po; tempo 4, “E” falado e po no meio.",
+     "speech": "Compasso 46: tempo 1, pá. tempo 2, é falado e pá no meio. tempo 3, pô. tempo 4, é falado e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 48 é igualzinho a esse.",
+     "speech": "O compasso 48 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 47: tempo 1, Pa; tempo 2, “E” falado e Pa no meio; tempo 3, po e po no finzinho; tempo 4, “E” falado e po no meio.",
+     "speech": "Compasso 47: tempo 1, pá. tempo 2, é falado e pá no meio. tempo 3, pô e pô no finzinho. tempo 4, é falado e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 49 é igualzinho a esse.",
+     "speech": "O compasso 49 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 50: só o Pa final, no tempo 1, e acabou.",
+     "speech": "Compasso 50: só o pá final, no tempo 1, e acabou."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Cerberus inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Cerberus inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "shady": {
+   "name": "Shady",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Shady: 45 compassos, que eu dividi em 11 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Shady: 45 compassos, que eu dividi em 11 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 2. Nesta parte é uma conversa: a 1ª faz po e a 2ª responde pa, uma de cada vez.",
+     "speech": "Parte 1, compassos 1 a 2. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 1: tempo 1, Pa; tempo 2, “E” falado e Pa no meio; tempo 3, po; tempo 4, “E” falado e po no meio.",
+     "speech": "Compasso 1: tempo 1, pá. tempo 2, é falado e pá no meio. tempo 3, pô. tempo 4, é falado e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 2: tempo 1, Pa; tempo 2, “E” falado e Pa no meio; tempo 3, po e po no finzinho; tempo 4, “E” falado e po no meio.",
+     "speech": "Compasso 2: tempo 1, pá. tempo 2, é falado e pá no meio. tempo 3, pô e pô no finzinho. tempo 4, é falado e pô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 3 a 6. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 2, compassos 3 a 6. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 3: tempo 1, To; tempo 2, Pa e po no meio; tempo 3, Pa; tempo 4, “E” falado.",
+     "speech": "Compasso 3: tempo 1, tô. tempo 2, pá e pô no meio. tempo 3, pá. tempo 4, é falado."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 4: tempo 1, To e po no meio e ro no finzinho; tempo 2, Pa e po no meio; tempo 3, Pa; tempo 4, “E” falado.",
+     "speech": "Compasso 4: tempo 1, tô e pô no meio e rô no finzinho. tempo 2, pá e pô no meio. tempo 3, pá. tempo 4, é falado."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, po.",
+     "speech": "Compasso 5: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, pô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 6: tempo 1, To; tempo 2, To e po no meio; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 6: tempo 1, tô. tempo 2, tô e pô no meio. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 7 a 10. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 3, compassos 7 a 10. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 7: tempo 1, To; tempo 2, “E” falado; tempo 3, To; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 7: tempo 1, tô. tempo 2, é falado. tempo 3, tô. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 8: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, Pa; tempo 4, po.",
+     "speech": "Compasso 8: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, pá. tempo 4, pô."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To; tempo 2, “E” falado; tempo 3, To e To no meio; tempo 4, To.",
+     "speech": "Compasso 9: tempo 1, tô. tempo 2, é falado. tempo 3, tô e tô no meio. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 10: tempo 1, “E” falado e To no meio; tempo 2, “E” falado e To no meio; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 10: tempo 1, é falado e tô no meio. tempo 2, é falado e tô no meio. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 11 a 14. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 4, compassos 11 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 11: tempo 1, To e To no meio; tempo 2, conta 1; tempo 3, “E” falado e To no meio; tempo 4, To e To no meio.",
+     "speech": "Compasso 11: tempo 1, tô e tô no meio. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 12: tempo 1, “E” falado e To no meio; tempo 2, “E” falado e To no meio; tempo 3, Pa; tempo 4, po.",
+     "speech": "Compasso 12: tempo 1, é falado e tô no meio. tempo 2, é falado e tô no meio. tempo 3, pá. tempo 4, pô."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13: tempo 1, To; tempo 2, “E” falado; tempo 3, To e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 13: tempo 1, tô. tempo 2, é falado. tempo 3, tô e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 14: tempo 1, To e po no meio e ro no finzinho; tempo 2, Pa e po no meio; tempo 3, “E” falado e po no meio e ro no finzinho; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 14: tempo 1, tô e pô no meio e rô no finzinho. tempo 2, pá e pô no meio. tempo 3, é falado e pô no meio e rô no finzinho. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compassos 15 a 18. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 5, compassos 15 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 15: tempo 1, To e Pa no meio e ra no finzinho; tempo 2, po e po no meio e ro no finzinho; tempo 3, Pa e Pa no meio e ra no finzinho; tempo 4, po e To no meio.",
+     "speech": "Compasso 15: tempo 1, tô e pá no meio e rá no finzinho. tempo 2, pô e pô no meio e rô no finzinho. tempo 3, pá e pá no meio e rá no finzinho. tempo 4, pô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 16: tempo 1, To e Pa no meio e ra no finzinho; tempo 2, po e to logo depois e Pa no meio e Pa no finzinho; tempo 3, To e po no meio e ro no finzinho; tempo 4, Pa e To no meio.",
+     "speech": "Compasso 16: tempo 1, tô e pá no meio e rá no finzinho. tempo 2, pô e tô logo depois e pá no meio e pá no finzinho. tempo 3, tô e pô no meio e rô no finzinho. tempo 4, pá e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Tá, vou contar junto.",
+     "speech": "Tá, vou contar junto."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 17: tempo 1, To e Pa no meio e ga no finzinho; tempo 2, ra e ga logo depois e po no meio e go no finzinho; tempo 3, ro e go logo depois e Pa no meio e ra no finzinho; tempo 4, Pa e To no meio.",
+     "speech": "Compasso 17: tempo 1, tô e pá no meio e gá no finzinho. tempo 2, rá e gá logo depois e pô no meio e gô no finzinho. tempo 3, rô e gô logo depois e pá no meio e rá no finzinho. tempo 4, pá e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 18: tempo 1, To e Pa no meio e ra no finzinho; tempo 2, Pa e po no meio e ro no finzinho; tempo 3, To e To no meio; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 18: tempo 1, tô e pá no meio e rá no finzinho. tempo 2, pá e pô no meio e rô no finzinho. tempo 3, tô e tô no meio. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 6, compassos 19 a 21. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 6, compassos 19 a 21. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 19: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, conta 1; tempo 4, conta 2.",
+     "speech": "Compasso 19: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, conta 1. tempo 4, conta 2."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 20: tempo 1, conta 3; tempo 2, conta 4; tempo 3, conta 5; tempo 4, conta 6.",
+     "speech": "Compasso 20: tempo 1, conta 3. tempo 2, conta 4. tempo 3, conta 5. tempo 4, conta 6."
+    },
+    {
+     "who": "T",
+     "text": "Esse eu preciso ver tocando.",
+     "speech": "Esse eu preciso ver tocando."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 21: tempo 1, conta 7; tempo 2, conta 8; tempo 3, To; tempo 4, conta 1.",
+     "speech": "Compasso 21: tempo 1, conta 7. tempo 2, conta 8. tempo 3, tô. tempo 4, conta 1."
+    },
+    {
+     "who": "R",
+     "text": "Parte 7, compassos 22 a 27. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 7, compassos 22 a 27. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 22: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, conta 1.",
+     "speech": "Compasso 22: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, conta 1."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 24 é igualzinho a esse.",
+     "speech": "O compasso 24 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 23: tempo 1, To e To no meio; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, conta 2.",
+     "speech": "Compasso 23: tempo 1, tô e tô no meio. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, conta 2."
+    },
+    {
+     "who": "T",
+     "text": "Beleza, próximo!",
+     "speech": "Beleza, próximo!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 25: tempo 1, To e To no meio; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, To e To no meio.",
+     "speech": "Compasso 25: tempo 1, tô e tô no meio. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 26: tempo 1, “E” falado e To no meio; tempo 2, To; tempo 3, To e To no meio; tempo 4, To e To no meio.",
+     "speech": "Compasso 26: tempo 1, é falado e tô no meio. tempo 2, tô. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 27: tempo 1, “E” falado e To no meio; tempo 2, “E” falado e To no meio; tempo 3, conta 1; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 27: tempo 1, é falado e tô no meio. tempo 2, é falado e tô no meio. tempo 3, conta 1. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 8, compassos 28 a 32. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 8, compassos 28 a 32. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 28 é igual ao compasso 22, que você já viu.",
+     "speech": "O compasso 28 é igual ao compasso 22, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 29: tempo 1, To; tempo 2, To e To no meio; tempo 3, To e To no meio; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 29: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, tô e tô no meio. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 30: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e To no meio; tempo 4, To.",
+     "speech": "Compasso 30: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 31: tempo 1, To; tempo 2, conta 1; tempo 3, To e To no finzinho; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 31: tempo 1, tô. tempo 2, conta 1. tempo 3, tô e tô no finzinho. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 32: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 32: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "R",
+     "text": "Parte 9, compassos 33 a 36. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+     "speech": "Parte 9, compassos 33 a 36. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+    },
+    {
+     "who": "T",
+     "text": "Pra que contar, se ninguém toca?",
+     "speech": "Pra que contar, se ninguém toca?"
+    },
+    {
+     "who": "R",
+     "text": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé.",
+     "speech": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e conta junto.",
+     "speech": "Escuta e conta junto."
+    },
+    {
+     "who": "R",
+     "text": "Parte 10, compassos 37 a 39. Aqui ninguém toca: é só contar. No primeiro: conta 5, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+     "speech": "Parte 10, compassos 37 a 39. Aqui ninguém toca: é só contar. No primeiro: conta 5, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+    },
+    {
+     "who": "R",
+     "text": "Parte 11, compassos 40 a 45. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 11, compassos 40 a 45. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 40 é igual ao compasso 30, que você já viu.",
+     "speech": "O compasso 40 é igual ao compasso 30, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 41: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e To no meio; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 41: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 42: tempo 1, To e To no meio; tempo 2, “E” falado e To no meio; tempo 3, “E” falado e To no meio; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 42: tempo 1, tô e tô no meio. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 43: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 43: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 44: tempo 1, To e To no meio; tempo 2, To; tempo 3, conta 1; tempo 4, To e to no meio.",
+     "speech": "Compasso 44: tempo 1, tô e tô no meio. tempo 2, tô. tempo 3, conta 1. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 45: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To e to no meio.",
+     "speech": "Compasso 45: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Shady inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Shady inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "nike": {
+   "name": "Nikê",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Nikê: 16 compassos, que eu dividi em 5 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Nikê: 16 compassos, que eu dividi em 5 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compasso 1. Aqui ninguém toca: é só contar. Fica assim: conta 1, conta 2, conta 3, “E” falado.",
+     "speech": "Parte 1, compasso 1. Aqui ninguém toca: é só contar. Fica assim: conta 1, conta 2, conta 3, é falado."
+    },
+    {
+     "who": "T",
+     "text": "Pra que contar, se ninguém toca?",
+     "speech": "Pra que contar, se ninguém toca?"
+    },
+    {
+     "who": "R",
+     "text": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé.",
+     "speech": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e conta junto.",
+     "speech": "Escuta e conta junto."
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 2 a 4. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 2, compassos 2 a 4. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 2: tempo 1, To; tempo 2, To e to no meio; tempo 3, To e po no meio e ro no finzinho; tempo 4, Pa e to no meio.",
+     "speech": "Compasso 2: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, tô e pô no meio e rô no finzinho. tempo 4, pá e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 3: tempo 1, To e to no meio; tempo 2, To e to no meio; tempo 3, To e to no meio; tempo 4, To.",
+     "speech": "Compasso 3: tempo 1, tô e tô no meio. tempo 2, tô e tô no meio. tempo 3, tô e tô no meio. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 4: tempo 1, To e to no meio; tempo 2, To e po no meio; tempo 3, Pa e po no meio; tempo 4, Pa.",
+     "speech": "Compasso 4: tempo 1, tô e tô no meio. tempo 2, tô e pô no meio. tempo 3, pá e pô no meio. tempo 4, pá."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 5 a 8. Nesta parte as duas tocam juntas no To e também conversam: a 1ª aparece sozinha no po.",
+     "speech": "Parte 3, compassos 5 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5: tempo 1, To e to no finzinho; tempo 2, to no meio e ro no finzinho; tempo 3, to e to no meio e ro no finzinho; tempo 4, to logo depois.",
+     "speech": "Compasso 5: tempo 1, tô e tô no finzinho. tempo 2, tô no meio e rô no finzinho. tempo 3, tô e tô no meio e rô no finzinho. tempo 4, tô logo depois."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 6 é igualzinho a esse.",
+     "speech": "O compasso 6 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 7: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To e to no meio.",
+     "speech": "Compasso 7: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 8: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 8: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 9 a 12. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 4, compassos 9 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 9: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 10: tempo 1, po; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 10: tempo 1, pô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 11: tempo 1, “E” falado; tempo 2, To; tempo 3, To; tempo 4, To e go logo depois e ro no meio e go no finzinho.",
+     "speech": "Compasso 11: tempo 1, é falado. tempo 2, tô. tempo 3, tô. tempo 4, tô e gô logo depois e rô no meio e gô no finzinho."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 12: tempo 1, To; tempo 2, To e Pa no meio; tempo 3, Pa e Pa no meio; tempo 4, To.",
+     "speech": "Compasso 12: tempo 1, tô. tempo 2, tô e pá no meio. tempo 3, pá e pá no meio. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compassos 13 a 16. Nesta parte as duas tocam juntas no To e também conversam: a 1ª aparece sozinha no po.",
+     "speech": "Parte 5, compassos 13 a 16. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 14 é igual ao compasso 5, que você já viu.",
+     "speech": "O compasso 14 é igual ao compasso 5, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 13: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 15: tempo 1, “E” falado e to no meio; tempo 2, “E” falado e to no meio; tempo 3, “E” falado e to logo depois e to no finzinho; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 15: tempo 1, é falado e tô no meio. tempo 2, é falado e tô no meio. tempo 3, é falado e tô logo depois e tô no finzinho. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Tá, vou contar junto.",
+     "speech": "Tá, vou contar junto."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 16: só o To final, no tempo 1, e acabou.",
+     "speech": "Compasso 16: só o tô final, no tempo 1, e acabou."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Nikê inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Nikê inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "caravan": {
+   "name": "Caravan",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Caravan: 30 compassos, que eu dividi em 7 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Caravan: 30 compassos, que eu dividi em 7 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 1: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 1: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 2: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 2: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 3: tempo 1, conta 2; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 3: tempo 1, conta 2. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 4: tempo 1, conta 4; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 4: tempo 1, conta 4. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 5 a 8. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 2, compassos 5 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5: tempo 1, To e po no finzinho; tempo 2, “E” falado e Pa no meio; tempo 3, “E” falado e Pa no finzinho; tempo 4, “E” falado e po no meio.",
+     "speech": "Compasso 5: tempo 1, tô e pô no finzinho. tempo 2, é falado e pá no meio. tempo 3, é falado e pá no finzinho. tempo 4, é falado e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 7 é igualzinho a esse.",
+     "speech": "O compasso 7 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 6: tempo 1, Pa; tempo 2, “E” falado e po no meio; tempo 3, Pa e po no finzinho; tempo 4, “E” falado e Pa no meio.",
+     "speech": "Compasso 6: tempo 1, pá. tempo 2, é falado e pô no meio. tempo 3, pá e pô no finzinho. tempo 4, é falado e pá no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 8 é igualzinho a esse.",
+     "speech": "O compasso 8 é igualzinho a esse."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 9 a 12. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 3, compassos 9 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 9, 10, 11 e 12 repetem compassos que você já viu: o 5 e o 6.",
+     "speech": "Os compassos 9, 10, 11 e 12 repetem compassos que você já viu: o 5 e o 6."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 13 a 18. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 4, compassos 13 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13: tempo 1, tercina: To, “ti” falado, po; tempo 2, tercina: “ti” falado, po, “ti” falado; tempo 3, tercina: To, “ti” falado, Pa; tempo 4, tercina: “ti” falado, Pa, “ti” falado.",
+     "speech": "Compasso 13: tempo 1, tercina: tô, tí falado, pô. tempo 2, tercina: tí falado, pô, tí falado. tempo 3, tercina: tô, tí falado, pá. tempo 4, tercina: tí falado, pá, tí falado."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 14: tempo 1, tercina: To, pausa, pausa; tempo 2, tercina: “E” falado, pausa, pausa; tempo 3, tercina: To, “ti” falado, to; tempo 4, tercina: “ti” falado, to, “ti” falado.",
+     "speech": "Compasso 14: tempo 1, tercina: tô, pausa, pausa. tempo 2, tercina: é falado, pausa, pausa. tempo 3, tercina: tô, tí falado, tô. tempo 4, tercina: tí falado, tô, tí falado."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 15: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, “E” falado; tempo 4, To.",
+     "speech": "Compasso 15: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, é falado. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 16: tempo 1, “E” falado e to no meio; tempo 2, “E” falado; tempo 3, To; tempo 4, conta 4.",
+     "speech": "Compasso 16: tempo 1, é falado e tô no meio. tempo 2, é falado. tempo 3, tô. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 17: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, To e to no meio e go no finzinho.",
+     "speech": "Compasso 17: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, tô e tô no meio e gô no finzinho."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 18: tempo 1, ro e to no meio; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 18: tempo 1, rô e tô no meio. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "Ué, aqui o tempo tem três divisões?",
+     "speech": "Ué, aqui o tempo tem três divisões?"
+    },
+    {
+     "who": "R",
+     "text": "É tercina: três notas iguais dentro de um tempo só. Fale tri-pa-ti em cada tempo para encaixar.",
+     "speech": "É tercina: três notas iguais dentro de um tempo só. Fale tri-pá-tí em cada tempo para encaixar."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compassos 19 a 23. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 5, compassos 19 a 23. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 19, 20, 21, 22 e 23 repetem compassos que você já viu: o 5 e o 6.",
+     "speech": "Os compassos 19, 20, 21, 22 e 23 repetem compassos que você já viu: o 5 e o 6."
+    },
+    {
+     "who": "R",
+     "text": "Parte 6, compassos 24 a 27. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 6, compassos 24 a 27. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 24 é igual ao compasso 1, que você já viu.",
+     "speech": "O compasso 24 é igual ao compasso 1, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 25: tempo 1, To e to no finzinho; tempo 2, “E” falado e to no meio; tempo 3, To e to no finzinho; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 25: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô e tô no finzinho. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 26: tempo 1, To e to no finzinho; tempo 2, “E” falado e to logo depois e to no meio; tempo 3, To; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 26: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô logo depois e tô no meio. tempo 3, tô. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Tá, vou contar junto.",
+     "speech": "Tá, vou contar junto."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 27: tempo 1, to e to no meio; tempo 2, conta 1; tempo 3, conta 2; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 27: tempo 1, tô e tô no meio. tempo 2, conta 1. tempo 3, conta 2. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 7, compassos 28 a 30. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 7, compassos 28 a 30. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 28: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 28: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 29: tempo 1, To e to no meio; tempo 2, conta 3; tempo 3, conta 4; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 29: tempo 1, tô e tô no meio. tempo 2, conta 3. tempo 3, conta 4. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Esse eu preciso ver tocando.",
+     "speech": "Esse eu preciso ver tocando."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 30: tempo 1, To; tempo 2, To; tempo 3, To e to no finzinho; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 30: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no finzinho. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Caravan inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Caravan inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "dagon": {
+   "name": "Dagon",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Dagon: 39 compassos, que eu dividi em 13 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Dagon: 39 compassos, que eu dividi em 13 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 1, compassos 1 a 4. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 1: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e to no meio; tempo 4, to logo depois.",
+     "speech": "Compasso 1: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 2: tempo 1, To; tempo 2, conta 2; tempo 3, “E” falado e to no meio; tempo 4, “E” falado.",
+     "speech": "Compasso 2: tempo 1, tô. tempo 2, conta 2. tempo 3, é falado e tô no meio. tempo 4, é falado."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 3: tempo 1, To; tempo 2, conta 3; tempo 3, “E” falado e to no meio; tempo 4, to logo depois.",
+     "speech": "Compasso 3: tempo 1, tô. tempo 2, conta 3. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 4: tempo 1, To; tempo 2, conta 4; tempo 3, “E” falado e to no meio; tempo 4, to logo depois.",
+     "speech": "Compasso 4: tempo 1, tô. tempo 2, conta 4. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 5 a 9. Nesta parte as duas tocam juntas no To e também conversam: a 1ª aparece sozinha no po.",
+     "speech": "Parte 2, compassos 5 a 9. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e to no meio e ro no finzinho; tempo 4, to logo depois e ro no meio.",
+     "speech": "Compasso 5: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio e rô no finzinho. tempo 4, tô logo depois e rô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 6: tempo 1, To; tempo 2, conta 2; tempo 3, “E” falado e to no meio e ro no finzinho; tempo 4, to logo depois e ro no meio.",
+     "speech": "Compasso 6: tempo 1, tô. tempo 2, conta 2. tempo 3, é falado e tô no meio e rô no finzinho. tempo 4, tô logo depois e rô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 7: tempo 1, To; tempo 2, conta 3; tempo 3, “E” falado e to no meio e ro no finzinho; tempo 4, to logo depois e ro no meio.",
+     "speech": "Compasso 7: tempo 1, tô. tempo 2, conta 3. tempo 3, é falado e tô no meio e rô no finzinho. tempo 4, tô logo depois e rô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 8: tempo 1, To; tempo 2, conta 4; tempo 3, “E” falado e To no meio; tempo 4, To logo depois.",
+     "speech": "Compasso 8: tempo 1, tô. tempo 2, conta 4. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 9: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 10 a 13. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 3, compassos 10 a 13. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 10: tempo 1, To e to logo depois e to no finzinho; tempo 2, “E” falado e to no meio e to no finzinho; tempo 3, to logo depois e to no meio; tempo 4, “ti” falado e to logo depois e to no finzinho.",
+     "speech": "Compasso 10: tempo 1, tô e tô logo depois e tô no finzinho. tempo 2, é falado e tô no meio e tô no finzinho. tempo 3, tô logo depois e tô no meio. tempo 4, tí falado e tô logo depois e tô no finzinho."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 12 é igualzinho a esse.",
+     "speech": "O compasso 12 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 11: tempo 1, to e to no meio e to no finzinho; tempo 2, to logo depois e to no meio; tempo 3, to e To logo depois e to no finzinho; tempo 4, “E” falado.",
+     "speech": "Compasso 11: tempo 1, tô e tô no meio e tô no finzinho. tempo 2, tô logo depois e tô no meio. tempo 3, tô e tô logo depois e tô no finzinho. tempo 4, é falado."
+    },
+    {
+     "who": "T",
+     "text": "Tá, vou contar junto.",
+     "speech": "Tá, vou contar junto."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13: tempo 1, to e to no meio e to no finzinho; tempo 2, to logo depois e to no meio; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 13: tempo 1, tô e tô no meio e tô no finzinho. tempo 2, tô logo depois e tô no meio. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 14 a 17. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 4, compassos 14 a 17. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 14, 15, 16 e 17 repetem compassos que você já viu: o 10, o 11 e o 13.",
+     "speech": "Os compassos 14, 15, 16 e 17 repetem compassos que você já viu: o 10, o 11 e o 13."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compassos 18 a 19. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 5, compassos 18 a 19. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 18: tempo 1, To e to no finzinho; tempo 2, conta 1; tempo 3, To e to no finzinho; tempo 4, conta 2.",
+     "speech": "Compasso 18: tempo 1, tô e tô no finzinho. tempo 2, conta 1. tempo 3, tô e tô no finzinho. tempo 4, conta 2."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 19: tempo 1, To e to no finzinho; tempo 2, conta 3; tempo 3, To e to no finzinho; tempo 4, conta 4.",
+     "speech": "Compasso 19: tempo 1, tô e tô no finzinho. tempo 2, conta 3. tempo 3, tô e tô no finzinho. tempo 4, conta 4."
+    },
+    {
+     "who": "R",
+     "text": "Parte 6, compassos 20 a 24. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 6, compassos 20 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 20: tempo 1, To e to no finzinho; tempo 2, “ti” falado e to logo depois; tempo 3, To e to no finzinho; tempo 4, “ti” falado e to logo depois.",
+     "speech": "Compasso 20: tempo 1, tô e tô no finzinho. tempo 2, tí falado e tô logo depois. tempo 3, tô e tô no finzinho. tempo 4, tí falado e tô logo depois."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 21, 23 e 24 são iguaizinhos a esse.",
+     "speech": "Os compassos 21, 23 e 24 são iguaizinhos a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 22: tempo 1, To e to no finzinho; tempo 2, “ti” falado e to logo depois; tempo 3, To e to no finzinho; tempo 4, conta 1.",
+     "speech": "Compasso 22: tempo 1, tô e tô no finzinho. tempo 2, tí falado e tô logo depois. tempo 3, tô e tô no finzinho. tempo 4, conta 1."
+    },
+    {
+     "who": "R",
+     "text": "Parte 7, compassos 25 a 26. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 7, compassos 25 a 26. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 25 e 26 repetem compassos que você já viu: o 20.",
+     "speech": "Os compassos 25 e 26 repetem compassos que você já viu: o 20."
+    },
+    {
+     "who": "R",
+     "text": "Parte 8, compasso 27. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 8, compasso 27. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 27 é igual ao compasso 9, que você já viu.",
+     "speech": "O compasso 27 é igual ao compasso 9, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Parte 9, compasso 28. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 9, compasso 28. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 28 é igual ao compasso 20, que você já viu.",
+     "speech": "O compasso 28 é igual ao compasso 20, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Parte 10, compassos 29 a 33. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 10, compassos 29 a 33. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 29: tempo 1, To e to no meio; tempo 2, “E” falado e to no meio; tempo 3, “E” falado e to no meio; tempo 4, To.",
+     "speech": "Compasso 29: tempo 1, tô e tô no meio. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 30, 31, 32 e 33 são iguaizinhos a esse.",
+     "speech": "Os compassos 30, 31, 32 e 33 são iguaizinhos a esse."
+    },
+    {
+     "who": "R",
+     "text": "Parte 11, compasso 34. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 11, compasso 34. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 34: tempo 1, To e to no meio; tempo 2, To e to no meio; tempo 3, To e to no meio; tempo 4, To e to no meio.",
+     "speech": "Compasso 34: tempo 1, tô e tô no meio. tempo 2, tô e tô no meio. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 12, compassos 35 a 36. Nesta parte as duas tocam juntas no To e também conversam: a 1ª aparece sozinha no po.",
+     "speech": "Parte 12, compassos 35 a 36. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 35 é igual ao compasso 6, que você já viu.",
+     "speech": "O compasso 35 é igual ao compasso 6, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 36: tempo 1, To; tempo 2, conta 1; tempo 3, To e to no meio e ro no finzinho; tempo 4, to logo depois e ro no meio.",
+     "speech": "Compasso 36: tempo 1, tô. tempo 2, conta 1. tempo 3, tô e tô no meio e rô no finzinho. tempo 4, tô logo depois e rô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 13, compassos 37 a 39. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 13, compassos 37 a 39. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 38 é igual ao compasso 3, que você já viu.",
+     "speech": "O compasso 38 é igual ao compasso 3, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 37: tempo 1, To; tempo 2, conta 2; tempo 3, “E” falado e to no meio; tempo 4, to logo depois.",
+     "speech": "Compasso 37: tempo 1, tô. tempo 2, conta 2. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 39: só o To final, no tempo 1, e acabou.",
+     "speech": "Compasso 39: só o tô final, no tempo 1, e acabou."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Dagon inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Dagon inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "cactus": {
+   "name": "Cactus",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Cactus: 21 compassos, que eu dividi em 5 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Cactus: 21 compassos, que eu dividi em 5 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 2. Nesta parte é uma conversa: a 1ª faz po e a 2ª responde pa, uma de cada vez.",
+     "speech": "Parte 1, compassos 1 a 2. Nesta parte é uma conversa: a primeira faz pô e a segunda responde pá, uma de cada vez."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 1: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 1: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 2: tempo 1, conta 5; tempo 2, conta 6; tempo 3, po e Pa no meio; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 2: tempo 1, conta 5. tempo 2, conta 6. tempo 3, pô e pá no meio. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 3 a 6. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 2, compassos 3 a 6. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 3: tempo 1, To; tempo 2, conta 1; tempo 3, To e ro logo depois e to no finzinho; tempo 4, to e to no meio.",
+     "speech": "Compasso 3: tempo 1, tô. tempo 2, conta 1. tempo 3, tô e rô logo depois e tô no finzinho. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 4: tempo 1, To; tempo 2, conta 2; tempo 3, po e Pa no meio; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 4: tempo 1, tô. tempo 2, conta 2. tempo 3, pô e pá no meio. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5: tempo 1, To; tempo 2, conta 3; tempo 3, To e ro logo depois e to no finzinho; tempo 4, to e to no meio.",
+     "speech": "Compasso 5: tempo 1, tô. tempo 2, conta 3. tempo 3, tô e rô logo depois e tô no finzinho. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 6: tempo 1, To; tempo 2, conta 4; tempo 3, po e Pa no meio; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 6: tempo 1, tô. tempo 2, conta 4. tempo 3, pô e pá no meio. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 7 a 12. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 3, compassos 7 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 7: tempo 1, Pa; tempo 2, po; tempo 3, Pa; tempo 4, po.",
+     "speech": "Compasso 7: tempo 1, pá. tempo 2, pô. tempo 3, pá. tempo 4, pô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 8: tempo 1, Pa e po no meio; tempo 2, Pa e po no meio; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 8: tempo 1, pá e pô no meio. tempo 2, pá e pô no meio. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To e to no finzinho; tempo 2, to no finzinho; tempo 3, ro e to logo depois e to no finzinho; tempo 4, to e to no meio.",
+     "speech": "Compasso 9: tempo 1, tô e tô no finzinho. tempo 2, tô no finzinho. tempo 3, rô e tô logo depois e tô no finzinho. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 10 e 11 são iguaizinhos a esse.",
+     "speech": "Os compassos 10 e 11 são iguaizinhos a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 12: tempo 1, po e Pa no meio; tempo 2, po e Pa no meio; tempo 3, po e Pa logo depois e Pa no finzinho; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 12: tempo 1, pô e pá no meio. tempo 2, pô e pá no meio. tempo 3, pô e pá logo depois e pá no finzinho. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 13 a 17. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 4, compassos 13 a 17. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 17 é igual ao compasso 12, que você já viu.",
+     "speech": "O compasso 17 é igual ao compasso 12, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To e to no meio.",
+     "speech": "Compasso 13: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 14: tempo 1, To; tempo 2, “E” falado e to no meio; tempo 3, “ti” falado e to logo depois; tempo 4, To.",
+     "speech": "Compasso 14: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tí falado e tô logo depois. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 16 é igualzinho a esse.",
+     "speech": "O compasso 16 é igualzinho a esse."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 15: tempo 1, To; tempo 2, “E” falado e to no meio; tempo 3, “E” falado e to no meio; tempo 4, To.",
+     "speech": "Compasso 15: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compassos 18 a 21. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 5, compassos 18 a 21. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 18: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e Pa no meio; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 18: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e pá no meio. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 19: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 19: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Tá, vou contar junto.",
+     "speech": "Tá, vou contar junto."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 20: tempo 1, To; tempo 2, conta 3; tempo 3, “E” falado e Pa no meio; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 20: tempo 1, tô. tempo 2, conta 3. tempo 3, é falado e pá no meio. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 21: tempo 1, To; tempo 2, To; tempo 3, To e to no meio; tempo 4, To e to no meio.",
+     "speech": "Compasso 21: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Cactus inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Cactus inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "soma": {
+   "name": "Soma",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Soma: 14 compassos, que eu dividi em 4 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Soma: 14 compassos, que eu dividi em 4 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 5. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 1, compassos 1 a 5. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 1: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, To e To no meio.",
+     "speech": "Compasso 1: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 2: tempo 1, To e po no finzinho; tempo 2, Pa; tempo 3, To e Pa no finzinho; tempo 4, po e To no meio.",
+     "speech": "Compasso 2: tempo 1, tô e pô no finzinho. tempo 2, pá. tempo 3, tô e pá no finzinho. tempo 4, pô e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 3: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, “E” falado e To no meio; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 3: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 4: tempo 1, To e po no finzinho; tempo 2, Pa; tempo 3, To e Pa no finzinho; tempo 4, po.",
+     "speech": "Compasso 4: tempo 1, tô e pô no finzinho. tempo 2, pá. tempo 3, tô e pá no finzinho. tempo 4, pô."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5: tempo 1, To e po no finzinho; tempo 2, Pa; tempo 3, To e To no meio; tempo 4, To e To no meio.",
+     "speech": "Compasso 5: tempo 1, tô e pô no finzinho. tempo 2, pá. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 6 a 8. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 2, compassos 6 a 8. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 6: tempo 1, To; tempo 2, To e To no meio; tempo 3, “E” falado e To no meio; tempo 4, conta 1.",
+     "speech": "Compasso 6: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, é falado e tô no meio. tempo 4, conta 1."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 7: tempo 1, To; tempo 2, To e To no meio; tempo 3, conta 1; tempo 4, To.",
+     "speech": "Compasso 7: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, conta 1. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 8: tempo 1, To; tempo 2, To e To no meio; tempo 3, “E” falado e To no meio; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 8: tempo 1, tô. tempo 2, tô e tô no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 9 a 11. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 3, compassos 9 a 11. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To e To no meio.",
+     "speech": "Compasso 9: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 11 é igualzinho a esse.",
+     "speech": "O compasso 11 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 10: tempo 1, To; tempo 2, To; tempo 3, To e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 10: tempo 1, tô. tempo 2, tô. tempo 3, tô e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 12 a 14. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 4, compassos 12 a 14. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 12: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, conta 1.",
+     "speech": "Compasso 12: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, conta 1."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, conta 1.",
+     "speech": "Compasso 13: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, conta 1."
+    },
+    {
+     "who": "T",
+     "text": "Tá, vou contar junto.",
+     "speech": "Tá, vou contar junto."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 14: só o To final, no tempo 1, e acabou.",
+     "speech": "Compasso 14: só o tô final, no tempo 1, e acabou."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Soma inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Soma inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "minus": {
+   "name": "Minus",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Minus: 51 compassos, que eu dividi em 12 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Minus: 51 compassos, que eu dividi em 12 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 6. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 1, compassos 1 a 6. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 1: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, To e To no meio.",
+     "speech": "Compasso 1: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 2: tempo 1, To; tempo 2, po e Pa no meio; tempo 3, po e Pa no meio; tempo 4, conta 1.",
+     "speech": "Compasso 2: tempo 1, tô. tempo 2, pô e pá no meio. tempo 3, pô e pá no meio. tempo 4, conta 1."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 3: tempo 1, “E” falado e po no meio; tempo 2, po e Pa no meio; tempo 3, Pa e po no meio; tempo 4, conta 1.",
+     "speech": "Compasso 3: tempo 1, é falado e pô no meio. tempo 2, pô e pá no meio. tempo 3, pá e pô no meio. tempo 4, conta 1."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 4: tempo 1, To e To no finzinho; tempo 2, “E” falado e Pa no meio; tempo 3, Pa e po no meio; tempo 4, conta 1.",
+     "speech": "Compasso 4: tempo 1, tô e tô no finzinho. tempo 2, é falado e pá no meio. tempo 3, pá e pô no meio. tempo 4, conta 1."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 5: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 6: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 6: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 7 a 12. Nesta parte as duas tocam juntas no To e também conversam: a 1ª aparece sozinha no po.",
+     "speech": "Parte 2, compassos 7 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 7: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 7: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 8: tempo 1, conta 2; tempo 2, conta 2; tempo 3, conta 3; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 8: tempo 1, conta 2. tempo 2, conta 2. tempo 3, conta 3. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To e To no meio; tempo 2, conta 1; tempo 3, conta 2; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 9: tempo 1, tô e tô no meio. tempo 2, conta 1. tempo 3, conta 2. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 10 é igualzinho a esse.",
+     "speech": "O compasso 10 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 11: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, To e To no meio; tempo 4, To e To no meio.",
+     "speech": "Compasso 11: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Tá, vou contar junto.",
+     "speech": "Tá, vou contar junto."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 12: tempo 1, To e To no meio e ro no finzinho; tempo 2, to; tempo 3, “E” falado e to no meio e ro no finzinho; tempo 4, conta 1.",
+     "speech": "Compasso 12: tempo 1, tô e tô no meio e rô no finzinho. tempo 2, tô. tempo 3, é falado e tô no meio e rô no finzinho. tempo 4, conta 1."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 13 a 16. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 3, compassos 13 a 16. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, “E” falado e To no meio; tempo 4, To.",
+     "speech": "Compasso 13: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, é falado e tô no meio. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 15 é igualzinho a esse.",
+     "speech": "O compasso 15 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 14: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 14: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Esse eu preciso ver tocando.",
+     "speech": "Esse eu preciso ver tocando."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 16: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e To no meio; tempo 4, To e To no meio.",
+     "speech": "Compasso 16: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 17 a 20. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 4, compassos 17 a 20. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 17: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, To e To no meio.",
+     "speech": "Compasso 17: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 18 e 19 são iguaizinhos a esse.",
+     "speech": "Os compassos 18 e 19 são iguaizinhos a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 20: tempo 1, To; tempo 2, To; tempo 3, To e po no meio e ro no finzinho; tempo 4, Pa e To no meio.",
+     "speech": "Compasso 20: tempo 1, tô. tempo 2, tô. tempo 3, tô e pô no meio e rô no finzinho. tempo 4, pá e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compassos 21 a 24. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 5, compassos 21 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 21: tempo 1, To e To no meio; tempo 2, “E” falado e To no finzinho; tempo 3, “E” falado e To no meio; tempo 4, To logo depois.",
+     "speech": "Compasso 21: tempo 1, tô e tô no meio. tempo 2, é falado e tô no finzinho. tempo 3, é falado e tô no meio. tempo 4, tô logo depois."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 22 e 23 são iguaizinhos a esse.",
+     "speech": "Os compassos 22 e 23 são iguaizinhos a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 24: tempo 1, To e To no meio; tempo 2, To no finzinho; tempo 3, “E” falado e To no meio; tempo 4, To e To no meio.",
+     "speech": "Compasso 24: tempo 1, tô e tô no meio. tempo 2, tô no finzinho. tempo 3, é falado e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 6, compassos 25 a 28. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 6, compassos 25 a 28. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 25: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, conta 1.",
+     "speech": "Compasso 25: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, conta 1."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 26 é igualzinho a esse.",
+     "speech": "O compasso 26 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 27: tempo 1, To e To no finzinho; tempo 2, “E” falado e To no meio; tempo 3, To; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 27: tempo 1, tô e tô no finzinho. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Beleza, próximo!",
+     "speech": "Beleza, próximo!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 28: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, “E” falado.",
+     "speech": "Compasso 28: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, é falado."
+    },
+    {
+     "who": "R",
+     "text": "Parte 7, compassos 29 a 32. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+     "speech": "Parte 7, compassos 29 a 32. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+    },
+    {
+     "who": "T",
+     "text": "Pra que contar, se ninguém toca?",
+     "speech": "Pra que contar, se ninguém toca?"
+    },
+    {
+     "who": "R",
+     "text": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé.",
+     "speech": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e conta junto.",
+     "speech": "Escuta e conta junto."
+    },
+    {
+     "who": "R",
+     "text": "Parte 8, compassos 33 a 34. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 8, compassos 33 a 34. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 33: tempo 1, To; tempo 2, conta 1; tempo 3, conta 2; tempo 4, To e To no meio.",
+     "speech": "Compasso 33: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 2. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 34: tempo 1, “E” falado e To no meio; tempo 2, To; tempo 3, conta 1; tempo 4, conta 2.",
+     "speech": "Compasso 34: tempo 1, é falado e tô no meio. tempo 2, tô. tempo 3, conta 1. tempo 4, conta 2."
+    },
+    {
+     "who": "R",
+     "text": "Parte 9, compassos 35 a 39. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 9, compassos 35 a 39. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 35: tempo 1, To; tempo 2, conta 1; tempo 3, “E” falado e To no meio; tempo 4, To.",
+     "speech": "Compasso 35: tempo 1, tô. tempo 2, conta 1. tempo 3, é falado e tô no meio. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 36: tempo 1, “E” falado e To no meio; tempo 2, To; tempo 3, To e To no meio; tempo 4, To e To no meio.",
+     "speech": "Compasso 36: tempo 1, é falado e tô no meio. tempo 2, tô. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 37: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, To e To no meio; tempo 4, conta 1.",
+     "speech": "Compasso 37: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, tô e tô no meio. tempo 4, conta 1."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 38 e 39 são iguaizinhos a esse.",
+     "speech": "Os compassos 38 e 39 são iguaizinhos a esse."
+    },
+    {
+     "who": "R",
+     "text": "Parte 10, compassos 40 a 44. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 10, compassos 40 a 44. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 41, 42 e 43 repetem compassos que você já viu: o 37.",
+     "speech": "Os compassos 41, 42 e 43 repetem compassos que você já viu: o 37."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 40: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 40: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 44 é igualzinho a esse.",
+     "speech": "O compasso 44 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Parte 11, compassos 45 a 48. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 11, compassos 45 a 48. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 45: tempo 1, To; tempo 2, “E” falado e To no meio; tempo 3, conta 1; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 45: tempo 1, tô. tempo 2, é falado e tô no meio. tempo 3, conta 1. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 46: tempo 1, To; tempo 2, Pa e po no meio; tempo 3, Pa; tempo 4, To.",
+     "speech": "Compasso 46: tempo 1, tô. tempo 2, pá e pô no meio. tempo 3, pá. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 47: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, To e To no meio.",
+     "speech": "Compasso 47: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 48: tempo 1, To; tempo 2, Pa; tempo 3, po; tempo 4, To e To no meio.",
+     "speech": "Compasso 48: tempo 1, tô. tempo 2, pá. tempo 3, pô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 12, compassos 49 a 51. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 12, compassos 49 a 51. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 49: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, po.",
+     "speech": "Compasso 49: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, pô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 50: tempo 1, Pa; tempo 2, po; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 50: tempo 1, pá. tempo 2, pô. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 51: só o To final, no tempo 1, e acabou.",
+     "speech": "Compasso 51: só o tô final, no tempo 1, e acabou."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Minus inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Minus inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "hecate": {
+   "name": "Hécate",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Hécate: 24 compassos, que eu dividi em 8 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Hécate: 24 compassos, que eu dividi em 8 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 4. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+     "speech": "Parte 1, compassos 1 a 4. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+    },
+    {
+     "who": "T",
+     "text": "Pra que contar, se ninguém toca?",
+     "speech": "Pra que contar, se ninguém toca?"
+    },
+    {
+     "who": "R",
+     "text": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé.",
+     "speech": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e conta junto.",
+     "speech": "Escuta e conta junto."
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 5 a 8. Aqui ninguém toca: é só contar. No primeiro: conta 5, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+     "speech": "Parte 2, compassos 5 a 8. Aqui ninguém toca: é só contar. No primeiro: conta 5, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 9 a 12. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 3, compassos 9 a 12. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, po.",
+     "speech": "Compasso 9: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, pô."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 10 e 11 são iguaizinhos a esse.",
+     "speech": "Os compassos 10 e 11 são iguaizinhos a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 12: tempo 1, To; tempo 2, To; tempo 3, To e to no finzinho; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 12: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no finzinho. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 13 a 14. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 4, compassos 13 a 14. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13, que tem 7 tempos: tempo 1, To; tempo 2, Pa; tempo 3, Pa; tempo 4, Pa e po no meio; tempo 5, “E” falado e po no meio; tempo 6, Pa; tempo 7, Pa.",
+     "speech": "Compasso 13, que tem 7 tempos: tempo 1, tô. tempo 2, pá. tempo 3, pá. tempo 4, pá e pô no meio. tempo 5, é falado e pô no meio. tempo 6, pá. tempo 7, pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 14, que tem 7 tempos: tempo 1, To; tempo 2, Pa; tempo 3, Pa; tempo 4, Pa e po no meio; tempo 5, po no meio; tempo 6, Pa; tempo 7, Pa.",
+     "speech": "Compasso 14, que tem 7 tempos: tempo 1, tô. tempo 2, pá. tempo 3, pá. tempo 4, pá e pô no meio. tempo 5, pô no meio. tempo 6, pá. tempo 7, pá."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "T",
+     "text": "Espera, o compasso 13 tem 7 tempos?",
+     "speech": "Espera, o compasso 13 tem 7 tempos?"
+    },
+    {
+     "who": "R",
+     "text": "Tem. Conte até 7 e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem.",
+     "speech": "Tem. Conte até 7 e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compasso 15. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 5, compasso 15. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 15, que tem 7 tempos: tempo 1, To; tempo 2, conta 1; tempo 3, To; tempo 4, conta 2; tempo 5, To; tempo 6, conta 3; tempo 7, To e To no meio.",
+     "speech": "Compasso 15, que tem 7 tempos: tempo 1, tô. tempo 2, conta 1. tempo 3, tô. tempo 4, conta 2. tempo 5, tô. tempo 6, conta 3. tempo 7, tô e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 6, compassos 16 a 18. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 6, compassos 16 a 18. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 16 e 17 repetem compassos que você já viu: o 13.",
+     "speech": "Os compassos 16 e 17 repetem compassos que você já viu: o 13."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 18, que tem 7 tempos: tempo 1, To; tempo 2, Pa; tempo 3, Pa; tempo 4, Pa e po no meio; tempo 5, To; tempo 6, To; tempo 7, To.",
+     "speech": "Compasso 18, que tem 7 tempos: tempo 1, tô. tempo 2, pá. tempo 3, pá. tempo 4, pá e pô no meio. tempo 5, tô. tempo 6, tô. tempo 7, tô."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 7, compassos 19 a 21. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 7, compassos 19 a 21. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 19, que tem 7 tempos: tempo 1, To e po no meio; tempo 2, po e Pa no meio; tempo 3, Pa e po no meio; tempo 4, po e Pa no meio; tempo 5, Pa e po no meio; tempo 6, po e Pa no meio; tempo 7, po e Pa no meio.",
+     "speech": "Compasso 19, que tem 7 tempos: tempo 1, tô e pô no meio. tempo 2, pô e pá no meio. tempo 3, pá e pô no meio. tempo 4, pô e pá no meio. tempo 5, pá e pô no meio. tempo 6, pô e pá no meio. tempo 7, pô e pá no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 20 é igualzinho a esse.",
+     "speech": "O compasso 20 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 21, que tem 7 tempos: tempo 1, To e po no meio; tempo 2, po e Pa no meio; tempo 3, Pa e po no meio; tempo 4, po e po no meio; tempo 5, To; tempo 6, To; tempo 7, To.",
+     "speech": "Compasso 21, que tem 7 tempos: tempo 1, tô e pô no meio. tempo 2, pô e pá no meio. tempo 3, pá e pô no meio. tempo 4, pô e pô no meio. tempo 5, tô. tempo 6, tô. tempo 7, tô."
+    },
+    {
+     "who": "R",
+     "text": "Parte 8, compassos 22 a 24. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 8, compassos 22 a 24. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 22, que tem 7 tempos: tempo 1, “E” falado e to no meio; tempo 2, conta 1 e to no meio; tempo 3, conta 2 e to no meio; tempo 4, conta 3 e to no meio; tempo 5, conta 4 e to no meio; tempo 6, conta 5 e to no meio; tempo 7, conta 6 e to no meio.",
+     "speech": "Compasso 22, que tem 7 tempos: tempo 1, é falado e tô no meio. tempo 2, conta 1 e tô no meio. tempo 3, conta 2 e tô no meio. tempo 4, conta 3 e tô no meio. tempo 5, conta 4 e tô no meio. tempo 6, conta 5 e tô no meio. tempo 7, conta 6 e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 23, que tem 7 tempos: tempo 1, “E” falado e to no meio; tempo 2, conta 1 e to no meio; tempo 3, conta 2 e to no meio; tempo 4, conta 3 e to no meio; tempo 5, To; tempo 6, To; tempo 7, To.",
+     "speech": "Compasso 23, que tem 7 tempos: tempo 1, é falado e tô no meio. tempo 2, conta 1 e tô no meio. tempo 3, conta 2 e tô no meio. tempo 4, conta 3 e tô no meio. tempo 5, tô. tempo 6, tô. tempo 7, tô."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 24: só o To final, no tempo 1, e acabou.",
+     "speech": "Compasso 24: só o tô final, no tempo 1, e acabou."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Hécate inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Hécate inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "ganesha": {
+   "name": "Ganesha",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Ganesha: 35 compassos, que eu dividi em 9 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Ganesha: 35 compassos, que eu dividi em 9 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 6. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 1, compassos 1 a 6. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 1: tempo 1, conta 1; tempo 2, conta 2; tempo 3, conta 3; tempo 4, To e To no meio.",
+     "speech": "Compasso 1: tempo 1, conta 1. tempo 2, conta 2. tempo 3, conta 3. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 2: tempo 1, To; tempo 2, conta 1; tempo 3, conta 2; tempo 4, To e To no meio.",
+     "speech": "Compasso 2: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 2. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 3: tempo 1, To; tempo 2, conta 1; tempo 3, conta 3; tempo 4, To e To no meio.",
+     "speech": "Compasso 3: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 3. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 4: tempo 1, To; tempo 2, conta 1; tempo 3, conta 4; tempo 4, To e To no meio.",
+     "speech": "Compasso 4: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 4. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5: tempo 1, To; tempo 2, conta 1; tempo 3, conta 5; tempo 4, To e To no meio.",
+     "speech": "Compasso 5: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 5. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 6: tempo 1, To; tempo 2, conta 1; tempo 3, conta 6; tempo 4, To e To no meio.",
+     "speech": "Compasso 6: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 6. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 1ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da primeira, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 7 a 10. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 2, compassos 7 a 10. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 7: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, “E” falado e To no meio.",
+     "speech": "Compasso 7: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 8: tempo 1, To; tempo 2, conta 1; tempo 3, conta 2; tempo 4, To.",
+     "speech": "Compasso 8: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 2. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To; tempo 2, conta 1; tempo 3, conta 3; tempo 4, To.",
+     "speech": "Compasso 9: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 3. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 10: tempo 1, To; tempo 2, conta 1; tempo 3, conta 4; tempo 4, To1.",
+     "speech": "Compasso 10: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 4. tempo 4, tô 1."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "E os numerinhos colados nos toques?",
+     "speech": "E os numerinhos colados nos toques?"
+    },
+    {
+     "who": "R",
+     "text": "É a série: po1, po2, po3 contam as repetições. Ajudam a não perder a conta no meio da conversa.",
+     "speech": "É a série: pô 1, pô 2, pô 3 contam as repetições. Ajudam a não perder a conta no meio da conversa."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 11 a 16. Nesta parte as duas tocam juntas no To e também conversam: a 2ª aparece sozinha no pa.",
+     "speech": "Parte 3, compassos 11 a 16. Nesta parte as duas tocam juntas no tô e também conversam: a segunda aparece sozinha no pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 11: tempo 1, To2; tempo 2, To3; tempo 3, To4; tempo 4, To5.",
+     "speech": "Compasso 11: tempo 1, tô 2. tempo 2, tô 3. tempo 3, tô 4. tempo 4, tô 5."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 12: tempo 1, To6; tempo 2, conta 1; tempo 3, conta 2; tempo 4, Pa.",
+     "speech": "Compasso 12: tempo 1, tô 6. tempo 2, conta 1. tempo 3, conta 2. tempo 4, pá."
+    },
+    {
+     "who": "T",
+     "text": "Tá, vou contar junto.",
+     "speech": "Tá, vou contar junto."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, conta 1.",
+     "speech": "Compasso 13: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, conta 1."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 14: tempo 1, To; tempo 2, conta 1; tempo 3, conta 2; tempo 4, conta 3.",
+     "speech": "Compasso 14: tempo 1, tô. tempo 2, conta 1. tempo 3, conta 2. tempo 4, conta 3."
+    },
+    {
+     "who": "T",
+     "text": "Esse eu preciso ver tocando.",
+     "speech": "Esse eu preciso ver tocando."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 15: tempo 1, To1; tempo 2, To2; tempo 3, To3; tempo 4, To4.",
+     "speech": "Compasso 15: tempo 1, tô 1. tempo 2, tô 2. tempo 3, tô 3. tempo 4, tô 4."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 16: tempo 1, To5; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 16: tempo 1, tô 5. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 17 a 19. Aqui ninguém toca: é só contar. No primeiro: conta 2, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+     "speech": "Parte 4, compassos 17 a 19. Aqui ninguém toca: é só contar. No primeiro: conta 2, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+    },
+    {
+     "who": "T",
+     "text": "Pra que contar, se ninguém toca?",
+     "speech": "Pra que contar, se ninguém toca?"
+    },
+    {
+     "who": "R",
+     "text": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé.",
+     "speech": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e conta junto.",
+     "speech": "Escuta e conta junto."
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compassos 20 a 22. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 5, compassos 20 a 22. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 22 é igual ao compasso 11, que você já viu.",
+     "speech": "O compasso 22 é igual ao compasso 11, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 20: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, To.",
+     "speech": "Compasso 20: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 21: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, To1.",
+     "speech": "Compasso 21: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, tô 1."
+    },
+    {
+     "who": "R",
+     "text": "Parte 6, compassos 23 a 26. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 6, compassos 23 a 26. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 23: tempo 1, To6; tempo 2, conta 1; tempo 3, To; tempo 4, tercina: “E” falado, pausa, To.",
+     "speech": "Compasso 23: tempo 1, tô 6. tempo 2, conta 1. tempo 3, tô. tempo 4, tercina: é falado, pausa, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 24: tempo 1, Bo; tempo 2, conta 1; tempo 3, tercina: To, “E” falado, To; tempo 4, tercina: “E” falado, pausa, pausa.",
+     "speech": "Compasso 24: tempo 1, bô. tempo 2, conta 1. tempo 3, tercina: tô, é falado, tô. tempo 4, tercina: é falado, pausa, pausa."
+    },
+    {
+     "who": "T",
+     "text": "Beleza, próximo!",
+     "speech": "Beleza, próximo!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 25: tempo 1, To; tempo 2, conta 2; tempo 3, To; tempo 4, tercina: “E” falado, pausa, To.",
+     "speech": "Compasso 25: tempo 1, tô. tempo 2, conta 2. tempo 3, tô. tempo 4, tercina: é falado, pausa, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 26: tempo 1, Bo; tempo 2, conta 2; tempo 3, tercina: To, “E” falado, To; tempo 4, tercina: “E” falado, To, bo.",
+     "speech": "Compasso 26: tempo 1, bô. tempo 2, conta 2. tempo 3, tercina: tô, é falado, tô. tempo 4, tercina: é falado, tô, bô."
+    },
+    {
+     "who": "T",
+     "text": "Ué, aqui o tempo tem três divisões?",
+     "speech": "Ué, aqui o tempo tem três divisões?"
+    },
+    {
+     "who": "R",
+     "text": "É tercina: três notas iguais dentro de um tempo só. Fale tri-pa-ti em cada tempo para encaixar.",
+     "speech": "É tercina: três notas iguais dentro de um tempo só. Fale tri-pá-tí em cada tempo para encaixar."
+    },
+    {
+     "who": "T",
+     "text": "O que é esse Bo?",
+     "speech": "O que é esse bô?"
+    },
+    {
+     "who": "R",
+     "text": "Bo é abafado: os dois tocam, e a outra mão segura a pele na hora, pro som morrer curto.",
+     "speech": "bô é abafado: os dois tocam, e a outra mão segura a pele na hora, pro som morrer curto."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Parte 7, compasso 27. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 7, compasso 27. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 27 é igual ao compasso 14, que você já viu.",
+     "speech": "O compasso 27 é igual ao compasso 14, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Parte 8, compassos 28 a 32. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 8, compassos 28 a 32. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 29 é igual ao compasso 14, que você já viu.",
+     "speech": "O compasso 29 é igual ao compasso 14, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 28: tempo 1, To; tempo 2, tercina: pausa, “E” falado, To; tempo 3, tercina: Bo, “E” falado, To; tempo 4, tercina: “E” falado, To, bo.",
+     "speech": "Compasso 28: tempo 1, tô. tempo 2, tercina: pausa, é falado, tô. tempo 3, tercina: bô, é falado, tô. tempo 4, tercina: é falado, tô, bô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 30: tempo 1, To; tempo 2, tercina: pausa, pausa, To; tempo 3, tercina: Bo, “E” falado, To; tempo 4, tercina: “E” falado, To, bo.",
+     "speech": "Compasso 30: tempo 1, tô. tempo 2, tercina: pausa, pausa, tô. tempo 3, tercina: bô, é falado, tô. tempo 4, tercina: é falado, tô, bô."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 31 é igualzinho a esse.",
+     "speech": "O compasso 31 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 32: tempo 1, To; tempo 2, po; tempo 3, Pa; tempo 4, po.",
+     "speech": "Compasso 32: tempo 1, tô. tempo 2, pô. tempo 3, pá. tempo 4, pô."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 9, compassos 33 a 35. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 9, compassos 33 a 35. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 33 e 34 repetem compassos que você já viu: o 32.",
+     "speech": "Os compassos 33 e 34 repetem compassos que você já viu: o 32."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 35: tempo 1, To; tempo 2, To; tempo 3, To e to no finzinho; tempo 4, to no meio.",
+     "speech": "Compasso 35: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no finzinho. tempo 4, tô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Ganesha inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Ganesha inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  },
+  "wukong": {
+   "name": "Wukong",
+   "lines": [
+    {
+     "who": "R",
+     "text": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Wukong: 34 compassos, que eu dividi em 9 partes.",
+     "speech": "Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o Wukong: 34 compassos, que eu dividi em 9 partes."
+    },
+    {
+     "who": "T",
+     "text": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?",
+     "speech": "Oi! Eu ainda confundo os nomes dos toques. Me lembra?"
+    },
+    {
+     "who": "R",
+     "text": "To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.",
+     "speech": "tô é a primeira e a segunda juntas. pô é só a primeira, o surdo grave, à esquerda. pá é só a segunda, à direita. Os números são contagem: você conta e não toca."
+    },
+    {
+     "who": "R",
+     "text": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.",
+     "speech": "Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco."
+    },
+    {
+     "who": "R",
+     "text": "Parte 1, compassos 1 a 4. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está.",
+     "speech": "Parte 1, compassos 1 a 4. Aqui ninguém toca: é só contar. No primeiro: conta 1, conta 2, conta 3, conta 4. Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está."
+    },
+    {
+     "who": "T",
+     "text": "Pra que contar, se ninguém toca?",
+     "speech": "Pra que contar, se ninguém toca?"
+    },
+    {
+     "who": "R",
+     "text": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé.",
+     "speech": "Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e conta junto.",
+     "speech": "Escuta e conta junto."
+    },
+    {
+     "who": "R",
+     "text": "Parte 2, compassos 5 a 8. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 2, compassos 5 a 8. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 5: tempo 1, To e to no finzinho; tempo 2, “E” falado; tempo 3, To e to no finzinho; tempo 4, “E” falado e Pa no meio.",
+     "speech": "Compasso 5: tempo 1, tô e tô no finzinho. tempo 2, é falado. tempo 3, tô e tô no finzinho. tempo 4, é falado e pá no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 7 é igualzinho a esse.",
+     "speech": "O compasso 7 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 6: tempo 1, To e to no finzinho; tempo 2, “E” falado e Pa no meio; tempo 3, po e Pa no meio; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 6: tempo 1, tô e tô no finzinho. tempo 2, é falado e pá no meio. tempo 3, pô e pá no meio. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "T",
+     "text": "Anotado!",
+     "speech": "Anotado!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 8: tempo 1, po; tempo 2, Pa e Pa no meio; tempo 3, po e Pa no meio; tempo 4, po e Pa no meio.",
+     "speech": "Compasso 8: tempo 1, pô. tempo 2, pá e pá no meio. tempo 3, pô e pá no meio. tempo 4, pô e pá no meio."
+    },
+    {
+     "who": "T",
+     "text": "Por que a gente fala “E” sem tocar?",
+     "speech": "Por que a gente fala é sem tocar?"
+    },
+    {
+     "who": "R",
+     "text": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.",
+     "speech": "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa."
+    },
+    {
+     "who": "T",
+     "text": "E o toque que cai no meio do tempo?",
+     "speech": "E o toque que cai no meio do tempo?"
+    },
+    {
+     "who": "R",
+     "text": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.",
+     "speech": "É o contratempo. Conte um-e, dois-e: o toque do meio cai no e."
+    },
+    {
+     "who": "T",
+     "text": "Tem toque no finzinho do tempo, né?",
+     "speech": "Tem toque no finzinho do tempo, né?"
+    },
+    {
+     "who": "R",
+     "text": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.",
+     "speech": "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro."
+    },
+    {
+     "who": "T",
+     "text": "Por que alguns toques estão escritos em minúsculo?",
+     "speech": "Por que alguns toques estão escritos em minúsculo?"
+    },
+    {
+     "who": "R",
+     "text": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.",
+     "speech": "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes."
+    },
+    {
+     "who": "R",
+     "text": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da 2ª, como se fosse você tocando.",
+     "speech": "Vou pedir pros músicos tocarem bem devagar. Olhe por trás da segunda, como se fosse você tocando."
+    },
+    {
+     "who": "T",
+     "text": "Agora na velocidade normal!",
+     "speech": "Agora na velocidade normal!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 3, compassos 9 a 11. Nesta parte as duas tocam juntas o tempo todo, só To.",
+     "speech": "Parte 3, compassos 9 a 11. Nesta parte as duas tocam juntas o tempo todo, só tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 9: tempo 1, To; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 9: tempo 1, tô. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 10: tempo 1, conta 2; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 10: tempo 1, conta 2. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "Hum, esse é fácil.",
+     "speech": "Hum, esse é fácil."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 11: tempo 1, conta 3; tempo 2, conta 2; tempo 3, conta 3; tempo 4, conta 4.",
+     "speech": "Compasso 11: tempo 1, conta 3. tempo 2, conta 2. tempo 3, conta 3. tempo 4, conta 4."
+    },
+    {
+     "who": "T",
+     "text": "E esses números no meio dos toques?",
+     "speech": "E esses números no meio dos toques?"
+    },
+    {
+     "who": "R",
+     "text": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.",
+     "speech": "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque."
+    },
+    {
+     "who": "R",
+     "text": "Primeiro devagar.",
+     "speech": "Primeiro devagar."
+    },
+    {
+     "who": "T",
+     "text": "Bora no andamento!",
+     "speech": "Bora no andamento!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 4, compassos 12 a 15. Nesta parte as duas tocam juntas no To e também conversam: a 1ª aparece sozinha no po.",
+     "speech": "Parte 4, compassos 12 a 15. Nesta parte as duas tocam juntas no tô e também conversam: a primeira aparece sozinha no pô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 12: tempo 1, To; tempo 2, To; tempo 3, To e po no meio; tempo 4, To.",
+     "speech": "Compasso 12: tempo 1, tô. tempo 2, tô. tempo 3, tô e pô no meio. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 13: tempo 1, To e to no meio; tempo 2, conta 1; tempo 3, conta 2; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 13: tempo 1, tô e tô no meio. tempo 2, conta 1. tempo 3, conta 2. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 15 é igualzinho a esse.",
+     "speech": "O compasso 15 é igualzinho a esse."
+    },
+    {
+     "who": "T",
+     "text": "Deixa eu ver se entendi…",
+     "speech": "Deixa eu ver se entendi…"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 14: tempo 1, To e to no meio; tempo 2, “E” falado e to no meio; tempo 3, To; tempo 4, To.",
+     "speech": "Compasso 14: tempo 1, tô e tô no meio. tempo 2, é falado e tô no meio. tempo 3, tô. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Agora no andamento de verdade!",
+     "speech": "Agora no andamento de verdade!"
+    },
+    {
+     "who": "R",
+     "text": "Parte 5, compassos 16 a 19. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 5, compassos 16 a 19. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 16: tempo 1, To e to no meio; tempo 2, “E” falado; tempo 3, Pa e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 16: tempo 1, tô e tô no meio. tempo 2, é falado. tempo 3, pá e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 17: tempo 1, To e Pa no meio; tempo 2, po e Pa no meio; tempo 3, “E” falado e to no meio; tempo 4, “E” falado e to no meio.",
+     "speech": "Compasso 17: tempo 1, tô e pá no meio. tempo 2, pô e pá no meio. tempo 3, é falado e tô no meio. tempo 4, é falado e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 19 é igualzinho a esse.",
+     "speech": "O compasso 19 é igualzinho a esse."
+    },
+    {
+     "who": "T",
+     "text": "Tá, vou contar junto.",
+     "speech": "Tá, vou contar junto."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 18: tempo 1, Pa e po no meio; tempo 2, Pa e po no meio; tempo 3, conta 1; tempo 4, conta 2.",
+     "speech": "Compasso 18: tempo 1, pá e pô no meio. tempo 2, pá e pô no meio. tempo 3, conta 1. tempo 4, conta 2."
+    },
+    {
+     "who": "T",
+     "text": "E rápido, como fica?",
+     "speech": "E rápido, como fica?"
+    },
+    {
+     "who": "R",
+     "text": "Parte 6, compassos 20 a 23. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 6, compassos 20 a 23. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Os compassos 20, 21, 22 e 23 repetem compassos que você já viu: o 18 e o 17.",
+     "speech": "Os compassos 20, 21, 22 e 23 repetem compassos que você já viu: o 18 e o 17."
+    },
+    {
+     "who": "R",
+     "text": "Parte 7, compassos 24 a 25. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 7, compassos 24 a 25. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 24: tempo 1, Pa e po no meio; tempo 2, Pa e po no meio; tempo 3, To; tempo 4, “E” falado.",
+     "speech": "Compasso 24: tempo 1, pá e pô no meio. tempo 2, pá e pô no meio. tempo 3, tô. tempo 4, é falado."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 25: tempo 1, To; tempo 2, To; tempo 3, To e to no meio; tempo 4, To e to no meio.",
+     "speech": "Compasso 25: tempo 1, tô. tempo 2, tô. tempo 3, tô e tô no meio. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Parte 8, compassos 26 a 30. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 8, compassos 26 a 30. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 26: tempo 1, To e po no meio; tempo 2, Pa e po no meio; tempo 3, po e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 26: tempo 1, tô e pô no meio. tempo 2, pá e pô no meio. tempo 3, pô e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 28 é igualzinho a esse.",
+     "speech": "O compasso 28 é igualzinho a esse."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 27: tempo 1, To e Pa no meio; tempo 2, po e Pa no meio; tempo 3, po e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 27: tempo 1, tô e pá no meio. tempo 2, pô e pá no meio. tempo 3, pô e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "T",
+     "text": "Esse eu preciso ver tocando.",
+     "speech": "Esse eu preciso ver tocando."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 29: tempo 1, To; tempo 2, To; tempo 3, To; tempo 4, To e to no meio.",
+     "speech": "Compasso 29: tempo 1, tô. tempo 2, tô. tempo 3, tô. tempo 4, tô e tô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 30: tempo 1, To e po no meio; tempo 2, Pa e po no meio; tempo 3, po e po no meio; tempo 4, to.",
+     "speech": "Compasso 30: tempo 1, tô e pô no meio. tempo 2, pá e pô no meio. tempo 3, pô e pô no meio. tempo 4, tô."
+    },
+    {
+     "who": "R",
+     "text": "Parte 9, compassos 31 a 34. Nesta parte as duas tocam juntas no To e também conversam: a 1ª faz po e a 2ª responde com pa.",
+     "speech": "Parte 9, compassos 31 a 34. Nesta parte as duas tocam juntas no tô e também conversam: a primeira faz pô e a segunda responde com pá."
+    },
+    {
+     "who": "R",
+     "text": "O compasso 33 é igual ao compasso 29, que você já viu.",
+     "speech": "O compasso 33 é igual ao compasso 29, que você já viu."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 31: tempo 1, “E” falado e to no meio; tempo 2, Pa e po no meio; tempo 3, po e po no meio; tempo 4, Pa e po no meio.",
+     "speech": "Compasso 31: tempo 1, é falado e tô no meio. tempo 2, pá e pô no meio. tempo 3, pô e pô no meio. tempo 4, pá e pô no meio."
+    },
+    {
+     "who": "R",
+     "text": "Compasso 32: tempo 1, To e Pa no meio; tempo 2, po e Pa no meio; tempo 3, po e po no meio; tempo 4, To.",
+     "speech": "Compasso 32: tempo 1, tô e pá no meio. tempo 2, pô e pá no meio. tempo 3, pô e pô no meio. tempo 4, tô."
+    },
+    {
+     "who": "T",
+     "text": "Beleza, próximo!",
+     "speech": "Beleza, próximo!"
+    },
+    {
+     "who": "R",
+     "text": "Compasso 34: só o To final, no tempo 1, e acabou.",
+     "speech": "Compasso 34: só o tô final, no tempo 1, e acabou."
+    },
+    {
+     "who": "R",
+     "text": "Muito bem! Agora o Wukong inteiro, do começo ao fim.",
+     "speech": "Muito bem! Agora o Wukong inteiro, do começo ao fim."
+    },
+    {
+     "who": "T",
+     "text": "Ufa! Consegui acompanhar!",
+     "speech": "Ufa! Consegui acompanhar!"
+    },
+    {
+     "who": "R",
+     "text": "Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.",
+     "speech": "Para treinar, repita cada parte com a vista Atrás da primeira e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo."
+    },
+    {
+     "who": "R",
+     "text": "Escuta e repara no braço da maceta.",
+     "speech": "Escuta e repara no braço da maceta."
+    }
+   ]
+  }
+ }
+}

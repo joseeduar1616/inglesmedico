@@ -195,6 +195,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
         <button class="btn" id="vTest" type="button">Ouvir as vozes</button>
       </div>
       <p class="note" id="vHint" hidden>Para a voz soar mais humana, baixe uma voz de melhor qualidade no aparelho. No iPhone: Ajustes › Acessibilidade › Conteúdo Falado › Vozes › Português (Brasil), e baixe a Luciana e o Felipe na versão Aprimorada ou Premium. Depois recarregue esta página. No computador, o navegador Edge já traz vozes "Natural" (Francisca, Thalita, Antonio). As vozes marcadas com ★ são as melhores.</p>
+      <p class="note" id="vPack" hidden></p>
       <div class="ex-progress" id="lsProgress" hidden><div class="ex-track"><i id="lsBar"></i></div><span id="lsStatus"></span></div>
       <p class="note">A Ritma (professora) e o Tuco (aluno) conversam sobre o breque escolhido, parte por parte: quem toca, tempo a tempo, e o que quer dizer cada símbolo. Depois de cada explicação os músicos tocam o trecho, primeiro devagar e depois no andamento, e a parte da partitura fica marcada. Pular passa para a próxima fala ou trecho.</p>
     </div>
@@ -1678,7 +1679,8 @@ To To To-to To-to`;
       r.bodyG.position.y = 0.06 + Math.sin(t * 1.8) * 0.025;
       r.ring.material.opacity = 0.32 + 0.18 * Math.sin(t * 1.8);
       const talking = r.talk > 0, pulse = playing ? Math.pow(Math.max(0, Math.cos(2 * Math.PI * beatT)), 6) : 0;
-      r.mouth.scale.set(talking ? 0.8 : 1, talking ? 0.6 + 2.8 * Math.abs(Math.sin(t * 13) * Math.sin(t * 5.3 + 1)) : 1, 1);
+      const lvl = talking ? voiceLevel() : -1;
+      r.mouth.scale.set(talking ? 0.8 : 1, !talking ? 1 : lvl >= 0 ? 0.5 + Math.min(3.2, lvl * 22) : 0.6 + 2.8 * Math.abs(Math.sin(t * 13) * Math.sin(t * 5.3 + 1)), 1);
       r.antTip.scale.setScalar(talking ? 1 + 0.45 * Math.abs(Math.sin(t * 9)) : 1 + 0.6 * pulse);
       const blink = ((t * 0.27) % 1) < 0.035 ? 0.12 : 1;
       r.eyes.forEach(e => { e.scale.y = 1.15 * blink; });
@@ -1735,6 +1737,50 @@ To To To-to To-to`;
     chosen[k] = vSel[k].value || null;
     try { localStorage.setItem("surdos3d.vozes", JSON.stringify(chosen)); } catch (e) {}
   });
+  // ---- vozes gravadas (ElevenLabs) ----
+  // Quando existe o pacote voz/<breque>.mp3 + voz/<breque>.json (gerado por surdos3d/tools/gerar_vozes.py), cada fala
+  // toca o trecho gravado dela; o que não estiver no pacote usa a voz do aparelho.
+  let packIndex = null, pack = null;
+  const voiceOut = { gain: null, an: null, data: null, src: null };
+  fetch("voz/index.json").then(r => r.ok ? r.json() : null).then(j => { packIndex = j; packUI(); }).catch(() => {});
+  const hasPack = id => !!(packIndex && Array.isArray(packIndex.breques) && packIndex.breques.includes(id));
+  async function loadPack(id) {
+    if (!hasPack(id)) return null;
+    if (pack && pack.id === id) return pack;
+    const [meta, bin] = await Promise.all([fetch(`voz/${id}.json`).then(r => r.json()), fetch(`voz/${id}.mp3`).then(r => r.arrayBuffer())]);
+    const buf = await new Promise((ok, no) => ctx.decodeAudioData(bin, ok, no));
+    pack = { id, buf, lines: meta.lines || {} };
+    return pack;
+  }
+  function voiceNode() {
+    if (!voiceOut.gain) {
+      voiceOut.gain = ctx.createGain(); voiceOut.an = ctx.createAnalyser(); voiceOut.an.fftSize = 512; voiceOut.data = new Float32Array(512);
+      voiceOut.gain.connect(voiceOut.an); voiceOut.gain.connect(master);
+    }
+    return voiceOut.gain;
+  }
+  const clipFor = (r, text) => pack && pack.id === current.id ? pack.lines[(r === ritma ? "R" : "T") + "|" + text] || null : null;
+  function playClip(clip, onEnd) {
+    const s = ctx.createBufferSource(); s.buffer = pack.buf; s.connect(voiceNode());
+    s.onended = () => { if (voiceOut.src === s) voiceOut.src = null; onEnd && onEnd(); };
+    s.start(ctx.currentTime + 0.02, clip[0], clip[1]); voiceOut.src = s;
+    return s;
+  }
+  const stopClip = () => { if (voiceOut.src) { try { voiceOut.src.stop(); } catch (e) {} voiceOut.src = null; } };
+  // volume da voz gravada agora: a boca do robô abre conforme ele fala
+  function voiceLevel() {
+    if (!voiceOut.an || !voiceOut.src) return -1;
+    voiceOut.an.getFloatTimeDomainData(voiceOut.data);
+    let e = 0; for (const v of voiceOut.data) e += v * v;
+    return Math.sqrt(e / voiceOut.data.length);
+  }
+  function packUI() {
+    const el = $("vPack");
+    if (!packIndex || !packIndex.breques || !packIndex.breques.length) { el.hidden = true; return; }
+    el.hidden = false;
+    el.textContent = `Vozes gravadas na ElevenLabs${packIndex.vozes ? ` (Ritma: ${packIndex.vozes.R}; Tuco: ${packIndex.vozes.T})` : ""} para ${packIndex.breques.length === BUILTIN.length ? "todos os breques" : packIndex.breques.map(id => (BUILTIN.find(b => b.id === id) || { name: id }).name).join(", ")}. Nos outros, a aula usa a voz do aparelho.`;
+    if (lsVoice.disabled) { lsVoice.disabled = false; lsVoice.checked = true; }
+  }
   const lsVoice = $("lsVoice"), lsSlow = $("lsSlow");
   const useVoice = () => !!tts && lsVoice.checked;
   // legenda → texto falado (as sílabas dos toques com a pronúncia certa)
@@ -1767,8 +1813,12 @@ To To To-to To-to`;
       const fin = () => { if (done) return; done = true; r.talk = 0; clearTimeout(to); lesson.skipFn = null; res(); };
       // sem voz (ou se ela falhar) a legenda fica o tempo de leitura
       const byTime = ms => { clearTimeout(to); to = setTimeout(fin, ms); };
-      lesson.skipFn = () => { if (tts) tts.cancel(); fin(); };
-      if (useVoice()) {
+      lesson.skipFn = () => { if (tts) tts.cancel(); stopClip(); fin(); };
+      const clip = lsVoice.checked ? clipFor(r, text) : null;
+      if (clip) {
+        playClip(clip, () => byTime(220));
+        byTime(clip[1] * 1000 + 4000);
+      } else if (useVoice()) {
         const parts = sentences(speakable(text));
         parts.forEach((p, n) => {
           const u = utter(r, p);
@@ -1840,7 +1890,7 @@ To To To-to To-to`;
     R(`Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o ${current.name}: ${parsed.bars.length} compassos, que eu dividi em ${P.length} partes.`);
     T("Oi! Eu ainda confundo os nomes dos toques. Me lembra?");
     R("To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.");
-    R(`O andamento é ${bpmN} bpm. Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando.`);
+    R("Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.");
     P.forEach((bars, pi) => {
       part = pi + 1;
       const a = bars[0], z = bars[bars.length - 1], range = a === z ? `compasso ${a + 1}` : `compassos ${a + 1} a ${z + 1}`;
@@ -1891,12 +1941,12 @@ To To To-to To-to`;
       // tocar
       if (lsSlow.checked && slowBpm < bpmN) {
         const v = p2 > p1 ? "a2" : "a1";
-        R(gk++ === 0 ? `Vou pedir pros músicos tocarem devagar, a ${slowBpm} bpm. Olhe por trás da ${v === "a1" ? "1ª" : "2ª"}, como se fosse você tocando.` : `Primeiro devagar, a ${slowBpm} bpm.`);
+        R(gk++ === 0 ? `Vou pedir pros músicos tocarem bem devagar. Olhe por trás da ${v === "a1" ? "1ª" : "2ª"}, como se fosse você tocando.` : "Primeiro devagar.");
         view(v);
-        steps.push({ play: { from: a, to: z + 1, bpm: slowBpm, caption: `Tocando devagar · ${range}` }, part });
+        steps.push({ play: { from: a, to: z + 1, bpm: slowBpm, caption: `Tocando devagar · ${slowBpm} bpm · ${range}` }, part });
         view("frente");
         T(TUCO_GO[part % TUCO_GO.length]);
-        steps.push({ play: { from: a, to: z + 1, caption: `No andamento · ${range}` }, part });
+        steps.push({ play: { from: a, to: z + 1, caption: `No andamento · ${bpmN} bpm · ${range}` }, part });
       } else {
         R("Escuta e repara no braço da maceta.");
         view("frente");
@@ -1932,19 +1982,26 @@ To To To-to To-to`;
     }
     if (tk === lesson.token && lesson.on) endLesson();
   }
-  function startLesson() {
+  async function startLesson() {
     if (lesson.on || job) return;
     ensureCtx(); if (bq.on) stopBreque();
     if (useVoice()) { try { tts.cancel(); const u = new SpeechSynthesisUtterance(" "); u.volume = 0; tts.speak(u); } catch (e) {} }   // libera a voz no iPhone dentro do toque
-    lesson.steps = buildLesson(); lesson.on = true; lesson.paused = false; lesson.i = 0; lesson.token++;
+    lesson.on = true; lesson.paused = false; lesson.i = 0; lesson.steps = []; const tk = ++lesson.token;
     robots.forEach(r => { r.g.visible = true; r.tag.visible = !mirrored; });
+    setView("aula"); lessonUI();
+    if (lsVoice.checked && hasPack(current.id)) {
+      showTalk(ritma, "Carregando as vozes…");
+      try { await loadPack(current.id); } catch (e) { pack = null; }
+      if (tk !== lesson.token) return;
+    }
+    lesson.steps = buildLesson();
     runLesson();
   }
   function endLesson() {
     if (!lesson.on) return;
     lesson.on = false; lesson.token++; lesson.paused = false;
     if (lesson.resume) { lesson.resume(); lesson.resume = null; }
-    if (tts) tts.cancel();
+    if (tts) tts.cancel(); stopClip();
     if (lesson.skipFn) lesson.skipFn(); lesson.skipFn = null;
     if (bq.on) stopBreque();
     robots.forEach(r => { r.g.visible = false; r.talk = 0; });
@@ -1954,7 +2011,7 @@ To To To-to To-to`;
   function pauseLesson() {
     if (!lesson.on) return;
     if (lesson.paused) { lesson.paused = false; if (lesson.resume) { const r = lesson.resume; lesson.resume = null; r(); } }
-    else { lesson.paused = true; lesson.repeat = true; if (tts) tts.cancel(); if (lesson.skipFn) lesson.skipFn(); showTalk(null, "Aula pausada. Toque em Continuar quando quiser."); }
+    else { lesson.paused = true; lesson.repeat = true; if (tts) tts.cancel(); stopClip(); if (lesson.skipFn) lesson.skipFn(); showTalk(null, "Aula pausada. Toque em Continuar quando quiser."); }
     lessonUI();
   }
   const skipStep = () => { if (lesson.on && !lesson.paused && lesson.skipFn) lesson.skipFn(); };
@@ -1971,13 +2028,22 @@ To To To-to To-to`;
   lsPause.addEventListener("click", pauseLesson);
   lsSkip.addEventListener("click", skipStep); $("fsSkip").addEventListener("click", skipStep);
   lsVoice.addEventListener("change", () => { if (!lsVoice.checked && tts) tts.cancel(); $("lsVoices").hidden = !lsVoice.checked; });
-  $("vTest").addEventListener("click", () => {
+  $("vTest").addEventListener("click", async () => {
+    ensureCtx();
+    if (hasPack(current.id)) {
+      try {
+        await loadPack(current.id); stopClip();
+        const keys = Object.keys(pack.lines), kr = keys.find(k => k.startsWith("R|")), kt = keys.find(k => k.startsWith("T|"));
+        if (kr) playClip(pack.lines[kr], () => { if (kt) playClip(pack.lines[kt]); });
+        return;
+      } catch (e) {}
+    }
     if (!tts) return;
     tts.cancel();
     tts.speak(utter(ritma, "Oi, eu sou a Ritma. Vamos aprender o breque juntos?"));
     tts.speak(utter(tuco, "E eu sou o Tuco. Bora tocar!"));
   });
-  if (!tts) { $("lsVoices").hidden = true; lsVoice.checked = false; lsVoice.disabled = true; lsVoice.parentElement.title = "Este navegador não tem voz sintetizada; a aula fica só com legenda."; }
+  if (!tts) { $("lsVoices").hidden = true; lsVoice.checked = false; lsVoice.disabled = true; /* volta a ligar se houver vozes gravadas (packUI) */ lsVoice.parentElement.title = "Este navegador não tem voz sintetizada; a aula fica só com legenda."; }
 
   // ---------- Baixar vídeo ----------
   // 1) o som do breque inteiro é sintetizado num OfflineAudioContext; 2) cada quadro da cena 3D é desenhado no instante
@@ -2217,7 +2283,7 @@ To To To-to To-to`;
   let last = null; try { last = localStorage.getItem("surdos3d.sel"); } catch (e) {}
   selectBreque(last && BUILTIN.some(b => b.id === last) ? last : "minus");
   ovPos.textContent = `${current.name} · pronto para tocar`;
-  window.__s3d = { renderer, setArm, buildLesson, lesson, robots, startLesson, endLesson, skipStep, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
+  window.__s3d = { speakable, get pack() { return pack; }, renderer, setArm, buildLesson, lesson, robots, startLesson, endLesson, skipStep, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
 
 })();
 </script>
