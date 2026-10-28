@@ -2284,7 +2284,7 @@ To To To-to To-to`;
   let last = null; try { last = localStorage.getItem("surdos3d.sel"); } catch (e) {}
   selectBreque(last && BUILTIN.some(b => b.id === last) ? last : "minus");
   ovPos.textContent = `${current.name} · pronto para tocar`;
-  window.__s3d = { speakable, get pack() { return pack; }, renderer, setArm, buildLesson, lesson, robots, startLesson, endLesson, skipStep, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
+  window.__s3d = { renderBrequeAudio, speakable, get pack() { return pack; }, renderer, setArm, buildLesson, lesson, robots, startLesson, endLesson, skipStep, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
 
 })();
 </script>
