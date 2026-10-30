@@ -1838,7 +1838,7 @@ To To To-to To-to`;
     return { buffer, t0, s, lead };
   }
 
-  window.__surdos = { renderOffline, prep: async () => { ensureCtx(); await loadVox(); } };   // para gravar os breques fora da página (ferramentas)
+  window.__surdos = { renderOffline, voxBufs, decode: b => ctx.decodeAudioData(b), prep: async () => { ensureCtx(); await loadVox(); } };   // para gravar os breques fora da página (ferramentas)
   function pickMime(kind) {
     if (!window.MediaRecorder) return null;
     const list = kind === "video"
