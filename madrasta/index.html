@@ -543,7 +543,7 @@ function renderBanner() {
   const loading = !S.local && Object.values(S.loaded).some(x => !x);
   b.className = "banner"; b.replaceChildren(); b.hidden = false;
   if (loading) { b.append(el("b", { text: "Carregando" }), " o almoxarifado da bateria…"); return; }
-  if (S.local) { b.classList.add("warn"); b.append(el("b", { text: "Exemplo" }), "Esta página está aberta fora do Claude: os dados abaixo são só de exemplo e nada é salvo. Abra pelo link do Claude para usar o almoxarifado de verdade."); return; }
+  if (S.local) { b.classList.add("warn"); b.append(el("b", { text: "Exemplo" }), "Não foi possível conectar ao banco do almoxarifado: os dados abaixo são só de exemplo e nada é salvo. Confira a internet e recarregue a página."); return; }
   if (!S.canWrite) { b.classList.add("warn"); b.append(el("b", { text: "Só leitura" }), "Você pode ver tudo, mas não pode alterar. Peça a quem criou o site para te convidar com acesso de edição."); return; }
   b.hidden = true; return;
 }
