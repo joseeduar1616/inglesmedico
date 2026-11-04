@@ -40,7 +40,9 @@ async function podarHistorico() {
 
 export default async (req: Request, context: Context) => {
   const codigo = Netlify.env.get("CODIGO_BATERIA")
-  if (codigo && req.headers.get("x-codigo") !== codigo) return json({ erro: "codigo" }, 401)
+  // tolerante: ignora maiúsculas, espaços e traços (o iPhone troca "-" por "–" sozinho)
+  const limpa = (v: string | null) => (v || "").normalize("NFD").replace(/[^a-zA-Z0-9]/g, "").toLowerCase()
+  if (codigo && limpa(req.headers.get("x-codigo")) !== limpa(codigo)) return json({ erro: "codigo" }, 401)
   const s = store()
   const url = new URL(req.url)
 

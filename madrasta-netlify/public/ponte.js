@@ -13,7 +13,7 @@
       const bg = document.createElement("div");
       bg.className = "modal-bg";
       bg.innerHTML = `<form class="modal" style="max-width:420px"><h3></h3><p style="margin:0;color:var(--muted)"></p>
-        <label class="field"><span></span><input id="ponteCampo" type="${tipo}" autocomplete="off" required maxlength="40"></label>
+        <label class="field"><span></span><input id="ponteCampo" type="${tipo}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required maxlength="40"></label>
         <div class="modal-actions"><button class="btn primary" type="submit">Entrar</button></div></form>`;
       bg.querySelector("h3").textContent = titulo;
       bg.querySelector("p").textContent = texto;
@@ -23,20 +23,21 @@
       document.body.append(bg); setTimeout(() => inp.focus(), 30);
     });
   }
+  // o código vai só com letras e números: maiúsculas, espaços e traços não atrapalham
+  const limpa = v => (v || "").normalize("NFD").replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
   async function chamar(metodo, corpo) {
-    for (let tentativa = 0; tentativa < 3; tentativa++) {
+    for (let tentativa = 0; ; tentativa++) {
       const r = await fetch(API + (metodo === "GET" ? "?rev=" + encodeURIComponent(rev) : ""), {
-        method: metodo, headers: { "content-type": "application/json", "x-codigo": LS("madrasta.codigo") || "" }, body: corpo ? JSON.stringify(corpo) : undefined,
+        method: metodo, headers: { "content-type": "application/json", "x-codigo": limpa(LS("madrasta.codigo")) }, body: corpo ? JSON.stringify(corpo) : undefined,
       });
       if (r.status === 401) {
         LS("madrasta.codigo", null);
-        LS("madrasta.codigo", await pedir("Código da bateria", tentativa ? "Esse código não confere. Tente de novo." : "Este almoxarifado é só da Bateria Madrasta. Digite o código que a diretoria passou.", "Código", "password"));
+        LS("madrasta.codigo", limpa(await pedir("Código da bateria", tentativa ? "Esse código não confere. Confira com a diretoria e tente de novo." : "Este almoxarifado é só da Bateria Madrasta. Digite o código que a diretoria passou.", "Código", "text")));
         continue;
       }
       if (!r.ok) throw { code: r.status === 404 ? "invalid_argument" : "unavailable", message: "HTTP " + r.status };
       return r.json();
     }
-    throw { code: "invalid_argument", message: "código" };
   }
   // ---- leitura: busca o estado quando algo mudou e avisa quem está ouvindo ----
   const snap = col => {
