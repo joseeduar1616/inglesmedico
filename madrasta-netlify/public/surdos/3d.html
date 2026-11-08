@@ -1,0 +1,2753 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+<title>Surdos em 3D</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Dois músicos em 3D tocando surdo de 1ª e de 2ª, com golpes amplos e a maceta na pele no tempo de cada toque dos breques. Tela cheia, vista por trás e espelho para copiar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: o palco 3D ocupa a largura toda; embaixo os controles do breque e a partitura com o tempo atual aceso */
+:root {
+  --stage: #0e0f12;
+  --stage-2: #16181d;
+  --line: #2a2d35;
+  --fg: #ecebe6;
+  --muted: #8d8f98;
+  --brass: #c9a24a;
+  --hit: #ffb547;
+  --ok: #6fcf97;
+  --d1: #c9a24a;
+  --d2: #7fb3d5;
+  --t-to: #6ea8ff; --t-pa: #3fc1b0; --t-po: #ff9a4a; --t-e: #ff6b6b; --t-cnt: #6b6e78;
+  --f-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: radial-gradient(ellipse at 50% 20%, var(--stage-2), var(--stage) 70%) fixed, var(--stage); color: var(--fg); font-family: var(--f-body); font-size: 15px; -webkit-tap-highlight-color: transparent; }
+[hidden] { display: none !important; }
+.wrap { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; padding-block: 18px 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 20px; }
+h1 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(28px, 5vw, 44px); letter-spacing: .02em; margin: 0; line-height: 1; text-wrap: balance; }
+h1 span { color: var(--brass); }
+.status { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brass); flex: none; }
+.dot.on { background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+
+.stage3d { position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 320px; max-height: 72vh; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #0b0c0f; touch-action: none; }
+@media (max-width: 640px) { .stage3d { aspect-ratio: 4 / 5; } }
+.stage3d canvas { display: block; width: 100% !important; height: 100% !important; cursor: grab; }
+.stage3d canvas:active { cursor: grabbing; }
+.ov { position: absolute; pointer-events: none; }
+.ov-word { left: 0; right: 0; top: 52px; text-align: center; font-family: var(--f-display); font-weight: 800; font-size: clamp(34px, 6vw, 64px); line-height: 1; letter-spacing: .03em; text-shadow: 0 2px 18px rgba(0,0,0,.7); min-height: 1em; }
+.ov-pos { left: 14px; bottom: 12px; font: 500 12px var(--f-mono); color: var(--fg); background: rgba(14,15,18,.7); padding: 5px 9px; border-radius: 6px; font-variant-numeric: tabular-nums; }
+.topbar { position: absolute; left: 10px; right: 10px; top: 10px; display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; }
+.tools, .views { display: flex; flex-wrap: wrap; gap: 6px; }
+.views { justify-content: flex-end; max-width: 66%; }
+.tools button, .views button, .fsbar button { font: 600 12px var(--f-body); color: var(--fg); background: rgba(22,24,29,.82); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.tools button, .fsbar button { display: inline-flex; align-items: center; gap: 6px; }
+.tools svg, .fsbar svg { width: 13px; height: 13px; flex: none; }
+.tools button:hover, .tools button[aria-pressed=true], .views button:hover, .views button.on, .fsbar button:hover { border-color: var(--brass); color: var(--brass); }
+.fsbar { position: absolute; left: 50%; bottom: max(12px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(14,15,18,.82); border: 1px solid var(--line); }
+.fsbar button { font-size: 14px; padding: 7px 13px; }
+.fsbar button.wide { min-width: 92px; justify-content: center; }
+.fsbar output { font: 500 12px var(--f-mono); min-width: 62px; text-align: center; font-variant-numeric: tabular-nums; }
+.stage3d.is-fs { border-radius: 0; border: 0; max-height: none; aspect-ratio: auto; width: 100%; height: 100%; }
+.stage3d.fs-css { position: fixed; inset: 0; z-index: 1000; height: 100vh; height: 100dvh; }
+.stage3d.is-fs .fsbar { display: flex; }
+.stage3d.is-fs .ov-pos { bottom: calc(max(12px, env(safe-area-inset-bottom, 0px)) + 52px); }
+.stage3d.is-fs .hint3d { display: none; }
+.stage3d.is-fs .topbar { top: max(10px, env(safe-area-inset-top, 0px)); left: max(10px, env(safe-area-inset-left, 0px)); right: max(10px, env(safe-area-inset-right, 0px)); }
+.stage3d.mirror canvas { transform: scaleX(-1); }
+.ov-talk { left: 50%; transform: translateX(-50%); bottom: 48px; width: min(calc(100% - 24px), 720px); display: flex; flex-direction: column; gap: 2px; padding: 9px 13px; border-radius: 12px; background: rgba(14,15,18,.88); border: 1px solid var(--line); font-size: 15px; line-height: 1.4; text-wrap: pretty; }
+.ov-talk b { font: 800 14px var(--f-display); text-transform: uppercase; letter-spacing: .06em; }
+.stage3d.is-fs .ov-talk { bottom: calc(max(12px, env(safe-area-inset-bottom, 0px)) + 92px); }
+#lsVoices .sel { max-width: min(240px, 60vw); }
+.lesson { display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px solid var(--line); }
+.btn.playing#lsStart { border-color: var(--d2); background: color-mix(in srgb, var(--d2) 14%, var(--stage)); }
+.bar-row.lesson-part .cells { border-color: var(--d2); box-shadow: 0 0 0 1px var(--d2); }
+@media (max-width: 640px) { .ov-talk { font-size: 13.5px; bottom: 44px; } .fsbar { flex-wrap: wrap; justify-content: center; border-radius: 16px; max-width: calc(100% - 20px); } }
+body.no-scroll { overflow: hidden; }
+.hint3d { right: 12px; bottom: 12px; font-size: 11.5px; color: var(--muted); background: rgba(14,15,18,.7); padding: 4px 8px; border-radius: 6px; }
+@media (max-width: 640px) {
+  .hint3d { display: none; }
+  .topbar { flex-direction: column; align-items: stretch; gap: 6px; }
+  .views { max-width: none; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+  .views::-webkit-scrollbar { display: none; }
+  .views button { flex: none; }
+  .ov-word { top: 86px; }
+}
+
+.panel { display: flex; flex-direction: column; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--stage-2) 80%, transparent); }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 13px; color: var(--muted); }
+.row label { display: inline-flex; align-items: center; gap: 8px; }
+.row input[type=range] { width: 120px; accent-color: var(--brass); }
+.row input[type=checkbox] { accent-color: var(--brass); width: 16px; height: 16px; }
+.row output { font: 500 12px var(--f-mono); color: var(--fg); min-width: 58px; font-variant-numeric: tabular-nums; }
+.bq-title { font-family: var(--f-display); font-weight: 800; font-size: 28px; text-transform: uppercase; letter-spacing: .03em; margin: 0; line-height: 1; }
+.bq-meta { font-size: 12px; color: var(--muted); }
+.sel { font: 600 13px var(--f-body); color: var(--fg); background: var(--stage); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 13px var(--f-body); color: var(--fg); background: var(--stage); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px 8px 12px; cursor: pointer; }
+.btn:hover { border-color: var(--brass); }
+.btn.playing { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 12%, var(--stage)); }
+.btn svg { width: 14px; height: 14px; flex: none; }
+.btn:focus-visible, .sel:focus-visible, .views button:focus-visible, .pad:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.pads { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pad { font: inherit; border: 2px solid var(--line); border-radius: 14px; background: var(--stage); color: var(--fg); padding: 14px 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; touch-action: none; user-select: none; -webkit-user-select: none; }
+.pad b { font-family: var(--f-display); font-size: 30px; line-height: 1; }
+.pad small { font-size: 11.5px; color: var(--muted); }
+.pad.p1 b { color: var(--d1); } .pad.p2 b { color: var(--d2); }
+.pad.hit { border-color: var(--hit); transform: scale(.98); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); }
+.legend b { font-weight: 700; margin-right: 4px; }
+.score { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 6px; max-height: 300px; overflow-y: auto; padding: 2px; }
+.bar-row { display: grid; grid-template-columns: 26px 1fr; gap: 6px; cursor: pointer; border-radius: 6px; }
+.bar-row:hover .cells { border-color: var(--brass); }
+.bar-row:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.bar-row .n { font: 500 11px var(--f-mono); color: var(--muted); display: flex; align-items: center; justify-content: flex-end; }
+.bar-row.start .n { color: var(--brass); }
+.bar-row.wide { grid-column: 1 / -1; }
+.cells { display: grid; grid-template-columns: repeat(var(--n, 4), 1fr); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: color-mix(in srgb, var(--sec, var(--stage)) 14%, var(--stage)); }
+.beat { display: flex; min-width: 0; border-right: 1px solid color-mix(in srgb, var(--line) 70%, transparent); }
+.beat:last-child { border-right: 0; }
+.beat.now { background: color-mix(in srgb, var(--hit) 30%, transparent); }
+.slot-t { flex: 1; min-width: 0; text-align: center; font: 700 12.5px/28px var(--f-body); }
+.slot-t sup { font-size: 8px; }
+.tk-To, .tk-Bo, .tk-bo { color: var(--t-to); } .tk-Pa { color: var(--t-pa); } .tk-po { color: var(--t-po); }
+.tk-E, .tk-ti { color: var(--t-e); font-weight: 600; } .tk-to { color: var(--t-to); font-weight: 600; opacity: .85; }
+.tk-ro, .tk-go { color: var(--t-po); font-weight: 600; opacity: .75; } .tk-ra, .tk-ga { color: var(--t-pa); font-weight: 600; opacity: .75; }
+.tk-cnt { color: var(--t-cnt); font-weight: 500; }
+.note { font-size: 12.5px; color: var(--muted); max-width: 90ch; margin: 0; }
+.sing { display: flex; flex-direction: column; gap: 6px; padding-top: 10px; border-top: 1px solid var(--line); }
+.sing .sel { max-width: min(260px, 70vw); }
+/* Tocar junto */
+.learn h2 { margin: 0; }
+.ln-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+.ln-opts, .ln-ctrls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 13px; color: var(--muted); }
+.ln-opts label, .ln-ctrls label { display: flex; align-items: center; gap: 8px; }
+.ln-ctrls input[type=range] { width: 120px; accent-color: var(--brass); }
+.ln-ctrls output { font: 500 12px var(--f-mono); color: var(--fg); min-width: 58px; }
+.ln-chunks { display: flex; flex-wrap: wrap; gap: 6px; }
+.ln-chip { font: 600 12px var(--f-mono); color: var(--muted); background: var(--stage); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; cursor: pointer; }
+.ln-chip.cur { color: var(--fg); border-color: var(--brass); }
+.ln-chip.ok { color: var(--stage); background: var(--ok); border-color: var(--ok); }
+.ln-chip:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.ln-empty { font-size: 13px; color: var(--muted); }
+.ln-pos { font-size: 15px; color: var(--muted); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; min-height: 26px; }
+.ln-pos b { font-family: var(--f-display); font-size: 24px; font-weight: 800; color: var(--fg); }
+.ln-tok { margin-left: 10px; font-family: var(--f-display); font-size: 24px; font-weight: 800; color: var(--brass); }
+.ln-grid { display: flex; flex-direction: column; gap: 6px; overflow-x: auto; }
+.ln-bar { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 6px; align-items: stretch; }
+.ln-bar .n { font: 500 11px var(--f-mono); color: var(--muted); display: flex; align-items: center; justify-content: flex-end; }
+.ln-cells { display: grid; grid-template-columns: repeat(var(--n, 4), minmax(44px, 1fr)); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--stage); }
+.ln-beat { display: flex; border-right: 1px solid var(--line); min-width: 0; transition: background .06s; }
+.ln-beat:last-child { border-right: 0; }
+.ln-beat.now { background: color-mix(in srgb, var(--hit) 22%, transparent); box-shadow: inset 0 0 0 2px var(--hit); }
+.ln-slot { flex: 1; min-width: 0; text-align: center; font: 700 15px/40px var(--f-body); color: #4c4f58; }
+.ln-slot sup { font-size: 9px; }
+.ln-slot.other { color: #5d6f78; font-weight: 600; font-size: 12px; }
+.ln-slot.cnt, .ln-slot.rest { color: #4c4f58; font-weight: 500; font-size: 12px; }
+.ln-slot.mine { color: var(--stage); background: var(--brass); border-radius: 4px; margin: 4px 2px; line-height: 32px; }
+.ln-slot.mine.r-ok { background: var(--ok); }
+.ln-slot.mine.r-near { background: #e9c25a; }
+.ln-slot.mine.r-miss { background: #ef6b6b; }
+.ln-how { margin: 0; font-size: 13px; line-height: 1.6; color: var(--muted); }
+.ln-how b { color: var(--fg); font-weight: 600; }
+.ln-msg { margin: 0; font-size: 14px; color: var(--fg); padding: 8px 12px; border-radius: 8px; background: var(--stage); border: 1px solid var(--line); }
+.ln-msg.pass { border-color: var(--ok); color: var(--ok); }
+.ln-msg.fail { border-color: #e9c25a; color: #e9c25a; }
+.ln-ctrls.small { font-size: 12.5px; }
+.bar-row.ln-range .cells { outline: 2px solid var(--brass); outline-offset: 1px; }
+.bar-row.ln-range .n { color: var(--brass); font-weight: 700; }
+.pad.armed { border-color: var(--brass); box-shadow: 0 0 0 3px var(--stage), 0 0 16px color-mix(in srgb, var(--brass) 60%, transparent); }
+.pad.armed small::after { content: " · sua vez"; color: var(--brass); font-weight: 700; }
+kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 1px 5px; color: var(--fg); }
+.err { color: #ef6b6b; font-size: 13px; }
+.export { display: flex; flex-direction: column; gap: 8px; padding-block: 10px; border-block: 1px solid var(--line); }
+.ex-progress { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--fg); }
+.ex-track { flex: 1; height: 6px; border-radius: 3px; background: var(--stage); overflow: hidden; border: 1px solid var(--line); min-width: 80px; }
+.ex-track i { display: block; height: 100%; width: 0; background: var(--brass); }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Surdos <span>em</span> 3D</h1>
+    <div class="status"><i class="dot" id="ctxDot"></i><span id="ctxText">Áudio em espera · toque num botão para ativar</span></div>
+  </header>
+
+  <div class="stage3d" id="stage3d">
+    <div class="ov ov-word" id="ovWord"></div>
+    <div class="topbar">
+      <div class="tools">
+        <button type="button" id="fsBtn" aria-pressed="false"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1.5 5V1.5H5M9 1.5h3.5V5M12.5 9v3.5H9M5 12.5H1.5V9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span id="fsLbl">Tela cheia</span></button>
+        <button type="button" id="mirBtn" aria-pressed="false"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 1.6"/><path d="M5 3.5L1.5 7 5 10.5zM9 3.5L12.5 7 9 10.5z" fill="currentColor"/></svg>Espelho</button>
+      </div>
+      <div class="views" id="views">
+        <button type="button" data-v="frente" class="on">Frente</button>
+        <button type="button" data-v="a1">Atrás da 1ª</button>
+        <button type="button" data-v="a2">Atrás da 2ª</button>
+        <button type="button" data-v="p1">Perto da 1ª</button>
+        <button type="button" data-v="p2">Perto da 2ª</button>
+        <button type="button" data-v="lado">De lado</button>
+        <button type="button" data-v="cima">De cima</button>
+      </div>
+    </div>
+    <div class="ov ov-pos" id="ovPos">Escolha um breque e toque em Tocar breque</div>
+    <div class="ov hint3d">arraste para girar · pinça ou roda para aproximar</div>
+    <div class="ov ov-talk" id="ovTalk" hidden aria-live="polite"><b id="talkWho"></b><span id="talkText"></span></div>
+    <div class="fsbar" id="fsBar">
+      <button type="button" id="fsPlay" class="wide"><svg viewBox="0 0 14 14" aria-hidden="true"><path id="fsIcon" d="M3 1.5v11l9.5-5.5z" fill="currentColor"/></svg><span id="fsPlayLbl">Tocar</span></button>
+      <button type="button" id="fsSlow" aria-label="Mais devagar">−</button>
+      <output id="fsBpm">150 bpm</output>
+      <button type="button" id="fsFast" aria-label="Mais rápido">+</button>
+      <button type="button" id="fsLesson">Aula</button>
+      <button type="button" id="fsSkip" hidden>Pular</button>
+      <button type="button" id="fsExit">Sair</button>
+    </div>
+    <p class="err" id="err3d" hidden style="position:absolute;inset:auto 16px 50% 16px;text-align:center"></p>
+  </div>
+
+  <div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <div class="row">
+        <label class="sr" for="bqSel" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Breque</label>
+        <select id="bqSel" class="sel"></select>
+        <h2 class="bq-title" id="bqTitle">Ganesha</h2>
+        <span class="bq-meta" id="bqMeta"></span>
+      </div>
+      <button class="btn" id="bqPlay" type="button"><svg viewBox="0 0 14 14" aria-hidden="true"><path id="bqIcon" d="M3 1.5v11l9.5-5.5z" fill="currentColor"/></svg><span id="bqLbl">Tocar breque</span></button>
+    </div>
+    <div class="row">
+      <label for="bpm">Andamento <input type="range" id="bpm" min="60" max="180" step="1" value="150"><output id="bpmOut">150 bpm</output></label>
+      <label for="metro"><input type="checkbox" id="metro"> Metrônomo</label>
+      <label for="countIn"><input type="checkbox" id="countIn" checked> Contagem de entrada</label>
+      <label for="bqRepeat"><input type="checkbox" id="bqRepeat"> Repetir</label>
+      <label for="vol">Volume <input type="range" id="vol" min="0" max="3" step="0.01" value="2"></label>
+      <span id="bqPos" class="bq-meta">Começa no compasso 1</span>
+    </div>
+    <div class="sing">
+      <div class="row">
+        <label for="bqVoice">Voz cantando o breque <select id="bqVoice" class="sel"><option value="R" selected>Ritma</option><option value="T">Tuco</option><option value="RT">Ritma e Tuco (dueto)</option><option value="">Sem voz</option></select></label>
+        <label for="sayCount"><input type="checkbox" id="sayCount" checked> Cantar a contagem</label>
+        <label for="voxVol">Volume da voz <input type="range" id="voxVol" min="0" max="3" step="0.01" value="1.9"></label>
+      </div>
+      <p class="note" id="singNote">A Ritma e o Tuco aparecem no palco e cantam cada toque na hora em que ele sai, com a voz deles da ElevenLabs. No dueto a Ritma canta a 1ª (po), o Tuco a 2ª (Pa) e os dois juntos nos toques das duas (To, Bo). A contagem é sempre da Ritma. Vale para Tocar breque, para a aula, para o Tocar junto e para o vídeo.</p>
+    </div>
+    <div class="lesson">
+      <div class="row">
+        <button class="btn" id="lsStart" type="button"><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="1.8" y="3.5" width="10.4" height="8" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="5.2" cy="7.5" r="1.1" fill="currentColor"/><circle cx="8.8" cy="7.5" r="1.1" fill="currentColor"/><path d="M7 1v2.5" stroke="currentColor" stroke-width="1.5"/></svg><span id="lsStartLbl">Aula com os robôs</span></button>
+        <button class="btn" id="lsPause" type="button" hidden>Pausar</button>
+        <button class="btn" id="lsSkip" type="button" hidden>Pular</button>
+        <label for="lsVoice"><input type="checkbox" id="lsVoice" checked> Voz dos robôs</label>
+        <label for="lsSlow"><input type="checkbox" id="lsSlow" checked> Mostrar devagar antes</label>
+      </div>
+      <div class="row" id="lsVoices">
+        <label for="vRitma">Voz da Ritma <select id="vRitma" class="sel"></select></label>
+        <label for="vTuco">Voz do Tuco <select id="vTuco" class="sel"></select></label>
+        <button class="btn" id="vTest" type="button">Ouvir as vozes</button>
+      </div>
+      <p class="note" id="vHint" hidden>Para a voz soar mais humana, baixe uma voz de melhor qualidade no aparelho. No iPhone: Ajustes › Acessibilidade › Conteúdo Falado › Vozes › Português (Brasil), e baixe a Luciana e o Felipe na versão Aprimorada ou Premium. Depois recarregue esta página. No computador, o navegador Edge já traz vozes "Natural" (Francisca, Thalita, Antonio). As vozes marcadas com ★ são as melhores.</p>
+      <p class="note" id="vPack" hidden></p>
+      <div class="ex-progress" id="lsProgress" hidden><div class="ex-track"><i id="lsBar"></i></div><span id="lsStatus"></span></div>
+      <p class="note">A Ritma (professora) e o Tuco (aluno) conversam sobre o breque escolhido, parte por parte: quem toca, tempo a tempo, e o que quer dizer cada símbolo. Depois de cada explicação os músicos tocam o trecho, primeiro devagar e depois no andamento, e a parte da partitura fica marcada. Pular passa para a próxima fala ou trecho.</p>
+    </div>
+    <div class="export">
+      <div class="row">
+        <button class="btn" id="exVideo" type="button"><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="3" width="8.5" height="8" rx="1.5" fill="currentColor"/><path d="M10 6l3-2v6l-3-2z" fill="currentColor"/></svg><span>Baixar vídeo do breque</span></button>
+        <button class="btn" id="exCancel" type="button" hidden>Cancelar</button>
+        <button class="btn" id="exSave" type="button" hidden>Guardar arquivo</button>
+        <label for="exMonitor"><input type="checkbox" id="exMonitor" checked> Ouvir se precisar gravar em tempo real</label>
+      </div>
+      <div class="ex-progress" id="exProgress" hidden><div class="ex-track"><i id="exBar"></i></div><span id="exStatus"></span></div>
+      <p class="note">O vídeo mostra o breque inteiro com os músicos tocando, na câmera que estiver no palco agora (gire ou escolha uma vista antes de baixar; o espelho também vale), com o andamento, a contagem e o metrônomo escolhidos acima. Sai em MP4 1280×720 com H.264 e AAC, que abre no iPhone, na galeria e no WhatsApp.</p>
+    </div>
+    <div class="legend">
+      <span><b class="tk-To">To</b>1ª + 2ª</span><span><b class="tk-Pa">Pa</b>só a 2ª</span><span><b class="tk-po">po</b>só a 1ª</span>
+      <span><b class="tk-Bo">Bo</b>1ª + 2ª abafados (a mão segura a pele)</span><span><b class="tk-ro">ro</b><b class="tk-ra">ra</b>leves</span>
+      <span><b class="tk-E">E</b>pausa falada</span><span><b class="tk-cnt">1 2 3</b>contagem</span><span>Clique num compasso para começar dali.</span>
+    </div>
+    <div class="score" id="score"></div>
+  </div>
+
+  <div class="panel learn">
+    <div class="ln-head">
+      <h2 class="bq-title" id="lnTitle">Tocar junto</h2>
+      <div class="ln-opts">
+        <label for="lnInstr">Eu toco <select id="lnInstr" class="sel"><option value="0">Surdo de 1ª</option><option value="1">Surdo de 2ª</option></select></label>
+        <label for="lnSize">Dividir <select id="lnSize" class="sel"><option value="sec" selected>Por frase</option><option value="1">1 compasso</option><option value="2">2 compassos</option><option value="4">4 compassos</option><option value="all">Breque inteiro</option></select></label>
+      </div>
+    </div>
+    <div class="ln-chunks" id="lnChunks" aria-label="Trechos"></div>
+    <div class="ln-pos" id="lnPos" aria-live="off"></div>
+    <div class="ln-grid" id="lnGrid"></div>
+    <p class="ln-how" id="lnHow"></p>
+    <p class="ln-msg" id="lnMsg">Escolha um trecho. Toque em <b>1 · Ouvir</b> para ver e ouvir como é, depois em <b>2 · Tocar</b> e faça a sua parte no pad (ou na tecla). O seu músico no palco só toca quando você bate.</p>
+    <div class="ln-ctrls">
+      <button class="btn" id="lnListen" type="button">1 · Ouvir</button>
+      <button class="btn" id="lnPlay" type="button">2 · Tocar</button>
+      <button class="btn" id="lnAuto" type="button">Treino automático</button>
+      <button class="btn" id="lnPrev" type="button">‹ Trecho anterior</button>
+      <button class="btn" id="lnNext" type="button">Próximo trecho ›</button>
+      <button class="btn" id="lnStop" type="button" hidden>Parar</button>
+    </div>
+    <div class="ln-ctrls small">
+      <label for="lnBpm">Andamento do treino <input type="range" id="lnBpm" min="50" max="180" step="1" value="100"><output id="lnBpmOut">100 bpm</output></label>
+      <label for="lnUp"><input type="checkbox" id="lnUp" checked> Subir o andamento quando acertar</label>
+      <label for="lnGuide"><input type="checkbox" id="lnGuide" checked> Voz guia nos meus toques</label>
+      <label for="lnMetro"><input type="checkbox" id="lnMetro" checked> Metrônomo ao tocar</label>
+    </div>
+    <div class="pads">
+      <button class="pad p1" id="pad1" type="button"><b>1ª</b><small>tocar · tecla A · Shift abafa</small></button>
+      <button class="pad p2" id="pad2" type="button"><b>2ª</b><small>tocar · tecla S · Shift abafa</small></button>
+    </div>
+    <p class="note">No <b>Tocar junto</b>, o pad do seu surdo fica dourado na sua vez (tocar no palco 3D também vale, bom para a tela cheia no celular); no computador use <kbd>A</kbd> (1ª), <kbd>S</kbd> (2ª) ou <kbd>Espaço</kbd>. Cada toque vira verde (certo), amarelo (adiantado ou atrasado) ou vermelho (faltou). Com 85% certos o andamento sobe até o do breque, e aí o trecho fica verde. Fora do treino, os pads tocam livre. Para copiar: <b>Atrás da 1ª</b> e <b>Atrás da 2ª</b> mostram o golpe por cima do ombro, como se fosse você tocando. De frente, ligue o <b>Espelho</b> para o músico ficar como o seu reflexo (a mão da maceta do mesmo lado que a sua). Os músicos levantam a maceta até perto da cabeça e acertam a pele no instante em que o som sai; nas notas rápidas o golpe fica mais curto, como na mão de verdade. No abafado (Bo), a mão esquerda segura a pele. <kbd>Espaço</kbd> ou <kbd>B</kbd> toca e para o breque, <kbd>F</kbd> põe em tela cheia e <kbd>E</kbd> liga o espelho. O som é o mesmo do simulador de surdos: 1ª em 45 Hz e 2ª em 78 Hz.</p>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mp4-muxer@5.2.2/build/mp4-muxer.min.js"></script>
+<script>
+(() => {
+"use strict";
+  const PRESETS = [
+    { name: "1ª", full: "Surdo de 1ª", role: "Marcação principal", key: "a", alt: "1", size: 1.0,
+      f0: 45, fMin: 40, fMax: 50, bend: 1.3, bendT: 0.09,
+      A: 0.02, D: 0.15, S: 0.7, R: 2.4, rMin: 1.6, rMax: 3.4,
+      peak: 0.85, ot: 0, pres: 0.8, click: { type: "lowpass", f: 1800, Q: 0.7, gain: 0.32, dur: 0.035 }, level: 0.8,
+      mid: [[4, 0.2, 0.16], [5, 0.17, 0.12], [6, 0.14, 0.09], [7, 0.1, 0.07], [9, 0.07, 0.05]], skin: { f: 420, Q: 1.1, gain: 0.5, dur: 0.11 } },
+    { name: "2ª", full: "Surdo de 2ª", role: "Resposta", key: "s", alt: "2", size: 0.92,
+      f0: 78, fMin: 70, fMax: 85, bend: 1.25, bendT: 0.06,
+      A: 0.012, D: 0.1, S: 0.5, R: 0.85, rMin: 0.5, rMax: 1.3,
+      peak: 0.8, ot: 0, pres: 0.6, click: { type: "lowpass", f: 2200, Q: 0.7, gain: 0.3, dur: 0.03 }, level: 0.8,
+      mid: [[3, 0.2, 0.2], [4, 0.16, 0.14], [5, 0.12, 0.1], [6, 0.08, 0.07]], skin: { f: 560, Q: 1.1, gain: 0.42, dur: 0.08 } },
+    { name: "3ª", full: "Surdo de 3ª", role: "Corte / balanço", key: "d", alt: "3", size: 0.84,
+      f0: 130, fMin: 120, fMax: 140, bend: 1.4, bendT: 0.025,
+      A: 0.01, D: 0.035, S: 0.3, R: 0.2, rMin: 0.1, rMax: 0.38,
+      peak: 0.28, ot: 0.08, pres: 0, click: { type: "bandpass", f: 2400, Q: 0.9, gain: 0.14, dur: 0.028 }, level: 0.55 },
+  ];
+
+  function makeEngine(ac, out) {
+    const busGains = P.map(p => { const g = ac.createGain(); g.gain.value = p.level; g.connect(out); return g; });
+    const sr = ac.sampleRate;
+    const noiseBuf = ac.createBuffer(1, Math.ceil(sr * 0.1), sr);
+    const nd = noiseBuf.getChannelData(0);
+    for (let k = 0; k < nd.length; k++) nd[k] = Math.random() * 2 - 1;
+    const voices = [[], [], []];
+    const extra = [];   // vozes faladas e cliques, para poderem ser cancelados
+
+    // Abafa as vozes do tambor i que já começaram antes de "at". Cada voz tem um ganho próprio de corte,
+    // por isso não é preciso cancelar o envelope (o que causaria saltos de nível e estalos).
+    // Vozes agendadas para depois de "at" (batidas futuras) não são tocadas.
+    function stopVoices(i, at, tau = 0.012) {
+      for (const v of voices[i]) {
+        if (v.cut || v.start > at) continue;
+        v.cut = true;
+        v.choke.gain.setValueAtTime(v.vel, at);
+        v.choke.gain.setTargetAtTime(0, at, tau);
+        for (const s of v.srcs) { try { s.stop(at + tau * 8); } catch (e) {} }
+      }
+    }
+
+    function strike(i, t, tag, vel = 1) {
+      const p = P[i];
+      const end = t + p.A + p.D + p.R;
+      const cut = ac.createGain();
+      cut.gain.value = vel;
+      cut.connect(busGains[i]);
+      const srcs = [];
+
+      // Corpo: senoide pura na fundamental, com a queda de afinação do golpe
+      const body = ac.createOscillator(), env = ac.createGain();
+      body.type = "sine";
+      body.frequency.setValueAtTime(p.f0 * p.bend, t);
+      body.frequency.exponentialRampToValueAtTime(p.f0, t + p.bendT);
+      env.gain.setValueAtTime(0.0001, t);
+      env.gain.exponentialRampToValueAtTime(p.peak, t + p.A);               // A: rampa curta, sem estalo
+      env.gain.exponentialRampToValueAtTime(p.peak * p.S, t + p.A + p.D);   // D → S
+      env.gain.exponentialRampToValueAtTime(0.0001, end);                   // R: cauda exponencial
+      body.connect(env).connect(cut);
+      body.start(t); body.stop(end + 0.05);
+      srcs.push(body);
+
+      // Harmónico da pele (só na 3ª)
+      if (p.ot > 0) {
+        const ot = ac.createOscillator(), oe = ac.createGain();
+        ot.type = "sine";
+        ot.frequency.setValueAtTime(p.f0 * 1.59 * p.bend, t);
+        ot.frequency.exponentialRampToValueAtTime(p.f0 * 1.59, t + p.bendT);
+        oe.gain.setValueAtTime(0.0001, t);
+        oe.gain.exponentialRampToValueAtTime(p.ot, t + p.A);
+        oe.gain.exponentialRampToValueAtTime(0.0001, t + p.A + p.R * 0.5);
+        ot.connect(oe).connect(cut);
+        ot.start(t); ot.stop(end + 0.05);
+        srcs.push(ot);
+      }
+
+      // Presença: parciais senoidais limpas em 2× e 3× f0 para o grave se ouvir sem distorção
+      if (p.pres > 0) {
+        [[2, 0.34, 0.45], [3, 0.16, 0.25]].forEach(([mult, g, dec]) => {
+          const o = ac.createOscillator(), oe = ac.createGain();
+          o.type = "sine";
+          o.frequency.setValueAtTime(p.f0 * mult * p.bend, t);
+          o.frequency.exponentialRampToValueAtTime(p.f0 * mult, t + p.bendT);
+          oe.gain.setValueAtTime(0.0001, t);
+          oe.gain.exponentialRampToValueAtTime(g * p.pres, t + p.A);
+          oe.gain.exponentialRampToValueAtTime(0.0001, t + p.A + p.R * dec);
+          o.connect(oe).connect(cut);
+          o.start(t); o.stop(end + 0.05);
+          srcs.push(o);
+        });
+      }
+
+      // Médios do surdo (harmônicos altos e o "bum" da pele com a maceta de feltro): é o que um alto-falante de
+      // celular consegue tocar; sem eles a 1ª e a 2ª quase somem no telefone, porque o grave fica abaixo de 100 Hz
+      if (p.mid) p.mid.forEach(([mult, g, dec]) => {
+        const o = ac.createOscillator(), oe = ac.createGain();
+        o.type = "sine";
+        o.frequency.setValueAtTime(p.f0 * mult * p.bend, t);
+        o.frequency.exponentialRampToValueAtTime(p.f0 * mult, t + p.bendT);
+        oe.gain.setValueAtTime(0.0001, t);
+        oe.gain.exponentialRampToValueAtTime(g, t + p.A);
+        oe.gain.exponentialRampToValueAtTime(0.0001, t + p.A + Math.max(0.05, p.R * dec));
+        o.connect(oe).connect(cut); o.start(t); o.stop(end + 0.05); srcs.push(o);
+      });
+      if (p.skin) {
+        const k = p.skin, sn = ac.createBufferSource(), sf = ac.createBiquadFilter(), se = ac.createGain();
+        sn.buffer = noiseBuf; sf.type = "bandpass"; sf.frequency.value = k.f; sf.Q.value = k.Q;
+        se.gain.setValueAtTime(0.0001, t); se.gain.exponentialRampToValueAtTime(k.gain, t + 0.004); se.gain.exponentialRampToValueAtTime(0.0001, t + k.dur);
+        sn.connect(sf).connect(se).connect(cut); sn.start(t); sn.stop(t + k.dur + 0.02); srcs.push(sn);
+      }
+
+      // Toque da maceta: ruído curto filtrado, com rampa de entrada para não estalar
+      const c = p.click, n = ac.createBufferSource(), nf = ac.createBiquadFilter(), ne = ac.createGain();
+      n.buffer = noiseBuf;
+      nf.type = c.type; nf.frequency.value = c.f; nf.Q.value = c.Q;
+      ne.gain.setValueAtTime(0.0001, t);
+      ne.gain.exponentialRampToValueAtTime(c.gain, t + 0.002);
+      ne.gain.exponentialRampToValueAtTime(0.0001, t + c.dur);
+      n.connect(nf).connect(ne).connect(cut);
+      n.start(t); n.stop(t + c.dur + 0.02);
+      srcs.push(n);
+
+      const v = { srcs, choke: cut, vel, start: t, tag: tag || false, cut: false };
+      voices[i].push(v);
+      body.onended = () => { cut.disconnect(); const k = voices[i].indexOf(v); if (k >= 0) voices[i].splice(k, 1); };
+    }
+
+    // Um toque no instante t do relógio de áudio
+    function trigger(i, mute, t, tag, vel = 1) {
+      if (mute) { stopVoices(i, t, 0.03); return; }
+      if (choke.checked) stopVoices(i, t, 0.012);
+      strike(i, t, tag, vel);
+    }
+
+    function track(src, t, tag) {
+      const e = { src, start: t, tag };
+      extra.push(e);
+      src.onended = () => { const k = extra.indexOf(e); if (k >= 0) extra.splice(k, 1); };
+    }
+
+    function click(t, accent, tag) {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.type = "sine"; o.frequency.value = accent ? 1760 : 1320;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(accent ? 0.22 : 0.14, t + 0.002);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+      o.connect(g).connect(out);
+      o.start(t); o.stop(t + 0.06);
+      track(o, t, tag);
+    }
+
+    // Cada sílaba tem várias gravações (cantadas numa frase, com entonação natural): a 1ª é a acentuada,
+    // as outras alternam para a voz não soar sempre igual. Sem acelerar (no máximo 1,1×): se não couber,
+    // a sílaba fecha com um fade curto. Pequenas variações de afinação e volume deixam a fala mais humana.
+    let voxTurn = 0;
+    function speak(voice, word, t, slot, gain, tag) {
+      const list = (voxBufs[voice] && voxBufs[voice][word]) || (voxBufs.R && voxBufs.R[word]);
+      if (!list || !list.length) return 0;
+      const strong = gain >= 0.95 || list.length === 1;
+      const buf = strong ? list[0] : list[1 + (voxTurn++ % (list.length - 1))];
+      const src = ac.createBufferSource(), g = ac.createGain();
+      src.buffer = buf;
+      const room = Math.max(0.07, slot * 0.96);
+      const detune = Math.pow(2, (Math.random() * 24 - 12) / 1200);
+      const rate = Math.min(1.1, Math.max(1, buf.duration / room)) * detune;
+      src.playbackRate.value = rate;
+      const len = Math.min(buf.duration / rate, room);
+      const lvl = gain * +voxVol.value * (0.92 + Math.random() * 0.16);
+      const fade = Math.min(0.04, len * 0.3);
+      g.gain.setValueAtTime(lvl, t);
+      g.gain.setValueAtTime(lvl, t + Math.max(0.005, len - fade));
+      g.gain.linearRampToValueAtTime(0, t + len);
+      src.connect(g).connect(out);
+      src.start(t); src.stop(t + len + 0.01);
+      track(src, t, tag);
+      return len;
+    }
+
+    // Cancela tudo o que tem esta etiqueta e ainda não começou (ao parar o loop ou o breque)
+    function cancelTagged(tag, t) {
+      for (let i = 0; i < 3; i++) for (const v of voices[i]) {
+        if (v.tag === tag && !v.cut && v.start > t) { v.cut = true; v.choke.gain.setValueAtTime(0, t); v.srcs.forEach(s => { try { s.stop(t); } catch (e) {} }); }
+      }
+      for (const e of extra) if (e.tag === tag && e.start > t) { try { e.src.stop(t); } catch (x) {} }
+    }
+
+    return { busGains, voices, stopVoices, strike, trigger, click, speak, cancelTagged };
+  }
+
+
+  function makeLimiter(ac) {
+    const l = ac.createDynamicsCompressor();
+    l.threshold.value = -2; l.knee.value = 2; l.ratio.value = 20;
+    l.attack.value = 0.001; l.release.value = 0.1;
+    return l;
+  }
+
+  const GANESHA_TXT = `1 2 3 To-To
+To 1 2 To-To
+To 1 3 To-To
+To 1 4 To-To
+To 1 5 To-To
+To 1 6 To-To
+
+To To To E-To
+To 1 2 To
+To 1 3 To
+To 1 4 To1
+
+To2 To3 To4 To5
+To6 1 2 Pa
+To To To 1
+To 1 2 3
+To1 To2 To3 To4
+To5 2 3 4
+
+2 2 3 4
+3 2 3 4
+4 2 3 4
+
+To po Pa To
+To po Pa To1
+To2 To3 To4 To5
+
+To6 1 To E-.-To
+Bo 1 To-E-To E-.-.
+To 2 To E-.-To
+Bo 2 To-E-To E-To-bo
+
+To 1 2 3
+
+To .-E-To Bo-E-To E-To-bo
+To 1 2 3
+To .-.-To Bo-E-To E-To-bo
+To .-.-To Bo-E-To E-To-bo
+To Po Pa Po
+
+To Po Pa Po
+To Po Pa Po
+To To To-.-.-to .-.-to-.`;
+  const SOMA_TXT = `1 2 3 To-To
+To-.-.-Po Pa To-.-.-Pa Po-To
+To E-To E-To E-To
+To-.-.-Po Pa To-.-.-Pa Po
+To-.-.-Po Pa To[25]-To[40] To[60]-To[80]
+
+To To-To E-To 1
+To To-To 1 To
+To To-To E-To E-To
+
+To To To To-To
+To To To-Po Pa-Po
+To To To To-To
+
+To E-To To 1
+To To To 1
+To`;
+  const DAGON_TXT = `To 1 E-.-to-. .-to-.-.
+To 2 E-.-to-. E
+To 3 E-.-to-. .-to-.-.
+To 4 E-.-to-. .-to-.-.
+
+To 1 E-.-to-ro .-to-ro-.
+To 2 E-.-to-ro .-to-ro-.
+To 3 E-.-to-ro .-to-ro-.
+To 4 E-.-To-. .-To-.-.
+To 2 3 4
+
+To-to-.-to E-.-to-to .-to-to-. ti-to-.-to
+to-.-to-to .-to-to-. to-To-.-to E
+To-to-.-to E-.-to-to .-to-to-. ti-to-.-to
+to-.-to-to .-to-to-. To To
+
+To-to-.-to E-.-to-to .-to-to-. ti-to-.-to
+to-.-to-to .-to-to-. to-To-.-to E
+To-to-.-to E-.-to-to .-to-to-. ti-to-.-to
+to-.-to-to .-to-to-. To To
+
+To-.-.-to 1 To-.-.-to 2
+To-.-.-to 3 To-.-.-to 4
+
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+To-.-.-to ti-to-.-. To-.-.-to 1
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+
+To 2 3 4
+
+To-.-.-to ti-to-.-. To-.-.-to ti-to-.-.
+
+To-.-to-. E-.-to-. E-.-to-. To
+To-.-to-. E-.-to-. E-.-to-. To
+To-.-to-. E-.-to-. E-.-to-. To
+To-.-to-. E-.-to-. E-.-to-. To
+To-.-to-. E-.-to-. E-.-to-. To
+
+To-.-to-. To-.-to-. To-.-to-. To-.-to-.
+
+To 2 E-.-to-ro .-to-ro-.
+To 1 To-.-to-ro .-to-ro-.
+
+To 2 E-.-to-. .-to-.-.
+To 3 E-.-to-. .-to-.-.
+To`;
+  // Hécate: 8 compassos de contagem e 4 em 4/4, depois 7/4 (cada tempo dividido em colcheias)
+  const HECATE_TXT = `1 2 3 4
+2 2 3 4
+3 2 3 4
+4 2 3 4
+5 2 3 4
+6 2 3 4
+7 2 3 4
+8 2 3 4
+
+To Po Pa Po
+To Po Pa Po
+To Po Pa Po
+To To To-.-.-to E-.-to-.
+
+To Pa Pa Pa-po[70] E-po[70] Pa Pa
+To Pa Pa Pa-po[70] .-po[70] Pa Pa
+
+To 1 To 2 To 3 To-To
+
+To Pa Pa Pa-po[70] E-po[70] Pa Pa
+To Pa Pa Pa-po[70] E-po[70] Pa Pa
+To Pa Pa Pa-po[70] To To To
+
+To-po[70] Po-pa[70] Pa-po[70] Po-pa[70] Pa-po[70] Po-pa[70] po[70]-pa[70]
+To-po[70] Po-pa[70] Pa-po[70] Po-pa[70] Pa-po[70] Po-pa[70] po[70]-pa[70]
+To-po[70] Po-pa[70] Pa-po[70] Po-po[70] To To To
+
+E-to 1-to 2-to 3-to 4-to 5-to 6-to
+E-to 1-to 2-to 3-to To To To
+To`;
+  // Wukong: 4 compassos de contagem; minúsculas (pa, po) mais leves
+  const WUKONG_TXT = `1 2 3 4
+2 2 3 4
+3 2 3 4
+4 2 3 4
+
+To-.-.-to E To-.-.-to E-pa[70]
+To-.-.-to E-pa[70] po[70]-pa[70] po[70]-pa[70]
+To-.-.-to E To-.-.-to E-pa[70]
+Po Pa-pa[70] Po-pa[70] po[70]-pa[70]
+To 2 3 4
+2 2 3 4
+3 2 3 4
+
+To To To-po[70] To
+To-to 1 2 E-to
+To-to E-to To To
+To-to 1 2 E-to
+
+To-to E Pa-po[70] Pa-po[70]
+To-pa[70] Po-pa[70] E-to E-to
+Pa-po[70] Pa-po[70] 1 2
+To-pa[70] Po-pa[70] E-to E-to
+
+Pa-po[70] Pa-po[70] 1 2
+To-pa[70] Po-pa[70] E-to E-to
+Pa-po[70] Pa-po[70] 1 2
+To-pa[70] Po-pa[70] E-to E-to
+
+Pa-po[70] Pa-po[70] To E
+To To To-to To-to
+
+To-po[70] Pa-po[70] Po-po[70] Pa-po[70]
+To-pa[70] po[70]-Pa Po-po[70] Pa-po[70]
+To-po[70] Pa-po[70] Po-po[70] Pa-po[70]
+To To To To-to
+To-po[70] Pa-po[70] Po-Po to
+E-to Pa-po[70] Po-po[70] Pa-po[70]
+To-pa[70] po[70]-pa[70] Po-po[70] To
+To To To To-to
+To`;
+  // Shady (legenda do PDF: primeira = po, segunda = pa, dois = to). ro/go = 1ª leve, ra/ga = 2ª leve
+  const SHADY_TXT = `Pa E-Pa Po E-Po
+Pa E-Pa Po-.-.-Po E-Po
+
+To Pa-Po Pa E
+To-.-po-ro pa-po pa E
+To po pa po
+To To-po pa-po pa-po
+
+To E To E-To
+To E-To Pa Po
+To E To-To To
+E-To E-To pa-po pa-po
+To-To 1 E-To To-To
+E-To E-To pa po
+To E To-po pa-po
+To-.-po-ro pa-po E-.-po-ro pa-po
+
+To-.-pa-ra Po-.-po-ro pa-.-pa-ra po-To
+To-.-pa-ra po-to-pa-pa To-.-po-ro pa-To
+To-.-pa-ga ra-ga-po-go ro-go-pa-ra pa-To
+To-.-pa-ra pa-.-po-ro To-To E-To
+
+To-.-.-To E-To 1 2
+3 4 5 6
+7 8 To 1
+
+To E-To To 1
+To-To E-To To 2
+To E-To To 1
+To-To E-To To To-To
+E-To To To-To To-To
+E-To E-To 1 E-To
+
+To E-To To 1
+To To-To To-To E-To
+To 1 E-To To
+To 1 To-.-.-To E-To
+To 2 3 4
+
+1 2 3 4
+2 2 3 4
+3 2 3 4
+4 2 3 4
+5 2 3 4
+6 2 3 4
+7 2 3 4
+
+To 1 E-To To
+To 1 E-To E-To
+To-To E-To E-To E-To
+To-.-.-To E-To Pa-Po Pa-Po
+To-To To 1 To-to
+To To To To-to`;
+  const MINUS_TXT = `To E-To To To-To
+To Po-Pa Po-Pa 1
+E-Po Po-Pa Pa-Po 1
+To-.-.-To E-Pa Pa-Po 1
+To-.-.-To E-To Pa-Po Pa-Po
+To 2 3 4
+
+1 2 3 4
+2 2 3 E-To
+To-To 1 2 E-To
+To-To 1 2 E-To
+To-.-.-To E-To To-To To-To
+To-.-To-ro to E-.-to-ro 1
+
+To-.-.-To E-To E-To To
+To-.-.-To E-To To To
+To-.-.-To E-To E-To To
+To 1 E-To To-To
+
+To-.-.-To E-To To To-To
+To-.-.-To E-To To To-To
+To-.-.-To E-To To To-To
+To To To-.-Po-ro Pa-To
+
+To-To E-.-.-To E-To .-To-.-.
+To-To E-.-.-To E-To .-To-.-.
+To-To E-.-.-To E-To .-To-.-.
+To-To .-.-.-To E-To To-To
+
+To-.-.-To E-To To 1
+To-.-.-To E-To To 1
+To-.-.-To E-To To E-To
+To To To E
+
+1 2 3 4
+2 2 3 4
+3 2 3 4
+4 2 3 4
+
+To 1 2 To-To
+E-To To 1 2
+
+To 1 E-To To
+E-To To To-To To-To
+To E-To To-To 1
+To E-To To-To 1
+To E-To To-To 1
+To To To To
+To E-To To-To 1
+To E-To To-To 1
+To E-To To-To 1
+To To To To
+
+To E-To 1 E-To
+To Pa-Po Pa To
+To Po Pa To-To
+To Pa Po To-To
+To Po Pa Po
+Pa Po To To
+To`;
+  // Brahma (legenda do PDF: primeira = po, segunda = pa, dois = to). Onde a partitura separa o tempo com tracinhos
+  // (To | To |, E | | To) são tercinas: o tempo dividido em três.
+  const BRAHMA_TXT = `To-To Po-Pa To To-To
+Po-Pa To 1 2
+To-To Po-Pa To To-To
+Po-Pa To To To
+To-To Po-Pa To To-To
+Po-Pa To 1 2
+To-To Po-Pa To To-To
+
+To-To To To-To-. To-To-.
+
+To E-Pa E-Po To
+E-Po Pa-Po To-.-.-To E-To
+
+To E To E-.-To
+To E To To-.-To
+To E To E-.-To
+To E To To-.-To
+To E To To-.-To
+To E To To-.-To
+
+To . To .-.-To
+bo-To-. E-To-E To To
+
+To E To To
+To E To-To To-To
+To To To E
+To To To To
+E-To To E-To E-To
+To`;
+  // Aine: compassos de 3/4 e 2/4 misturados (cada linha tem os tempos que o compasso tem), depois 4/4
+  const AINE_TXT = `1 2 3
+2 2 3
+
+To To To
+To To To
+Po-Pa Po-Pa
+To To To
+To To E-To
+To To
+To E-to E
+To E-to E
+Pa-Po Pa-Po
+To E-to E
+To E-to E
+Pa-Po Pa-Po
+
+To 2 3 To-To
+To 2 3 Pa-Po
+Pa 2 3 To
+To 2 To 4
+
+1 2 3 4
+2 2 3 4
+3 2 3 4
+4 2 3 4
+
+To To To-to To-to
+To`;
+  // Cerberus: po1, po2, po3, po4 = a série numerada da partitura
+  const CERBERUS_TXT = `To-to E-po Pa-po Pa
+To-to E To To
+To-to E-po Pa-po Pa
+To To To To
+To 2 3 4
+
+E-to E-to E-to E-to
+To 2 3 4
+E-to E-to E-to E-to
+
+To To-to To To-to
+To E-to To-to E-to
+To 2 3 To
+To To To To
+To E-to E-to E-po
+
+Pa po1 Pa po2
+Pa po3 To E
+Pa po1 Pa po2
+Pa po3 Pa po4
+
+To To-to E-to E-po
+
+Pa po1 Pa po2
+Pa po3 Po-Pa Pa-Po
+Pa po1 Pa po2
+Pa po3 Pa-Po Pa-Po
+
+Pa-.-.-Pa E-Po To To
+To To E-Pa Po-Pa
+To 1 2 Po-Pa
+Po 1 E-Pa Pa-Po
+Pa 2 E-Pa Pa-Po
+Pa To To To
+
+Po-.-.-Po E-Pa Po-.-.-Po E-Pa
+
+To Po Pa po1
+Pa po2 Pa po3
+To E-Po Pa 1
+
+2 3 4 5
+
+6 To-ro To-ro To-ro
+1 2 3 4
+5 To-ro To-ro To-ro
+To To 1 E-.-To-ro
+ti-to-.-. 1 To To
+
+Pa po1 Pa po2
+Pa po3 Pa-Po Pa-Po
+
+To 2 To E-.-.-To
+ro Po Pa po1
+To Po Pa po1
+To 2 To E-.-.-to
+ro Po Pa po3
+
+Pa E-Pa Po E-Po
+Pa E-Pa Po-.-.-Po E-Po
+Pa E-Pa Po E-Po
+Pa E-Pa Po-.-.-Po E-Po
+Pa`;
+  // Nikê: o 1º compasso é a chamada ("ri" na partitura); os surdos só contam
+  const NIKE_TXT = `1 2 3 E
+
+To To-to To-.-Po-ro Pa-to
+To-to To-to To-to To
+To-to To-Po Pa-Po Pa
+
+To-.-.-to .-.-to-ro to-.-to-ro .-to-.-.
+To-.-.-to .-.-to-ro to-.-to-ro .-to-.-.
+To To To To-to
+To 2 3 4
+
+To To To Po-Pa
+Po 2 3 4
+E To To To-go-ro-go
+To To-Pa Pa-Pa To
+
+1 2 3 4
+To-.-.-to .-.-to-ro to-.-to-ro .-to-.-.
+E-to E-to E-to-.-to E-to
+To`;
+  // Caravan: nos compassos 13 e 14 (marcados "volume") cada tempo vira tercina: To | ti | po
+  const CARAVAN_TXT = `To 2 3 4
+1 2 3 4
+2 2 3 4
+4 2 3 4
+
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+
+To-ti-po ti-po-ti To-ti-Pa ti-Pa-ti
+To-.-. E-.-. To-ti-to ti-to-ti
+To E-To E To
+E-to E To 4
+To 2 To To-.-to-go
+ro-to 2 3 4
+
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+To-.-.-po E-Pa E-.-.-Pa E-po
+Pa E-po Pa-.-.-po E-Pa
+To-.-.-po E-Pa E-.-.-Pa E-po
+
+To 2 3 4
+To-.-.-to E-to To-.-.-to E-to
+To-.-.-to E-to-to-. To E-to
+to-to 1 2 E-to
+To 2 3 E-to
+To-to 3 4 E-to
+To To To-.-.-to E-to`;
+  // Cactus: compassos 7 a 12 são o maracatu
+  const CACTUS_TXT = `1 2 3 4
+5 6 Po-Pa Po-Pa
+
+To 1 To-ro-.-to to-to
+To 2 Po-Pa Po-Pa
+To 3 To-ro-.-to to-to
+To 4 Po-Pa Po-Pa
+
+Pa Po Pa Po
+Pa-Po Pa-Po Pa-Po Pa-Po
+To-.-.-to .-.-.-to ro-to-.-to to-to
+To-.-.-to .-.-.-to ro-to-.-to to-to
+To-.-.-to .-.-.-to ro-to-.-to to-to
+Po-Pa Po-Pa Po-Pa-.-Pa Po-Pa
+
+To To To To-to
+To E-to ti-to-.-. To
+To E-to E-to To
+To E-to ti-to-.-. To
+Po-Pa Po-Pa Po-Pa-.-Pa Po-Pa
+
+To 1 E-Pa Po-Pa
+To 2 To To
+To 3 E-Pa Po-Pa
+To To To-to To-to`;
+  const BUILTIN = [
+    { id: "brahma", name: "Brahma", bpm: 130, text: BRAHMA_TXT, builtin: true },
+    { id: "aine", name: "Aine", bpm: 130, text: AINE_TXT, builtin: true },
+    { id: "cerberus", name: "Cerberus", bpm: 130, text: CERBERUS_TXT, builtin: true },
+    { id: "shady", name: "Shady", bpm: 130, text: SHADY_TXT, builtin: true },
+    { id: "nike", name: "Nikê", bpm: 130, text: NIKE_TXT, builtin: true },
+    { id: "caravan", name: "Caravan", bpm: 130, text: CARAVAN_TXT, builtin: true },
+    { id: "dagon", name: "Dagon", bpm: 140, text: DAGON_TXT, builtin: true },
+    { id: "cactus", name: "Cactus", bpm: 130, text: CACTUS_TXT, builtin: true },
+    { id: "soma", name: "Soma", bpm: 130, text: SOMA_TXT, builtin: true },
+    { id: "minus", name: "Minus", bpm: 130, text: MINUS_TXT, builtin: true },
+    { id: "hecate", name: "Hécate", bpm: 130, text: HECATE_TXT, builtin: true },
+    { id: "ganesha", name: "Ganesha", bpm: 150, text: GANESHA_TXT, builtin: true },
+    { id: "wukong", name: "Wukong", bpm: 130, text: WUKONG_TXT, builtin: true },
+  ];
+  const SEC_COLORS = ["#ff9a4a", "#3fc18a", "#b7d65a", "#3fc1d6", "#e070b0", "#9f8cff"];
+  // Toque → tambores [1ª, 2ª], força, abafado, palavra falada, volume da voz
+  const HITS = {
+    To: { drums: [0, 1], vel: 1, mute: false, say: "to", sg: 1 },
+    Pa: { drums: [1], vel: 1, mute: false, say: "pa", sg: 1 },
+    po: { drums: [0], vel: 1, mute: false, say: "po", sg: 1 },
+    Bo: { drums: [0, 1], vel: 1, mute: true, say: "bo", sg: 1 },
+    bo: { drums: [0, 1], vel: 0.75, mute: false, say: "bo", sg: 0.8 },
+    to: { drums: [0, 1], vel: 0.8, mute: false, say: "to", sg: 0.85 },
+    ro: { drums: [0], vel: 0.6, mute: false, say: "ro", sg: 0.8 },
+    go: { drums: [0], vel: 0.6, mute: false, say: "go", sg: 0.8 },
+    ra: { drums: [1], vel: 0.6, mute: false, say: "ra", sg: 0.8 },
+    ga: { drums: [1], vel: 0.6, mute: false, say: "ga", sg: 0.8 },
+  };
+  const RESTS = { E: "e", ti: "ti" };   // falados, sem toque
+  const ALIASES = { TO: "To", Ti: "ti", TI: "ti", Ro: "ro", RO: "ro", Go: "go", Ra: "ra", Ga: "ga", tô: "To", "Tô": "To", pa: "Pa", PA: "Pa", "pá": "Pa", Po: "po", PO: "po", e: "E", "é": "E", "ê": "E" };
+
+  // "To3[40]" → base "To", índice "3", intensidade 40
+  function tokParts(tok) {
+    const m = tok.match(/^([^\d\[]+)(\d*)(?:\[(\d+)\])?$/);
+    return m ? { base: m[1], sup: m[2], vel: m[3] ? +m[3] : null } : { base: tok, sup: "", vel: null };
+  }
+
+  function parseBreque(text) {
+    const bars = [], errors = [];
+    let sec = 0, secStart = 0, lineNo = 0;
+    const secs = [];            // índice da secção de cada compasso
+    const secHasHit = [];
+    for (const raw of text.split(/\r?\n/)) {
+      lineNo++;
+      const line = raw.replace(/#.*/, "").trim();
+      if (!line) { if (bars.length > secStart) { sec++; secStart = bars.length; } continue; }
+      const beats = line.split(/[\s|]+/).filter(Boolean).slice(0, 12).map(b => b.split("-").map(tok => {
+        if (tok === "." || tok === "_") return "";
+        if (/^[1-9]$/.test(tok)) return "#" + tok;
+        const m = tok.match(/^([^\d\[]+)(\d*)(?:\[(\d{1,3})\])?$/) || [tok, tok, "", ""];
+        const base = ALIASES[m[1]] || m[1];
+        if (RESTS[base]) return base + m[2];
+        if (HITS[base]) return base + m[2] + (m[3] ? `[${Math.min(100, +m[3])}]` : "");
+        errors.push(`Linha ${lineNo}: "${tok}" não é um toque conhecido`);
+        return "";
+      }));
+      if (line.split(/[\s|]+/).filter(Boolean).length > 12) errors.push(`Linha ${lineNo}: mais de 12 tempos (o resto foi ignorado)`);
+      bars.push(beats);
+      secs.push(sec);
+      if (beats.some(b => b.some(t => t && !t.startsWith("#")))) secHasHit[sec] = true;
+    }
+    // Secções só com contagem ficam neutras, como na partitura
+    let ci = 0;
+    const secColor = [];
+    for (let s = 0; s <= sec; s++) secColor[s] = secHasHit[s] ? SEC_COLORS[ci++ % SEC_COLORS.length] : null;
+    // Compassos podem ter quantos tempos quiserem (4/4, 7/4…): cada linha ocupa os tempos que tem
+    const barStart = [], beatBar = [], beatInBar = [];
+    let total = 0;
+    bars.forEach((bar, b) => { barStart[b] = total; bar.forEach((_, k) => { beatBar.push(b); beatInBar.push(k); }); total += bar.length; });
+    return { bars, sectionColor: secs.map(s => secColor[s]), section: secs, errors, barStart, beatBar, beatInBar, total };
+  }
+
+  // Lista de eventos em tempos (beats): toques e falas
+  function buildEvents(parsed) {
+    const ev = [];
+    parsed.bars.forEach((bar, b) => bar.forEach((beat, k) => beat.forEach((tok, j) => {
+      if (!tok) return;
+      const at = parsed.barStart[b] + k + j / beat.length, slot = 1 / beat.length;
+      if (tok.startsWith("#")) { const n = +tok.slice(1); ev.push({ beat: at, slot, say: n <= 8 ? "n" + n : null, sg: 0.8, count: true }); return; }
+      const { base, vel } = tokParts(tok);
+      if (RESTS[base]) { ev.push({ beat: at, slot, say: RESTS[base], sg: 0.9, rest: true, label: base }); return; }
+      const h = HITS[base];
+      const v = vel == null ? 1 : Math.max(0.05, vel / 100);
+      ev.push({ beat: at, slot, drums: h.drums, vel: h.vel * v, mute: h.mute, say: h.say, sg: h.sg * Math.max(0.5, v), label: base });
+    })));
+    return ev.sort((a, b) => a.beat - b.beat);
+  }
+
+
+  // ======================= Simulador 3D =======================
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const choke = { checked: true };      // novo toque corta o anterior, como no simulador de surdos
+  let P = JSON.parse(JSON.stringify(PRESETS));
+  let ctx = null, master = null, eng = null;
+  const vol = $("vol");
+  function updateStatus() {
+    const on = ctx && ctx.state === "running";
+    $("ctxDot").classList.toggle("on", !!on);
+    $("ctxText").textContent = on ? "Áudio ligado" : "Áudio em espera · toque num botão para ativar";
+  }
+  function ensureCtx() {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      ctx = new AC({ latencyHint: "interactive" });
+      const lim = makeLimiter(ctx);
+      master = ctx.createGain(); master.gain.value = +vol.value;
+      master.connect(lim).connect(ctx.destination);
+      eng = makeEngine(ctx, master);
+      ctx.onstatechange = updateStatus;
+    }
+    if (ctx.state !== "running") ctx.resume().catch(() => {});
+    updateStatus();
+  }
+  vol.addEventListener("input", () => { if (master) master.gain.value = +vol.value; });
+  // tempo "que se ouve agora": o som agendado em t só sai do alto-falante depois da latência de saída
+  const outLat = () => ctx ? (ctx.baseLatency || 0) + (ctx.outputLatency || 0) : 0;
+  const audibleNow = () => ctx ? ctx.currentTime - outLat() : 0;
+
+  // ---------- Cena ----------
+  const host = $("stage3d");
+  if (!window.THREE) { $("err3d").textContent = "Não foi possível carregar o motor 3D. Verifique a ligação e recarregue a página."; $("err3d").hidden = false; }
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  host.prepend(renderer.domElement);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0d0e12);
+  scene.fog = new THREE.Fog(0x0d0e12, 8, 16);
+  const camera = new THREE.PerspectiveCamera(38, 16 / 9, 0.05, 50);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.dampingFactor = 0.08; controls.enablePan = false;
+  controls.minDistance = 0.6; controls.maxDistance = 8; controls.maxPolarAngle = Math.PI * 0.49;
+
+  scene.add(new THREE.HemisphereLight(0xdfe6ff, 0x1a1410, 0.55));
+  const key = new THREE.DirectionalLight(0xfff1dc, 1.05); key.position.set(2.2, 4.2, 3.2); key.castShadow = true;
+  key.shadow.mapSize.set(1024, 1024); key.shadow.camera.left = -3; key.shadow.camera.right = 3; key.shadow.camera.top = 3; key.shadow.camera.bottom = -2; key.shadow.bias = -0.0005;
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0x8fb6ff, 0.5); rim.position.set(-3, 2.5, -3); scene.add(rim);
+  const warm = new THREE.PointLight(0xffb547, 0.6, 6); warm.position.set(0, 2.6, 1.6); scene.add(warm);
+  // palco: tablado redondo de madeira escura com um anel de luz
+  const floor = new THREE.Mesh(new THREE.CircleGeometry(3.4, 64), new THREE.MeshStandardMaterial({ color: 0x2a2018, roughness: 0.85 }));
+  floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+  for (let k = 0; k < 16; k++) { const x = -3.15 + k * 0.42, len = 2 * Math.sqrt(Math.max(0, 3.38 * 3.38 - x * x)); const plank = new THREE.Mesh(new THREE.PlaneGeometry(0.012, len), new THREE.MeshBasicMaterial({ color: 0x1b140f })); plank.rotation.x = -Math.PI / 2; plank.position.set(x, 0.001, 0); scene.add(plank); }
+  const ring = new THREE.Mesh(new THREE.RingGeometry(3.32, 3.4, 96), new THREE.MeshBasicMaterial({ color: 0xc9a24a })); ring.rotation.x = -Math.PI / 2; ring.position.y = 0.002; scene.add(ring);
+
+  const M = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: o.r ?? 0.6, metalness: o.m ?? 0, ...(o.extra || {}) });
+  function mesh(geo, mat, cast = true) { const m = new THREE.Mesh(geo, mat); m.castShadow = cast; m.receiveShadow = true; return m; }
+  const UNIT_CYL = new THREE.CylinderGeometry(1, 1, 1, 16);
+  // um "osso": cilindro de altura 1 esticado entre dois pontos (braços que mudam de forma a cada quadro)
+  function limb(r, mat) { const m = mesh(UNIT_CYL, mat); m.userData.r = r; return m; }
+  const Y = new THREE.Vector3(0, 1, 0), tmpV = new THREE.Vector3();
+  function between(m, a, b) {
+    tmpV.subVectors(b, a); const len = tmpV.length();
+    m.position.copy(a).addScaledVector(tmpV, 0.5);
+    m.scale.set(m.userData.r, len, m.userData.r);
+    m.quaternion.setFromUnitVectors(Y, tmpV.normalize());
+  }
+  function label(text, color) {
+    const c = document.createElement("canvas"); c.width = 256; c.height = 128; const g = c.getContext("2d");
+    g.fillStyle = "rgba(14,15,18,.78)"; g.beginPath(); g.roundRect ? g.roundRect(28, 18, 200, 92, 46) : g.rect(28, 18, 200, 92); g.fill();
+    g.fillStyle = color; g.font = "800 72px 'Big Shoulders Display', Impact, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(text, 128, 68);
+    const t = new THREE.CanvasTexture(c); t.encoding = THREE.sRGBEncoding;
+    const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthWrite: false })); s.scale.set(0.42, 0.21, 1); return s;
+  }
+
+  // ---------- O surdo ----------
+  function makeDrum(R, H, hoopColor) {
+    const d = new THREE.Group();
+    const shell = mesh(new THREE.CylinderGeometry(R, R, H, 56, 1, true), M(0xd9dde3, { m: 0.35, r: 0.3, extra: { side: THREE.DoubleSide } }));
+    d.add(shell);
+    const skinMat = M(0xece4cf, { r: 0.92, extra: { emissive: new THREE.Color(0xffb547), emissiveIntensity: 0 } });
+    const head = mesh(new THREE.CircleGeometry(R * 0.99, 56), skinMat, false); head.rotation.x = -Math.PI / 2; head.position.y = H / 2 + 0.003; d.add(head);
+    const bottom = mesh(new THREE.CircleGeometry(R * 0.99, 56), M(0xd8cfb7, { r: 0.95 }), false); bottom.rotation.x = Math.PI / 2; bottom.position.y = -H / 2 - 0.003; d.add(bottom);
+    const hoopMat = M(hoopColor, { m: 0.55, r: 0.35 });
+    for (const y of [H / 2 + 0.006, -H / 2 - 0.006]) { const hoop = mesh(new THREE.TorusGeometry(R + 0.006, 0.019, 10, 56), hoopMat); hoop.rotation.x = Math.PI / 2; hoop.position.y = y; d.add(hoop); }
+    const rodMat = M(0xe3e6ea, { m: 0.9, r: 0.2 });
+    for (let k = 0; k < 10; k++) {
+      const a = k / 10 * Math.PI * 2, x = Math.cos(a) * (R + 0.026), z = Math.sin(a) * (R + 0.026);
+      const rod = mesh(new THREE.CylinderGeometry(0.0055, 0.0055, H * 0.98, 6), rodMat); rod.position.set(x, 0, z); d.add(rod);
+      for (const y of [H / 2 - 0.03, -H / 2 + 0.03]) { const lug = mesh(new THREE.BoxGeometry(0.022, 0.05, 0.022), rodMat); lug.position.set(x, y, z); d.add(lug); }
+    }
+    // onda de choque na pele
+    const wave = new THREE.Mesh(new THREE.RingGeometry(0.9, 1, 48), new THREE.MeshBasicMaterial({ color: 0xffb547, transparent: true, opacity: 0, depthWrite: false }));
+    wave.rotation.x = -Math.PI / 2; wave.position.y = H / 2 + 0.006; d.add(wave);
+    return { group: d, head, skinMat, wave, R, H };
+  }
+
+  // ---------- O músico ----------
+  // Manequim de desenho (como o boneco 3D dos programas de desenho): corpo inteiro liso, o volume dos músculos vem do
+  // perfil de cada parte, juntas redondas e uma linha central colorida que mostra para onde o tronco e a cabeça viram.
+  // O braço da maceta segue um caminho calculado por cinemática inversa no início: sete quadros-chave da pele até o alto,
+  // com a mão e o cabo em lugares definidos. A animação passa de um para o outro; no instante do toque a pose é a de contato.
+  const HIP = 0.93;
+  // parte torneada: perfil [raio, y] de baixo para cima (raio ~0 nas pontas), suavizado por spline; sx/sz achatam a seção
+  function part(prof, mat, sx = 1, sz = 1) {
+    const pts = new THREE.SplineCurve(prof.map(([r, y]) => new THREE.Vector2(r, y))).getPoints(Math.max(24, prof.length * 6));
+    pts.forEach(v => { v.x = Math.max(v.x, 1e-4); });
+    const m = mesh(new THREE.LatheGeometry(pts, 36), mat); m.scale.set(sx, 1, sz); m.userData.prof = pts; return m;
+  }
+  // faixa chata ao longo de uma curva (largura no plano da superfície do corpo)
+  function ribbon(pts, width, mat) {
+    const curve = new THREE.CatmullRomCurve3(pts, false, "centripetal"), N = 90, pos = [], idx = [];
+    const T = new THREE.Vector3(), out = new THREE.Vector3(), side = new THREE.Vector3();
+    for (let n = 0; n <= N; n++) {
+      const p = curve.getPointAt(n / N); curve.getTangentAt(n / N, T);
+      out.set(p.x, 0, p.z); if (out.lengthSq() < 1e-6) out.set(0, 1, 0); out.normalize();
+      side.crossVectors(T, out).normalize().multiplyScalar(width / 2);
+      pos.push(p.x - side.x, p.y - side.y, p.z - side.z, p.x + side.x, p.y + side.y, p.z + side.z);
+      if (n < N) { const a = 2 * n; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+    }
+    const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
+    return mesh(g, mat);
+  }
+  const ball = (r, mat, s = [1, 1, 1], p = [0, 0, 0]) => { const m = mesh(new THREE.SphereGeometry(r, 28, 20), mat); m.scale.set(...s); m.position.set(...p); return m; };
+  // linha central sobre a superfície de uma parte torneada (frente: +z, costas: -z)
+  function midLine(m, y0, y1, side, mat) {
+    const pts = m.userData.prof.filter(v => v.y >= y0 && v.y <= y1).map(v => new THREE.Vector3(0, v.y, side * (v.x * m.scale.z + 0.0015)));
+    return new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 80, 0.0028, 6), mat);
+  }
+  const PROF = {
+    pelvis: [[0.001, -0.125], [0.085, -0.118], [0.135, -0.085], [0.152, -0.02], [0.142, 0.04], [0.128, 0.085], [0.001, 0.095]],
+    torso: [[0.001, 0.015], [0.122, 0.025], [0.124, 0.1], [0.136, 0.2], [0.156, 0.3], [0.17, 0.38], [0.176, 0.44], [0.16, 0.49], [0.09, 0.535], [0.001, 0.55]],
+    neck: [[0.001, -0.08], [0.05, -0.07], [0.046, -0.02], [0.042, 0.04], [0.001, 0.06]],
+    upper: [[0.001, -0.305], [0.028, -0.296], [0.036, -0.27], [0.04, -0.22], [0.047, -0.14], [0.052, -0.06], [0.054, -0.01], [0.044, 0.03], [0.001, 0.045]],
+    fore: [[0.001, -0.262], [0.022, -0.255], [0.026, -0.235], [0.032, -0.17], [0.041, -0.085], [0.043, -0.045], [0.037, -0.005], [0.001, 0.02]],
+    thigh: [[0.001, -0.44], [0.044, -0.43], [0.051, -0.4], [0.058, -0.33], [0.071, -0.2], [0.082, -0.08], [0.084, -0.02], [0.068, 0.03], [0.001, 0.05]],
+    shin: [[0.001, -0.415], [0.029, -0.405], [0.031, -0.37], [0.036, -0.28], [0.05, -0.15], [0.054, -0.08], [0.049, -0.02], [0.038, 0.02], [0.001, 0.03]],
+  };
+  function makePlayer(o) {
+    const g = new THREE.Group(); g.position.set(o.x, 0, 0); g.rotation.y = o.ry; g.scale.x = -1; scene.add(g);   // espelhado: o modelo tem a maceta em +x; assim ela fica na mão direita (destro)
+    const body = M(o.body, { r: 0.62 }), line = new THREE.MeshBasicMaterial({ color: o.hoop });
+    const hips = new THREE.Group(); hips.position.y = HIP; g.add(hips);
+    // quadril e pernas (as pernas dobram para o corpo descer na ginga sem tirar os pés do chão)
+    const pelvis = part(PROF.pelvis, body, 1, 0.7); hips.add(pelvis);
+    for (const sx of [-1, 1]) hips.add(ball(0.072, body, [1, 1, 0.8], [0.065 * sx, -0.055, -0.045]));
+    hips.add(midLine(pelvis, -0.11, 0.09, 1, line), midLine(pelvis, -0.11, 0.09, -1, line));
+    const legs = [];
+    for (const sx of [-1, 1]) {
+      const hipJ = new THREE.Group(); hipJ.position.set(0.088 * sx, -0.06, 0); hips.add(hipJ);
+      hipJ.add(part(PROF.thigh, body, 1, 1.05));
+      const knee = new THREE.Group(); knee.position.y = -0.42; hipJ.add(knee);
+      knee.add(ball(0.05, body, [1, 1, 1.05]), part(PROF.shin, body, 1, 1.05));
+      knee.add(ball(0.03, body, [1, 0.8, 0.6], [0, 0.01, 0.045]));   // patela
+      const ankle = new THREE.Group(); ankle.position.y = -0.4; knee.add(ankle);
+      ankle.add(ball(0.031, body));
+      ankle.add(ball(1, body, [0.042, 0.032, 0.105], [0, -0.048, 0.055]), ball(0.034, body, [1, 1, 1.1], [0, -0.046, -0.02]), ball(1, body, [0.046, 0.02, 0.04], [0.004 * sx, -0.06, 0.145]));
+      legs.push({ hipJ, knee, ankle });
+    }
+    // tronco
+    const torso = new THREE.Group(); hips.add(torso);
+    const chest = part(PROF.torso, body, 1, 0.66); torso.add(chest);
+    torso.add(midLine(chest, 0.03, 0.53, 1, line), midLine(chest, 0.03, 0.53, -1, line));
+    const neck = part(PROF.neck, body); neck.position.y = 0.6; torso.add(neck);
+    // cabeça
+    const headG = new THREE.Group(); headG.position.y = 0.63; torso.add(headG);
+    headG.add(ball(0.098, body, [0.9, 1.08, 1.04], [0, 0.105, -0.008]));            // crânio
+    headG.add(ball(0.072, body, [0.88, 1.12, 0.92], [0, 0.06, 0.028]));             // rosto e queixo
+    headG.add(ball(0.014, body, [0.8, 1.6, 1.1], [0, 0.088, 0.093]));               // nariz
+    for (const sx of [-1, 1]) {
+      headG.add(ball(0.022, body, [0.42, 1, 0.72], [0.088 * sx, 0.095, -0.004]));   // orelha
+    }
+    const hl = []; for (let a = 0.35; a <= Math.PI + 0.9; a += 0.08) hl.push(new THREE.Vector3(0, 0.105 + 0.098 * 1.08 * Math.sin(a) * 1.012, -0.008 + 0.098 * 1.04 * Math.cos(a) * 1.012));
+    headG.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(hl), 60, 0.0028, 6), line));
+    const drum = makeDrum(o.R, o.H, o.hoop);
+    drum.group.position.set(-0.05, 0.05 - o.H / 2, 0.15 + o.R); drum.group.rotation.x = 0.26; torso.add(drum.group);
+    drum.group.updateMatrix();
+    const dToTorso = v => v.clone().applyMatrix4(drum.group.matrix);
+    // talabarte: faixa chata que sai do gancho do surdo, cruza o peito, passa por cima do ombro da maceta e desce pelas costas
+    const tp = chest.userData.prof, rAt = y => { for (let n = 1; n < tp.length; n++) if (tp[n].y >= y) { const a = tp[n - 1], b = tp[n], u = (y - a.y) / (b.y - a.y || 1); return a.x + (b.x - a.x) * u; } return 0; };
+    const onTorso = (x, y, side) => new THREE.Vector3(x, y, side * (chest.scale.z * Math.sqrt(Math.max(0, rAt(y) ** 2 - x * x)) + 0.012));
+    const hookF = dToTorso(new THREE.Vector3(-o.R * 0.95, o.H / 2 - 0.09, -o.R * 0.42)), hookB = dToTorso(new THREE.Vector3(-o.R * 0.62, o.H / 2 - 0.09, -o.R * 0.86));
+    const strapPts = [hookF, onTorso(-0.12, 0.17, 1), onTorso(-0.05, 0.28, 1), onTorso(0.03, 0.37, 1), onTorso(0.09, 0.45, 1), new THREE.Vector3(0.125, 0.545, 0),
+      onTorso(0.09, 0.45, -1), onTorso(0.0, 0.34, -1), onTorso(-0.08, 0.24, -1), onTorso(-0.13, 0.14, -1), hookB];
+    torso.add(ribbon(strapPts, 0.042, M(0x2a2e38, { r: 0.85, extra: { side: THREE.DoubleSide } })));
+    const ringM = M(0xc9ccd2, { m: 0.85, r: 0.3 });
+    for (const hk of [hookF, hookB]) { const r = mesh(new THREE.TorusGeometry(0.016, 0.004, 6, 14), ringM); r.position.copy(hk); torso.add(r); }
+    // braços
+    function arm(side) {
+      const sh = new THREE.Group(); sh.position.set(0.175 * side, 0.475, 0); torso.add(sh);
+      sh.add(ball(0.058, body, [1.08, 1, 1]), part(PROF.upper, body, 1, 0.95));
+      const el = new THREE.Group(); el.position.y = -0.29; sh.add(el);
+      el.add(ball(0.037, body), part(PROF.fore, body, 1.12, 0.88));
+      const wr = new THREE.Group(); wr.position.y = -0.25; el.add(wr);
+      wr.add(ball(0.024, body, [1.15, 1, 0.8]));
+      return { sh, el, wr };
+    }
+    const RA = arm(1), LA = arm(-1);
+    // mão direita fechada na maceta: dedos enrolados no cabo, polegar por cima
+    const malletR = 0.048, stickLen = 0.37;
+    const grip = new THREE.Group(); grip.position.y = -0.062; RA.wr.add(grip);
+    RA.wr.add(ball(1, body, [0.024, 0.042, 0.04], [0, -0.04, 0]));
+    for (let f = 0; f < 4; f++) {
+      const fg = mesh(new THREE.TorusGeometry(0.02, 0.0095, 8, 14, Math.PI * 1.45), body);
+      fg.position.set(0, -0.062, -0.027 + f * 0.018); fg.rotation.z = -Math.PI * 0.12; fg.scale.setScalar(1 - Math.abs(f - 1.5) * 0.06); RA.wr.add(fg);
+    }
+    const thumb = new THREE.Group(); thumb.position.set(-0.018, -0.03, 0.018); thumb.rotation.set(1.25, 0, 0.45); RA.wr.add(thumb);
+    const tcR = mesh(new THREE.CylinderGeometry(0.0105, 0.0088, 0.048, 8), body); tcR.position.y = -0.024; thumb.add(tcR); thumb.add(ball(0.0088, body, [1, 1, 1], [0, -0.048, 0]));
+    const stick = mesh(new THREE.CylinderGeometry(0.011, 0.013, stickLen + 0.07, 10), M(0xb07a43, { r: 0.55 })); stick.rotation.x = Math.PI / 2; stick.position.z = (stickLen - 0.07) / 2; grip.add(stick);
+    const malletHead = new THREE.Group(); malletHead.position.z = stickLen; grip.add(malletHead);
+    const felt = mesh(new THREE.CylinderGeometry(malletR, malletR, 0.075, 22), M(0xf4efe4, { r: 0.98 })); felt.rotation.z = Math.PI / 2; malletHead.add(felt);
+    const band = mesh(new THREE.TorusGeometry(malletR * 0.99, 0.006, 6, 22), M(o.hoop, { m: 0.4, r: 0.4 })); band.rotation.y = Math.PI / 2; malletHead.add(band);
+    // mão esquerda aberta: palma (normal +z) e dedos levemente curvos
+    LA.wr.add(ball(1, body, [0.04, 0.05, 0.015], [0, -0.055, 0]));
+    for (let f = 0; f < 4; f++) {
+      const x = -0.027 + f * 0.018, len = [0.062, 0.072, 0.068, 0.055][f];
+      const fj = new THREE.Group(); fj.position.set(x, -0.098, 0.002); fj.rotation.x = 0.18; LA.wr.add(fj);
+      const c = mesh(new THREE.CylinderGeometry(0.0082, 0.0074, len, 8), body); c.position.y = -len / 2; fj.add(c);
+      fj.add(ball(0.0076, body, [1, 1, 1], [0, -len, 0]), ball(0.0086, body));
+    }
+    const thumbL = new THREE.Group(); thumbL.position.set(0.035, -0.04, 0.006); thumbL.rotation.set(0.25, 0, 0.75); LA.wr.add(thumbL);
+    const tc = mesh(new THREE.CylinderGeometry(0.0105, 0.0085, 0.05, 8), body); tc.position.y = -0.025; thumbL.add(tc); thumbL.add(ball(0.0085, body, [1, 1, 1], [0, -0.05, 0]));
+    const palmPt = new THREE.Object3D(); palmPt.position.set(0, -0.08, 0.016); LA.wr.add(palmPt);
+    const tag = label(o.label, o.labelColor); tag.position.set(0, 2.06, 0); g.add(tag);
+
+    // ---- cinemática inversa (uma vez, com o corpo parado) ----
+    g.updateMatrixWorld(true);
+    const W = v => v.clone().applyMatrix4(drum.group.matrixWorld);
+    const nW = new THREE.Vector3(0, 1, 0).transformDirection(drum.group.matrixWorld);
+    const toW = v => v.clone().applyMatrix4(g.matrixWorld), dirW = v => v.clone().normalize().transformDirection(g.matrixWorld);
+    const toM = v => g.worldToLocal(v.clone());
+    const pos = o3 => new THREE.Vector3().setFromMatrixPosition(o3.matrixWorld);
+    function solve(params, apply, cost, root, iters = 700) {
+      let p = params.map(q => q.v), step = 0.25;
+      const ev = () => { apply(p); root.updateMatrixWorld(true); return cost(p); };
+      let c = ev();
+      for (let it = 0; it < iters && step > 2e-5; it++) {
+        let better = false;
+        for (let i = 0; i < p.length; i++) for (const s of [step, -step]) {
+          const old = p[i], nv = clamp(old + s, params[i].min, params[i].max); if (nv === old) continue;
+          p[i] = nv; const c2 = ev(); if (c2 < c) { c = c2; better = true; } else p[i] = old;
+        }
+        if (!better) step *= 0.5;
+      }
+      apply(p); root.updateMatrixWorld(true); return { p, c: cost(p) };
+    }
+    const reg = (p, guess, w) => p.reduce((a, v, i) => a + w * (v - guess[i]) ** 2, 0);
+    const RP = [{ min: -3.0, max: 0.8 }, { min: -1.2, max: 1.2 }, { min: -0.4, max: 1.8 }, { min: -2.6, max: 0 }, { min: -1.4, max: 1.1 }, { min: -0.8, max: 0.8 }, { min: -1.4, max: 1.4 }];
+    const applyR = p => { RA.sh.rotation.set(p[0], p[1], p[2]); RA.el.rotation.set(p[3], 0, 0); RA.wr.rotation.set(p[4], p[6], p[5]); };
+    const shM = toM(pos(RA.sh));
+    // custo: maceta (ou mão) no alvo, cabo na direção pedida, mão e maceta acima da pele, cotovelo para fora (nunca na frente do peito)
+    function rightCost(t) {
+      return p => {
+        const mh = pos(malletHead), hand = pos(grip), dir = mh.clone().sub(hand).normalize();
+        let c = dir.distanceToSquared(t.dir) * 30 + reg(p, t.guess, t.w);
+        if (t.mallet) c += mh.distanceToSquared(t.mallet) * 1e4;
+        if (t.hand) c += hand.distanceToSquared(t.hand) * 3e3;
+        const above = hand.clone().sub(hit).dot(nW); if (above < 0.12) c += (0.12 - above) ** 2 * 3e3;
+        if (!t.mallet) { const ma = mh.clone().sub(hit).dot(nW); if (ma < 0.07) c += (0.07 - ma) ** 2 * 3e3; }
+        const elx = toM(pos(RA.el)).x; if (elx < shM.x - 0.01) c += (shM.x - 0.01 - elx) ** 2 * 1e3;
+        return c;
+      };
+    }
+    // contato: cabeça da maceta na pele, um pouco à direita do centro; o cabo vem da borda direita, descendo para a pele
+    const hit = W(new THREE.Vector3(0.06, o.H / 2, -0.03)).addScaledVector(nW, malletR + 0.003);
+    const dirCm = new THREE.Vector3(-0.75, -0.45, 0.35).normalize().transformDirection(drum.group.matrix);
+    let win = null;
+    for (const gs of [[-0.55, 0.15, 0.35, -1.25, 0.1, 0, 0], [-0.9, 0.3, 0.6, -1.5, 0.4, 0, 0.5], [-0.3, 0, 0.2, -0.9, -0.3, 0.3, -0.5], [-0.7, -0.2, 0.5, -1.0, 0.2, -0.3, 0.9]]) {
+      const r = solve(RP.map((q, i) => ({ ...q, v: gs[i] })), applyR, rightCost({ mallet: hit, dir: dirW(dirCm), guess: gs, w: 0.003 }), RA.sh);
+      if (!win || r.c < win.c) win = r;
+    }
+    applyR(win.p); RA.sh.updateMatrixWorld(true);
+    const contactErr = pos(malletHead).distanceTo(hit);
+    // caminho do golpe (no corpo): a mão sobe da borda do surdo, abrindo para fora, até a altura do ombro;
+    // o cabo gira da pele para a frente-fora e termina em pé, acima da cabeça
+    const handC = toM(pos(grip)), handT = new THREE.Vector3(0.34, HIP + 0.46, 0.15);
+    const ctrl = handC.clone().lerp(handT, 0.5).add(new THREE.Vector3(0.09, 0, 0.05));
+    const dirM = new THREE.Vector3(0.6, 0.35, 0.7).normalize(), dirT = new THREE.Vector3(0.2, 1, -0.45).normalize();
+    const KS = [0, 0.15, 0.3, 0.45, 0.6, 0.8, 1], keys = [win.p];
+    for (let n = 1; n < KS.length; n++) {
+      const k = KS[n], u = 1 - k;
+      const hand = handC.clone().multiplyScalar(u * u).addScaledVector(ctrl, 2 * u * k).addScaledVector(handT, k * k);
+      const d = k < 0.5 ? dirCm.clone().lerp(dirM, k / 0.5) : dirM.clone().lerp(dirT, (k - 0.5) / 0.5);
+      const prev = keys[n - 1];
+      keys.push(solve(RP.map((q, i) => ({ ...q, v: prev[i] })), applyR, rightCost({ hand: toW(hand), dir: dirW(d), guess: prev, w: 0.02 }), RA.sh, 400).p);
+    }
+    // mão esquerda: apoiada no aro e, no abafado, espalmada sobre a pele
+    const LP = [{ min: -2.6, max: 0.6 }, { min: -1.2, max: 1.2 }, { min: -1.4, max: 0.4 }, { min: -2.6, max: 0 }, { min: -1.2, max: 1.2 }, { min: -1.6, max: 1.6 }];
+    const applyL = p => { LA.sh.rotation.set(p[0], p[1], p[2]); LA.el.rotation.set(p[3], 0, 0); LA.wr.rotation.set(p[4], p[5], 0); };
+    const shL = toM(pos(LA.sh));
+    function leftCost(target, guess) {
+      return p => {
+        const pp = pos(palmPt), pn = new THREE.Vector3(0, 0, 1).transformDirection(LA.wr.matrixWorld);
+        let c = pp.distanceToSquared(target) * 1e4 + 1.5 * (pn.dot(nW) + 1) ** 2 + reg(p, guess, 0.01);
+        const elx = toM(pos(LA.el)).x; if (elx > shL.x + 0.01) c += (elx - shL.x - 0.01) ** 2 * 1e3;
+        return c;
+      };
+    }
+    const gL = [-0.7, 0.2, -0.25, -1.1, 0.5, 0];
+    const restLp = solve(LP.map((q, i) => ({ ...q, v: gL[i] })), applyL, leftCost(W(new THREE.Vector3(-o.R * 0.78, o.H / 2 + 0.03, -o.R * 0.3)), gL), LA.sh).p;
+    const muteLp = solve(LP.map((q, i) => ({ ...q, v: restLp[i] })), applyL, leftCost(W(new THREE.Vector3(-o.R * 0.32, o.H / 2 + 0.022, -0.04)), restLp), LA.sh).p;
+    const Q = (rx, ry, rz) => new THREE.Quaternion().setFromEuler(new THREE.Euler(rx, ry, rz));
+    const poseR = p => [Q(p[0], p[1], p[2]), Q(p[3], 0, 0), Q(p[4], p[6], p[5])];
+    const poseL = p => [Q(p[0], p[1], p[2]), Q(p[3], 0, 0), Q(p[4], p[5], 0)];
+    return {
+      i: o.i, g, hips, torso, headG, legs, drum, tag, R: o.R, H: o.H, RA, LA, malletHead, hit, contactErr,
+      P: { KS, R: keys.map(poseR), restL: poseL(restLp), muteL: poseL(muteLp) },
+      hits: [], fx: [], lastFx: -1, idle: Math.random() * 6,
+    };
+  }
+  const players = [
+    makePlayer({ i: 0, x: -0.75, ry: 0.2, R: 0.28, H: 0.6, body: 0xa59e94, hoop: 0xc9a24a, label: "1ª", labelColor: "#c9a24a" }),
+    makePlayer({ i: 1, x: 0.75, ry: -0.2, R: 0.26, H: 0.55, body: 0x98a0a9, hoop: 0x7fb3d5, label: "2ª", labelColor: "#7fb3d5" }),
+  ];
+
+  // ---------- Câmeras ----------
+  const VIEWS = {
+    frente: { pos: [0, 1.5, 4.2], at: [0, 1.0, 0.2] },
+    lado: { pos: [3.8, 1.6, 1.8], at: [0, 1.0, 0.2] },
+    cima: { pos: [0, 4.6, 1.6], at: [0, 0.9, 0.3] },
+    p1: { pos: [-0.3, 1.6, 2.3], at: [-0.75, 1.1, 0.3] },
+    p2: { pos: [0.3, 1.6, 2.3], at: [0.75, 1.1, 0.3] },
+  };
+  // atrás do músico, por cima do ombro direito: o golpe aparece como se fosse você tocando
+  players.forEach((p, i) => {
+    p.g.updateMatrixWorld(true);
+    VIEWS["a" + (i + 1)] = { pos: p.g.localToWorld(new THREE.Vector3(1.15, 2.4, -1.0)).toArray(), at: p.g.localToWorld(new THREE.Vector3(0.1, 1.0, 0.4)).toArray() };
+  });
+  let camTween = null;
+  function setView(v, instant) {
+    const V = v === "aula" && camera.aspect < 1 ? VIEWS.aulaRetrato : VIEWS[v]; if (!V) return;
+    document.querySelectorAll("#views button").forEach(b => b.classList.toggle("on", b.dataset.v === v));
+    const to = { pos: new THREE.Vector3(...V.pos), at: new THREE.Vector3(...V.at) };
+    if (instant) { camera.position.copy(to.pos); controls.target.copy(to.at); controls.update(); return; }
+    camTween = { from: { pos: camera.position.clone(), at: controls.target.clone() }, to, t0: performance.now(), dur: 700 };
+  }
+  document.querySelectorAll("#views button").forEach(b => b.addEventListener("click", () => setView(b.dataset.v)));
+  setView("frente", true);
+  function resize() {
+    const w = host.clientWidth, h = host.clientHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h;
+    camera.fov = w / h < 1 ? 52 : 38;
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(host); resize();
+
+  // ---------- Animação do golpe ----------
+  // fase 0 = maceta na pele, 1 = no alto. A maceta sobe antes do toque e desce acelerando até a pele no instante do som.
+  // Nas notas rápidas a janela do golpe encolhe (o braço não sobe tanto); depois do toque há um rebote.
+  const REST_K = 0.14;
+  function strikePhase(p, t) {
+    let prev = null, next = null;
+    for (const h of p.hits) { if (h.t <= t) prev = h; else { next = h; break; } }
+    let k = REST_K;
+    if (prev) { const dt = t - prev.t; if (dt < 0.2) { const q = dt / 0.2; k = REST_K * (1 - Math.pow(1 - q, 3)); } }
+    if (next) {
+      const gap = next.t - (prev ? prev.t : next.t - 1);
+      const Wn = Math.min(0.46, Math.max(0.06, gap * 0.82));
+      const u = (next.t - t) / Wn;
+      if (u <= 1) {
+        const topK = Math.min(1, Math.pow(Wn / 0.46, 0.6)) * (0.62 + 0.38 * next.v);
+        const s = 1 - u, start = prev && t - prev.t < 0.2 ? k : REST_K;
+        k = s < 0.5 ? start + (Math.max(topK, start) - start) * Math.sin((s / 0.5) * Math.PI / 2) : Math.max(topK, start) * (1 - Math.pow((s - 0.5) / 0.5, 2));
+      }
+    }
+    return k;
+  }
+  const malletAngle = strikePhase;
+  function addHit(i, t, v, mute) { const p = players[i]; p.hits.push({ t, v, mute }); p.hits.sort((a, b) => a.t - b.t); }
+  function animate() {
+    requestAnimationFrame(animate);
+    if (exporting) return;
+    const now = audibleNow(), wall = performance.now() / 1000;
+    if (camTween) {
+      const k = Math.min(1, (performance.now() - camTween.t0) / camTween.dur), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      camera.position.lerpVectors(camTween.from.pos, camTween.to.pos, e); controls.target.lerpVectors(camTween.from.at, camTween.to.at, e);
+      if (k >= 1) camTween = null;
+    }
+    controls.update();
+    const beatT = bq.on ? (now - bq.start) / spb() : wall * 0.9;
+    stepScene(now, wall, beatT, bq.on);
+    stepRobots(wall, beatT);
+    renderer.render(scene, camera);
+  }
+  const _q = new THREE.Quaternion();
+  // braço da maceta na fase k: entre os dois quadros-chave vizinhos do caminho do golpe
+  function setArm(p, k) {
+    const K = p.P.KS; k = clamp(k, 0, 1);
+    let n = 0; while (n < K.length - 2 && k > K[n + 1]) n++;
+    setPose([p.RA.sh, p.RA.el, p.RA.wr], p.P.R[n], p.P.R[n + 1], (k - K[n]) / (K[n + 1] - K[n]));
+  }
+  function setPose(joints, A, B, k) { joints.forEach((j, n) => j.quaternion.copy(_q.copy(A[n]).slerp(B[n], k))); }
+  const THIGH = 0.42, SHIN = 0.4, ANKLE_Y = 0.08;
+  // pernas por cinemática inversa: o quadril desce, os joelhos dobram e os pés ficam no chão
+  function setLegs(p, hipY) {
+    const D = Math.min(THIGH + SHIN - 1e-4, hipY - 0.06 - ANKLE_Y);
+    const a = Math.acos(clamp((THIGH * THIGH + D * D - SHIN * SHIN) / (2 * THIGH * D), -1, 1));
+    const bend = Math.PI - Math.acos(clamp((THIGH * THIGH + SHIN * SHIN - D * D) / (2 * THIGH * SHIN), -1, 1));
+    for (const L of p.legs) { L.hipJ.rotation.x = -a; L.knee.rotation.x = bend; L.ankle.rotation.x = a - bend; }
+  }
+  // Atualiza os músicos para o instante "now" (ao vivo e em cada quadro do vídeo)
+  function stepScene(now, wall, beatT, playing) {
+    for (const p of players) {
+      while (p.hits.length > 2 && p.hits[1].t < now - 1) p.hits.shift();
+      const k = strikePhase(p, now);
+      setArm(p, k);
+      // ginga: o corpo desce nos tempos dobrando os joelhos, gira um pouco para armar o golpe e volta no toque
+      const ph = beatT - Math.floor(beatT), bounce = playing ? 0.5 + 0.5 * Math.cos(2 * Math.PI * ph) : 0.15 + 0.1 * Math.sin(wall * 1.6 + p.idle);
+      const drop = (playing ? 0.045 : 0.012) * bounce;
+      p.hips.position.y = HIP - drop;
+      setLegs(p, HIP - drop);
+      p.torso.rotation.y = (playing ? 0.07 * Math.sin(Math.PI * beatT) : 0.02 * Math.sin(wall * 0.9 + p.idle)) + 0.12 * (k - REST_K);
+      p.torso.rotation.x = 0.05 + 0.04 * (k - REST_K) + (playing ? 0.02 * bounce : 0);
+      p.torso.rotation.z = playing ? 0.03 * Math.sin(Math.PI * beatT) : 0;
+      p.headG.rotation.x = 0.32 + (playing ? 0.07 * bounce : 0.02 * Math.sin(wall + p.idle));
+      p.headG.rotation.y = -p.torso.rotation.y * 0.5;
+      // efeitos do toque
+      for (const h of p.hits) if (h.t <= now && h.t > p.lastFx) { p.lastFx = h.t; p.fx.push({ t: h.t, v: h.v, mute: h.mute }); }
+      p.fx = p.fx.filter(f => now - f.t < 0.5);
+      let glow = 0, squash = 0, wave = null, mute = 0;
+      for (const f of p.fx) {
+        const dt = now - f.t;
+        glow = Math.max(glow, Math.exp(-dt / 0.09) * f.v); squash = Math.max(squash, Math.exp(-dt / 0.05) * f.v);
+        if (!wave || f.t > wave.t) wave = f;
+        if (f.mute) mute = Math.max(mute, dt < 0.22 ? 1 : Math.max(0, 1 - (dt - 0.22) / 0.12));
+      }
+      for (const h of p.hits) if (h.mute && h.t > now && h.t - now < 0.1) mute = Math.max(mute, 1 - (h.t - now) / 0.1);
+      p.drum.skinMat.emissiveIntensity = glow * 0.55;
+      p.drum.group.scale.set(1 + squash * 0.01, 1 - squash * 0.008, 1 + squash * 0.01);
+      if (wave) { const dt = now - wave.t, kk = dt / (wave.mute ? 0.18 : 0.42); p.drum.wave.material.opacity = Math.max(0, (1 - kk) * 0.8 * wave.v); const r = p.drum.R * (0.15 + 0.8 * Math.min(1, kk)); p.drum.wave.scale.set(r, r, r); }
+      else p.drum.wave.material.opacity = 0;
+      setPose([p.LA.sh, p.LA.el, p.LA.wr], p.P.restL, p.P.muteL, mute);
+    }
+  }
+  let exporting = false;
+  requestAnimationFrame(animate);
+
+  // ---------- Tocar ao vivo ----------
+  function playLive(i, mute) {
+    ensureCtx();
+    const t = ctx.currentTime;
+    eng.trigger(i, mute, t, false);
+    addHit(i, t, mute ? 0.8 : 1, mute);
+    if (!mute) learnHit(i, t);
+    const pad = $(i === 0 ? "pad1" : "pad2"); pad.classList.add("hit"); setTimeout(() => pad.classList.remove("hit"), 110);
+  }
+  $("pad1").addEventListener("pointerdown", e => { e.preventDefault(); playLive(0, e.shiftKey); });
+  $("pad2").addEventListener("pointerdown", e => { e.preventDefault(); playLive(1, e.shiftKey); });
+
+  // ---------- Voz cantando (Ritma e Tuco) ----------
+  // voz/silabas.mp3 traz cada sílaba recortada da fala natural dos dois robôs na ElevenLabs (várias gravações de cada:
+  // a 1ª é a acentuada). O que o Tuco não tem (números, "ti") sai na voz da Ritma.
+  const bqVoice = $("bqVoice"), sayCount = $("sayCount"), voxVol = $("voxVol");
+  const voxBufs = { R: {}, T: {} }, singLog = [];
+  let silReady = null, silOk = false;
+  function loadSil() {
+    if (!silReady) silReady = (async () => {
+      const [meta, bin] = await Promise.all([fetch("voz/silabas.json").then(r => r.json()), fetch("voz/silabas.mp3").then(r => r.arrayBuffer())]);
+      const OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      const dec = ctx || new OAC(1, 1, 48000);
+      const buf = await new Promise((ok, no) => dec.decodeAudioData(bin, ok, no));
+      const sr = buf.sampleRate, ch = buf.getChannelData(0);
+      const cut = ([a, d]) => { const i = Math.round(a * sr), n = Math.max(1, Math.round(d * sr)), b = dec.createBuffer(1, n, sr); b.getChannelData(0).set(ch.subarray(i, i + n)); return b; };
+      for (const w of ["R", "T"]) for (const [k, list] of Object.entries(meta[w] || {})) voxBufs[w][k] = list.map(cut);
+      silOk = true; return true;
+    })().catch(() => { silReady = null; return false; });
+    return silReady;
+  }
+  loadSil();
+  const voiceOn = () => !!bqVoice.value && silOk;
+  // quem canta cada toque: no dueto a Ritma faz a 1ª, o Tuco a 2ª e os dois juntos os toques das duas; contagem é da Ritma
+  function singers(e) {
+    const v = bqVoice.value;
+    if (!v || e.count) return v ? ["R"] : [];
+    if (v !== "RT") return [v];
+    if (!e.drums) return ["R"];
+    return e.drums.length > 1 ? ["R", "T"] : [e.drums[0] === 0 ? "R" : "T"];
+  }
+  // agenda a sílaba do toque e anota quando cada robô abre a boca (log: tempo do relógio de áudio)
+  function sing(e, t, room, tag, en = eng, log = singLog) {
+    if (!voiceOn() || !e.say || (e.count && !sayCount.checked)) return;
+    const who = singers(e);
+    const g = (e.sg || 1) * (who.length > 1 ? 0.78 : 1);
+    for (let w of who) {
+      if (!(voxBufs[w] && voxBufs[w][e.say])) w = "R";
+      const len = en.speak(w, e.say, t, room, g, tag);
+      if (len) log.push({ w, t, len });
+    }
+  }
+  function singCount(n, t, room, tag, en = eng, log = singLog) {
+    if (!voiceOn() || !sayCount.checked || n < 1 || n > 8) return false;
+    const len = en.speak("R", "n" + n, t, room, 0.8, tag);
+    if (len) log.push({ w: "R", t, len });
+    return !!len;
+  }
+  const robotsWanted = () => lesson.on || !!bqVoice.value;
+  function showRobots() { robots.forEach(r => { const v = robotsWanted(); if (!v) r.talk = 0; r.g.visible = v; r.tag.visible = v && !mirrored; }); }
+  bqVoice.addEventListener("change", () => { showRobots(); if (bqVoice.value) loadSil(); try { localStorage.setItem("surdos3d.canto", bqVoice.value || "-"); } catch (e) {} });
+  try { const v = localStorage.getItem("surdos3d.canto"); if (v) bqVoice.value = v === "-" ? "" : v; } catch (e) {}
+
+  // ---------- Breques ----------
+  const bqSel = $("bqSel"), bqTitle = $("bqTitle"), bqMeta = $("bqMeta"), scoreEl = $("score"), bpm = $("bpm"), bpmOut = $("bpmOut");
+  const fsBpm = $("fsBpm"), metro = $("metro"), countIn = $("countIn"), bqRepeat = $("bqRepeat"), bqPos = $("bqPos"), ovWord = $("ovWord"), ovPos = $("ovPos");
+  let current = BUILTIN[0], parsed = parseBreque(current.text), events = buildEvents(parsed), beatCells = [], barRows = [], startBar = 0;
+  BUILTIN.forEach(b => bqSel.appendChild(new Option(b.name, b.id)));
+  const spb = () => 60 / (bq.on && bq.bpmOv ? bq.bpmOv : +bpm.value);
+  const brequeHooks = [];
+  function selectBreque(id) {
+    if (lesson.on) endLesson();
+    current = BUILTIN.find(b => b.id === id) || BUILTIN[0];
+    if (bq.on) stopBreque();
+    parsed = parseBreque(current.text); events = buildEvents(parsed); startBar = 0;
+    bqSel.value = current.id; bpm.value = current.bpm; bpmOut.textContent = fsBpm.textContent = `${bpm.value} bpm`;
+    bqTitle.textContent = current.name; bqMeta.textContent = `${parsed.bars.length} compassos · ${current.bpm} bpm`;
+    bqPos.textContent = "Começa no compasso 1"; renderScore();
+    try { localStorage.setItem("surdos3d.sel", current.id); } catch (e) {}
+    brequeHooks.forEach(f => f());
+  }
+  bqSel.addEventListener("change", () => selectBreque(bqSel.value));
+  bpm.addEventListener("input", () => { bpmOut.textContent = fsBpm.textContent = `${bpm.value} bpm`; if (bq.on) { stopBreque(); startBreque(); } });
+  function renderScore() {
+    scoreEl.innerHTML = ""; beatCells = []; barRows = [];
+    parsed.bars.forEach((bar, b) => {
+      const row = document.createElement("div"); row.className = "bar-row" + (b === startBar ? " start" : "") + (bar.length > 4 ? " wide" : "");
+      row.tabIndex = 0; row.setAttribute("role", "button"); row.setAttribute("aria-label", `Começar no compasso ${b + 1}`);
+      const cells = document.createElement("div"); cells.className = "cells"; cells.style.setProperty("--n", Math.max(bar.length, 4));
+      if (parsed.sectionColor[b]) cells.style.setProperty("--sec", parsed.sectionColor[b]);
+      bar.forEach((beat, k) => {
+        const cell = document.createElement("div"); cell.className = "beat";
+        beat.forEach(tok => {
+          const sp = document.createElement("span"); sp.className = "slot-t";
+          if (tok.startsWith("#")) { sp.classList.add("tk-cnt"); sp.textContent = tok.slice(1); }
+          else if (tok) { const { base, sup, vel } = tokParts(tok); sp.classList.add("tk-" + base); sp.innerHTML = base + (sup ? `<sup>${sup}</sup>` : ""); if (vel != null) sp.style.opacity = (0.35 + 0.65 * vel / 100).toFixed(2); }
+          cell.appendChild(sp);
+        });
+        beatCells[parsed.barStart[b] + k] = cell; cells.appendChild(cell);
+      });
+      row.innerHTML = `<span class="n">${b + 1}</span>`; row.appendChild(cells);
+      const pick = () => { startBar = b; barRows.forEach((r, i) => r.classList.toggle("start", i === b)); bqPos.textContent = `Começa no compasso ${b + 1}`; if (bq.on) { stopBreque(); startBreque(); } };
+      row.addEventListener("click", pick); row.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); pick(); } });
+      scoreEl.appendChild(row); barRows.push(row);
+    });
+  }
+  // Agendador: o som vai 0,15 s à frente; os músicos recebem os toques 0,6 s antes para preparar o golpe
+  const bq = { on: false, start: 0, timer: 0, ev: [], aIdx: 0, vIdx: 0, nextClick: 0, cur: -1, sb: 0, span: 0, range: false, bpmOv: 0, cnt: true, onEnd: null };
+  const rep = () => bqRepeat.checked && !bq.range;   // trechos da aula nunca repetem
+  const lesson = { on: false, steps: [], i: 0, token: 0, paused: false, repeat: false, skipFn: null, resume: null };
+  const evTime = k => { const n = bq.ev.length, e = bq.ev[k % n], cyc = Math.floor(k / n); return bq.start + (cyc * bq.span + e.beat - bq.sb) * spb(); };
+  function bqSchedule() {
+    const s = spb(), now = ctx.currentTime, total = parsed.total;
+    while (true) {   // contagem e metrônomo
+      const t = bq.start + bq.nextClick * s; if (t > now + 0.15) break;
+      const inCount = bq.nextClick < 0, pos = bq.sb + bq.nextClick;
+      if (!rep() && pos >= bq.sb + bq.span) break;
+      if (inCount && bq.cnt) { if (!singCount(bq.nextClick + 5, t, s, "bq")) eng.click(t, bq.nextClick === -4, "bq"); }
+      else if (!inCount && metro.checked) { const n = total || 1; eng.click(t, parsed.beatInBar[((pos % n) + n) % n] === 0, "bq"); }
+      bq.nextClick++;
+    }
+    const n = bq.ev.length, limit = rep() ? Infinity : n;
+    while (bq.vIdx < limit && n) {   // músicos: antecedência maior
+      const t = evTime(bq.vIdx); if (t > now + 0.6) break;
+      const e = bq.ev[bq.vIdx % n];
+      if (e.drums) for (const d of e.drums) if (d < 2) addHit(d, t, e.vel, e.mute);
+      bq.vIdx++;
+    }
+    while (bq.aIdx < limit && n) {   // som
+      const t = evTime(bq.aIdx); if (t > now + 0.15) break;
+      const e = bq.ev[bq.aIdx % n];
+      if (t >= now - 0.01 && e.drums) for (const d of e.drums) { if (d > 1) continue; eng.trigger(d, false, Math.max(t, now), "bq", e.vel); if (e.mute) eng.stopVoices(d, t + 0.13, 0.035); }
+      if (t >= now - 0.01) sing(e, Math.max(t, now), e.slot * s, "bq");
+      bq.aIdx++;
+    }
+    if (!rep() && bq.aIdx >= n && now > bq.start + (bq.span + 0.6) * s) stopBreque(true);
+  }
+  function bqDraw() {
+    if (!bq.on) return;
+    const s = spb(), now = audibleNow(), rel = (now - bq.start) / s;
+    let gi = -1;
+    if (rel >= 0) { const r = Math.floor(rel); gi = bq.sb + (rep() ? r % bq.span : r); }
+    if (gi !== bq.cur) {
+      if (beatCells[bq.cur]) beatCells[bq.cur].classList.remove("now");
+      bq.cur = gi; const c = beatCells[gi];
+      if (c) { c.classList.add("now"); const row = c.closest(".bar-row"), top = row.offsetTop - scoreEl.offsetTop; if (top < scoreEl.scrollTop || top + row.offsetHeight > scoreEl.scrollTop + scoreEl.clientHeight) scoreEl.scrollTop = top - 8; ovPos.textContent = `${current.name} · compasso ${parsed.beatBar[gi] + 1} · tempo ${parsed.beatInBar[gi] + 1}`; }
+    }
+    // sílaba do momento, grande sobre o palco
+    let word = "", col = "#8d8f98";
+    if (rel < 0 && bq.cnt) word = String(Math.max(1, Math.min(4, Math.floor(rel + 5))));
+    else {
+      const b = bq.sb + (rep() ? ((rel % bq.span) + bq.span) % bq.span : rel);
+      for (let k = events.length - 1; k >= 0; k--) { const e = events[k]; if (e.beat <= b + 1e-6) { if (b - e.beat < Math.max(e.slot, 0.35)) { word = e.count ? String(+e.say?.slice(1) || "") : (e.label || ""); col = e.count ? "#6b6e78" : e.rest ? "#ff6b6b" : ({ Pa: "#3fc1b0", po: "#ff9a4a", ro: "#ff9a4a", go: "#ff9a4a", ra: "#3fc1b0", ga: "#3fc1b0" })[e.label] || "#6ea8ff"; } break; } }
+    }
+    ovWord.textContent = word; ovWord.style.color = col;
+    requestAnimationFrame(bqDraw);
+  }
+  // opt (aula): { from, to } compassos do trecho, bpm do trecho, onEnd(acabouSozinho); sempre com contagem
+  function startBreque(opt = {}) {
+    if (!parsed.bars.length) return;
+    ensureCtx();
+    if (L.busy || L.auto) learnStop();
+    const b0 = opt.from ?? startBar, b1 = Math.min(opt.to ?? parsed.bars.length, parsed.bars.length);
+    bq.range = opt.from != null; bq.bpmOv = opt.bpm || 0; bq.onEnd = opt.onEnd || null; bq.cnt = bq.range || countIn.checked;
+    bq.on = true;
+    const s = spb(), eb = b1 < parsed.bars.length ? parsed.barStart[b1] : parsed.total;
+    bq.sb = parsed.barStart[b0] || 0; bq.span = eb - bq.sb;
+    bq.ev = events.filter(e => e.beat >= bq.sb && e.beat < eb);
+    bq.aIdx = 0; bq.vIdx = 0; bq.cur = -1;
+    bq.nextClick = bq.cnt ? -4 : 0;
+    bq.start = ctx.currentTime + 0.1 + (bq.cnt ? 4 * s : 0);
+    players.forEach(p => { p.hits = p.hits.filter(h => h.t < ctx.currentTime); });
+    bqSchedule(); bq.timer = setInterval(bqSchedule, 25);
+    $("bqPlay").classList.add("playing"); $("bqLbl").textContent = "Parar breque"; $("fsPlayLbl").textContent = "Parar";
+    for (const id of ["bqIcon", "fsIcon"]) $(id).setAttribute("d", "M3 3h8v8H3z");
+    bqDraw();
+  }
+  function stopBreque(natural) {
+    bq.on = false; clearInterval(bq.timer);
+    const cb = bq.onEnd; bq.onEnd = null; bq.range = false; bq.bpmOv = 0;
+    if (eng) eng.cancelTagged("bq", ctx.currentTime);
+    const now = ctx ? ctx.currentTime : 0;
+    players.forEach(p => { p.hits = p.hits.filter(h => h.t <= now); });
+    if (beatCells[bq.cur]) beatCells[bq.cur].classList.remove("now");
+    bq.cur = -1; ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`;
+    $("bqPlay").classList.remove("playing"); $("bqLbl").textContent = "Tocar breque"; $("fsPlayLbl").textContent = "Tocar";
+    for (const id of ["bqIcon", "fsIcon"]) $(id).setAttribute("d", "M3 1.5v11l9.5-5.5z");
+    bqPos.textContent = `Começa no compasso ${startBar + 1}`;
+    if (cb) cb(!!natural);
+  }
+  const toggleBreque = () => { if (bq.on) return stopBreque(); if (bqVoice.value && !silOk) { ensureCtx(); loadSil().then(() => { if (!bq.on) startBreque(); }); } else startBreque(); };
+  $("bqPlay").addEventListener("click", toggleBreque);
+
+  // ---------- Tela cheia e espelho ----------
+  // Tela cheia de verdade quando o navegador deixa; senão (iPhone, quadro embutido) o palco cobre a janela.
+  const fsBtn = $("fsBtn"), mirBtn = $("mirBtn");
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+  const isFs = () => host.classList.contains("is-fs");
+  function setFsUI(on) {
+    host.classList.toggle("is-fs", on); fsBtn.setAttribute("aria-pressed", String(on));
+    $("fsLbl").textContent = on ? "Sair da tela cheia" : "Tela cheia";
+    document.body.classList.toggle("no-scroll", on && host.classList.contains("fs-css"));
+    resize();
+  }
+  async function enterFs() {
+    const req = host.requestFullscreen || host.webkitRequestFullscreen;
+    if (req) { try { await req.call(host); if (fsEl() === host) return setFsUI(true); } catch (e) {} }
+    host.classList.add("fs-css"); setFsUI(true);
+  }
+  function exitFs() {
+    if (host.classList.contains("fs-css")) { host.classList.remove("fs-css"); setFsUI(false); return; }
+    const ex = document.exitFullscreen || document.webkitExitFullscreen;
+    if (fsEl() && ex) ex.call(document); else setFsUI(false);
+  }
+  const toggleFs = () => isFs() ? exitFs() : enterFs();
+  fsBtn.addEventListener("click", toggleFs);
+  $("fsExit").addEventListener("click", exitFs);
+  for (const ev of ["fullscreenchange", "webkitfullscreenchange"]) document.addEventListener(ev, () => { if (!host.classList.contains("fs-css")) setFsUI(fsEl() === host); });
+  $("fsPlay").addEventListener("click", toggleBreque);
+  const nudgeBpm = d => { bpm.value = clamp(+bpm.value + d, +bpm.min, +bpm.max); bpm.dispatchEvent(new Event("input")); };
+  $("fsSlow").addEventListener("click", () => nudgeBpm(-5));
+  $("fsFast").addEventListener("click", () => nudgeBpm(5));
+  // espelho: a imagem vira como num espelho, para copiar de frente; os rótulos somem porque o texto ficaria ao contrário
+  let mirrored = false;
+  function toggleMirror() {
+    mirrored = !mirrored; host.classList.toggle("mirror", mirrored); mirBtn.setAttribute("aria-pressed", String(mirrored));
+    players.forEach(p => { p.tag.visible = !mirrored; }); robots.forEach(r => { r.tag.visible = !mirrored; });
+  }
+  mirBtn.addEventListener("click", toggleMirror);
+  window.addEventListener("keydown", e => {
+    if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.target.closest && e.target.closest("input:not([type=range]):not([type=checkbox]), select, textarea")) return;
+    const k = e.key.toLowerCase();
+    if (k === " " && L.phase === "tocar") { e.preventDefault(); playLive(L.instr, e.shiftKey); return; }
+    if (k === " " || k === "b") { e.preventDefault(); toggleBreque(); return; }
+    if (k === "f") { e.preventDefault(); toggleFs(); return; }
+    if (k === "e") { e.preventDefault(); toggleMirror(); return; }
+    if (k === "escape" && host.classList.contains("fs-css")) { exitFs(); return; }
+    if (k === "a") { e.preventDefault(); playLive(0, e.shiftKey); return; }
+    if (k === "s") { e.preventDefault(); playLive(1, e.shiftKey); return; }
+  });
+  document.addEventListener("visibilitychange", () => { if (document.hidden && bq.on) stopBreque(); });
+
+  // ---------- Tocar junto ----------
+  // Como no simulador de surdos: o breque é dividido em trechos; 1 · Ouvir toca tudo (a sua parte fica destacada e o
+  // seu músico mostra o golpe), 2 · Tocar deixa o seu surdo para você no pad. Cada toque é avaliado (certo, adiantado,
+  // atrasado, faltou); acertando, o andamento sobe até o do breque e depois passa ao trecho seguinte.
+  const L = { instr: 0, chunks: [], ci: 0, phase: "idle", busy: false, auto: false, hits: [], targets: [], passed: new Set(), timer: 0, raf: 0, slotMap: new Map(), runId: 0, skipped: 0 };
+  const lnInstr = $("lnInstr"), lnSize = $("lnSize"), lnBpm = $("lnBpm"), lnBpmOut = $("lnBpmOut"), lnUp = $("lnUp"), lnGuide = $("lnGuide"), lnMetro = $("lnMetro");
+  const lnListen = $("lnListen"), lnPlay = $("lnPlay"), lnAuto = $("lnAuto"), lnNext = $("lnNext"), lnPrev = $("lnPrev"), lnStop = $("lnStop");
+  const lnPos = $("lnPos"), lnGrid = $("lnGrid"), lnHow = $("lnHow"), lnMsg = $("lnMsg"), lnChunks = $("lnChunks"), lnTitle = $("lnTitle");
+  const PASS = 0.85;
+  const myPad = () => $(L.instr === 0 ? "pad1" : "pad2");
+  const isMine = e => e.drums && e.drums.includes(L.instr);
+  const trainBpm = () => Math.max(50, Math.round((current.bpm || 120) * 0.7));
+  function setTrainBpm(v) { lnBpm.value = v; lnBpmOut.textContent = `${lnBpm.value} bpm`; }
+  lnBpm.addEventListener("input", () => { lnBpmOut.textContent = `${lnBpm.value} bpm`; });
+  // trechos contínuos; um trecho sem toques seus junta-se ao anterior, só a contagem do início fica de fora
+  function buildChunks() {
+    const n = parsed.bars.length, mode = lnSize.value, groups = [];
+    if (mode === "sec") { let start = 0; for (let b = 1; b <= n; b++) if (b === n || parsed.section[b] !== parsed.section[b - 1]) { groups.push([start, b]); start = b; } }
+    else if (mode === "all") groups.push([0, n]);
+    else { const size = +mode; for (let b = 0; b < n; b += size) groups.push([b, Math.min(n, b + size)]); }
+    const span = (from, to) => ({ from, to, b0: parsed.barStart[from], b1: to < n ? parsed.barStart[to] : parsed.total });
+    const out = [];
+    for (const [from, to] of groups) {
+      const c = span(from, to);
+      c.n = events.filter(e => e.beat >= c.b0 && e.beat < c.b1 && isMine(e)).length;
+      if (c.n) out.push(c);
+      else if (out.length) { const last = out[out.length - 1]; Object.assign(last, span(last.from, to)); }
+    }
+    L.skipped = out.length ? out[0].from : 0;
+    return out;
+  }
+  function learnReset() {
+    learnStop();
+    L.instr = +lnInstr.value; L.chunks = buildChunks(); L.ci = 0; L.passed = new Set();
+    setTrainBpm(trainBpm());
+    lnTitle.textContent = `Tocar junto · ${current.name} · surdo de ${L.instr === 0 ? "1ª" : "2ª"}`;
+    renderChunks(); renderLesson();
+    lnMsg.className = "ln-msg";
+    lnMsg.innerHTML = L.skipped ? `Os compassos 1–${L.skipped} são só contagem, então o treino começa no ${L.skipped + 1}. Toque em <b>1 · Ouvir</b>.` : `Escolha um trecho. Toque em <b>1 · Ouvir</b> para ver e ouvir como é, depois em <b>2 · Tocar</b> e faça a sua parte no pad. O seu músico no palco só toca quando você bate.`;
+  }
+  function renderChunks() {
+    lnChunks.innerHTML = "";
+    L.chunks.forEach((c, k) => {
+      const b = document.createElement("button"); b.type = "button";
+      b.className = "ln-chip" + (k === L.ci ? " cur" : "") + (L.passed.has(k) ? " ok" : "");
+      b.textContent = c.to - c.from > 1 ? `${c.from + 1}–${c.to}` : `${c.from + 1}`;
+      b.title = `Compassos ${b.textContent}`;
+      b.addEventListener("click", () => goChunk(k));
+      lnChunks.appendChild(b);
+    });
+    if (!L.chunks.length) lnChunks.innerHTML = `<span class="ln-empty">Este breque não tem toques para este surdo.</span>`;
+  }
+  // onde cai cada toque, em linguagem de ensaio
+  function where(k, j, n) {
+    const t = k + 1;
+    if (n === 1 || j === 0) return `no ${t}`;
+    if (n === 2) return `no "e" do ${t}`;
+    if (n === 3) return j === 1 ? `na 2ª da tercina do ${t}` : `na 3ª da tercina do ${t}`;
+    if (n === 4) return j === 1 ? `logo depois do ${t}` : j === 2 ? `no "e" do ${t}` : `antes do ${t + 1}`;
+    return `na ${j + 1}ª parte do ${t}`;
+  }
+  function renderLesson() {
+    lnGrid.innerHTML = ""; L.slotMap.clear();
+    const c = L.chunks[L.ci];
+    if (!c) { lnHow.innerHTML = ""; markRange(null); setPos(null); setButtons(); return; }
+    const howLines = [];
+    for (let b = c.from; b < c.to; b++) {
+      const bar = parsed.bars[b];
+      const row = document.createElement("div"); row.className = "ln-bar"; row.innerHTML = `<span class="n">${b + 1}</span>`;
+      const cells = document.createElement("div"); cells.className = "ln-cells"; cells.style.setProperty("--n", Math.max(bar.length, 4));
+      const say = [];
+      bar.forEach((beat, k) => {
+        const cell = document.createElement("div"); cell.className = "ln-beat"; cell.dataset.beat = parsed.barStart[b] + k;
+        beat.forEach((tok, j) => {
+          const sp = document.createElement("span"); sp.className = "ln-slot";
+          const at = parsed.barStart[b] + k + j / beat.length;
+          if (tok.startsWith("#")) { sp.textContent = tok.slice(1); sp.classList.add("cnt"); }
+          else if (tok) {
+            const { base, sup } = tokParts(tok), h = HITS[ALIASES[base] || base];
+            sp.textContent = base; if (sup) { const u = document.createElement("sup"); u.textContent = sup; sp.appendChild(u); }
+            if (h && h.drums.includes(L.instr)) {
+              sp.classList.add("mine"); L.slotMap.set(at.toFixed(4), sp);
+              const other = h.drums.length > 1 ? " (junto com a " + (L.instr === 0 ? "2ª" : "1ª") + ")" : "";
+              say.push(`${where(k, j, beat.length)}${other}${h.mute ? ", abafado" : ""}${h.vel < 1 ? ", mais leve" : ""}`);
+            } else if (h) sp.classList.add("other");
+            else sp.classList.add("rest");
+          }
+          cell.appendChild(sp);
+        });
+        cells.appendChild(cell);
+      });
+      row.appendChild(cells); lnGrid.appendChild(row);
+      if (say.length) howLines.push(`<b>Compasso ${b + 1}:</b> ${say.join(" · ")}`);
+    }
+    lnHow.innerHTML = howLines.join("<br>");
+    markRange(c); setPos(null); setButtons();
+  }
+  function markRange(c) {
+    barRows.forEach((r, i) => r.classList.toggle("ln-range", !!c && i >= c.from && i < c.to));
+  }
+  function scrollScoreTo(row) {
+    if (!row) return;
+    const top = row.offsetTop - scoreEl.offsetTop, bot = top + row.offsetHeight;
+    if (top < scoreEl.scrollTop || bot > scoreEl.scrollTop + scoreEl.clientHeight) scoreEl.scrollTop = top - 8;
+  }
+  let scoreNow = -1;
+  function setPos(gb) {
+    if (beatCells[scoreNow]) beatCells[scoreNow].classList.remove("now");
+    scoreNow = gb == null ? -1 : gb;
+    const c = L.chunks[L.ci];
+    if (gb == null || gb < 0) { lnPos.innerHTML = c ? `Trecho: compassos <b>${c.from + 1}${c.to - c.from > 1 ? "–" + c.to : ""}</b> de ${parsed.bars.length}` : ""; return; }
+    const cell = beatCells[gb];
+    if (cell) { cell.classList.add("now"); scrollScoreTo(cell.closest(".bar-row")); }
+    const bar = parsed.beatBar[gb], k = parsed.beatInBar[gb];
+    const toks = (parsed.bars[bar] && parsed.bars[bar][k] || []).map(t => t.startsWith("#") ? t.slice(1) : t ? tokParts(t).base : "·").join(" ");
+    lnPos.innerHTML = `Compasso <b>${bar + 1}</b> de ${parsed.bars.length} · tempo <b>${k + 1}</b>`;
+    const tk = document.createElement("span"); tk.className = "ln-tok"; tk.textContent = toks; lnPos.appendChild(tk);
+  }
+  function setButtons() {
+    const has = !!L.chunks[L.ci];
+    lnListen.disabled = lnPlay.disabled = !has || L.busy;
+    lnNext.disabled = !has || L.busy || L.ci >= L.chunks.length - 1;
+    lnPrev.disabled = !has || L.busy || L.ci === 0;
+    lnStop.hidden = !L.busy && !L.auto;
+    lnAuto.textContent = L.auto ? "Parar treino" : "Treino automático";
+    $("pad1").classList.toggle("armed", L.phase === "tocar" && L.instr === 0);
+    $("pad2").classList.toggle("armed", L.phase === "tocar" && L.instr === 1);
+  }
+  function padFlash() { const p = myPad(); p.classList.add("hit"); setTimeout(() => p.classList.remove("hit"), 110); }
+  // mode "ouvir" = tudo; "tocar" = sem o seu surdo (você faz essa parte no pad)
+  async function playChunk(mode) {
+    ensureCtx();
+    if (lesson.on) endLesson();
+    if (bq.on) stopBreque();
+    if (bqVoice.value && !silOk) await loadSil();
+    return new Promise(resolve => {
+      const c = L.chunks[L.ci], s = 60 / +lnBpm.value, myRun = ++L.runId;
+      const firstBar = parsed.bars[c.from], pre = Math.max(4, firstBar.length >= 4 ? 4 : firstBar.length);
+      const t0 = ctx.currentTime + 0.2 + pre * s;
+      for (let k = 0; k < pre; k++) { const t = t0 - (pre - k) * s; if (!singCount(k + 1, t, s, "learn")) eng.click(t, k === 0, "learn"); }
+      L.targets = []; L.hits = [];
+      players.forEach(p => { p.hits = p.hits.filter(h => h.t < ctx.currentTime); });
+      for (const e of events.filter(e => e.beat >= c.b0 && e.beat < c.b1)) {
+        const t = t0 + (e.beat - c.b0) * s, mine = isMine(e);
+        if (e.drums) for (const d of e.drums) {
+          if (d > 1 || (mode === "tocar" && d === L.instr)) continue;
+          eng.trigger(d, false, t, "learn", e.vel);
+          if (e.mute) eng.stopVoices(d, t + 0.13, 0.035);
+          addHit(d, t, e.vel, e.mute);   // o músico 3D prepara o golpe antes do som
+        }
+        if (mine) L.targets.push({ t, beat: e.beat, slot: L.slotMap.get(e.beat.toFixed(4)) });
+        if (mode === "ouvir" || (lnGuide.checked && mine)) sing(e, t, e.slot * s, "learn");
+        if (mine && mode === "ouvir") setTimeout(() => { if (L.runId === myRun) padFlash(); }, Math.max(0, (t - ctx.currentTime) * 1000));
+      }
+      if (mode === "tocar" && lnMetro.checked) for (let k = 0; k < c.b1 - c.b0; k++) eng.click(t0 + k * s, parsed.beatInBar[c.b0 + k] === 0, "learn");
+      const end = t0 + (c.b1 - c.b0) * s + 0.35;
+      L.phase = mode; L.busy = true; L.t0 = t0; L.s = s; setButtons();
+      lnMsg.className = "ln-msg";
+      lnMsg.textContent = mode === "ouvir" ? "Ouvindo… repare nos toques destacados e no golpe do seu músico." : `Sua vez: toque a sua parte no pad ${L.instr === 0 ? "1ª (tecla A" : "2ª (tecla S"} ou Espaço).`;
+      ovPos.textContent = `${current.name} · ${mode === "ouvir" ? "ouvindo" : "sua vez"} · compassos ${c.from + 1}–${c.to}`;
+      const cells = [...lnGrid.querySelectorAll(".ln-beat")];
+      const tick = () => {
+        if (L.runId !== myRun) return;
+        const now = audibleNow(), relF = (now - t0) / s, rel = Math.floor(relF), b = rel + c.b0;
+        cells.forEach(x => x.classList.toggle("now", +x.dataset.beat === b));
+        let word = "", col = "#8d8f98";
+        if (rel < 0) { if (scoreNow !== -2) { setPos(null); scoreNow = -2; } lnPos.innerHTML = `Contagem… <b>${pre + rel + 1}</b> · começa no compasso <b>${c.from + 1}</b>`; word = String(pre + rel + 1); }
+        else { if (b < c.b1 && b !== scoreNow) setPos(b); if (c.b0 + relF < c.b1) [word, col] = wordAt(c.b0 + relF); }
+        ovWord.textContent = word; ovWord.style.color = col;
+        if (ctx.currentTime < end) L.raf = requestAnimationFrame(tick);
+      };
+      tick();
+      L.done = resolve;
+      L.timer = setTimeout(() => {
+        if (L.runId !== myRun) return;
+        L.done = null; cells.forEach(x => x.classList.remove("now"));
+        setPos(null); ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`;
+        L.busy = false; L.phase = "idle"; setButtons();
+        resolve(true);
+      }, (end - ctx.currentTime) * 1000);
+    });
+  }
+  // um toque seu (vem de playLive): você reage ao som que chega com atraso, então compensamos a latência
+  function learnHit(i, t) {
+    if (L.phase !== "tocar" || i !== L.instr) return;
+    L.hits.push(t - outLat());
+  }
+  function evaluate() {
+    const s = 60 / +lnBpm.value, ok = Math.min(0.07, s * 0.14), near = Math.min(0.15, s * 0.3), used = new Set();
+    let good = 0, sumErr = 0, nErr = 0;
+    L.slotMap.forEach(sp => sp.classList.remove("r-ok", "r-near", "r-miss"));
+    for (const tg of L.targets) {
+      let best = -1, bestD = 1e9;
+      L.hits.forEach((h, k) => { if (used.has(k)) return; const d = Math.abs(h - tg.t); if (d < bestD) { bestD = d; best = k; } });
+      let cls = "r-miss", label = "faltou";
+      if (best >= 0 && bestD <= near) {
+        used.add(best);
+        const err = L.hits[best] - tg.t, ms = Math.round(err * 1000);
+        sumErr += err; nErr++;
+        if (bestD <= ok) { cls = "r-ok"; good++; label = "certo"; }
+        else { cls = "r-near"; good += 0.5; label = ms < 0 ? `adiantado ${-ms} ms` : `atrasado ${ms} ms`; }
+      }
+      if (tg.slot) { tg.slot.classList.add(cls); tg.slot.title = label; }
+    }
+    return { score: L.targets.length ? good / L.targets.length : 0, extra: L.hits.length - used.size, avg: nErr ? Math.round(sumErr / nErr * 1000) : 0, total: L.targets.length, good };
+  }
+  function showResult(r) {
+    const pass = r.score >= PASS && r.extra <= Math.max(1, Math.floor(r.total * 0.15));
+    let tip = "";
+    if (r.avg < -35) tip = " Está adiantando: espere um pouco mais.";
+    else if (r.avg > 35) tip = " Está atrasando: antecipe um pouco.";
+    if (r.extra > 0) tip += ` ${r.extra} toque${r.extra > 1 ? "s" : ""} a mais.`;
+    lnMsg.className = "ln-msg " + (pass ? "pass" : "fail");
+    lnMsg.textContent = `${Math.round(r.score * 100)}% · ${Math.round(r.good)} de ${r.total} no tempo.` + (pass ? " Passou!" : " Vamos repetir.") + tip;
+    return pass;
+  }
+  async function doListen() { if (!L.busy) await playChunk("ouvir"); }
+  async function doPlay() {
+    if (L.busy) return false;
+    const done = await playChunk("tocar");
+    if (!done) return false;
+    const pass = showResult(evaluate());
+    if (pass) {
+      const full = current.bpm || 120;
+      if (lnUp.checked && +lnBpm.value < full) { setTrainBpm(Math.min(full, +lnBpm.value + 6)); lnMsg.textContent += ` O andamento sobe para ${lnBpm.value} bpm.`; }
+      else {
+        L.passed.add(L.ci); renderChunks();
+        lnMsg.textContent += L.ci < L.chunks.length - 1 ? " Siga para o próximo trecho." : " Breque completo! 🎉";
+      }
+    }
+    return pass;
+  }
+  function goChunk(k, keepAuto) {
+    if (!keepAuto) learnStop();
+    L.ci = Math.max(0, Math.min(L.chunks.length - 1, k));
+    setTrainBpm(trainBpm()); renderChunks(); renderLesson();
+  }
+  // treino automático: ouve uma vez, depois toca até passar; passando no andamento do breque, vai para o seguinte
+  async function autoRun() {
+    L.auto = true; setButtons();
+    let listened = -1;
+    while (L.auto && L.chunks[L.ci]) {
+      if (listened !== L.ci) { listened = L.ci; if (!(await playChunk("ouvir"))) break; await sleep(700); if (!L.auto) break; }
+      const before = L.ci, wasFull = +lnBpm.value >= (current.bpm || 120);
+      const pass = await doPlay();
+      if (!L.auto) break;
+      await sleep(1600);
+      if (!L.auto) break;
+      if (pass && (wasFull || !lnUp.checked) && L.passed.has(before)) { if (L.ci >= L.chunks.length - 1) break; goChunk(L.ci + 1, true); }
+    }
+    L.auto = false; setButtons();
+  }
+  function learnStop() {
+    L.auto = false; L.runId++;
+    clearTimeout(L.timer); cancelAnimationFrame(L.raf);
+    if (L.done) { const d = L.done; L.done = null; d(false); }
+    const was = L.busy;
+    if (eng) eng.cancelTagged("learn", ctx.currentTime);
+    if (was && ctx) players.forEach(p => { p.hits = p.hits.filter(h => h.t <= ctx.currentTime); });
+    L.busy = false; L.phase = "idle";
+    lnGrid.querySelectorAll(".now").forEach(x => x.classList.remove("now"));
+    setPos(null);
+    if (was && !bq.on) { ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`; }
+    if (was) { lnMsg.className = "ln-msg"; lnMsg.innerHTML = "Parado. Toque em <b>1 · Ouvir</b> ou <b>2 · Tocar</b> para continuar."; }
+    setButtons();
+  }
+  lnListen.addEventListener("click", doListen);
+  lnPlay.addEventListener("click", () => doPlay());
+  lnNext.addEventListener("click", () => goChunk(L.ci + 1));
+  lnPrev.addEventListener("click", () => goChunk(L.ci - 1));
+  lnStop.addEventListener("click", learnStop);
+  lnAuto.addEventListener("click", () => { if (L.auto) learnStop(); else { ensureCtx(); autoRun(); } });
+  lnInstr.addEventListener("change", learnReset);
+  // na sua vez, tocar no palco 3D também vale como toque (no celular, em tela cheia, sem procurar o pad)
+  host.addEventListener("pointerdown", e => { if (L.phase !== "tocar" || e.target.closest("button, select, input, label")) return; playLive(L.instr, false); padFlash(); });
+  lnSize.addEventListener("change", learnReset);
+  brequeHooks.push(learnReset);
+  learnReset();
+
+  // ---------- Aula com os robôs ----------
+  // Dois robôs, a Ritma (professora) e o Tuco (aluno), conversam sobre o breque escolhido parte por parte: quem toca,
+  // tempo a tempo, o que quer dizer cada símbolo. Depois de cada explicação os músicos tocam o trecho, primeiro devagar e
+  // depois no andamento. A fala usa a voz do navegador em português quando existe; a legenda aparece sempre.
+  function makeRobot(o) {
+    const g = new THREE.Group(); g.position.set(o.x, 0, o.z); g.rotation.y = o.ry; g.visible = false; scene.add(g);
+    const shell = M(0xeef0f3, { r: 0.28, m: 0.2 }), dark = M(0x10131a, { r: 0.15, m: 0.4 }), acc = M(o.color, { r: 0.4, m: 0.3 });
+    const glow = new THREE.MeshBasicMaterial({ color: o.color });
+    const ring = new THREE.Mesh(new THREE.RingGeometry(0.16, 0.24, 40), new THREE.MeshBasicMaterial({ color: o.color, transparent: true, opacity: 0.5, side: THREE.DoubleSide, depthWrite: false }));
+    ring.rotation.x = -Math.PI / 2; ring.position.y = 0.01; g.add(ring);
+    const bodyG = new THREE.Group(); g.add(bodyG);
+    // corpo em gota, sem pernas: ele flutua
+    bodyG.add(part([[0.001, 0.3], [0.05, 0.34], [0.12, 0.45], [0.17, 0.6], [0.18, 0.72], [0.165, 0.82], [0.12, 0.88], [0.001, 0.9]], shell, 1, 0.85));
+    const belt = mesh(new THREE.TorusGeometry(0.176, 0.012, 8, 40), acc); belt.rotation.x = Math.PI / 2; belt.position.y = 0.66; belt.scale.set(1, 0.85, 1); bodyG.add(belt);
+    const chestLight = new THREE.Mesh(new THREE.CircleGeometry(0.035, 24), glow); chestLight.position.set(0, 0.76, 0.152); chestLight.rotation.x = -0.25; bodyG.add(chestLight);
+    bodyG.add(ball(0.045, dark, [1, 0.8, 1], [0, 0.92, 0]));
+    // cabeça: casco claro e uma tela escura com olhos e boca de luz
+    const head = new THREE.Group(); head.position.y = 0.98; bodyG.add(head);
+    head.add(ball(0.17, shell, [1.1, 0.88, 0.95], [0, 0.07, 0]));
+    head.add(ball(0.15, dark, [1.0, 0.72, 0.75], [0, 0.07, 0.07]));
+    const eyes = [];
+    for (const sx of [-1, 1]) { const e = new THREE.Mesh(new THREE.SphereGeometry(0.024, 16, 12), glow); e.scale.set(0.8, 1.15, 0.4); e.position.set(0.055 * sx, 0.095, 0.178); head.add(e); eyes.push(e); }
+    const mouth = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.012, 0.01), glow); mouth.position.set(0, 0.04, 0.176); head.add(mouth);
+    for (const sx of [-1, 1]) head.add(ball(0.035, acc, [0.5, 1, 1], [0.185 * sx, 0.07, 0]));
+    const ant = mesh(new THREE.CylinderGeometry(0.006, 0.006, 0.1, 6), dark); ant.position.y = 0.245; head.add(ant);
+    const antTip = new THREE.Mesh(new THREE.SphereGeometry(0.02, 12, 10), glow); antTip.position.y = 0.3; head.add(antTip);
+    const arms = [];
+    for (const sx of [-1, 1]) {
+      const sh = new THREE.Group(); sh.position.set(0.19 * sx, 0.8, 0); bodyG.add(sh);
+      sh.add(ball(0.045, acc));
+      const up = mesh(new THREE.CylinderGeometry(0.03, 0.026, 0.2, 10), shell); up.position.y = -0.11; sh.add(up);
+      const el = new THREE.Group(); el.position.y = -0.22; sh.add(el);
+      el.add(ball(0.03, dark));
+      const fo = mesh(new THREE.CylinderGeometry(0.026, 0.022, 0.18, 10), shell); fo.position.y = -0.1; el.add(fo);
+      el.add(ball(0.04, acc, [1, 1.1, 0.8], [0, -0.21, 0]));
+      arms.push({ sh, el, sx });
+    }
+    const tag = label(o.name, o.css); tag.position.y = 1.5; g.add(tag);
+    return { ...o, g, bodyG, head, eyes, mouth, antTip, arms, ring, tag, talk: 0, seed: Math.random() * 10 };
+  }
+  const robots = [
+    makeRobot({ name: "Ritma", css: "#c9a24a", color: 0xc9a24a, x: -1.6, z: 1.05, ry: 0.55, look: 0.5 }),
+    makeRobot({ name: "Tuco", css: "#3fc1d6", color: 0x3fc1d6, x: 1.6, z: 1.05, ry: -0.55, look: -0.5 }),
+  ];
+  const [ritma, tuco] = robots, WHO = { R: ritma, T: tuco };
+  showRobots();
+  VIEWS.aula = { pos: [0, 1.85, 5.3], at: [0, 0.9, 0.55] };
+  VIEWS.aulaRetrato = { pos: [0, 2.05, 6.4], at: [0, 0.62, 0.5] };
+  // os robôs flutuam, mexem a boca quando falam, olham para quem fala e marcam o tempo quando os músicos tocam
+  function stepRobots(wall, beatT, now = audibleNow(), log = singLog, playingOv) {
+    const playing = playingOv ?? (bq.on || L.busy);
+    while (log === singLog && log.length && log[0].t + log[0].len < now - 2) log.shift();
+    for (const r of robots) {
+      if (!r.g.visible) continue;
+      const t = wall + r.seed, other = r === ritma ? tuco : ritma;
+      r.bodyG.position.y = 0.06 + Math.sin(t * 1.8) * 0.025;
+      r.ring.material.opacity = 0.32 + 0.18 * Math.sin(t * 1.8);
+      const talking = r.talk > 0, pulse = playing ? Math.pow(Math.max(0, Math.cos(2 * Math.PI * beatT)), 6) : 0;
+      const lvl = talking ? voiceLevel() : -1, w = r === ritma ? "R" : "T";
+      let sungK = -1;   // cantando: a boca abre e fecha em cada sílaba
+      for (let k = log.length - 1; k >= 0; k--) { const g = log[k]; if (g.w === w && g.t <= now && now < g.t + g.len + 0.03) { sungK = Math.min(1, (now - g.t) / (g.len + 0.03)); break; } }
+      if (sungK >= 0) r.mouth.scale.set(0.9, 0.7 + 3.3 * Math.sin(Math.PI * sungK), 1);
+      else r.mouth.scale.set(talking ? 0.8 : 1, !talking ? 1 : lvl >= 0 ? 0.5 + Math.min(3.2, lvl * 22) : 0.6 + 2.8 * Math.abs(Math.sin(t * 13) * Math.sin(t * 5.3 + 1)), 1);
+      if (sungK >= 0) r.antTip.scale.setScalar(1 + 0.5 * Math.sin(Math.PI * sungK));
+      if (sungK < 0) r.antTip.scale.setScalar(talking ? 1 + 0.45 * Math.abs(Math.sin(t * 9)) : 1 + 0.6 * pulse);
+      const blink = ((t * 0.27) % 1) < 0.035 ? 0.12 : 1;
+      r.eyes.forEach(e => { e.scale.y = 1.15 * blink; });
+      // cabeça: fala olhando para a câmera, escuta olhando para o outro, nos trechos olha os músicos e balança no tempo
+      const ly = playing ? -r.look * 0.9 : talking ? 0.12 * Math.sin(t * 1.3) : other.talk > 0 ? r.look : 0.1 * Math.sin(t * 0.7);
+      r.head.rotation.y += (ly - r.head.rotation.y) * 0.12;
+      r.head.rotation.x = playing ? 0.18 * pulse : talking ? 0.05 * Math.sin(t * 2.1) : 0;
+      for (const a of r.arms) {
+        let sx = 0.1, sz = 0.12 * a.sx, ex = -0.25;
+        if (talking && a.sx > 0) { sx = -0.55 - 0.3 * Math.sin(t * 2.2); ex = -0.9 - 0.25 * Math.sin(t * 3.1); sz = 0.25; }
+        else if (talking) { sx = -0.15 - 0.1 * Math.sin(t * 1.7); }
+        else if (playing && r === ritma) { sx = -1.0 + 0.35 * pulse; ex = -0.6; sz = 0.35 * a.sx; }   // rege
+        else if (playing) { sx = -0.4 - 0.5 * pulse; ex = -1.2; }                                     // marca o tempo
+        a.sh.rotation.set(sx, 0, sz); a.el.rotation.x = ex;
+      }
+    }
+  }
+  // ---- voz ----
+  // Usa as vozes do próprio aparelho. Escolhe as mais naturais (Aprimorada, Premium, Natural, Neural), uma feminina para a
+  // Ritma e uma masculina para o Tuco, sem mexer no tom. Dá para trocar nos seletores; a escolha fica guardada.
+  const tts = window.speechSynthesis || null;
+  let ptVoices = [];
+  const FEM = /luciana|francisca|thalita|maria|vit[oó]ria|joana|fernanda|raquel|camila|let[ií]cia|yara|brenda|elza|giovanna|leila|manuela|helena|google portugu|female|feminin/i;
+  const MAS = /felipe|ant[oô]nio|daniel|f[aá]bio|humberto|j[uú]lio|nicolau|val[eé]rio|donato|ricardo|male\b|masculin/i;
+  const GOOD = /natural|neural|premium|enhanced|aprimorad|wavenet|studio|online/i, NOVELTY = /compact|eloquence|espeak|grandma|grandpa|rocko|shelley|sandy|reed|\bflo\b|eddy|bad news|bells|bubbles|cellos|organ|whisper|zarvox|trinoids|albert|jester|superstar|boing|wobble/i;
+  const quality = v => (GOOD.test(v.name) ? 4 : 0) + (/google/i.test(v.name) ? 1 : 0) + (/^pt[-_]BR/i.test(v.lang) ? 2 : 0) - (NOVELTY.test(v.name) ? 6 : 0);
+  const vSel = { R: $("vRitma"), T: $("vTuco") };
+  let chosen = { R: null, T: null };
+  try { chosen = { ...chosen, ...JSON.parse(localStorage.getItem("surdos3d.vozes") || "{}") }; } catch (e) {}
+  function loadVoices() {
+    if (!tts) return;
+    const all = tts.getVoices();
+    ptVoices = all.filter(v => /^pt/i.test(v.lang)).sort((x, y) => quality(y) - quality(x));
+    for (const k of ["R", "T"]) {
+      const s = vSel[k], keep = chosen[k]; s.innerHTML = "";
+      s.appendChild(new Option("Automática (a mais natural)", ""));
+      ptVoices.forEach(v => s.appendChild(new Option(`${v.name}${GOOD.test(v.name) ? " ★" : ""} · ${v.lang}`, v.name)));
+      s.value = ptVoices.some(v => v.name === keep) ? keep : "";
+    }
+    $("vHint").hidden = ptVoices.some(v => GOOD.test(v.name) && !NOVELTY.test(v.name));
+  }
+  if (tts) { loadVoices(); try { tts.addEventListener("voiceschanged", loadVoices); } catch (e) { tts.onvoiceschanged = loadVoices; } }
+  function autoVoice(k) {
+    if (!ptVoices.length) return null;
+    const want = k === "R" ? FEM : MAS, avoid = k === "R" ? MAS : FEM;
+    const score = v => quality(v) + (want.test(v.name) ? 3 : 0) - (avoid.test(v.name) ? 3 : 0);
+    return [...ptVoices].sort((x, y) => score(y) - score(x))[0];
+  }
+  function voiceFor(r) {
+    const k = r === ritma ? "R" : "T";
+    return ptVoices.find(v => v.name === chosen[k]) || autoVoice(k);
+  }
+  for (const k of ["R", "T"]) vSel[k].addEventListener("change", () => {
+    chosen[k] = vSel[k].value || null;
+    try { localStorage.setItem("surdos3d.vozes", JSON.stringify(chosen)); } catch (e) {}
+  });
+  // ---- vozes gravadas (ElevenLabs) ----
+  // Quando existe o pacote voz/<breque>.mp3 + voz/<breque>.json (gerado por surdos3d/tools/gerar_vozes.py), cada fala
+  // toca o trecho gravado dela; o que não estiver no pacote usa a voz do aparelho.
+  let packIndex = null, pack = null;
+  const voiceOut = { gain: null, an: null, data: null, src: null };
+  fetch("voz/index.json").then(r => r.ok ? r.json() : null).then(j => { packIndex = j; packUI(); }).catch(() => {});
+  const hasPack = id => !!(packIndex && Array.isArray(packIndex.breques) && packIndex.breques.includes(id));
+  async function loadPack(id) {
+    if (!hasPack(id)) return null;
+    if (pack && pack.id === id) return pack;
+    const [meta, bin] = await Promise.all([fetch(`voz/${id}.json`).then(r => r.json()), fetch(`voz/${id}.mp3`).then(r => r.arrayBuffer())]);
+    const buf = await new Promise((ok, no) => ctx.decodeAudioData(bin, ok, no));
+    pack = { id, buf, lines: meta.lines || {} };
+    return pack;
+  }
+  function voiceNode() {
+    if (!voiceOut.gain) {
+      voiceOut.gain = ctx.createGain(); voiceOut.an = ctx.createAnalyser(); voiceOut.an.fftSize = 512; voiceOut.data = new Float32Array(512);
+      voiceOut.gain.connect(voiceOut.an); voiceOut.gain.connect(master);
+    }
+    return voiceOut.gain;
+  }
+  const clipFor = (r, text) => pack && pack.id === current.id ? pack.lines[(r === ritma ? "R" : "T") + "|" + text] || null : null;
+  function playClip(clip, onEnd) {
+    const s = ctx.createBufferSource(); s.buffer = pack.buf; s.connect(voiceNode());
+    s.onended = () => { if (voiceOut.src === s) voiceOut.src = null; onEnd && onEnd(); };
+    s.start(ctx.currentTime + 0.02, clip[0], clip[1]); voiceOut.src = s;
+    return s;
+  }
+  const stopClip = () => { if (voiceOut.src) { try { voiceOut.src.stop(); } catch (e) {} voiceOut.src = null; } };
+  // volume da voz gravada agora: a boca do robô abre conforme ele fala
+  function voiceLevel() {
+    if (!voiceOut.an || !voiceOut.src) return -1;
+    voiceOut.an.getFloatTimeDomainData(voiceOut.data);
+    let e = 0; for (const v of voiceOut.data) e += v * v;
+    return Math.sqrt(e / voiceOut.data.length);
+  }
+  function packUI() {
+    const el = $("vPack");
+    if (!packIndex || !packIndex.breques || !packIndex.breques.length) { el.hidden = true; return; }
+    el.hidden = false;
+    const parc = packIndex.parcial || [], inteiros = packIndex.breques.filter(id => !parc.includes(id)).map(id => (BUILTIN.find(b => b.id === id) || { name: id }).name);
+    el.textContent = `Vozes gravadas na ElevenLabs${packIndex.vozes ? ` (Ritma: ${packIndex.vozes.R}; Tuco: ${packIndex.vozes.T})` : ""}: ` +
+      (parc.length ? `aula inteira no ${inteiros.join(", ")}; nos outros breques o Tuco fala tudo com a voz dele e a Ritma as falas que já foram gravadas. O resto da Ritma ainda sai na voz do aparelho.` : "em todos os breques.");
+    if (lsVoice.disabled) { lsVoice.disabled = false; lsVoice.checked = true; }
+  }
+  const lsVoice = $("lsVoice"), lsSlow = $("lsSlow");
+  const useVoice = () => !!tts && lsVoice.checked;
+  // legenda → texto falado (as sílabas dos toques com a pronúncia certa)
+  function speakable(s) {
+    return s.replace(/“E”/g, "é").replace(/[“”]/g, "").replace(/1ª/g, "primeira").replace(/2ª/g, "segunda").replace(/\bbpm\b/g, "batidas por minuto")
+      .replace(/\b(To|to)(\d*)\b/g, (m, a, d) => "tô" + (d ? " " + d : "")).replace(/\b(Po|po)(\d*)\b/g, (m, a, d) => "pô" + (d ? " " + d : ""))
+      .replace(/\b(Pa|pa)(\d*)\b/g, (m, a, d) => "pá" + (d ? " " + d : "")).replace(/\b(Bo|bo)\b/g, "bô").replace(/\bro\b/g, "rô").replace(/\bgo\b/g, "gô")
+      .replace(/\bra\b/g, "rá").replace(/\bga\b/g, "gá").replace(/\bti\b/g, "tí").replace(/;\s*/g, ". ").replace(/\s*:\s*/g, ": ")
+      .replace(/(^|[.!?…]\s+)([a-zà-ú])/g, (m, a, b) => a + b.toUpperCase());   // frase começa com maiúscula: a entonação sai melhor
+  }
+  // uma frase por vez: a entonação fica mais natural e o navegador não corta falas longas
+  const sentences = s => (s.match(/[^.!?…]+[.!?…]*/g) || [s]).map(x => x.trim()).filter(Boolean);
+  function utter(r, text) {
+    const u = new SpeechSynthesisUtterance(text); u.lang = "pt-BR";
+    const v = voiceFor(r); if (v) { u.voice = v; u.lang = v.lang; }
+    // só quando os dois acabam com a mesma voz o Tuco fala um pouquinho mais alto e rápido, para dar para distinguir
+    const same = voiceFor(ritma) === voiceFor(tuco);
+    u.pitch = r === tuco && same ? 1.12 : 1; u.rate = r === tuco ? 1.04 : 0.98;
+    return u;
+  }
+  const ovTalk = $("ovTalk"), talkWho = $("talkWho"), talkText = $("talkText");
+  function showTalk(r, text) {
+    if (!text) { ovTalk.hidden = true; return; }
+    ovTalk.hidden = false; talkWho.textContent = r ? r.name : "Músicos"; talkWho.style.color = r ? r.css : "#ecebe6"; talkText.textContent = text;
+  }
+  function say(r, text) {
+    return new Promise(res => {
+      showTalk(r, text); r.talk = 1;
+      const t0 = performance.now(), est = 900 + text.length * 60;
+      let done = false, to = 0;
+      const fin = () => { if (done) return; done = true; r.talk = 0; clearTimeout(to); lesson.skipFn = null; res(); };
+      // sem voz (ou se ela falhar) a legenda fica o tempo de leitura
+      const byTime = ms => { clearTimeout(to); to = setTimeout(fin, ms); };
+      lesson.skipFn = () => { if (tts) tts.cancel(); stopClip(); fin(); };
+      const clip = lsVoice.checked ? clipFor(r, text) : null;
+      if (clip) {
+        playClip(clip, () => byTime(220));
+        byTime(clip[1] * 1000 + 4000);
+      } else if (useVoice()) {
+        const parts = sentences(speakable(text));
+        parts.forEach((p, n) => {
+          const u = utter(r, p);
+          if (n === parts.length - 1) u.onend = () => byTime(Math.max(250, est * 0.45 - (performance.now() - t0)));
+          u.onerror = () => byTime(Math.max(300, est - (performance.now() - t0)));
+          tts.speak(u);
+        });
+        byTime(est + 12000);
+      } else byTime(est);
+    });
+  }
+  function wait(ms) { return new Promise(res => { const t = setTimeout(() => { lesson.skipFn = null; res(); }, ms); lesson.skipFn = () => { clearTimeout(t); lesson.skipFn = null; res(); }; }); }
+  function playPart(p) {
+    return new Promise(res => {
+      showTalk(null, p.caption);
+      markBars(p.from, p.to);
+      lesson.skipFn = () => { if (bq.on) stopBreque(); else { lesson.skipFn = null; res(); } };
+      startBreque({ from: p.from, to: p.to, bpm: p.bpm, onEnd: () => { lesson.skipFn = null; setTimeout(res, 450); } });
+    });
+  }
+  function markBars(a, b) {
+    barRows.forEach((row, i) => row.classList.toggle("lesson-part", a != null && i >= a && i < b));
+    const row = barRows[a]; if (row && a != null) { const top = row.offsetTop - scoreEl.offsetTop; if (top < scoreEl.scrollTop || top + row.offsetHeight > scoreEl.scrollTop + scoreEl.clientHeight) scoreEl.scrollTop = top - 8; }
+  }
+
+  // ---- o roteiro da aula, montado a partir da partitura ----
+  function tokInfo(tok) {
+    if (!tok) return { kind: "rest" };
+    if (tok.startsWith("#")) return { kind: "count", n: tok.slice(1) };
+    const { base, sup } = tokParts(tok);
+    if (RESTS[base]) return { kind: "say", base, label: base };
+    const h = HITS[base];
+    return { kind: "hit", base, label: base + (sup || ""), sup, drums: h.drums, mute: h.mute, light: h.vel < 1 && !h.mute };
+  }
+  const word = i => i.kind === "count" ? `conta ${i.n}` : i.kind === "say" ? `“${i.label}” falado` : i.label;
+  const POS4 = ["", "logo depois", "no meio", "no finzinho"];
+  function describeBeat(beat) {
+    const n = beat.length, items = beat.map((t, j) => ({ j, i: tokInfo(t) })).filter(x => x.i.kind !== "rest");
+    if (!items.length) return "silêncio";
+    if (n === 1) return word(items[0].i);
+    if (n === 3) return "tercina: " + beat.map(t => { const i = tokInfo(t); return i.kind === "rest" ? "pausa" : word(i); }).join(", ");
+    if (n === 2) return items.map(x => x.j === 0 ? word(x.i) : `${word(x.i)} no meio`).join(" e ");
+    if (n === 4) return items.map(x => x.j === 0 ? word(x.i) : `${word(x.i)} ${POS4[x.j]}`).join(" e ");
+    return items.map(x => x.j === 0 ? word(x.i) : `${word(x.i)} no pedaço ${x.j + 1} de ${n}`).join(" e ");
+  }
+  // o último compasso com um tempo só é o toque final, não uma mudança de compasso
+  const isFinal = b => b === parsed.bars.length - 1 && parsed.bars[b].length === 1;
+  const describeBar = (bar, b) => isFinal(b) ? `Compasso ${b + 1}: só o ${describeBeat(bar[0])} final, no tempo 1, e acabou.`
+    : `Compasso ${b + 1}${bar.length !== 4 ? `, que tem ${bar.length} tempos` : ""}: ` + bar.map((beat, k) => `tempo ${k + 1}, ${describeBeat(beat)}`).join("; ") + ".";
+  const sig = bar => bar.map(b => b.join("-")).join(" ");
+  const listNums = a => a.length === 1 ? String(a[0]) : a.slice(0, -1).join(", ") + " e " + a[a.length - 1];
+  function chunks() {
+    const out = []; let cur = null;
+    parsed.bars.forEach((bar, b) => { if (!cur || parsed.section[b] !== cur.sec) { cur = { sec: parsed.section[b], bars: [] }; out.push(cur); } cur.bars.push(b); });
+    // partes longas viram pedaços de até 6 compassos
+    return out.flatMap(c => { const n = Math.ceil(c.bars.length / 6), size = Math.ceil(c.bars.length / n), r = []; for (let k = 0; k < c.bars.length; k += size) r.push(c.bars.slice(k, k + size)); return r; });
+  }
+  const TUCO_OK = ["Anotado!", "Hum, esse é fácil.", "Deixa eu ver se entendi…", "Tá, vou contar junto.", "Esse eu preciso ver tocando.", "Beleza, próximo!"];
+  const TUCO_GO = ["Agora no andamento de verdade!", "E rápido, como fica?", "Agora na velocidade normal!", "Bora no andamento!"];
+  function buildLesson() {
+    const steps = [], P = chunks(), bpmN = +bpm.value, slowBpm = Math.max(60, Math.round(bpmN * 0.7 / 5) * 5);
+    const seen = new Map(), told = new Set();
+    let tk = 0, gk = 0, part = 0;
+    const R = (text, extra) => steps.push({ who: "R", say: text, part, ...extra }), T = text => steps.push({ who: "T", say: text, part });
+    const view = v => steps.push({ view: v, part });
+    const hasAny = (bars, f) => bars.some(b => parsed.bars[b].some((beat, k) => beat.some((t, j) => f(tokInfo(t), beat, j, parsed.bars[b]))));
+    // abertura
+    view("aula");
+    R(`Oi! Eu sou a Ritma, e este é o Tuco. Hoje a gente vai aprender o ${current.name}: ${parsed.bars.length} compassos, que eu dividi em ${P.length} partes.`);
+    T("Oi! Eu ainda confundo os nomes dos toques. Me lembra?");
+    R("To é a 1ª e a 2ª juntas. Po é só a 1ª, o surdo grave, à esquerda. Pa é só a 2ª, à direita. Os números são contagem: você conta e não toca.");
+    R("Antes de cada trecho os músicos contam quatro, e a partitura embaixo acende o tempo que está tocando. O andamento você muda no controle embaixo do palco.");
+    P.forEach((bars, pi) => {
+      part = pi + 1;
+      const a = bars[0], z = bars[bars.length - 1], range = a === z ? `compasso ${a + 1}` : `compassos ${a + 1} a ${z + 1}`;
+      const infos = bars.flatMap(b => parsed.bars[b].flat().map(tokInfo)), hits = infos.filter(i => i.kind === "hit");
+      steps.push({ mark: [a, z + 1], part });
+      if (!hits.length) {
+        const first = parsed.bars[a].map(beat => beat.map(tokInfo).filter(i => i.kind !== "rest").map(word).join(" ") || "silêncio").join(", ");
+        const lead = new Set(bars.map(b => sig([parsed.bars[b][0]])));
+        R(`Parte ${part}, ${range}. Aqui ninguém toca: é só contar. ${bars.length > 1 ? "No primeiro" : "Fica assim"}: ${first}.${bars.length > 1 && lead.size > 1 ? " Repare que o primeiro número muda a cada compasso: é ele que diz em qual compasso de contagem você está." : ""}`);
+        if (!told.has("count")) { told.add("count"); T("Pra que contar, se ninguém toca?"); R("Pra todo mundo voltar junto no tempo certo. Conte em voz alta e marque o tempo com o pé."); }
+        R("Escuta e conta junto.");
+        steps.push({ play: { from: a, to: z + 1, caption: `Contando os ${range}` }, part });
+        return;
+      }
+      // quem toca nesta parte
+      const both = hits.filter(i => i.drums.length === 2).length, p1 = hits.filter(i => i.drums.length === 1 && i.drums[0] === 0).length, p2 = hits.filter(i => i.drums.length === 1 && i.drums[0] === 1).length;
+      let who;
+      if (both && !p1 && !p2) who = "as duas tocam juntas o tempo todo, só To.";
+      else if (both) who = "as duas tocam juntas no To e também conversam: " + (p1 && p2 ? "a 1ª faz po e a 2ª responde com pa." : p1 ? "a 1ª aparece sozinha no po." : "a 2ª aparece sozinha no pa.");
+      else who = p1 && p2 ? "é uma conversa: a 1ª faz po e a 2ª responde pa, uma de cada vez." : p1 ? "só a 1ª toca." : "só a 2ª toca.";
+      R(`Parte ${part}, ${range}. Nesta parte ${who}`);
+      // cada compasso novo, tempo a tempo; os repetidos só são apontados
+      const old = bars.filter(b => seen.has(sig(parsed.bars[b])));   // iguais a compassos de partes anteriores
+      if (old.length === 1) R(`O compasso ${old[0] + 1} é igual ao compasso ${seen.get(sig(parsed.bars[old[0]])) + 1}, que você já viu.`);
+      else if (old.length) R(`Os compassos ${listNums(old.map(x => x + 1))} repetem compassos que você já viu: ${listNums([...new Set(old.map(b => seen.get(sig(parsed.bars[b])) + 1))].map(n => `o ${n}`))}.`);
+      const fresh = [];
+      bars.forEach(b => { const s = sig(parsed.bars[b]); if (seen.has(s)) return; seen.set(s, b); fresh.push(b); });
+      fresh.forEach((b, n) => {
+        R(describeBar(parsed.bars[b], b));
+        const same = bars.filter(x => x > b && sig(parsed.bars[x]) === sig(parsed.bars[b]));
+        if (same.length) R(same.length === 1 ? `O compasso ${same[0] + 1} é igualzinho a esse.` : `Os compassos ${listNums(same.map(x => x + 1))} são iguaizinhos a esse.`);
+        if (n % 2 === 1 && n < fresh.length - 1) T(TUCO_OK[tk++ % TUCO_OK.length]);
+      });
+      // o que aparece pela primeira vez nesta parte
+      const feat = (key, test, q, ans) => { if (!told.has(key) && hasAny(bars, test)) { told.add(key); T(q); R(ans); } };
+      feat("e", i => i.kind === "say", "Por que a gente fala “E” sem tocar?", "É a pausa falada. Ela segura o lugar do tempo: fale baixinho e não toque. Assim ninguém atravessa.");
+      feat("cnt", (i, beat, j, bar) => i.kind === "count" && bar.some(bt => bt.some(t => tokInfo(t).kind === "hit")), "E esses números no meio dos toques?", "São contagem também: você conta em voz alta e segura a maceta. Ajuda a sentir onde está o próximo toque.");
+      feat("off2", (i, beat, j) => i.kind === "hit" && beat.length === 2 && j === 1, "E o toque que cai no meio do tempo?", "É o contratempo. Conte um-e, dois-e: o toque do meio cai no “e”.");
+      feat("off4", (i, beat, j) => i.kind === "hit" && beat.length === 4 && j > 0, "Tem toque no finzinho do tempo, né?", "Isso. Divida cada tempo em quatro pedaços iguais. No finzinho quer dizer no último pedaço, colado no tempo seguinte. Pense devagar primeiro.");
+      feat("tri", (i, beat) => beat.length === 3 && i.kind !== "rest", "Ué, aqui o tempo tem três divisões?", "É tercina: três notas iguais dentro de um tempo só. Fale tri-pa-ti em cada tempo para encaixar.");
+      feat("mute", i => i.kind === "hit" && i.mute, "O que é esse Bo?", "Bo é abafado: os dois tocam, e a outra mão segura a pele na hora, pro som morrer curto.");
+      feat("light", i => i.kind === "hit" && i.light, "Por que alguns toques estão escritos em minúsculo?", "Minúsculo é mais leve: menos força, a maceta sobe menos. Eles enfeitam sem tapar os toques fortes.");
+      feat("ser", i => i.kind === "hit" && i.sup, "E os numerinhos colados nos toques?", "É a série: po1, po2, po3 contam as repetições. Ajudam a não perder a conta no meio da conversa.");
+      if (bars.some(b => parsed.bars[b].length !== 4 && !isFinal(b)) && !told.has("meter")) {
+        told.add("meter"); const odd = bars.find(b => parsed.bars[b].length !== 4 && !isFinal(b)), n = parsed.bars[odd].length;
+        T(`Espera, o compasso ${odd + 1} tem ${n} tempos?`); R(`Tem. Conte até ${n} e já vire para o próximo compasso. Cada linha da partitura tem os tempos que o compasso tem.`);
+      }
+      // tocar
+      if (lsSlow.checked && slowBpm < bpmN) {
+        const v = p2 > p1 ? "a2" : "a1";
+        R(gk++ === 0 ? `Vou pedir pros músicos tocarem bem devagar. Olhe por trás da ${v === "a1" ? "1ª" : "2ª"}, como se fosse você tocando.` : "Primeiro devagar.");
+        view(v);
+        steps.push({ play: { from: a, to: z + 1, bpm: slowBpm, caption: `Tocando devagar · ${slowBpm} bpm · ${range}` }, part });
+        view("frente");
+        T(TUCO_GO[part % TUCO_GO.length]);
+        steps.push({ play: { from: a, to: z + 1, caption: `No andamento · ${bpmN} bpm · ${range}` }, part });
+      } else {
+        R("Escuta e repara no braço da maceta.");
+        view("frente");
+        steps.push({ play: { from: a, to: z + 1, caption: `Tocando · ${range}` }, part });
+      }
+      view("aula");
+    });
+    part = P.length + 1;
+    steps.push({ mark: [0, parsed.bars.length], part });
+    R(`Muito bem! Agora o ${current.name} inteiro, do começo ao fim.`);
+    view("frente");
+    steps.push({ play: { from: 0, to: parsed.bars.length, caption: `${current.name} inteiro` }, part });
+    view("aula");
+    T("Ufa! Consegui acompanhar!");
+    R("Para treinar, repita cada parte com a vista Atrás da 1ª e ligue o espelho para copiar de frente. Quando quiser, escolha outro breque e chame a gente de novo.");
+    return steps;
+  }
+
+  // ---- andamento da aula ----
+  const lsStart = $("lsStart"), lsPause = $("lsPause"), lsSkip = $("lsSkip"), lsStatus = $("lsStatus"), lsBar = $("lsBar");
+  async function runLesson() {
+    const tk = lesson.token;
+    while (lesson.on && tk === lesson.token && lesson.i < lesson.steps.length) {
+      if (lesson.paused) { await new Promise(r => { lesson.resume = r; }); continue; }
+      const st = lesson.steps[lesson.i]; lesson.repeat = false;
+      lessonUI();
+      if (st.say) await say(WHO[st.who], st.say);
+      else if (st.view) { setView(st.view); await wait(650); }
+      else if (st.mark) markBars(st.mark[0], st.mark[1]);
+      else if (st.play) await playPart(st.play);
+      if (tk !== lesson.token) return;
+      if (!lesson.repeat) lesson.i++;
+    }
+    if (tk === lesson.token && lesson.on) endLesson();
+  }
+  async function startLesson() {
+    if (lesson.on || job) return;
+    ensureCtx(); if (bq.on) stopBreque(); learnStop();
+    if (useVoice()) { try { tts.cancel(); const u = new SpeechSynthesisUtterance(" "); u.volume = 0; tts.speak(u); } catch (e) {} }   // libera a voz no iPhone dentro do toque
+    lesson.on = true; lesson.paused = false; lesson.i = 0; lesson.steps = []; const tk = ++lesson.token;
+    robots.forEach(r => { r.g.visible = true; r.tag.visible = !mirrored; });
+    setView("aula"); lessonUI();
+    if (lsVoice.checked && hasPack(current.id)) {
+      showTalk(ritma, "Carregando as vozes…");
+      try { await loadPack(current.id); } catch (e) { pack = null; }
+      if (tk !== lesson.token) return;
+    }
+    lesson.steps = buildLesson();
+    runLesson();
+  }
+  function endLesson() {
+    if (!lesson.on) return;
+    lesson.on = false; lesson.token++; lesson.paused = false;
+    if (lesson.resume) { lesson.resume(); lesson.resume = null; }
+    if (tts) tts.cancel(); stopClip();
+    if (lesson.skipFn) lesson.skipFn(); lesson.skipFn = null;
+    if (bq.on) stopBreque();
+    robots.forEach(r => { r.talk = 0; }); showRobots();
+    showTalk(null, ""); markBars(null);
+    setView("frente"); lessonUI();
+  }
+  function pauseLesson() {
+    if (!lesson.on) return;
+    if (lesson.paused) { lesson.paused = false; if (lesson.resume) { const r = lesson.resume; lesson.resume = null; r(); } }
+    else { lesson.paused = true; lesson.repeat = true; if (tts) tts.cancel(); stopClip(); if (lesson.skipFn) lesson.skipFn(); showTalk(null, "Aula pausada. Toque em Continuar quando quiser."); }
+    lessonUI();
+  }
+  const skipStep = () => { if (lesson.on && !lesson.paused && lesson.skipFn) lesson.skipFn(); };
+  function lessonUI() {
+    const on = lesson.on, st = lesson.steps[lesson.i], total = lesson.steps.length ? lesson.steps[lesson.steps.length - 1].part : 0;
+    $("lsStartLbl").textContent = on ? "Sair da aula" : "Aula com os robôs"; lsStart.classList.toggle("playing", on);
+    lsPause.hidden = lsSkip.hidden = !on; lsPause.textContent = lesson.paused ? "Continuar" : "Pausar";
+    $("lsProgress").hidden = !on;
+    if (on && st) { lsBar.style.width = `${(100 * lesson.i / lesson.steps.length).toFixed(1)}%`; lsStatus.textContent = st.part > total - 1 ? "Breque inteiro" : st.part ? `Parte ${st.part} de ${total - 1}` : "Começando"; }
+    $("fsLesson").textContent = on ? "Sair da aula" : "Aula"; $("fsSkip").hidden = !on;
+  }
+  lsStart.addEventListener("click", () => lesson.on ? endLesson() : startLesson());
+  $("fsLesson").addEventListener("click", () => lesson.on ? endLesson() : startLesson());
+  lsPause.addEventListener("click", pauseLesson);
+  lsSkip.addEventListener("click", skipStep); $("fsSkip").addEventListener("click", skipStep);
+  lsVoice.addEventListener("change", () => { if (!lsVoice.checked && tts) tts.cancel(); $("lsVoices").hidden = !lsVoice.checked; });
+  $("vTest").addEventListener("click", async () => {
+    ensureCtx();
+    if (hasPack(current.id)) {
+      try {
+        await loadPack(current.id); stopClip();
+        const keys = Object.keys(pack.lines), kr = keys.find(k => k.startsWith("R|")), kt = keys.find(k => k.startsWith("T|"));
+        if (kr) playClip(pack.lines[kr], () => { if (kt) playClip(pack.lines[kt]); });
+        return;
+      } catch (e) {}
+    }
+    if (!tts) return;
+    tts.cancel();
+    tts.speak(utter(ritma, "Oi, eu sou a Ritma. Vamos aprender o breque juntos?"));
+    tts.speak(utter(tuco, "E eu sou o Tuco. Bora tocar!"));
+  });
+  if (!tts) { $("lsVoices").hidden = true; lsVoice.checked = false; lsVoice.disabled = true; /* volta a ligar se houver vozes gravadas (packUI) */ lsVoice.parentElement.title = "Este navegador não tem voz sintetizada; a aula fica só com legenda."; }
+
+  // ---------- Baixar vídeo ----------
+  // 1) o som do breque inteiro é sintetizado num OfflineAudioContext; 2) cada quadro da cena 3D é desenhado no instante
+  // exato (a maceta na pele no quadro do toque); 3) WebCodecs + MP4 quando o navegador tem, senão gravação em tempo real.
+  const VW = 1280, VH = 720, FPS = 30;
+  const vcan = document.createElement("canvas"); vcan.width = VW; vcan.height = VH; const vg = vcan.getContext("2d");
+  const exBtn = $("exVideo"), exCancel = $("exCancel"), exSave = $("exSave"), exStatus = $("exStatus"), exBar = $("exBar"), exWrap = $("exProgress"), exMonitor = $("exMonitor");
+  let downloadsApi, pendingFile = null, job = null;
+  (async () => { try { downloadsApi = window.claude && claude.use ? await claude.use("downloads") : null; } catch (e) { downloadsApi = null; } })();
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const slug = t => (t || "breque").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-|-$/g, "").toLowerCase() || "breque";
+  async function renderBrequeAudio() {
+    const s = spb(), sr = 48000, lead = 0.25, pre = countIn.checked ? 4 * s : 0, t0 = lead + pre;
+    const dur = t0 + parsed.total * s + 1.4;
+    const off = new OfflineAudioContext(2, Math.ceil(dur * sr), sr);
+    const lim = makeLimiter(off), m = off.createGain(); m.gain.value = 0.6; lim.threshold.value = -4;
+    m.connect(lim).connect(off.destination);
+    const e2 = makeEngine(off, m), hits = [[], []];
+    const sung = [];
+    if (bqVoice.value) await loadSil();
+    if (countIn.checked) for (let k = 0; k < 4; k++) { if (!singCount(k + 1, lead + k * s, s, false, e2, sung)) e2.click(lead + k * s, k === 0); }
+    if (metro.checked) for (let k = 0; k < parsed.total; k++) e2.click(t0 + k * s, parsed.beatInBar[k] === 0);
+    for (const e of events) {
+      const t = t0 + e.beat * s;
+      if (e.drums) for (const d of e.drums) { if (d > 1) continue; e2.trigger(d, false, t, false, e.vel); if (e.mute) e2.stopVoices(d, t + 0.13, 0.035); hits[d].push({ t, v: e.vel, mute: e.mute }); }
+      sing(e, t, e.slot * s, false, e2, sung);
+    }
+    const buffer = await off.startRendering();
+    return { buffer, t0, s, lead, hits, sung };
+  }
+  function wordAt(b) {
+    for (let k = events.length - 1; k >= 0; k--) {
+      const e = events[k];
+      if (e.beat <= b + 1e-6) {
+        if (b - e.beat >= Math.max(e.slot, 0.35)) return ["", ""];
+        const w = e.count ? String(+(e.say || "").slice(1) || "") : (e.label || "");
+        const c = e.count ? "#6b6e78" : e.rest ? "#ff6b6b" : ({ Pa: "#3fc1b0", po: "#ff9a4a", ro: "#ff9a4a", go: "#ff9a4a", ra: "#3fc1b0", ga: "#3fc1b0" })[e.label] || "#6ea8ff";
+        return [w, c];
+      }
+    }
+    return ["", ""];
+  }
+  function overlay(tv, r) {
+    const g = vg, rel = (tv - r.t0) / r.s;
+    const top = g.createLinearGradient(0, 0, 0, 170); top.addColorStop(0, "rgba(10,11,14,.8)"); top.addColorStop(1, "rgba(10,11,14,0)");
+    g.fillStyle = top; g.fillRect(0, 0, VW, 170);
+    g.textBaseline = "alphabetic"; g.textAlign = "left"; g.fillStyle = "#ecebe6"; g.font = '800 54px "Big Shoulders Display", Impact, sans-serif';
+    g.fillText(current.name.toUpperCase(), 40, 72);
+    g.textAlign = "right"; g.fillStyle = "#b9bbc3"; g.font = '500 22px "JetBrains Mono", ui-monospace, monospace';
+    const bi = rel < 0 ? -1 : parsed.beatBar[Math.min(parsed.total - 1, Math.floor(rel))];
+    g.fillText(rel < 0 ? `${bpm.value} bpm · contagem` : `${bpm.value} bpm · compasso ${Math.min(parsed.bars.length, bi + 1)}/${parsed.bars.length}`, VW - 40, 66);
+    let word = "", col = "#8d8f98";
+    if (rel < 0) { if (countIn.checked && rel >= -4) word = String(Math.max(1, Math.min(4, Math.floor(rel + 5)))); }
+    else [word, col] = wordAt(rel);
+    if (word) {
+      g.textAlign = "center"; g.font = '800 104px "Big Shoulders Display", Impact, sans-serif';
+      g.lineWidth = 10; g.strokeStyle = "rgba(10,11,14,.75)"; g.strokeText(word, VW / 2, 150);
+      g.fillStyle = col; g.fillText(word, VW / 2, 150);
+    }
+    g.fillStyle = "rgba(201,162,74,.95)"; g.fillRect(0, VH - 6, VW * Math.min(1, Math.max(0, tv / r.buffer.duration)), 6);
+    g.textAlign = "right"; g.font = '600 20px Figtree, system-ui, sans-serif'; g.fillStyle = "rgba(236,235,230,.65)"; g.fillText("Surdos em 3D", VW - 32, VH - 24);
+  }
+  function makePainter(r) {
+    const saved = players.map(p => ({ hits: p.hits, fx: p.fx, lastFx: p.lastFx }));
+    players.forEach((p, i) => { p.hits = r.hits[i].slice(); p.fx = []; p.lastFx = -1; });
+    const pr = renderer.getPixelRatio(), fov = camera.fov;
+    renderer.setPixelRatio(1); renderer.setSize(VW, VH, false); camera.aspect = VW / VH; camera.fov = 38; camera.updateProjectionMatrix();
+    return {
+      draw(tv) {
+        stepScene(tv, tv, (tv - r.t0) / r.s, tv >= r.t0 - 0.05);
+        stepRobots(tv, (tv - r.t0) / r.s, tv, r.sung || [], tv >= r.t0 - 0.05);
+        renderer.render(scene, camera);
+        if (mirrored) { vg.save(); vg.translate(VW, 0); vg.scale(-1, 1); vg.drawImage(renderer.domElement, 0, 0, VW, VH); vg.restore(); }
+        else vg.drawImage(renderer.domElement, 0, 0, VW, VH);
+        overlay(tv, r);
+      },
+      restore() { players.forEach((p, i) => Object.assign(p, saved[i])); renderer.setPixelRatio(pr); camera.fov = fov; resize(); },
+    };
+  }
+  async function pickAudioCodec(allowOpus) {
+    if (typeof AudioEncoder === "undefined") return null;
+    for (const c of [{ codec: "mp4a.40.2", mux: "aac" }].concat(allowOpus ? [{ codec: "opus", mux: "opus" }] : [])) {
+      const cfg = { codec: c.codec, sampleRate: 48000, numberOfChannels: 2, bitrate: 160000 };
+      try { if ((await AudioEncoder.isConfigSupported(cfg)).supported) return { cfg, mux: c.mux }; } catch (e) {}
+    }
+    return null;
+  }
+  async function pickVideoCodec(allowVp9) {
+    if (typeof VideoEncoder === "undefined" || typeof VideoFrame === "undefined") return null;
+    const list = ["avc1.42001f", "avc1.4d401f", "avc1.640028"].map(codec => ({ codec, mux: "avc", extra: { avc: { format: "avc" } } }));
+    if (allowVp9) list.push({ codec: "vp09.00.10.08", mux: "vp9", extra: {} });
+    for (const c of list) {
+      const cfg = { codec: c.codec, width: VW, height: VH, bitrate: 4500000, framerate: FPS, ...c.extra };
+      try { if ((await VideoEncoder.isConfigSupported(cfg)).supported) return { cfg, mux: c.mux }; } catch (e) {}
+    }
+    return null;
+  }
+  async function encodeFast(r, ac, vc) {
+    const Mx = window.Mp4Muxer;
+    const muxer = new Mx.Muxer({ target: new Mx.ArrayBufferTarget(), video: { codec: vc.mux, width: VW, height: VH }, audio: { codec: ac.mux, numberOfChannels: 2, sampleRate: 48000 }, fastStart: "in-memory", firstTimestampBehavior: "offset" });
+    let encErr = null, aBytes = 0, aChunks = 0;
+    const aDur = Math.round(1024 / 48000 * 1e6);
+    const aenc = new AudioEncoder({
+      output: (c, m) => {
+        let d = new Uint8Array(c.byteLength); c.copyTo(d);
+        if (ac.mux === "aac") { if (d.length > 7 && d[0] === 0xFF && (d[1] & 0xF6) === 0xF0) d = d.subarray((d[1] & 1) ? 7 : 9); muxer.addAudioChunkRaw(d, c.type, c.timestamp, c.duration || aDur); }
+        else muxer.addAudioChunkRaw(d, c.type, c.timestamp, c.duration || 20000, m);
+        aBytes += d.length; aChunks++;
+      },
+      error: e => { encErr = e; },
+    });
+    aenc.configure(ac.cfg);
+    const venc = new VideoEncoder({ output: (c, m) => muxer.addVideoChunk(c, m), error: e => { encErr = e; } });
+    venc.configure(vc.cfg);
+    const buf = r.buffer, n = buf.length, L = buf.getChannelData(0), R = buf.getChannelData(1), STEP = 4800;
+    const painter = makePainter(r), frames = Math.ceil(buf.duration * FPS);
+    let a = 0, f = 0, lastUi = 0;
+    try {
+      while (a < n || f < frames) {
+        if (job.cancelled) throw "cancel";
+        if (encErr) throw encErr;
+        const ta = a / 48000, tv = f / FPS;
+        if (a < n && (f >= frames || ta <= tv)) {
+          const k = Math.min(STEP, n - a), data = new Float32Array(k * 2);
+          data.set(L.subarray(a, a + k), 0); data.set(R.subarray(a, a + k), k);
+          const ad = new AudioData({ format: "f32-planar", sampleRate: 48000, numberOfFrames: k, numberOfChannels: 2, timestamp: Math.round(ta * 1e6), data });
+          aenc.encode(ad); ad.close(); a += k;
+        } else {
+          painter.draw(tv);
+          const fr = new VideoFrame(vcan, { timestamp: Math.round(tv * 1e6), duration: Math.round(1e6 / FPS) });
+          venc.encode(fr, { keyFrame: f % 60 === 0 }); fr.close(); f++;
+          while (venc.encodeQueueSize > 4) await sleep(4);
+        }
+        if (performance.now() - lastUi > 150) {
+          lastUi = performance.now();
+          const done = Math.min(f / frames, a / n);
+          exBar.style.width = `${(done * 100).toFixed(1)}%`; exStatus.textContent = `Criando o vídeo… ${Math.round(done * 100)}% (quadro ${f} de ${frames})`;
+          await sleep(0);
+        }
+      }
+      await aenc.flush(); await venc.flush();
+    } finally { painter.restore(); }
+    if (encErr) throw encErr;
+    aenc.close(); venc.close();
+    if (!aChunks || aBytes / aChunks < 24) throw new Error("silent-encoder");
+    muxer.finalize();
+    return new Blob([muxer.target.buffer], { type: "video/mp4" });
+  }
+  function pickMime() {
+    if (!window.MediaRecorder) return null;
+    return ["video/mp4;codecs=avc1,mp4a.40.2", "video/mp4", "video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"].find(t => MediaRecorder.isTypeSupported(t)) || null;
+  }
+  async function recordRealtime(r, mime) {
+    ensureCtx();
+    const dest = ctx.createMediaStreamDestination(), src = ctx.createBufferSource(); src.buffer = r.buffer; src.connect(dest);
+    let mon = null; if (exMonitor.checked) { mon = ctx.createGain(); mon.gain.value = 0.9; src.connect(mon); mon.connect(ctx.destination); }
+    const painter = makePainter(r); painter.draw(0);
+    const vs = vcan.captureStream(FPS), stream = new MediaStream([...vs.getVideoTracks(), ...dest.stream.getAudioTracks()]);
+    const chunks = [], rec = new MediaRecorder(stream, { mimeType: mime, audioBitsPerSecond: 160000, videoBitsPerSecond: 4500000 });
+    rec.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+    const stopped = new Promise(res => { rec.onstop = res; });
+    rec.start(500);
+    const startAt = ctx.currentTime + 0.15, total = r.buffer.duration;
+    src.start(startAt);
+    try {
+      await new Promise(res => {
+        const iv = setInterval(() => {
+          const t = ctx.currentTime - startAt;
+          painter.draw(Math.max(0, t));
+          exBar.style.width = `${Math.min(100, Math.max(0, t / total * 100)).toFixed(1)}%`;
+          exStatus.textContent = `Gravando em tempo real · ${Math.max(0, Math.ceil(total - t))} s restantes. Mantenha esta página aberta.`;
+          if (job.cancelled || t >= total + 0.2) { clearInterval(iv); res(); }
+        }, 1000 / FPS);
+      });
+    } finally { painter.restore(); }
+    try { src.stop(); } catch (e) {}
+    rec.stop(); await stopped;
+    src.disconnect(); if (mon) mon.disconnect(); stream.getTracks().forEach(t => t.stop());
+    if (job.cancelled) throw "cancel";
+    return new Blob(chunks, { type: mime.split(";")[0] });
+  }
+  function rms(buf) { let sum = 0, n = 0; for (let c = 0; c < buf.numberOfChannels; c++) { const d = buf.getChannelData(c); for (let i = 0; i < d.length; i += 64) { sum += d[i] * d[i]; n++; } } return Math.sqrt(sum / Math.max(1, n)); }
+  async function isSilent(blob) { try { const ab = await blob.arrayBuffer(); const b = await new Promise((res, rej) => { const p = ctx.decodeAudioData(ab, res, rej); if (p && p.then) p.then(res, rej); }); return rms(b) < 1e-4; } catch (e) { return false; } }
+  async function offerSave() {
+    if (!pendingFile) return;
+    if (!downloadsApi) {
+      const a = document.createElement("a"); a.href = URL.createObjectURL(pendingFile.blob); a.download = pendingFile.name;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 60000);
+      exStatus.textContent = `Guardado: ${pendingFile.name}`; exSave.hidden = true; pendingFile = null; return;
+    }
+    exSave.disabled = true;
+    try { await downloadsApi.save({ filename: pendingFile.name, data: pendingFile.blob }); exStatus.textContent = `Guardado: ${pendingFile.name}`; exSave.hidden = true; pendingFile = null; }
+    catch (e) {
+      const code = e && e.code;
+      exStatus.textContent = code === "declined" ? "Download cancelado. Toque em Guardar arquivo para tentar outra vez." : code === "rate_limited" ? "Já há um pedido de download aberto. Responda a ele ou aguarde uns segundos." : `O download não foi concluído (${code || (e && e.message) || "erro desconhecido"}). Toque em Guardar arquivo para tentar outra vez.`;
+      exSave.hidden = false;
+    }
+    exSave.disabled = false;
+  }
+  exSave.addEventListener("click", offerSave);
+  async function exportVideo() {
+    if (job) return;
+    if (!parsed.bars.length) return;
+    ensureCtx(); if (lesson.on) endLesson(); if (bq.on) stopBreque();
+    job = { cancelled: false }; pendingFile = null; exSave.hidden = true;
+    exBtn.disabled = true; exCancel.hidden = false; exWrap.hidden = false; exBar.style.width = "0%"; exStatus.textContent = "Preparando o som do breque…";
+    exporting = true;
+    try {
+      const r = await renderBrequeAudio();
+      if (job.cancelled) throw "cancel";
+      if (rms(r.buffer) < 1e-4) throw new Error("o som gerado ficou vazio");
+      const recMime = pickMime(), attempts = [];
+      const acA = window.Mp4Muxer ? await pickAudioCodec(false) : null, vcA = acA ? await pickVideoCodec(false) : null;
+      if (acA && vcA) attempts.push(["rápido", () => encodeFast(r, acA, vcA), "mp4"]);
+      if (recMime && recMime.startsWith("video/mp4")) attempts.push(["tempo real mp4", () => recordRealtime(r, recMime), "mp4"]);
+      attempts.push(["rápido (outros codecs)", async () => { const ac = window.Mp4Muxer ? await pickAudioCodec(true) : null, vc = ac ? await pickVideoCodec(true) : null; if (!ac || !vc) throw new Error("unsupported"); return encodeFast(r, ac, vc); }, "mp4"]);
+      if (recMime && !recMime.startsWith("video/mp4")) attempts.push(["tempo real webm", () => recordRealtime(r, recMime), "webm"]);
+      let blob = null, ext = "mp4", lastErr = null;
+      for (const [label, run, x] of attempts) {
+        try {
+          const b = await run(); if (job.cancelled) throw "cancel";
+          if (!b || !b.size) throw new Error("vazio");
+          exStatus.textContent = "Conferindo o som do arquivo…";
+          if (await isSilent(b)) throw new Error("mudo");
+          blob = b; ext = x; break;
+        } catch (e) { if (e === "cancel") throw e; console.warn("Vídeo:", label, e); lastErr = e; exStatus.textContent = "Tentando outro método…"; exBar.style.width = "0%"; }
+      }
+      if (!blob) throw new Error(lastErr && lastErr.message === "mudo" ? "o arquivo saiu sem som neste aparelho" : "este navegador não consegue criar o vídeo; atualize o sistema ou tente no computador");
+      pendingFile = { name: `surdos-3d-${slug(current.name)}-${bpm.value}bpm${mirrored ? "-espelho" : ""}.${ext}`, blob };
+      exBar.style.width = "100%"; exStatus.textContent = `Pronto (${(blob.size / 1048576).toFixed(1).replace(".", ",")} MB). Confirme o download.`; exSave.hidden = false;
+      exporting = false;
+      await offerSave();
+    } catch (e) {
+      console.error(e);
+      exStatus.textContent = e === "cancel" ? "Vídeo cancelado." : `Não foi possível criar o vídeo: ${(e && e.message) || e}. Tente outra vez.`;
+    }
+    exporting = false; job = null; exBtn.disabled = false; exCancel.hidden = true;
+  }
+  exBtn.addEventListener("click", exportVideo);
+  exCancel.addEventListener("click", () => { if (job) job.cancelled = true; });
+  let last = null; try { last = localStorage.getItem("surdos3d.sel"); } catch (e) {}
+  selectBreque(last && BUILTIN.some(b => b.id === last) ? last : "minus");
+  ovPos.textContent = `${current.name} · pronto para tocar`;
+  // dentro do Surdos de Marcação (aba "Surdos em 3D"): ao trocar de aba, tudo para
+  window.addEventListener("message", ev => {
+    if (ev.data !== "surdos:pausar") return;
+    try { if (lesson.on) endLesson(); if (bq.on) stopBreque(); if (L.busy || L.auto) learnStop(); if (ctx && ctx.state === "running") ctx.suspend(); } catch (e) {}
+  });
+  window.__s3d = { get ctx() { return ctx; }, L, learnReset, doListen, doPlay, playChunk, learnStop, playLive, loadSil, voxBufs, singLog, get silOk() { return silOk; }, bqVoice, startBreque, stopBreque, evaluate,  renderBrequeAudio, speakable, get pack() { return pack; }, renderer, setArm, buildLesson, lesson, robots, startLesson, endLesson, skipStep, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
+
+})();
+</script>
+
+</body>
+</html>
