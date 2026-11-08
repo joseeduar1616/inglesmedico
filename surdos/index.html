@@ -400,9 +400,9 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 
     <div class="bq-ctrls">
       <label for="bpm">Andamento <input type="range" id="bpm" min="60" max="180" step="1" value="150"><output id="bpmOut">150 bpm</output></label>
-      <label for="voiceSel">Voz <select id="voiceSel" class="sel sm"><option value="H" selected>Voz gravada (humana)</option><option value="A">Masculina (sintética)</option><option value="F">Feminina (sintética)</option><option value="U" id="mvOpt" disabled hidden>A minha voz</option><option value="">Sem voz</option></select></label>
+      <label for="voiceSel">Voz <select id="voiceSel" class="sel sm"><option value="RT" selected>Ritma e Tuco (dueto)</option><option value="R">Ritma (robô)</option><option value="T">Tuco (robô)</option><option value="H">Voz gravada (humana)</option><option value="A">Masculina (sintética)</option><option value="F">Feminina (sintética)</option><option value="U" id="mvOpt" disabled hidden>A minha voz</option><option value="">Sem voz</option></select></label>
       <button class="chip" id="mvToggle" type="button"><span>🎙 Usar a minha voz</span></button>
-      <label for="voxVol">Volume da voz <input type="range" id="voxVol" min="0" max="1.5" step="0.01" value="0.9"></label>
+      <label for="voxVol">Volume da voz <input type="range" id="voxVol" min="0" max="2.5" step="0.01" value="1.4"></label>
       <label for="sayCount"><input type="checkbox" id="sayCount" checked> Cantar a contagem</label>
       <label for="metro"><input type="checkbox" id="metro"> Metrónomo</label>
       <label for="countIn"><input type="checkbox" id="countIn" checked> Contagem de entrada</label>
@@ -506,7 +506,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
   <div class="toast" id="toast" role="status" hidden></div>
 
   <div class="bar">
-    <label for="vol">Volume geral <input type="range" id="vol" min="0" max="1" step="0.01" value="0.6"></label>
+    <label for="vol">Volume geral <input type="range" id="vol" min="0" max="3" step="0.01" value="2"></label>
     <label for="choke"><input type="checkbox" id="choke" checked> Novo toque corta o anterior</label>
     <span class="sp"></span>
     <span>Teclado: <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> tambores · <kbd>Shift</kbd>+tecla abafa · <kbd>R</kbd> gravar/parar · <kbd>P</kbd> loop · <kbd>B</kbd> breque</span>
@@ -669,7 +669,14 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
     // as outras alternam para a voz não soar sempre igual. Sem acelerar (no máximo 1,1×): se não couber,
     // a sílaba fecha com um fade curto. Pequenas variações de afinação e volume deixam a fala mais humana.
     let voxTurn = 0;
-    function speak(voice, word, t, slot, gain, tag) {
+    // Ritma e Tuco: no dueto a Ritma canta a 1ª (po), o Tuco a 2ª (Pa) e os dois juntos o que é das duas (To, Bo);
+    // a contagem é da Ritma. O que o Tuco não tem gravado (números, "ti") sai na voz da Ritma.
+    function speak(voice, word, t, slot, gain, tag, drums) {
+      if (voice === "RT") {
+        if (drums && drums.length > 1) { speak("R", word, t, slot, gain * 0.78, tag); speak("T", word, t, slot, gain * 0.78, tag); return; }
+        voice = drums && drums[0] === 1 ? "T" : "R";
+      }
+      if (voice === "T" && !(voxBufs.T && voxBufs.T[word])) voice = "R";
       const list = voxBufs[voice] && voxBufs[voice][word];
       if (!list || !list.length) return;
       const strong = gain >= 0.95 || list.length === 1;
@@ -715,8 +722,22 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
     voxReady = Promise.all(Object.entries(VOX).map(async ([v, words]) => {
       voxBufs[v] = {};
       await Promise.all(Object.entries(words).map(async ([w, list]) => { voxBufs[v][w] = await Promise.all([].concat(list).map(dec)); }));
-    })).catch(() => {});
+    })).catch(() => {}).then(loadRobots);
     return voxReady;
+  }
+
+  // sílabas da Ritma e do Tuco (recortadas da fala deles na ElevenLabs) e os nomes dos breques na voz da Ritma
+  let nomesVoz = null;
+  async function loadRobots() {
+    try {
+      const [meta, bin, nm, nbin] = await Promise.all([fetch("voz/silabas.json").then(r => r.json()), fetch("voz/silabas.mp3").then(r => r.arrayBuffer()),
+        fetch("voz/nomes.json").then(r => r.json()).catch(() => null), fetch("voz/nomes.mp3").then(r => r.arrayBuffer()).catch(() => null)]);
+      const decode = b => new Promise((res, rej) => { const p = ctx.decodeAudioData(b, res, rej); if (p && p.then) p.then(res, rej); });
+      const buf = await decode(bin), sr = buf.sampleRate, ch = buf.getChannelData(0);
+      const cut = ([a, d]) => { const i = Math.round(a * sr), n = Math.max(1, Math.round(d * sr)), b = ctx.createBuffer(1, n, sr); b.getChannelData(0).set(ch.subarray(i, i + n)); return b; };
+      for (const w of ["R", "T"]) { voxBufs[w] = {}; for (const [k, list] of Object.entries(meta[w] || {})) voxBufs[w][k] = list.map(cut); }
+      if (nm && nbin) { const nb = await decode(nbin); nomesVoz = { buf: nb, meta: nm }; }
+    } catch (e) {}
   }
 
   // ---------- Áudio ao vivo ----------
@@ -739,8 +760,8 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
   }
   function makeLimiter(ac) {
     const l = ac.createDynamicsCompressor();
-    l.threshold.value = -1; l.knee.value = 0; l.ratio.value = 20;
-    l.attack.value = 0.001; l.release.value = 0.1;
+    l.threshold.value = -2; l.knee.value = 2; l.ratio.value = 20;   // segura os picos quando o volume está alto
+    l.attack.value = 0.001; l.release.value = 0.12;
     return l;
   }
   function updateStatus() {
@@ -1556,6 +1577,7 @@ To To To-to To-to`;
   function refreshSelect() {
     const keep = current.id;
     bqSel.innerHTML = "";
+    bqSel.appendChild(new Option("▶ Todos os breques, em sequência", "__todos"));
     const g1 = document.createElement("optgroup"); g1.label = "Incluídos";
     BUILTIN.forEach(b => g1.appendChild(new Option(b.name, b.id)));
     bqSel.appendChild(g1);
@@ -1565,13 +1587,16 @@ To To To-to To-to`;
       bqSel.appendChild(g2);
     }
     const found = allBreques().find(b => b.id === keep);
-    if (!found) selectBreque(BUILTIN[0].id); else { bqSel.value = keep; if (found !== current) { const changed = found.text !== current.text || found.name !== current.name; current = found; if (changed && !editing && !bq.on) loadCurrent(false); } }
+    if (!found) selectBreque(BUILTIN[0].id); else { bqSel.value = seq.on ? "__todos" : keep; if (found !== current) { const changed = found.text !== current.text || found.name !== current.name; current = found; if (changed && !editing && !bq.on) loadCurrent(false); } }
   }
-  function selectBreque(id) {
+  // modo sequência: os 13 breques um atrás do outro, cada um no seu andamento, com a Ritma dizendo o nome
+  const seq = { on: false, i: 0 };
+  function selectBreque(id, keepSeq) {
     const b = allBreques().find(x => x.id === id) || BUILTIN[0];
     if (bq.on) stopBreque();
+    if (!keepSeq) seq.on = false;
     current = b;
-    bqSel.value = b.id;
+    bqSel.value = seq.on ? "__todos" : b.id;
     try { localStorage.setItem(LS_SEL, b.id); } catch (e) {}
     loadCurrent(true);
   }
@@ -1581,14 +1606,25 @@ To To To-to To-to`;
     if (resetTempo) { bpm.value = current.bpm || 120; bpmOut.textContent = `${bpm.value} bpm`; }
     startBar = 0;
     renderScore(parsed);
-    bqTitle.textContent = current.name || "Sem nome";
+    bqTitle.textContent = (current.name || "Sem nome") + (seq.on ? ` · ${seq.i + 1} de ${BUILTIN.length}` : "");
     bqMeta.textContent = `${parsed.bars.length} compassos · ${current.bpm || 120} bpm`;
     $("bqEdit").disabled = !!current.builtin;
     $("bqDel").disabled = !!current.builtin;
     bqPos.textContent = `Começa no compasso 1`;
     learnReset();
   }
-  bqSel.addEventListener("change", () => selectBreque(bqSel.value));
+  bqSel.addEventListener("change", () => {
+    if (bqSel.value === "__todos") { seq.on = true; seq.i = 0; selectBreque(BUILTIN[0].id, true); toast("Todos os breques em sequência: toque em Tocar breque."); return; }
+    selectBreque(bqSel.value);
+  });
+  // o nome do breque na voz da Ritma, logo antes da contagem
+  function falarNome(id, t) {
+    if (!nomesVoz || !nomesVoz.meta[id] || !voiceSel.value) return 0;
+    const [a, d] = nomesVoz.meta[id], src = ctx.createBufferSource(), g = ctx.createGain();
+    src.buffer = nomesVoz.buf; g.gain.value = Math.min(2, +voxVol.value);
+    src.connect(g).connect(master); src.start(t, a, d);
+    return d;
+  }
 
   function renderScore(p) {
     scoreEl.innerHTML = "";
@@ -1677,11 +1713,11 @@ To To To-to To-to`;
           if (e.mute) eng.stopVoices(d, t + 0.13, 0.035);   // abafado: a mão cala a pele logo a seguir
           setTimeout(() => { if (bq.on) flash(d); }, Math.max(0, (t - ctx.currentTime) * 1000));
         }
-        if (voice && e.say && (!e.count || sayCount.checked)) eng.speak(voice, e.say, t, e.slot * s, e.sg, "bq");
+        if (voice && e.say && (!e.count || sayCount.checked)) eng.speak(voice, e.say, t, e.slot * s, e.sg, "bq", e.count ? null : e.drums);
       }
       bq.idx++;
     }
-    if (!bqRepeat.checked && bq.idx >= bq.ev.length && ctx.currentTime > bq.start + (span + 0.5) * s) stopBreque();
+    if (!bqRepeat.checked && bq.idx >= bq.ev.length && ctx.currentTime > bq.start + (span + 0.5) * s) stopBreque(true);
   }
   function bqDraw() {
     if (!bq.on) return;
@@ -1711,14 +1747,22 @@ To To To-to To-to`;
     bq.ev = events.filter(e => e.beat >= barBeat(startBar));
     bq.on = true; bq.idx = 0; bq.cycle = 0; bq.cur = -1;
     bq.nextClick = countIn.checked ? -4 : 0;
-    bq.start = ctx.currentTime + 0.08 + (countIn.checked ? 4 * s : 0);
+    const nome = seq.on && startBar === 0 ? falarNome(current.id, ctx.currentTime + 0.05) : 0;
+    bq.start = ctx.currentTime + 0.08 + (nome ? nome + 0.25 : 0) + (countIn.checked ? 4 * s : 0);
     bqSchedule();
     bq.timer = setInterval(bqSchedule, 25);
     bqPlay.classList.add("playing"); bqLbl.textContent = "Parar breque";
     bqIcon.setAttribute("d", "M3 3h8v8H3z");
     bqDraw();
   }
-  function stopBreque() {
+  function stopBreque(natural) {
+    if (natural === true && seq.on && seq.i < BUILTIN.length - 1) {   // sequência: passa para o próximo breque
+      seq.i++; bq.on = false; clearInterval(bq.timer);
+      selectBreque(BUILTIN[seq.i].id, true);
+      setTimeout(() => { if (seq.on && !bq.on) startBreque(); }, 300);
+      return;
+    }
+    if (natural === true && seq.on) seqDone = true;   // acabou o último: o próximo play recomeça do Brahma
     bq.on = false;
     clearInterval(bq.timer);
     if (eng) eng.cancelTagged("bq", ctx.currentTime);
@@ -1728,7 +1772,8 @@ To To To-to To-to`;
     bqIcon.setAttribute("d", "M3 1.5v11l9.5-5.5z");
     bqPos.textContent = `Começa no compasso ${startBar + 1}`;
   }
-  const toggleBreque = () => bq.on ? stopBreque() : startBreque();
+  const toggleBreque = () => { if (bq.on) { stopBreque(); return; } if (seq.on && seqDone) { seq.i = 0; selectBreque(BUILTIN[0].id, true); } seqDone = false; startBreque(); };
+  let seqDone = false;
   bqPlay.addEventListener("click", toggleBreque);
 
   // ---------- Editor ----------
@@ -1820,8 +1865,8 @@ To To To-to To-to`;
     const dur = t0 + beats * s + 1.4;
     const off = new OfflineAudioContext(2, Math.ceil(dur * sr), sr);
     const lim = makeLimiter(off), m = off.createGain();
-    m.gain.value = 0.5;
-    lim.threshold.value = -4;   // margem para a compressão do MP4 não estourar
+    m.gain.value = 0.92;
+    lim.threshold.value = -3;   // margem para a compressão do MP4 não estourar
     m.connect(lim).connect(off.destination);
     const e2 = makeEngine(off, m);
     if (countIn.checked) for (let k = 0; k < 4; k++) {
@@ -1832,13 +1877,13 @@ To To To-to To-to`;
     for (const e of events) {
       const t = t0 + e.beat * s;
       if (withDrums && e.drums) for (const d of e.drums) { e2.trigger(d, false, t, false, e.vel); if (e.mute) e2.stopVoices(d, t + 0.13, 0.035); }
-      if (voice && e.say && (!e.count || sayCount.checked)) e2.speak(voice, e.say, t, e.slot * s, e.sg);
+      if (voice && e.say && (!e.count || sayCount.checked)) e2.speak(voice, e.say, t, e.slot * s, e.sg, undefined, e.count ? null : e.drums);
     }
     const buffer = await off.startRendering();
     return { buffer, t0, s, lead };
   }
 
-  window.__surdos = { renderOffline, voxBufs, decode: b => ctx.decodeAudioData(b), prep: async () => { ensureCtx(); await loadVox(); } };   // para gravar os breques fora da página (ferramentas)
+  window.__surdos = { get seq() { return seq; }, get bq() { return bq; }, get current() { return current; }, stopBreque, startBreque, renderOffline, voxBufs, decode: b => ctx.decodeAudioData(b), prep: async () => { ensureCtx(); await loadVox(); } };   // para gravar os breques fora da página (ferramentas)
   function pickMime(kind) {
     if (!window.MediaRecorder) return null;
     const list = kind === "video"
@@ -2371,7 +2416,7 @@ To To To-to To-to`;
         }
         if (mine) L.targets.push({ t, beat: e.beat, slot: L.slotMap.get(e.beat.toFixed(4)) });
         const wantVoice = voice && e.say && !e.count && (mode === "ouvir" || (lnGuide.checked && mine && !(MIC.on && !lnPhones.checked)));
-        if (wantVoice) eng.speak(voice, e.say, t, e.slot * s, e.sg, "learn");
+        if (wantVoice) eng.speak(voice, e.say, t, e.slot * s, e.sg, "learn", e.count ? null : e.drums);
         if (mine && mode === "ouvir") setTimeout(() => { if (L.runId === myRun) { flash(L.instr); padFlash(); } }, Math.max(0, (t - ctx.currentTime) * 1000));
         else if (e.drums) setTimeout(() => { if (L.runId === myRun) e.drums.forEach(d => { if (mode !== "tocar" || d !== L.instr) flash(d); }); }, Math.max(0, (t - ctx.currentTime) * 1000));
       }
