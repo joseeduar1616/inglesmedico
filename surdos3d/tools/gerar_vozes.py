@@ -64,6 +64,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--teste", action="store_true", help="bipes no lugar da ElevenLabs")
     ap.add_argument("--so", help="só estes breques (ids separados por vírgula)")
+    ap.add_argument("--parcial", action="store_true", help="com --montar: pula as falas que ainda não foram geradas (a página usa a voz do aparelho nelas)")
     ap.add_argument("--montar", metavar="VOZES", help="não gera nada: monta os pacotes com as falas já cortadas em .cache_vozes/el (separar_falas.py); VOZES = 'Ritma: nome; Tuco: nome' para a página mostrar")
     a = ap.parse_args()
     falas = json.load(open(os.path.join(VOZ, "falas.json")))["breques"]
@@ -78,13 +79,16 @@ def main():
         for who, gen, nome, env in (("R", "female", "Ritma", "ELEVEN_VOZ_RITMA"), ("T", "male", "Tuco", "ELEVEN_VOZ_TUCO")):
             vozes[who], nomes[who] = (os.environ[env], os.environ[env]) if os.environ.get(env) else escolher_voz(key, gen, nome)
     gerados = caracteres = 0
-    feitos = []
+    feitos, parciais = [], []
     for bid, b in falas.items():
         partes, linhas, pos = [], {}, 0
         for l in b["lines"]:
             if a.montar:
                 wav = os.path.join(CACHE, "el", hashlib.sha1(f"{l['who']}|{l['speech']}".encode()).hexdigest()[:16] + ".wav")
                 if not os.path.exists(wav):
+                    if a.parcial:
+                        if bid not in parciais: parciais.append(bid)
+                        continue
                     sys.exit(f"{bid}: falta a fala {l['who']}: {l['speech'][:60]}")
             else:
                 voz = "teste" if a.teste else vozes[l["who"]]
@@ -116,6 +120,8 @@ def main():
             junto = os.path.join(tmp, "junto.wav")
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lista, "-ac", "1", "-ar", str(SR), "-c:a", "pcm_s16le", junto], check=True)
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", junto, "-c:a", "libmp3lame", "-b:a", "48k", os.path.join(VOZ, bid + ".mp3")], check=True)
+        if not partes:
+            continue
         json.dump({"lines": linhas}, open(os.path.join(VOZ, bid + ".json"), "w"), ensure_ascii=False)
         feitos.append(bid)
         print(f"{bid}: {len(linhas)} falas, {pos / 60:.1f} min")
@@ -127,6 +133,8 @@ def main():
     if a.montar:
         idx["vozes"] = dict(p.split(": ", 1) for p in a.montar.split("; "))
         idx["vozes"] = {"R": idx["vozes"].get("Ritma", ""), "T": idx["vozes"].get("Tuco", "")}
+    if a.montar:
+        idx["parcial"] = sorted(parciais)
     if a.teste:
         idx["teste"] = True
     json.dump(idx, open(idx_path, "w"), ensure_ascii=False)

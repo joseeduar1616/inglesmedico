@@ -2227,7 +2227,9 @@ To To To-to To-to`;
     const el = $("vPack");
     if (!packIndex || !packIndex.breques || !packIndex.breques.length) { el.hidden = true; return; }
     el.hidden = false;
-    el.textContent = `Vozes gravadas na ElevenLabs${packIndex.vozes ? ` (Ritma: ${packIndex.vozes.R}; Tuco: ${packIndex.vozes.T})` : ""} para ${packIndex.breques.length === BUILTIN.length ? "todos os breques" : packIndex.breques.map(id => (BUILTIN.find(b => b.id === id) || { name: id }).name).join(", ")}. Nos outros, a aula usa a voz do aparelho.`;
+    const parc = packIndex.parcial || [], inteiros = packIndex.breques.filter(id => !parc.includes(id)).map(id => (BUILTIN.find(b => b.id === id) || { name: id }).name);
+    el.textContent = `Vozes gravadas na ElevenLabs${packIndex.vozes ? ` (Ritma: ${packIndex.vozes.R}; Tuco: ${packIndex.vozes.T})` : ""}: ` +
+      (parc.length ? `aula inteira no ${inteiros.join(", ")}; nos outros breques o Tuco fala tudo com a voz dele e a Ritma as falas que já foram gravadas. O resto da Ritma ainda sai na voz do aparelho.` : "em todos os breques.");
     if (lsVoice.disabled) { lsVoice.disabled = false; lsVoice.checked = true; }
   }
   const lsVoice = $("lsVoice"), lsSlow = $("lsSlow");
