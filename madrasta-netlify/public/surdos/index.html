@@ -188,7 +188,9 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 .ens-note { margin: 0; font-size: 12.5px; color: var(--muted); }
 .ens-note a { color: var(--brass); }
 .ens.on { border-style: solid; }
-.ens-go { border-color: var(--brass); color: var(--brass); font-size: 15px; }
+.ens-go { flex: 1 1 100%; min-height: 64px; justify-content: center; border: 2px solid var(--brass); background: var(--brass); color: var(--bg); font-size: 22px; font-weight: 800; touch-action: manipulation; }
+.ens-go:active { transform: scale(.97); }
+.ens:not(.on) .ens-go { background: transparent; color: var(--brass); font-size: 17px; min-height: 48px; }
 .bq-ctrls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 13px; color: var(--muted); }
 .bq-ctrls label { display: flex; align-items: center; gap: 8px; }
 .bq-ctrls input[type=range] { width: 120px; accent-color: var(--brass); }
@@ -426,13 +428,13 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
     <div class="ens" id="ensBox">
       <div class="ens-row">
         <button class="lp" id="ensBtn" type="button"><span id="ensLbl">🎙 Seguir o ensaio</span></button>
-        <button class="lp ens-go" id="ensGo" type="button" hidden><span id="ensGoLbl">👆 Começou!</span></button>
+        <button class="lp ens-go" id="ensGo" type="button"><span id="ensGoLbl">👆 Começou!</span></button>
         <span class="ens-st" id="ensSt">Liga o microfone, ouve a bateria e mostra em que parte do breque vocês estão.</span>
         <span class="ens-bpm" id="ensBpm"></span>
         <span class="ln-meter"><i id="ensMeter"></i></span>
       </div>
       <div class="ens-now" id="ensNow" hidden></div>
-      <p class="ens-note" id="ensNote">Escolha o breque, toque em Seguir o ensaio com o celular perto dos surdos e aperte <b>Começou!</b> junto com o primeiro toque do breque (para começar no meio, toque antes no compasso da partitura). Daí ele acompanha sozinho o andamento e o compasso. Depois de alguns compassos ele acha o andamento e o compasso e vai acendendo a partitura no tempo. Se a bateria parar, ele para; quando voltar, ele continua de onde parou ou do começo da parte. Sem apertar Começou!, ele também tenta achar sozinho, mas só trava quando tem certeza, porque muitos trechos dos breques soam igual ao samba.</p>
+      <p class="ens-note" id="ensNote">Escolha o breque, toque em Seguir o ensaio com o celular perto dos surdos e aperte <b>Começou!</b> junto com o primeiro toque do breque (para começar no meio, toque antes no compasso da partitura). Daí ele acompanha sozinho o andamento e o compasso. Se a bateria parar, ele para; quando voltar, ele continua de onde parou ou do começo da parte. Sem apertar Começou!, ele também tenta achar sozinho, mas só trava quando tem certeza, porque muitos trechos dos breques soam igual ao samba.</p>
     </div>
 
     <div class="bq-ctrls">
@@ -2796,7 +2798,7 @@ To To To-to To-to`;
     }
     ENS.on = true; ENS.onsets = []; ENS.lock = null; ENS.last = null; ENS.nextB = null; ENS.forced = null; ENS.miss = 0; ENS.pend = 0; ENS.T = ensTemplates();
     if (!MIC.listeners.includes(ensMic)) MIC.listeners.push(ensMic);
-    $("ensBox").classList.add("on"); $("ensLbl").textContent = "Parar de seguir"; $("ensGo").hidden = false; ENS.tap = null;
+    $("ensBox").classList.add("on"); $("ensLbl").textContent = "Parar de seguir"; ENS.tap = null;
     ensStatus("Ouvindo… toquem alguns compassos.");
     clearInterval(ENS.timer); ENS.timer = setInterval(ensTick, 350); ensLoop();
   }
@@ -2804,11 +2806,11 @@ To To To-to To-to`;
     ENS.on = false; clearInterval(ENS.timer); cancelAnimationFrame(ENS.raf); ensDraw(true); ENS.lock = null;
     MIC.listeners = MIC.listeners.filter(f => f !== ensMic);
     if (!lnMic.checked) micStop();
-    $("ensBox").classList.remove("on"); $("ensLbl").textContent = "🎙 Seguir o ensaio"; $("ensGo").hidden = true; $("ensMeter").style.width = "0%";
+    $("ensBox").classList.remove("on"); $("ensLbl").textContent = "🎙 Seguir o ensaio"; $("ensMeter").style.width = "0%";
     ensStatus("Liga o microfone, ouve a bateria e mostra em que parte do breque vocês estão.");
   }
   ensBtn.addEventListener("click", () => ENS.on ? ensStop() : ensStart());
-  $("ensGo").addEventListener("pointerdown", e => { e.preventDefault(); if (ENS.on) ensComecou(); });
+  $("ensGo").addEventListener("pointerdown", e => { e.preventDefault(); if (ENS.on) ensComecou(); else ensStart().then(() => { if (ENS.on) ensStatus("Microfone ligado. Agora aperte Começou! no primeiro toque do breque."); }); });
   bqSel.addEventListener("change", () => { if (ENS.on) { ENS.T = ensTemplates(); ENS.lock = null; ENS.last = null; ensDraw(true); } });
 
   lnMic.addEventListener("change", async () => {
