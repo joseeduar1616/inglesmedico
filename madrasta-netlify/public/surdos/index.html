@@ -188,6 +188,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 .ens-note { margin: 0; font-size: 12.5px; color: var(--muted); }
 .ens-note a { color: var(--brass); }
 .ens.on { border-style: solid; }
+.ens-go { border-color: var(--brass); color: var(--brass); font-size: 15px; }
 .bq-ctrls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; font-size: 13px; color: var(--muted); }
 .bq-ctrls label { display: flex; align-items: center; gap: 8px; }
 .bq-ctrls input[type=range] { width: 120px; accent-color: var(--brass); }
@@ -425,12 +426,13 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
     <div class="ens" id="ensBox">
       <div class="ens-row">
         <button class="lp" id="ensBtn" type="button"><span id="ensLbl">🎙 Seguir o ensaio</span></button>
+        <button class="lp ens-go" id="ensGo" type="button" hidden><span id="ensGoLbl">👆 Começou!</span></button>
         <span class="ens-st" id="ensSt">Liga o microfone, ouve a bateria e mostra em que parte do breque vocês estão.</span>
         <span class="ens-bpm" id="ensBpm"></span>
         <span class="ln-meter"><i id="ensMeter"></i></span>
       </div>
       <div class="ens-now" id="ensNow" hidden></div>
-      <p class="ens-note" id="ensNote">Escolha o breque que vão tocar (com "Todos os breques" ele procura nos 13, mas pode confundir breques parecidos) e toque em Seguir o ensaio com o celular perto dos surdos. Depois de alguns compassos ele acha o andamento e o compasso e vai acendendo a partitura no tempo. Se a bateria parar, ele para; quando voltar, ele acha o lugar de novo sozinho.</p>
+      <p class="ens-note" id="ensNote">Escolha o breque, toque em Seguir o ensaio com o celular perto dos surdos e aperte <b>Começou!</b> junto com o primeiro toque do breque (para começar no meio, toque antes no compasso da partitura). Daí ele acompanha sozinho o andamento e o compasso. Depois de alguns compassos ele acha o andamento e o compasso e vai acendendo a partitura no tempo. Se a bateria parar, ele para; quando voltar, ele continua de onde parou ou do começo da parte. Sem apertar Começou!, ele também tenta achar sozinho, mas só trava quando tem certeza, porque muitos trechos dos breques soam igual ao samba.</p>
     </div>
 
     <div class="bq-ctrls">
@@ -1734,6 +1736,12 @@ To To To-to To-to`;
   bpm.addEventListener("input", () => { bpmOut.textContent = `${bpm.value} bpm`; if (bq.on) { stopBreque(); startBreque(); } });
 
   function setStartBar(b) {
+    if (typeof ENS !== "undefined" && ENS.on) {
+      const T = ENS.T.find(x => x.b === current); if (!T) return;
+      const sb = parsed.barStart[b], h = T.hits.find(x => x >= sb);
+      if (h != null) { ENS.forced = { T, b: h, bar: b }; ENS.lock = null; ENS.last = null; ensDraw(true); ensStatus(`Combinado: começa no compasso ${b + 1}. Toquem!`); }
+      return;
+    }
     startBar = b;
     barRows.forEach((r, i) => r.classList.toggle("start", i === b));
     bqPos.textContent = `Começa no compasso ${b + 1}`;
@@ -1962,7 +1970,7 @@ To To To-to To-to`;
     if (ini === "3d") abrir("3d");
   })();
 
-  window.__surdos = { ens: () => ENS, ensStart, ensStop, ensFeed: t => ensHit(t), get ctx() { return ctx; }, makeEngine, get P() { return P; }, get seq() { return seq; }, get bq() { return bq; }, get current() { return current; }, stopBreque, startBreque, renderOffline, voxBufs, decode: b => ctx.decodeAudioData(b), prep: async () => { ensureCtx(); await loadVox(); } };   // para gravar os breques fora da página (ferramentas)
+  window.__surdos = { ensComecou: () => ensComecou(), ens: () => ENS, ensStart, ensStop, ensFeed: t => ensHit(t), get ctx() { return ctx; }, makeEngine, get P() { return P; }, get seq() { return seq; }, get bq() { return bq; }, get current() { return current; }, stopBreque, startBreque, renderOffline, voxBufs, decode: b => ctx.decodeAudioData(b), prep: async () => { ensureCtx(); await loadVox(); } };   // para gravar os breques fora da página (ferramentas)
   function pickMime(kind) {
     if (!window.MediaRecorder) return null;
     const list = kind === "video"
@@ -2611,53 +2619,98 @@ To To To-to To-to`;
     const Ein = T.hits.slice(a, b).filter(h => h >= pos0 && h <= pos0 + span).length || 1;
     return { sc: 0.6 * mE / Ein + 0.4 * mO / ob.length, E: Ein };
   }
+  function ensEvid(T, pos0, s, t0, ons, span) {
+    const ob = ons.map(t => pos0 + (t - t0) / s), near = (arr, x, d) => { const k = lowerIdx(arr, x - d); return k < arr.length && Math.abs(arr[k] - x) <= d; };
+    let restOK = 0, restBad = 0, offOK = 0;
+    for (let b = Math.ceil(pos0 + 0.3); b <= pos0 + span - 0.3; b++) {
+      if (near(T.hits, b, 0.3) || near(T.hits, b + 0.5, 0.2)) continue;   // tempo com toque (ou contratempo) na partitura
+      if (near(ob, b, 0.22) || near(ob, b + 0.5, 0.22)) restBad++; else restOK++;
+    }
+    for (const h of T.hits) { if (h < pos0 || h > pos0 + span) continue; const fr = h - Math.round(h); if (Math.abs(fr) < 0.1 || Math.abs(Math.abs(fr) - 0.5) < 0.1) continue; if (near(ob, h, 0.12)) offOK++; }
+    return { restOK, restBad, offOK, forte: restOK * 2 + offOK };
+  }
+  // procura só nos pontos onde um breque começa de verdade no ensaio: o começo de cada parte (ou o compasso tocado na
+  // partitura) e o ponto onde a bateria parou. Cada batida dos últimos segundos pode ser esse começo; a melhor combinação
+  // de começo, batida e andamento é a que explica as batidas que vieram depois.
+  // "Começou!": a batida mais perto do toque (de 0,6 s antes até 1 s depois) é o primeiro toque do trecho combinado
+  function ensComecou() {
+    const T = ENS.T.find(x => x.b === current) || ENS.T[0]; if (!T) return;
+    const b = ENS.forced && ENS.forced.T === T ? ENS.forced.b : T.hits[0];
+    ENS.tap = { t: ctx.currentTime, T, b }; ENS.lock = null; ENS.last = null; ENS.miss = 0; ensDraw(true);
+    ensStatus("Combinado! Acompanhando…");
+  }
+  function ensTryTap() {
+    const tp = ENS.tap; if (!tp) return false;
+    const now = ctx.currentTime; if (now < tp.t + 0.45) return false;
+    const c = ENS.onsets.filter(t => t >= tp.t - 0.6 && t <= tp.t + 0.45);
+    if (!c.length) { if (now > tp.t + 1.2) { ENS.tap = null; ensStatus("Não ouvi o começo. Aperte Começou! junto com o primeiro toque."); } return false; }
+    const o = c.reduce((a, t) => Math.abs(t - tp.t + 0.12) < Math.abs(a - tp.t + 0.12) ? t : a);   // a gente aperta um pouquinho depois de ouvir
+    ENS.lock = { T: tp.T, s: 60 / tp.T.bpm, t: o, pos: tp.b }; ENS.since = Math.min(ENS.since ?? o, o); ENS.tap = null; ENS.forced = null; ENS.miss = 0;
+    return true;
+  }
   function ensGlobal(now) {
-    const t0 = Math.max(now - 5, (ENS.since ?? now) - 0.05), W = now - t0, ons = ENS.onsets.filter(t => t >= t0);
-    if (W < 1.8) return null;
-    const fresh = (ENS.since ?? 0) >= t0, firstB = (p, s) => p + (ons[0] - t0) / s;   // beat da primeira batida do trecho
-    if (ons.length < 5) return null;
+    const ons = ENS.onsets.filter(t => t >= now - 7);
+    if (ons.length < 6) return null;
     let best = null, cands = [];
-    const step = ENS.T.length > 1 ? 0.5 : 0.25, fs = ENS.T.length > 1 ? 0.03 : 0.02;
-    for (const T of ENS.T) for (let f = 0.84; f <= 1.17; f += fs) {
-      const s = 60 / (T.bpm * f), span = W / s;
-      for (let p = -span * 0.3; p <= T.total - span * 0.4; p += step) {
-        let { sc } = ensScore(T, p, s, t0, ons, span);
-        sc -= 0.3 * Math.abs(f - 1);   // perto do andamento escrito do breque é mais provável
-        // de preferência: começo de uma parte do breque (quando a janela começa no começo do som) ou continuar de onde parou
-        if (fresh && T.starts.some(h => Math.abs(h - firstB(p, s)) < 0.35)) sc += 0.1;
-        if (ENS.last && ENS.last.T === T && Math.abs(firstB(p, s) - ENS.last.pos) < 3) sc += 0.05;
-        if (ENS.nextB && T.b === ENS.nextB && fresh && T.starts.some(h => Math.abs(h - firstB(p, s)) < 0.35)) sc += 0.08;   // na sequência, o próximo breque da ordem
-        if (!best || sc > best.sc) best = { T, p, s, sc, t0, span };
-        if (sc > 0.4) cands.push({ T, p, sc });
+    for (const T of ENS.T) {
+      let starts = ENS.forced && ENS.forced.T === T ? [ENS.forced.b] : T.starts.slice();
+      if (!ENS.forced && ENS.last && ENS.last.T === T) { starts.push(ENS.last.pos); if (ENS.last.sec != null) starts.push(ENS.last.sec); }
+      for (let i = 0; i < ons.length; i++) {
+        const o = ons[i], W = now - o; if (W < 3) break;
+        const after = ons.slice(i);
+        for (const c of starts) for (let f = 0.86; f <= 1.15; f += 0.015) {
+          const s = 60 / (T.bpm * f), span = W / s;
+          if (c + span > T.total + 1) continue;
+          const r = ensScore(T, c - 0.02, s, o - 0.02 * s, after, span);
+          if (r.E < 6) continue;
+          let sc = r.sc - 0.3 * Math.abs(f - 1) + Math.min(0.06, (W - 3) * 0.015);   // mais tempo explicado = mais confiança
+          if (ENS.nextB && T.b === ENS.nextB && c === T.starts[0]) sc += 0.05;
+          if (sc > 0.5) cands.push({ T, sc, now: c + W / s });
+          if (!best || sc > best.sc) best = { T, p: c - 0.02, s, sc, t0: o - 0.02 * s, span, W };
+        }
       }
     }
-    // refina em volta do melhor
-    if (best) for (let df = -0.015; df <= 0.015; df += 0.005) for (let dp = -0.25; dp <= 0.25; dp += 0.05) {
-      const s = best.s / (1 + df), span = W / s, r = ensScore(best.T, best.p + dp, s, t0, ons, span);
+    if (!best) return null;
+    // folga para o segundo melhor lugar (outro breque, ou o mesmo breque mais de 1 tempo longe): sem folga é chute
+    const bNow = best.p + 0.02 + best.W / best.s;
+    const rival = cands.reduce((m, c) => (c.T !== best.T || Math.abs(c.now - bNow) > 1) && c.sc > m ? c.sc : m, 0);
+    const margin = best.sc - rival;
+    // refina andamento e fase
+    const after = ons.filter(t => t >= best.t0);
+    for (let df = -0.012; df <= 0.012; df += 0.004) for (let dp = -0.15; dp <= 0.15; dp += 0.05) {
+      const s = best.s / (1 + df), span = (now - best.t0) / s, r = ensScore(best.T, best.p + dp, s, best.t0, after, span);
       if (r.sc > best.sc) best = { ...best, p: best.p + dp, s, sc: r.sc, span };
     }
-    // o segundo melhor encaixe em outro lugar: se for quase tão bom, ainda não dá para ter certeza
-    if (best) { let sec = 0; for (const c of cands) if ((c.T !== best.T || Math.abs(c.p - best.p) > 1) && c.sc > sec) sec = c.sc; best.margin = best.sc - sec; best.W = W; }
+    best.margin = margin; best.ev = { forte: 9, restBad: 0, restOK: 9 };
     return best;
   }
   const ensPos = t => ENS.lock.pos + (t - ENS.lock.t) / ENS.lock.s;
   function ensTick() {
     if (!ENS.on) return;
     const now = ctx.currentTime;
-    if (window.__ensLog) window.__ensLog.push({ now, lock: !!ENS.lock, pos: ENS.lock ? ensPos(now) : null, bpm: ENS.lock ? 60 / ENS.lock.s : null, n: ENS.onsets.filter(t => t > now - 2.5).length, miss: ENS.miss });
+    if (window.__ensLog) window.__ensLog.push({ now, rec: ENS.rec, prec: ENS.prec, lock: !!ENS.lock, pos: ENS.lock ? ensPos(now) : null, bpm: ENS.lock ? 60 / ENS.lock.s : null, n: ENS.onsets.filter(t => t > now - 2.5).length, miss: ENS.miss });
     ENS.onsets = ENS.onsets.filter(t => t > now - 12);
     const recent = ENS.onsets.filter(t => t > now - 2.5).length;
+    if (!ENS.lock && ENS.tap) { ensTryTap(); return; }   // esperando a batida do Começou!
     if (!ENS.lock) {
       if (!ENS.onsets.some(t => t > now - 1.5)) { ensStatus(ENS.last ? "Parou. Quando a bateria voltar, eu acho o lugar de novo." : "Ouvindo… toquem alguns compassos."); return; }
-      const best = ensGlobal(now);
-      if (best && best.sc >= 0.64 && best.W >= 3.2 && (best.margin >= 0.08 || best.W >= 4.8) && ENS.onsets.filter(t => t >= best.t0).length >= 8) {
+      if (ENS.last && now - ENS.last.at > 25) ENS.last = null;   // voltar do ponto onde parou só vale logo depois da parada
+      const best = ensGlobal(now), dica = ENS.forced || ENS.last;
+      const bom = best && best.sc >= (dica ? 0.72 : 0.93) && best.margin >= (dica ? 0.03 : 0.08) && ENS.onsets.filter(t => t >= best.t0).length >= 8;
+      // o mesmo lugar precisa ganhar duas vezes seguidas antes de travar
+      const pNow = bom ? best.p + (now - best.t0) / best.s : null, c0 = ENS.cand;
+      const conf = bom && c0 && c0.T === best.T && Math.abs(c0.p + (now - c0.t) / c0.s - pNow) < 0.4;
+      ENS.cand = bom ? { T: best.T, p: pNow, t: now, s: best.s } : null;
+      if (conf) {
+        ENS.cand = null;
+        ENS.forced = null;
         ENS.lock = { T: best.T, s: best.s, t: best.t0, pos: best.p }; ENS.miss = 0;
         if (seq.on && best.T.b !== current) { const k = BUILTIN.indexOf(best.T.b); seq.i = k; selectBreque(best.T.b.id, true); ENS.T = ensTemplates(); ENS.lock.T = ENS.T.find(T => T.b === best.T.b) || ENS.lock.T; }
-      } else ensStatus(ENS.onsets.length < 8 ? "Ouvindo… toquem alguns compassos." : "Procurando o lugar na partitura…");
+      } else ensStatus(ENS.onsets.length < 8 ? "Ouvindo… aperte Começou! quando o breque entrar." : ENS.forced ? `Esperando o começo no compasso ${ENS.forced.bar + 1}… (ou aperte Começou!)` : "Ouvindo (samba?). Aperte Começou! quando o breque entrar.");
       return;
     }
     // a cada ~2 s confere se outro lugar da partitura encaixa claramente melhor
-    if (++ENS.chk % 6 === 0 && ENS.onsets.filter(t => t > now - 1.2).length >= 2) {
+    if (false) {
       const g = ensGlobal(now);
       if (g) {
         const cur = ensScore(ENS.lock.T, ensPos(g.t0), ENS.lock.s, g.t0, ENS.onsets.filter(t => t >= g.t0), g.span * g.s / ENS.lock.s);
@@ -2669,7 +2722,11 @@ To To To-to To-to`;
     // seguindo: corrige o encaixe com os últimos 4 s
     const L0 = ENS.lock, t0 = Math.max(now - 4, (ENS.since ?? now) - 0.05), W = now - t0, ons = ENS.onsets.filter(t => t >= t0), pc = ensPos(t0);
     const expRecent = (() => { const p1 = ensPos(now - 2.5), p2 = ensPos(now); return L0.T.hits.filter(h => h >= p1 && h <= p2).length; })();
-    if (recent === 0 && expRecent >= 3) { ENS.last = { T: L0.T, pos: ensPos(now) }; ENS.lock = null; ensStatus("Parou. Quando a bateria voltar, eu acho o lugar de novo."); ensDraw(true); return; }
+    if (recent === 0 && expRecent >= 3) {
+      // parou: guarda o próximo toque depois da última batida ouvida (é dali, ou do começo da parte, que costumam voltar)
+      const lastOn = ENS.onsets[ENS.onsets.length - 1] ?? now, pStop = ensPos(lastOn);
+      const nxt = L0.T.hits.find(h => h > pStop + 0.2) ?? pStop, sec = [...L0.T.starts].reverse().find(h => h <= pStop + 0.2);
+      ENS.last = { T: L0.T, pos: nxt, sec, at: now }; ENS.lock = null; ensStatus("Parou. Quando a bateria voltar, eu acho o lugar de novo."); ensDraw(true); return; }
     if (ensPos(now) > L0.T.total + 1) { ENS.nextB = BUILTIN[BUILTIN.indexOf(L0.T.b) + 1] || null; ENS.last = null; ENS.lock = null; ensStatus(seq.on ? "Fim do breque. Esperando o próximo…" : "Fim do breque. Esperando a bateria…"); ensDraw(true); return; }
     // cada batida recente ganha o toque esperado mais perto; uma reta tempo × beat por esses pares dá o andamento e a fase
     const tolB = Math.min(0.3, 0.09 / L0.s), pairs = [];
@@ -2687,8 +2744,12 @@ To To To-to To-to`;
         L0.s = L0.s + (sNew - L0.s) * 0.5; L0.pos = cur + (posNow - cur) * 0.5; L0.t = now;
       }
     }
+    ENS.rec = recall; ENS.prec = pairs.length / Math.max(1, ons.length);
+    // batidas onde a partitura tem pausa: ou o lugar está errado ou a bateria saiu do breque (voltou para o samba)
+    const ev = ensEvid(L0.T, pc, L0.s, t0, ons, W / L0.s);
+    if (false && ev.restBad >= 3 && ev.restBad > ev.restOK) { ENS.last = { T: L0.T, pos: ensPos(now) }; ENS.lock = null; ENS.miss = 0; ensStatus("Saiu do breque. Procurando…"); ensDraw(true); return; }
     if (recall >= 0.4) ENS.miss = 0;
-    else if (++ENS.miss >= 5) { ENS.last = { T: L0.T, pos: ensPos(now) }; ENS.lock = null; ensStatus("Perdi o lugar. Procurando…"); ensDraw(true); }
+    else if (++ENS.miss >= 5) { ENS.last = { T: L0.T, pos: ensPos(now), at: now }; ENS.lock = null; ensStatus("Perdi o lugar. Procurando…"); ensDraw(true); }
   }
   function ensStatus(t) { if (ensSt.textContent !== t) ensSt.textContent = t; }
   function ensDraw(clear) {
@@ -2733,9 +2794,9 @@ To To To-to To-to`;
       $("ensNote").innerHTML = 'Dentro do app do Claude o microfone fica bloqueado. Abra <a href="https://musical-madrasta.netlify.app/surdos/" target="_blank" rel="noopener">musical-madrasta.netlify.app/surdos</a> no Safari ou no Chrome: lá o Seguir o ensaio funciona.';
       return;
     }
-    ENS.on = true; ENS.onsets = []; ENS.lock = null; ENS.last = null; ENS.nextB = null; ENS.miss = 0; ENS.pend = 0; ENS.T = ensTemplates();
+    ENS.on = true; ENS.onsets = []; ENS.lock = null; ENS.last = null; ENS.nextB = null; ENS.forced = null; ENS.miss = 0; ENS.pend = 0; ENS.T = ensTemplates();
     if (!MIC.listeners.includes(ensMic)) MIC.listeners.push(ensMic);
-    $("ensBox").classList.add("on"); $("ensLbl").textContent = "Parar de seguir";
+    $("ensBox").classList.add("on"); $("ensLbl").textContent = "Parar de seguir"; $("ensGo").hidden = false; ENS.tap = null;
     ensStatus("Ouvindo… toquem alguns compassos.");
     clearInterval(ENS.timer); ENS.timer = setInterval(ensTick, 350); ensLoop();
   }
@@ -2743,10 +2804,11 @@ To To To-to To-to`;
     ENS.on = false; clearInterval(ENS.timer); cancelAnimationFrame(ENS.raf); ensDraw(true); ENS.lock = null;
     MIC.listeners = MIC.listeners.filter(f => f !== ensMic);
     if (!lnMic.checked) micStop();
-    $("ensBox").classList.remove("on"); $("ensLbl").textContent = "🎙 Seguir o ensaio"; $("ensMeter").style.width = "0%";
+    $("ensBox").classList.remove("on"); $("ensLbl").textContent = "🎙 Seguir o ensaio"; $("ensGo").hidden = true; $("ensMeter").style.width = "0%";
     ensStatus("Liga o microfone, ouve a bateria e mostra em que parte do breque vocês estão.");
   }
   ensBtn.addEventListener("click", () => ENS.on ? ensStop() : ensStart());
+  $("ensGo").addEventListener("pointerdown", e => { e.preventDefault(); if (ENS.on) ensComecou(); });
   bqSel.addEventListener("change", () => { if (ENS.on) { ENS.T = ensTemplates(); ENS.lock = null; ENS.last = null; ensDraw(true); } });
 
   lnMic.addEventListener("change", async () => {
