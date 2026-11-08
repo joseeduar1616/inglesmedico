@@ -336,7 +336,20 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
   background: var(--stage-2); color: var(--fg); border: 1px solid var(--brass); border-radius: 10px;
   padding: 10px 16px; font-size: 13px; max-width: calc(100% - 32px); z-index: 10; box-shadow: 0 8px 30px rgba(0,0,0,.4);
 }
+/* chave entre o simulador e o 3D */
+.abas { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; justify-content: center; padding-block: 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); background: var(--stage); border-bottom: 1px solid var(--line); }
+.abas div { display: inline-flex; gap: 4px; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--stage-2); }
+.abas button { font: 700 13px var(--f-body); color: var(--muted); background: transparent; border: 0; border-radius: 999px; padding: 7px 14px; cursor: pointer; white-space: nowrap; }
+.abas button[aria-pressed="true"] { background: var(--brass); color: var(--stage); }
+.abas button:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+#v3d { display: block; width: 100%; height: calc(100dvh - 54px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); border: 0; background: var(--stage); }
 </style>
+
+<nav class="abas" aria-label="Escolher o simulador"><div>
+  <button type="button" id="abaSim" aria-pressed="true">Surdos de marcação</button>
+  <button type="button" id="aba3d" aria-pressed="false">Surdos em 3D</button>
+</div></nav>
+<iframe id="v3d" title="Surdos em 3D" hidden allow="fullscreen; autoplay" allowfullscreen></iframe>
 
 <div class="wrap">
   <header>
@@ -1903,6 +1916,28 @@ To To To-to To-to`;
     const buffer = await off.startRendering();
     return { buffer, t0, s, lead };
   }
+
+  // ---------- Abas: simulador e Surdos em 3D (3d.html, a mesma página do Surdos em 3D) ----------
+  (() => {
+    const wrap = document.querySelector(".wrap"), fr = $("v3d"), bS = $("abaSim"), b3 = $("aba3d");
+    function abrir(qual) {
+      const tres = qual === "3d";
+      if (tres) {
+        try { if (bq.on) stopBreque(); learnStop(); if (ctx && ctx.state === "running") ctx.suspend(); } catch (e) {}
+        if (!fr.src) fr.src = "3d.html";
+      } else { try { fr.contentWindow && fr.contentWindow.postMessage("surdos:pausar", "*"); } catch (e) {} }
+      fr.hidden = !tres; wrap.hidden = tres;
+      bS.setAttribute("aria-pressed", String(!tres)); b3.setAttribute("aria-pressed", String(tres));
+      try { localStorage.setItem("surdos.aba", tres ? "3d" : "sim"); } catch (e) {}
+      if (!tres) { try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {} } else if (location.hash !== "#tres-d") { try { history.replaceState(null, "", "#tres-d"); } catch (e) {} }
+      window.scrollTo(0, 0);
+    }
+    bS.addEventListener("click", () => abrir("sim"));
+    b3.addEventListener("click", () => abrir("3d"));
+    let ini = location.hash === "#tres-d" ? "3d" : null;
+    if (!ini) try { ini = localStorage.getItem("surdos.aba"); } catch (e) {}
+    if (ini === "3d") abrir("3d");
+  })();
 
   window.__surdos = { makeEngine, get P() { return P; }, get seq() { return seq; }, get bq() { return bq; }, get current() { return current; }, stopBreque, startBreque, renderOffline, voxBufs, decode: b => ctx.decodeAudioData(b), prep: async () => { ensureCtx(); await loadVox(); } };   // para gravar os breques fora da página (ferramentas)
   function pickMime(kind) {
