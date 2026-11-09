@@ -692,8 +692,12 @@ To To To To-to
 To-po[70] Pa-po[70] Po-Po to
 E-to Pa-po[70] Po-po[70] Pa-po[70]
 To-pa[70] po[70]-pa[70] Po-po[70] To
-To To To To-to
-To`;
+#! Final novo (33 a 37): o último ro-ro-ro e o To final caem no tempo
+To 2 3 4
+To 2 3 4
+To 2 3 4
+To To-go-ro To-go-ro To-go-ro
+To-to`;
   // Shady (legenda do PDF: primeira = po, segunda = pa, dois = to). ro/go = 1ª leve, ra/ga = 2ª leve
   const SHADY_TXT = `Pa E-Pa Po E-Po
 Pa E-Pa Po-.-.-Po E-Po
@@ -795,11 +799,12 @@ E-To To To-To To-To
 To E-To To-To 1
 To E-To To-To 1
 To E-To To-To 1
-To To To To
-To E-To To-To 1
-To E-To To-To 1
-To E-To To-To 1
-To To To To
+#! 40 a 44: abafados
+Bo Bo Bo Bo
+Bo E-Bo Bo-Bo 1
+Bo E-Bo Bo-Bo 1
+Bo E-Bo Bo-Bo 1
+Bo Bo Bo Bo
 
 To E-To 1 E-To
 To Pa-Po Pa To
@@ -983,11 +988,18 @@ Pa E-po Pa-.-.-po E-Pa
 To-.-.-po E-Pa E-.-.-Pa E-po
 
 To 2 3 4
+#! Dinâmica de volume (25 a 30): começa fraco e vai crescendo
+#vol 45
 To-.-.-to E-to To-.-.-to E-to
+#vol 55
 To-.-.-to E-to-to-. To E-to
+#vol 65
 to-to 1 2 E-to
+#vol 75
 To 2 3 E-to
+#vol 88
 To-to 3 4 E-to
+#vol 100
 To To To-.-.-to E-to`;
   // Cactus: compassos 7 a 12 são o maracatu
   const CACTUS_TXT = `1 2 3 4
@@ -1058,8 +1070,17 @@ To To To-to To-to`;
     let sec = 0, secStart = 0, lineNo = 0;
     const secs = [];            // índice da secção de cada compasso
     const secHasHit = [];
+    const notes = {}, barVol = [];   // "#! texto": anotação que aparece antes do compasso; "#vol 60": volume (%) dali em diante
+    let vol = 100;
     for (const raw of text.split(/\r?\n/)) {
       lineNo++;
+      const tr = raw.trim();
+      if (tr.startsWith("#")) {
+        const mv = tr.match(/^#\s*vol(?:ume)?\s*(\d{1,3})/i);
+        if (mv) vol = Math.max(5, Math.min(100, +mv[1]));
+        else if (tr.startsWith("#!")) notes[bars.length] = (notes[bars.length] ? notes[bars.length] + " · " : "") + tr.slice(2).trim();
+        continue;
+      }
       const line = raw.replace(/#.*/, "").trim();
       if (!line) { if (bars.length > secStart) { sec++; secStart = bars.length; } continue; }
       const beats = line.split(/[\s|]+/).filter(Boolean).slice(0, 12).map(b => b.split("-").map(tok => {
@@ -1074,6 +1095,7 @@ To To To-to To-to`;
       }));
       if (line.split(/[\s|]+/).filter(Boolean).length > 12) errors.push(`Linha ${lineNo}: mais de 12 tempos (o resto foi ignorado)`);
       bars.push(beats);
+      barVol.push(vol);
       secs.push(sec);
       if (beats.some(b => b.some(t => t && !t.startsWith("#")))) secHasHit[sec] = true;
     }
@@ -1085,7 +1107,7 @@ To To To-to To-to`;
     const barStart = [], beatBar = [], beatInBar = [];
     let total = 0;
     bars.forEach((bar, b) => { barStart[b] = total; bar.forEach((_, k) => { beatBar.push(b); beatInBar.push(k); }); total += bar.length; });
-    return { bars, sectionColor: secs.map(s => secColor[s]), section: secs, errors, barStart, beatBar, beatInBar, total };
+    return { bars, sectionColor: secs.map(s => secColor[s]), section: secs, errors, barStart, beatBar, beatInBar, total, notes, barVol };
   }
 
   // Lista de eventos em tempos (beats): toques e falas
@@ -1098,8 +1120,8 @@ To To To-to To-to`;
       const { base, vel } = tokParts(tok);
       if (RESTS[base]) { ev.push({ beat: at, slot, say: RESTS[base], sg: 0.9, rest: true, label: base }); return; }
       const h = HITS[base];
-      const v = vel == null ? 1 : Math.max(0.05, vel / 100);
-      ev.push({ beat: at, slot, drums: h.drums, vel: h.vel * v, mute: h.mute, say: h.say, sg: h.sg * Math.max(0.5, v), label: base });
+      const v = vel == null ? 1 : Math.max(0.05, vel / 100), bv = parsed.barVol ? parsed.barVol[b] / 100 : 1;
+      ev.push({ beat: at, slot, drums: h.drums, vel: h.vel * v * bv, mute: h.mute, say: h.say, sg: h.sg * Math.max(0.5, v), label: base });
     })));
     return ev.sort((a, b) => a.beat - b.beat);
   }
