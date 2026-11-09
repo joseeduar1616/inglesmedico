@@ -357,6 +357,29 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 .abas button[aria-pressed="true"] { background: var(--brass); color: var(--stage); }
 .abas button:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
 #v3d { display: block; width: 100%; height: calc(100dvh - 54px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); border: 0; background: var(--stage); }
+
+/* Letra grande (karaokê): só as linhas perto do momento, a atual enorme, cada sílaba acende na hora */
+.kara { position: fixed; inset: 0; z-index: 60; background: radial-gradient(120% 80% at 50% 40%, #1b1d26, #08090c); color: var(--fg); display: flex; flex-direction: column; padding: max(12px, env(safe-area-inset-top)) 16px max(14px, env(safe-area-inset-bottom)); }
+.kara header { display: flex; align-items: center; gap: 12px; }
+.kara header b { font: 800 clamp(22px, 6vw, 40px)/1 var(--f-display); letter-spacing: .02em; color: var(--brass); }
+.kara header span { flex: 1; font: 500 13px var(--f-mono); color: var(--muted); min-width: 0; }
+.kara .k-x { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: #ffffff10; color: var(--fg); font-size: 24px; cursor: pointer; }
+.k-view { position: relative; flex: 1; overflow: hidden; -webkit-mask: linear-gradient(transparent, #000 14%, #000 86%, transparent); mask: linear-gradient(transparent, #000 14%, #000 86%, transparent); }
+.k-roll { position: absolute; left: 0; right: 0; top: 42%; transition: transform .45s cubic-bezier(.3,.7,.2,1); }
+.k-l { display: flex; justify-content: center; align-items: baseline; gap: .45em; white-space: nowrap; padding: .08em 0; font: 800 var(--fs, 72px)/1.08 var(--f-display); transform-origin: 50% 50%; transition: transform .45s cubic-bezier(.3,.7,.2,1), opacity .45s, filter .45s; opacity: 0; transform: scale(.5); filter: blur(2px); }
+.k-l.cur { opacity: 1; transform: none; filter: none; }
+.k-l.prev { opacity: .28; transform: scale(.5); filter: none; }
+.k-l.next { opacity: .55; transform: scale(.62); filter: none; }
+.k-l.next2 { opacity: .25; transform: scale(.5); filter: none; }
+.k-b { display: inline-flex; gap: .12em; }
+.k-t { opacity: .3; transition: opacity .08s, transform .12s; display: inline-block; }
+.k-t sup { font-size: .45em; }
+.k-l.prev .k-t, .k-t.on { opacity: 1; }
+.k-t.now { transform: scale(1.18) translateY(-.04em); text-shadow: 0 0 .35em currentColor; }
+.k-t.dot { color: var(--muted); }
+.k-msg { position: absolute; left: 0; right: 0; top: 42%; text-align: center; font: 800 clamp(34px, 10vw, 90px)/1.1 var(--f-display); color: var(--brass); transform: translateY(-50%); }
+.kara footer { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.kara footer .lp { min-height: 52px; font-size: 17px; padding: 0 22px; }
 </style>
 
 <nav class="abas" aria-label="Escolher o simulador"><div>
@@ -365,6 +388,11 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 </div></nav>
 <iframe id="v3d" title="Surdos em 3D" hidden allow="fullscreen; autoplay" allowfullscreen></iframe>
 
+<div class="kara" id="kara" hidden role="dialog" aria-label="Letra grande">
+  <header><b id="kName"></b><span id="kInfo"></span><button class="k-x" id="kClose" type="button" aria-label="Fechar a letra grande">×</button></header>
+  <div class="k-view"><div class="k-roll" id="kRoll"></div><div class="k-msg" id="kMsg" hidden></div></div>
+  <footer><button class="lp" id="kPlay" type="button">▶ Tocar breque</button><button class="lp ens-go" id="kGo" type="button" hidden>👆 Começou!</button></footer>
+</div>
 <div class="wrap">
   <header>
     <h1>Surdos <span>de</span> Marcação</h1>
@@ -403,6 +431,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
     </div>
 
     <div class="bq-tools" id="bqTools">
+      <button class="chip" id="kOpen" type="button"><span>🎤 Letra grande</span></button>
       <button class="chip" id="bqNew" type="button"><span>+ Novo breque</span></button>
       <button class="chip" id="bqEdit" type="button"><span>Editar</span></button>
       <button class="chip" id="bqDup" type="button"><span>Duplicar</span></button>
@@ -2812,6 +2841,94 @@ To To To-to To-to`;
   ensBtn.addEventListener("click", () => ENS.on ? ensStop() : ensStart());
   $("ensGo").addEventListener("pointerdown", e => { e.preventDefault(); if (ENS.on) ensComecou(); else ensStart().then(() => { if (ENS.on) ensStatus("Microfone ligado. Agora aperte Começou! no primeiro toque do breque."); }); });
   bqSel.addEventListener("change", () => { if (ENS.on) { ENS.T = ensTemplates(); ENS.lock = null; ENS.last = null; ensDraw(true); } });
+
+  // ---------- Letra grande (karaokê) ----------
+  // Mostra só as linhas perto do momento: a anterior apagada, a atual enorme (cada sílaba acende quando toca) e as
+  // duas seguintes menores. Segue o breque tocando ou o Seguir o ensaio.
+  const K = { on: false, p: null, lines: [], toks: [], bar: -2, raf: 0, nowEl: null };
+  const kara = $("kara"), kRoll = $("kRoll"), kMsg = $("kMsg"), kName = $("kName"), kInfo = $("kInfo"), kPlay = $("kPlay"), kGo = $("kGo");
+  function kBuild(p) {
+    K.p = p; K.bar = -2; K.lines = []; K.toks = []; kRoll.innerHTML = "";
+    p.bars.forEach((bar, b) => {
+      const l = document.createElement("div"); l.className = "k-l"; const tk = [];
+      bar.forEach((beat, k) => {
+        const g = document.createElement("span"); g.className = "k-b";
+        beat.forEach((tok, j) => {
+          const t = document.createElement("span"); t.className = "k-t";
+          if (tok.startsWith("#")) { t.classList.add("tk-cnt"); t.textContent = tok.slice(1); }
+          else if (tok) { const { base, sup } = tokParts(tok); t.classList.add("tk-" + base); t.innerHTML = base + (sup ? `<sup>${sup}</sup>` : ""); }
+          else { t.classList.add("dot"); t.textContent = "·"; }
+          g.appendChild(t); tk.push([p.barStart[b] + k + j / beat.length, t]);
+        });
+        l.appendChild(g);
+      });
+      kRoll.appendChild(l); K.lines.push(l); K.toks.push(tk);
+    });
+    kFit();
+  }
+  // cada linha ganha o maior tamanho de letra que cabe na largura
+  function kFit() {
+    const W = kRoll.clientWidth - 8, big = Math.min(150, Math.max(44, innerWidth * 0.15));
+    for (const l of K.lines) { l.style.setProperty("--fs", big + "px"); l.style.width = "max-content"; const w = l.offsetWidth * 1.04; l.style.width = ""; if (w > W) l.style.setProperty("--fs", Math.max(22, big * W / w) + "px"); }
+    K.bar = -2;
+  }
+  function kSource() {
+    const t = ctx ? ctx.currentTime - (ctx.outputLatency || 0) : 0;
+    if (typeof ENS !== "undefined" && ENS.on) {
+      if (!ENS.lock) return { p: K.p && K.p === parsed ? parsed : parsed, name: current.name, pos: null, msg: ensSt.textContent };
+      const L0 = ENS.lock; return { p: L0.T.p, name: L0.T.b.name, pos: ensPos(t), info: `${Math.round(60 / L0.s)} bpm` };
+    }
+    if (bq.on) {
+      const s = spb(), sb = barBeat(startBar), span = totalBeats() - sb, rel = (t - bq.start) / s;
+      const pos = rel < 0 ? rel + sb : sb + (bqRepeat.checked ? rel % span : rel);
+      return { p: parsed, name: current.name + (seq.on ? ` · ${seq.i + 1} de ${BUILTIN.length}` : ""), pos, count: rel < 0 ? Math.min(4, Math.floor(rel + 5)) : 0, info: `${Math.round(60 / s)} bpm` };
+    }
+    return { p: parsed, name: current.name, pos: null, idle: true };
+  }
+  function kTick() {
+    if (!K.on) return;
+    const S = kSource();
+    if (S.p !== K.p) kBuild(S.p);
+    kName.textContent = S.name || "";
+    const P = K.p;
+    kPlay.textContent = bq.on ? "■ Parar" : "▶ Tocar breque"; kPlay.hidden = typeof ENS !== "undefined" && ENS.on;
+    kGo.hidden = !(typeof ENS !== "undefined" && ENS.on);
+    let bar = -1, pos = S.pos;
+    if (pos != null && pos >= 0 && pos < P.total) bar = P.beatBar[Math.floor(pos)];
+    else if (pos == null || pos < 0) bar = -1;
+    else bar = P.bars.length;   // acabou
+    const msg = S.count ? String(S.count) : pos == null ? (S.idle ? (startBar ? `Começa no compasso ${startBar + 1}` : "") : S.msg || "") : "";
+    kMsg.hidden = !msg; if (msg) kMsg.textContent = msg;
+    kInfo.textContent = bar >= 0 && bar < P.bars.length ? `compasso ${bar + 1} de ${P.bars.length}${S.info ? " · " + S.info : ""}` : (S.info || "");
+    // linha em foco (pode ser uma vaga antes da primeira ou depois da última); parado ou na contagem, mostra o começo como "próximas"
+    const show = bar < 0 ? startBar - 1 : bar, pre = bar < 0;
+    if (show !== K.bar) {
+      K.bar = show;
+      K.lines.forEach((l, i) => { const d = i - show; l.className = "k-l" + (d === 0 && !pre ? " cur" : d === -1 && !pre ? " prev" : d === 1 ? " next" : d === 2 ? " next2" : ""); });
+      const n = K.lines.length, ref = K.lines[Math.max(0, Math.min(n - 1, show))];
+      if (ref) { const h = ref.offsetHeight, y = ref.offsetTop + (show < 0 ? -h : show >= n ? h : 0) + h / 2; kRoll.style.transform = `translateY(${-y}px)`; }
+      if (K.nowEl) K.nowEl.classList.remove("now"); K.nowEl = null;
+      if (show >= 0 && K.toks[show]) K.toks[show].forEach(([, el]) => el.classList.remove("on"));
+    }
+    if (bar >= 0 && bar < P.bars.length && pos != null) {
+      let now = null;
+      for (const [b, el] of K.toks[bar]) { const on = b <= pos + 0.02; if (on !== el.classList.contains("on")) el.classList.toggle("on", on); if (on) now = el; }
+      if (now !== K.nowEl) { if (K.nowEl) K.nowEl.classList.remove("now"); K.nowEl = now; if (now) now.classList.add("now"); }
+    }
+    K.raf = requestAnimationFrame(kTick);
+  }
+  function kOpen(on) {
+    K.on = on; kara.hidden = !on; cancelAnimationFrame(K.raf);
+    document.documentElement.style.overflow = on ? "hidden" : "";
+    if (on) { K.p = null; kTick(); try { navigator.wakeLock && navigator.wakeLock.request("screen").then(w => K.wl = w).catch(() => {}); } catch (e) {} }
+    else { try { K.wl && K.wl.release(); } catch (e) {} K.wl = null; }
+  }
+  $("kOpen").addEventListener("click", () => kOpen(true));
+  $("kClose").addEventListener("click", () => kOpen(false));
+  kPlay.addEventListener("click", () => toggleBreque());
+  kGo.addEventListener("pointerdown", e => { e.preventDefault(); if (ENS.on) ensComecou(); });
+  addEventListener("keydown", e => { if (K.on && e.key === "Escape") kOpen(false); });
+  addEventListener("resize", () => { if (K.on && K.lines.length) kFit(); });
 
   lnMic.addEventListener("change", async () => {
     if (lnMic.checked) {
