@@ -1972,7 +1972,7 @@ To To To-to To-to`;
     if (ini === "3d") abrir("3d");
   })();
 
-  window.__surdos = { ensComecou: () => ensComecou(), ens: () => ENS, ensStart, ensStop, ensFeed: t => ensHit(t), get ctx() { return ctx; }, makeEngine, get P() { return P; }, get seq() { return seq; }, get bq() { return bq; }, get current() { return current; }, stopBreque, startBreque, renderOffline, voxBufs, decode: b => ctx.decodeAudioData(b), prep: async () => { ensureCtx(); await loadVox(); } };   // para gravar os breques fora da página (ferramentas)
+  window.__surdos = { ensComecou: () => ensComecou(), ens: () => ENS, ensStart, ensStop, ensFeed: t => ensHit(t), get ctx() { return ctx; }, makeEngine, get P() { return P; }, get seq() { return seq; }, get bq() { return bq; }, get current() { return current; }, get events() { return events; }, stopBreque, startBreque, renderOffline, voxBufs, decode: b => ctx.decodeAudioData(b), prep: async () => { ensureCtx(); await loadVox(); } };   // para gravar os breques fora da página (ferramentas)
   function pickMime(kind) {
     if (!window.MediaRecorder) return null;
     const list = kind === "video"
