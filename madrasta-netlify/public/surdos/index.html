@@ -391,7 +391,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 <div class="kara" id="kara" hidden role="dialog" aria-label="Letra grande">
   <header><b id="kName"></b><span id="kInfo"></span><button class="k-x" id="kClose" type="button" aria-label="Fechar a letra grande">×</button></header>
   <div class="k-view"><div class="k-roll" id="kRoll"></div><div class="k-msg" id="kMsg" hidden></div></div>
-  <footer><button class="lp" id="kPlay" type="button">▶ Tocar breque</button><button class="lp ens-go" id="kGo" type="button" hidden>👆 Começou!</button></footer>
+  <footer><button class="lp" id="kVoz" type="button" aria-pressed="true">🔊 Com voz</button><button class="lp" id="kPlay" type="button">▶ Tocar breque</button><button class="lp ens-go" id="kGo" type="button" hidden>👆 Começou!</button></footer>
 </div>
 <div class="wrap">
   <header>
@@ -2893,6 +2893,7 @@ To To To-to To-to`;
     const P = K.p;
     kPlay.textContent = bq.on ? "■ Parar" : "▶ Tocar breque"; kPlay.hidden = typeof ENS !== "undefined" && ENS.on;
     kGo.hidden = !(typeof ENS !== "undefined" && ENS.on);
+    const vz = !!voiceSel.value; if (kVoz.dataset.v !== String(vz)) { kVoz.dataset.v = String(vz); kVoz.textContent = vz ? "🔊 Com voz cantando" : "🔇 Sem voz (só a letra)"; kVoz.setAttribute("aria-pressed", String(vz)); kVoz.hidden = typeof ENS !== "undefined" && ENS.on; }
     let bar = -1, pos = S.pos;
     if (pos != null && pos >= 0 && pos < P.total) bar = P.beatBar[Math.floor(pos)];
     else if (pos == null || pos < 0) bar = -1;
@@ -2926,6 +2927,13 @@ To To To-to To-to`;
   $("kOpen").addEventListener("click", () => kOpen(true));
   $("kClose").addEventListener("click", () => kOpen(false));
   kPlay.addEventListener("click", () => toggleBreque());
+  const kVoz = $("kVoz");
+  // com ou sem a voz cantando: só troca a escolha de voz (vale na hora, até no meio do breque)
+  kVoz.addEventListener("click", () => {
+    if (voiceSel.value) { K.voz = voiceSel.value; voiceSel.value = ""; }
+    else { voiceSel.value = K.voz || "RT"; ensureCtx(); loadVox(); }
+    voiceSel.dispatchEvent(new Event("change", { bubbles: true }));
+  });
   kGo.addEventListener("pointerdown", e => { e.preventDefault(); if (ENS.on) ensComecou(); });
   addEventListener("keydown", e => { if (K.on && e.key === "Escape") kOpen(false); });
   addEventListener("resize", () => { if (K.on && K.lines.length) kFit(); });
