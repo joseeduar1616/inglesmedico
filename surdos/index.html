@@ -365,8 +365,11 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 .kara header span { flex: 1; font: 500 13px var(--f-mono); color: var(--muted); min-width: 0; }
 .kara .k-x { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: #ffffff10; color: var(--fg); font-size: 24px; cursor: pointer; }
 .k-view { position: relative; flex: 1; overflow: hidden; -webkit-mask: linear-gradient(transparent, #000 14%, #000 86%, transparent); mask: linear-gradient(transparent, #000 14%, #000 86%, transparent); }
-.k-roll { position: absolute; left: 0; right: 0; top: 42%; transition: transform .45s cubic-bezier(.3,.7,.2,1); }
-.k-l { display: flex; justify-content: center; align-items: baseline; gap: .45em; white-space: nowrap; padding: .08em 0; font: 800 var(--fs, 72px)/1.08 var(--f-display); transform-origin: 50% 50%; transition: transform .45s cubic-bezier(.3,.7,.2,1), opacity .45s, filter .45s; opacity: 0; transform: scale(.5); filter: blur(2px); }
+.k-roll { position: absolute; left: 0; right: 0; top: 42%; transition: transform .28s cubic-bezier(.3,.7,.2,1); }
+.k-aj { display: inline-flex; align-items: center; gap: 4px; font: 500 12px var(--f-mono); color: var(--muted); }
+.k-aj button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: #ffffff10; color: var(--fg); font-size: 18px; cursor: pointer; }
+.k-aj output { min-width: 62px; text-align: center; }
+.k-l { display: flex; justify-content: center; align-items: baseline; gap: .45em; white-space: nowrap; padding: .08em 0; font: 800 var(--fs, 72px)/1.08 var(--f-display); transform-origin: 50% 50%; transition: transform .28s cubic-bezier(.3,.7,.2,1), opacity .28s, filter .28s; opacity: 0; transform: scale(.5); filter: blur(2px); }
 .k-l.cur { opacity: 1; transform: none; filter: none; }
 .k-l.prev { opacity: .28; transform: scale(.5); filter: none; }
 .k-l.next { opacity: .55; transform: scale(.62); filter: none; }
@@ -389,7 +392,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 <iframe id="v3d" title="Surdos em 3D" hidden allow="fullscreen; autoplay" allowfullscreen></iframe>
 
 <div class="kara" id="kara" hidden role="dialog" aria-label="Letra grande">
-  <header><b id="kName"></b><span id="kInfo"></span><button class="k-x" id="kClose" type="button" aria-label="Fechar a letra grande">×</button></header>
+  <header><b id="kName"></b><span id="kInfo"></span><span class="k-aj" title="Se a letra estiver atrasada, aperte +; adiantada, aperte −">sincronia <button id="kMenos" type="button" aria-label="Letra mais tarde">−</button><output id="kAj">0,00 s</output><button id="kMais" type="button" aria-label="Letra mais cedo">+</button></span><button class="k-x" id="kClose" type="button" aria-label="Fechar a letra grande">×</button></header>
   <div class="k-view"><div class="k-roll" id="kRoll"></div><div class="k-msg" id="kMsg" hidden></div></div>
   <footer><button class="lp" id="kVoz" type="button" aria-pressed="true">🔊 Com voz</button><button class="lp" id="kPlay" type="button">▶ Tocar breque</button><button class="lp ens-go" id="kGo" type="button" hidden>👆 Começou!</button></footer>
 </div>
@@ -2876,12 +2879,12 @@ To To To-to To-to`;
     const t = ctx ? ctx.currentTime - (ctx.outputLatency || 0) : 0;
     if (typeof ENS !== "undefined" && ENS.on) {
       if (!ENS.lock) return { p: K.p && K.p === parsed ? parsed : parsed, name: current.name, pos: null, msg: ensSt.textContent };
-      const L0 = ENS.lock; return { p: L0.T.p, name: L0.T.b.name, pos: ensPos(t), info: `${Math.round(60 / L0.s)} bpm` };
+      const L0 = ENS.lock; return { p: L0.T.p, name: L0.T.b.name, pos: ensPos(t), s: L0.s, info: `${Math.round(60 / L0.s)} bpm` };
     }
     if (bq.on) {
       const s = spb(), sb = barBeat(startBar), span = totalBeats() - sb, rel = (t - bq.start) / s;
       const pos = rel < 0 ? rel + sb : sb + (bqRepeat.checked ? rel % span : rel);
-      return { p: parsed, name: current.name + (seq.on ? ` · ${seq.i + 1} de ${BUILTIN.length}` : ""), pos, count: rel < 0 ? Math.min(4, Math.floor(rel + 5)) : 0, info: `${Math.round(60 / s)} bpm` };
+      return { p: parsed, name: current.name + (seq.on ? ` · ${seq.i + 1} de ${BUILTIN.length}` : ""), pos, s, count: rel < 0 ? Math.min(4, Math.floor(rel + 5)) : 0, info: `${Math.round(60 / s)} bpm` };
     }
     return { p: parsed, name: current.name, pos: null, idle: true };
   }
@@ -2894,10 +2897,12 @@ To To To-to To-to`;
     kPlay.textContent = bq.on ? "■ Parar" : "▶ Tocar breque"; kPlay.hidden = typeof ENS !== "undefined" && ENS.on;
     kGo.hidden = !(typeof ENS !== "undefined" && ENS.on);
     const vz = !!voiceSel.value; if (kVoz.dataset.v !== String(vz)) { kVoz.dataset.v = String(vz); kVoz.textContent = vz ? "🔊 Com voz cantando" : "🔇 Sem voz (só a letra)"; kVoz.setAttribute("aria-pressed", String(vz)); kVoz.hidden = typeof ENS !== "undefined" && ENS.on; }
-    let bar = -1, pos = S.pos;
-    if (pos != null && pos >= 0 && pos < P.total) bar = P.beatBar[Math.floor(pos)];
+    // a linha entra ~0,3 s antes do compasso (para estar no lugar quando ele começa); a sílaba acende 0,06 s antes; mais o ajuste
+    let bar = -1, pos = S.pos == null ? null : S.pos + (0.06 + K.aj) / (S.s || 0.5);
+    const posL = pos == null ? null : pos + 0.25 / (S.s || 0.5);
+    if (posL != null && posL >= 0 && posL < P.total) bar = P.beatBar[Math.floor(posL)];
+    else if (posL != null && posL >= P.total) bar = P.bars.length;
     else if (pos == null || pos < 0) bar = -1;
-    else bar = P.bars.length;   // acabou
     const msg = S.count ? String(S.count) : pos == null ? (S.idle ? (startBar ? `Começa no compasso ${startBar + 1}` : "") : S.msg || "") : "";
     kMsg.hidden = !msg; if (msg) kMsg.textContent = msg;
     kInfo.textContent = bar >= 0 && bar < P.bars.length ? `compasso ${bar + 1} de ${P.bars.length}${S.info ? " · " + S.info : ""}` : (S.info || "");
@@ -2926,6 +2931,12 @@ To To To-to To-to`;
   }
   $("kOpen").addEventListener("click", () => kOpen(true));
   $("kClose").addEventListener("click", () => kOpen(false));
+  // ajuste fino da sincronia (cada aparelho/caixa de som tem o seu atraso); fica guardado neste aparelho
+  try { K.aj = +localStorage.getItem("surdos.letra.aj") || 0; } catch (e) { K.aj = 0; }
+  const kAjShow = () => { $("kAj").textContent = (K.aj > 0 ? "+" : "") + K.aj.toFixed(2).replace(".", ",") + " s"; try { localStorage.setItem("surdos.letra.aj", String(K.aj)); } catch (e) {} };
+  $("kMais").addEventListener("click", () => { K.aj = Math.min(1, Math.round((K.aj + 0.05) * 100) / 100); kAjShow(); });
+  $("kMenos").addEventListener("click", () => { K.aj = Math.max(-1, Math.round((K.aj - 0.05) * 100) / 100); kAjShow(); });
+  kAjShow();
   kPlay.addEventListener("click", () => toggleBreque());
   const kVoz = $("kVoz");
   // com ou sem a voz cantando: só troca a escolha de voz (vale na hora, até no meio do breque)
