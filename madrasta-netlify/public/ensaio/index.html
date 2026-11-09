@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A0E24">
+<title>Ensaio Ao Vivo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap">
+<style>
+/* Layout: uma coluna para o celular em cima do surdo: estado, botão do microfone, letra enorme, e os botões de ajuda (Começou!, de onde vamos, empurrar). */
+:root{--bg:#0A0E24;--panel:#131A3D;--panel-2:#1C2453;--edge:#29316A;--text:#EEF1FF;--muted:#98A0CF;--accent:#FFCF4A;--ink:#221A00;--live:#FF4D5E;--ok:#41D3BF;--font:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-tap-highlight-color:transparent}
+.wrap{max-width:820px;margin:0 auto;padding:max(12px,env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) max(28px,env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:12px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{margin:0;font-size:15px;font-weight:800;font-stretch:118%;letter-spacing:.06em;text-transform:uppercase}
+.brand em{font-style:normal;color:var(--accent)}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:99px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--edge);color:var(--muted);white-space:nowrap}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.pill.on{color:var(--text);border-color:color-mix(in srgb,var(--ok) 60%,transparent);background:color-mix(in srgb,var(--ok) 14%,transparent)}.pill.on i{background:var(--ok)}
+.pill.meio{color:var(--text);border-color:color-mix(in srgb,var(--accent) 60%,transparent)}.pill.meio i{background:var(--accent);animation:pulsa 1s ease-in-out infinite}
+@keyframes pulsa{50%{opacity:.25}}
+.agora{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.musica{margin:0;font-size:clamp(22px,6.5vw,36px);line-height:1.05;font-weight:800;font-stretch:112%}
+.info{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.msg{margin:0;font-size:14px;line-height:1.4;color:var(--muted);min-height:1.4em}
+.mic{min-height:64px;border-radius:16px;border:0;background:var(--accent);color:var(--ink);font:800 20px var(--font);font-stretch:110%;cursor:pointer}
+.mic.on{background:var(--panel);color:var(--text);border:1px solid var(--edge);min-height:44px;font-size:15px}
+.nivel{height:5px;border-radius:3px;background:var(--panel-2);overflow:hidden}.nivel i{display:block;height:100%;width:0;background:var(--ok)}
+.letra{position:relative;height:clamp(260px,46vh,440px);border-radius:16px;background:radial-gradient(120% 90% at 50% 45%,var(--panel-2),var(--bg));border:1px solid var(--edge);overflow:hidden}
+.letra.duvida .k-roll{opacity:.55}
+.k-view{position:absolute;inset:0;-webkit-mask:linear-gradient(transparent,#000 16%,#000 84%,transparent);mask:linear-gradient(transparent,#000 16%,#000 84%,transparent)}
+.k-roll{position:absolute;left:10px;right:10px;top:50%;transition:transform .28s cubic-bezier(.3,.7,.2,1),opacity .3s}
+.k-l{display:flex;justify-content:center;align-items:baseline;gap:.42em;white-space:nowrap;padding:.06em 0;font:800 var(--fs,60px)/1.08 var(--font);font-stretch:88%;transform-origin:50% 50%;transition:transform .28s cubic-bezier(.3,.7,.2,1),opacity .28s;opacity:0;transform:scale(.5)}
+.k-l.cur{opacity:1;transform:none}.k-l.prev{opacity:.3;transform:scale(.5)}.k-l.next{opacity:.6;transform:scale(.62)}.k-l.next2{opacity:.28;transform:scale(.5)}
+.k-b{display:inline-flex;gap:.1em}
+.k-t{opacity:.3;display:inline-block;transition:opacity .08s,transform .12s}
+.k-l.prev .k-t,.k-t.on{opacity:1}
+.k-t.now{transform:scale(1.18) translateY(-.04em);text-shadow:0 0 .35em currentColor}
+.k-To,.k-to,.k-Bo,.k-bo{color:#7DB3FF}.k-Pa,.k-pa,.k-ra,.k-ga{color:#41D3BF}.k-po,.k-Po,.k-ro,.k-go{color:#FFA052}.k-E,.k-ti{color:#FF7B7B;font-style:italic}.k-cnt{color:var(--accent)}.k-dot{color:var(--muted)}
+.k-msg{position:absolute;left:14px;right:14px;top:50%;transform:translateY(-50%);text-align:center;font-weight:800;font-stretch:108%;font-size:clamp(20px,5.6vw,34px);line-height:1.2}
+.k-msg small{display:block;font-size:.55em;font-weight:600;color:var(--muted);margin-top:8px;line-height:1.35}
+.go{min-height:68px;border-radius:16px;border:2px solid var(--accent);background:transparent;color:var(--accent);font:800 22px var(--font);cursor:pointer;touch-action:manipulation}
+.go:active{transform:scale(.98);background:var(--accent);color:var(--ink)}
+.eyebrow{margin:0;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:40px;padding:0 13px;border-radius:99px;border:1px solid var(--edge);background:var(--panel);color:var(--text);font:700 13px var(--font);cursor:pointer;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--ink);border-color:var(--accent)}
+.linha{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-size:13px;color:var(--muted)}
+.btn{min-height:42px;padding:0 13px;border-radius:10px;border:1px solid var(--edge);background:var(--panel);color:var(--text);font:700 14px var(--font);cursor:pointer;touch-action:manipulation}
+.btn.sm{min-width:42px;padding:0}
+output{font-variant-numeric:tabular-nums;min-width:58px;text-align:center;color:var(--text)}
+.nota{margin:0;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.mic:focus-visible,.go:focus-visible,.btn:focus-visible,.chip:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.pill.meio i{animation:none}.k-roll,.k-l,.k-t{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <p class="brand">Ensaio <em>Ao Vivo</em></p>
+    <span class="pill" id="pill"><i></i><span id="pillTxt">Desligado</span></span>
+  </header>
+
+  <div class="agora"><h1 class="musica" id="musica">Apresentação IMED</h1><span class="info" id="info"></span></div>
+  <p class="msg" id="msg" role="status">Ligue o microfone e deixe o celular perto da bateria. Quando ela tocar a apresentação, a letra dos surdos acompanha sozinha.</p>
+
+  <button class="mic" id="mic" type="button">🎙 Ligar o microfone</button>
+  <div class="nivel" aria-hidden="true"><i id="nivel"></i></div>
+
+  <section class="letra" id="letra" aria-label="Letra dos surdos">
+    <div class="k-view"><div class="k-roll" id="kRoll"></div><div class="k-msg" id="kMsg">A letra aparece aqui<small>grande, uma linha de cada vez, com cada sílaba acendendo na hora do toque</small></div></div>
+  </section>
+
+  <button class="go" id="go" type="button">👆 Começou!</button>
+
+  <section>
+    <p class="eyebrow" style="margin-bottom:6px">De onde a bateria vai começar? (opcional)</p>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <div class="linha">
+    <span>Letra fora do lugar?</span>
+    <button class="btn" id="eMenos4" type="button">◀ compasso</button>
+    <button class="btn" id="eMenos" type="button">◀ tempo</button>
+    <button class="btn" id="eMais" type="button">tempo ▶</button>
+    <button class="btn" id="eMais4" type="button">compasso ▶</button>
+  </div>
+  <div class="linha">
+    <span>Ajuste fino</span>
+    <button class="btn sm" id="ajMenos" type="button" aria-label="Letra mais tarde">−</button>
+    <output id="aj">0,00 s</output>
+    <button class="btn sm" id="ajMais" type="button" aria-label="Letra mais cedo">+</button>
+  </div>
+  <p class="nota">Como funciona: o celular ouve a bateria inteira e compara com a gravação da apresentação, então ele sabe a música toda. Se a bateria parar, a letra para; quando voltar (de onde parou ou do começo do trecho), ela volta. Se você avisar de onde vão começar, ou apertar <b>Começou!</b> no primeiro toque, ele acerta na hora; sem avisar, leva uns 10 segundos para se achar. O som não é gravado nem sai do seu celular.</p>
+</div>
+
+<script src="seguidor.js"></script>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const ls = { get(k, d) { try { const v = localStorage.getItem('ensaio.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('ensaio.' + k, JSON.stringify(v)); } catch (e) {} } };
+const mmss = s => { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+let META = null, LET = null, REF = null, motor = null, E = { estado: 'desligado', lock: null, conf: 0, f: 1, calado: true };
+let ctx = null, stream = null, amostras = 0, tChegou = 0, SR = 48000, ligado = false, AJ = ls.get('aj', 0);
+const LAT = 0.08;   // atraso típico do microfone + contas, em segundos
+
+const pronto = Promise.all([
+  fetch('ref.json').then(r => r.json()).then(d => { META = d; chips(); }),
+  fetch('letra.json').then(r => r.json()).then(d => { LET = d; }),
+  fetch('ref.bin').then(r => r.arrayBuffer()).then(b => { REF = b; }),
+]).catch(() => { $('msg').textContent = 'Não consegui carregar os dados da apresentação. Confira a internet e recarregue a página.'; });
+
+/* ---------- motor: o seguidor num Worker (ou aqui mesmo, se o navegador não deixar) ---------- */
+function criaMotor() {
+  const ini = { t: 'ini', ref: REF.slice(0), secs: META.secs, dur: META.dur, tatum: META.tatum, sr: SR };
+  try {
+    const w = new Worker('seguidor.js'); w.onmessage = e => { if (e.data.t === 'estado') E = e.data; };
+    w.postMessage(ini);
+    return { som: x => w.postMessage({ t: 'som', x }, [x.buffer]), cmd: (nome, arg) => w.postMessage({ t: 'cmd', nome, arg }), fim: () => w.terminate() };
+  } catch (e) {
+    const sg = new Seguidor(new Uint8Array(ini.ref), ini.secs, ini.dur, ini.tatum), ou = new Ouvido(SR);
+    const conta = () => { E = { estado: sg.estado, lock: sg.lock ? { p: sg.lock.p, t: sg.lock.t, f: sg.lock.f } : null, conf: sg.conf, f: sg.f, nq: sg.nq, calado: sg.calado, ult: sg.ult ? sg.ult.p : null, forcado: sg.forcado, fim: sg.fim }; };
+    return { som: x => ou.alimenta(x, (a, b, c, d, n) => { sg.quadro(a, b, c, d, n); if (sg.nq % 20 === 0) { sg.passo(); conta(); } }), cmd: (nome, arg) => { sg[nome](arg); conta(); }, fim: () => {} };
+  }
+}
+
+/* ---------- microfone ---------- */
+async function ligar() {
+  await pronto; if (!REF || !META || !LET) return;
+  $('msg').textContent = 'Pedindo o microfone…';
+  try {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('sem acesso');
+    stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+  } catch (e) {
+    $('msg').textContent = e && (e.name === 'NotAllowedError' || e.name === 'SecurityError') ? 'O microfone está bloqueado. Abra esta página no Safari ou no Chrome (não dentro de outro app) e permita o microfone.' : 'Não deu para ligar o microfone neste navegador.';
+    return;
+  }
+  const AC = window.AudioContext || window.webkitAudioContext; ctx = new AC(); SR = ctx.sampleRate;
+  if (ctx.state !== 'running') { try { await ctx.resume(); } catch (e) {} }
+  motor = criaMotor(); amostras = 0;
+  const src = ctx.createMediaStreamSource(stream), proc = ctx.createScriptProcessor(2048, 1, 1), mudo = ctx.createGain(); mudo.gain.value = 0;
+  proc.onaudioprocess = ev => {
+    const d = ev.inputBuffer.getChannelData(0), x = new Float32Array(d);
+    let s = 0; for (let i = 0; i < x.length; i += 8) s += x[i] * x[i];
+    nivelAgora = Math.sqrt(s / (x.length / 8));
+    amostras += x.length; tChegou = performance.now(); motor.som(x);
+  };
+  src.connect(proc).connect(mudo).connect(ctx.destination);
+  ligado = true; E = { estado: 'ouvindo', lock: null, conf: 0, f: 1, calado: true };
+  $('mic').classList.add('on'); $('mic').textContent = 'Desligar o microfone';
+  try { if (navigator.wakeLock) navigator.wakeLock.request('screen').catch(() => {}); } catch (e) {}
+  ctx._nos = [src, proc, mudo];
+}
+function desligar() {
+  ligado = false; try { ctx._nos.forEach(n => n.disconnect()); stream.getTracks().forEach(t => t.stop()); ctx.close(); motor.fim(); } catch (e) {}
+  ctx = stream = motor = null; E = { estado: 'desligado', lock: null, conf: 0, f: 1, calado: true };
+  $('mic').classList.remove('on'); $('mic').textContent = '🎙 Ligar o microfone'; $('nivel').style.width = '0%';
+}
+let nivelAgora = 0;
+$('mic').onclick = () => ligado ? desligar() : ligar();
+document.addEventListener('visibilitychange', () => { if (!document.hidden && ligado) { try { if (ctx.state !== 'running') ctx.resume(); if (navigator.wakeLock) navigator.wakeLock.request('screen').catch(() => {}); } catch (e) {} } });
+
+// segundos de som já ouvidos, no relógio do seguidor
+const tSom = () => amostras / SR + (performance.now() - tChegou) / 1000;
+const posAgora = () => E.lock && ligado ? E.lock.p + (tSom() + LAT + AJ - E.lock.t) * E.lock.f : null;
+
+/* ---------- ajuda manual ---------- */
+let combinado = null;
+function chips() {
+  META.musicas.forEach(([nome, t]) => {
+    const b = document.createElement('button'); b.className = 'chip'; b.type = 'button'; b.textContent = nome; b.setAttribute('aria-pressed', 'false');
+    b.onclick = () => {
+      const era = combinado === t; combinado = era ? null : t;
+      [...$('chips').children].forEach(c => c.setAttribute('aria-pressed', String(c === b && !era)));
+      if (motor && !era) motor.cmd('combinar', t);
+    };
+    $('chips').appendChild(b);
+  });
+}
+$('go').addEventListener('pointerdown', e => { e.preventDefault(); if (!ligado) { ligar(); return; } motor.cmd('comecou', combinado); });
+function tempoAqui(p) { for (const s of LET) for (const l of s.linhas) if (p >= l.a && p < l.z) { const n = Math.max(1, l.t[l.t.length - 1][2] + 1); return [(l.z - l.a) / n, l.z - l.a]; } return [0.46, 1.85]; }
+const empurra = (k, comp) => () => { const p = posAgora(); if (p == null) return; const [tb, tc] = tempoAqui(p); motor.cmd('empurra', k * (comp ? tc : tb)); };
+$('eMenos').onclick = empurra(-1, false); $('eMais').onclick = empurra(1, false); $('eMenos4').onclick = empurra(-1, true); $('eMais4').onclick = empurra(1, true);
+const ajShow = () => { $('aj').textContent = (AJ > 0 ? '+' : '') + AJ.toFixed(2).replace('.', ',') + ' s'; ls.set('aj', AJ); };
+$('ajMais').onclick = () => { AJ = Math.min(1, Math.round((AJ + .05) * 100) / 100); ajShow(); };
+$('ajMenos').onclick = () => { AJ = Math.max(-1, Math.round((AJ - .05) * 100) / 100); ajShow(); };
+ajShow();
+
+/* ---------- letra grande (karaokê) ---------- */
+const KA = { bq: null, lines: [], toks: [], foco: -9, nowEl: null }, kRoll = $('kRoll'), kMsg = $('kMsg');
+function kMontar(b) {
+  KA.bq = b; KA.lines = []; KA.toks = []; KA.foco = -9; kRoll.innerHTML = '';
+  b.linhas.forEach(Lh => {
+    const l = document.createElement('div'); l.className = 'k-l'; const tk = []; let g = null, gk = -1;
+    Lh.t.forEach(([t, tok, k]) => {
+      if (k !== gk) { g = document.createElement('span'); g.className = 'k-b'; l.appendChild(g); gk = k; }
+      const e = document.createElement('span'); e.className = 'k-t';
+      if (tok === '.' || tok === '_') { e.classList.add('k-dot'); e.textContent = '·'; }
+      else if (/^[1-9]$/.test(tok)) { e.classList.add('k-cnt'); e.textContent = tok; }
+      else { const m = tok.match(/^([^\d\[]+)(\d*)/) || [tok, tok, '']; e.classList.add('k-' + m[1]); e.textContent = m[1]; if (m[2]) { const sp = document.createElement('sup'); sp.textContent = m[2]; sp.style.fontSize = '.45em'; e.appendChild(sp); } }
+      g.appendChild(e); tk.push([t, e]);
+    });
+    kRoll.appendChild(l); KA.lines.push(l); KA.toks.push(tk);
+  });
+  kAjustar();
+}
+function kAjustar() {
+  const W = kRoll.clientWidth - 4, big = Math.min(120, Math.max(38, kRoll.clientWidth * .16));
+  for (const l of KA.lines) { l.style.setProperty('--fs', big + 'px'); l.style.width = 'max-content'; const w = l.offsetWidth * 1.04; l.style.width = ''; if (w > W) l.style.setProperty('--fs', Math.max(18, big * W / w) + 'px'); }
+  KA.foco = -9;
+}
+addEventListener('resize', () => { if (KA.lines.length) kAjustar(); });
+function letra(p, f) {
+  const t = p + 0.06 * f, tL = t + 0.25 * f;
+  let b = null; for (const x of LET) if (x.linhas[0].a <= tL) b = x;
+  if (b !== KA.bq && b) kMontar(b);
+  if (!b) return;
+  let i = -1; for (let j = 0; j < b.linhas.length; j++) if (b.linhas[j].a <= tL) i = j;
+  const fim = i === b.linhas.length - 1 && t > b.linhas[i].z + .05, foco = fim ? b.linhas.length : i;
+  if (foco !== KA.foco) {
+    KA.foco = foco;
+    KA.lines.forEach((l, j) => { const d = j - foco; l.className = 'k-l' + (d === 0 ? ' cur' : d === -1 ? ' prev' : d === 1 ? ' next' : d === 2 ? ' next2' : ''); });
+    const n = KA.lines.length, ref = KA.lines[Math.max(0, Math.min(n - 1, foco))];
+    if (ref) { const h = ref.offsetHeight, y = ref.offsetTop + (foco >= n ? h : 0) + h / 2; kRoll.style.transform = `translateY(${-y}px)`; }
+    if (KA.nowEl) KA.nowEl.classList.remove('now'); KA.nowEl = null;
+    if (KA.toks[foco]) KA.toks[foco].forEach(([, e]) => e.classList.remove('on'));
+  }
+  if (foco >= 0 && foco < KA.toks.length) {
+    let now = null; for (const [tt, e] of KA.toks[foco]) { const o = tt <= t + .02; if (o !== e.classList.contains('on')) e.classList.toggle('on', o); if (o) now = e; }
+    if (now !== KA.nowEl) { if (KA.nowEl) KA.nowEl.classList.remove('now'); KA.nowEl = now; if (now) now.classList.add('now'); }
+  }
+}
+
+/* ---------- tela ---------- */
+const TXT = { desligado: ['Desligado', ''], ouvindo: ['Ouvindo', ''], procurando: ['Procurando', 'meio'], conferindo: ['Conferindo', 'meio'], seguindo: ['Seguindo', 'on'], 'no relógio': ['No relógio', 'meio'], parado: ['Parou', ''], fim: ['Fim', ''] };
+const musicaEm = p => { let m = META.musicas[0]; for (const x of META.musicas) if (x[1] <= p + .05) m = x; return m; };
+function quadro() {
+  requestAnimationFrame(quadro);
+  if (!META || !LET) return;
+  const st = E.estado, [txt, cls] = TXT[st] || [st, ''], p = posAgora();
+  $('pillTxt').textContent = txt; $('pill').className = 'pill ' + cls;
+  $('nivel').style.width = ligado ? Math.min(100, Math.sqrt(nivelAgora) * 160).toFixed(0) + '%' : '0%';
+  if (p != null && p >= 0 && p < META.dur + 1) {
+    const f = E.lock.f, m = musicaEm(p), [tb] = tempoAqui(p);
+    $('musica').textContent = m[0]; $('info').textContent = `${mmss(p)} de ${mmss(META.dur)} · ${Math.round(60 * f / tb)} bpm`;
+    kMsg.hidden = true; kRoll.hidden = false; $('letra').classList.toggle('duvida', st === 'conferindo' || st === 'no relógio');
+    letra(p, f);
+    $('msg').textContent = st === 'conferindo' ? 'Conferindo se é este o lugar…' : st === 'no relógio' ? 'Não estou ouvindo bem: seguindo no andamento. Use ◀ ▶ se a letra sair do lugar.' : 'Seguindo a bateria.';
+  } else {
+    $('info').textContent = ''; kRoll.hidden = true; kMsg.hidden = false; KA.bq = null; KA.foco = -9; $('letra').classList.remove('duvida');
+    const onde = E.forcado != null ? musicaEm(E.forcado)[0] : E.ult != null ? musicaEm(E.ult)[0] : null;
+    if (!ligado) { kMsg.innerHTML = 'A letra aparece aqui<small>grande, uma linha de cada vez, com cada sílaba acendendo na hora do toque</small>'; }
+    else if (st === 'parado') { kMsg.innerHTML = `Parou<small>Quando a bateria voltar${onde ? ' (' + onde + ')' : ''}, a letra volta sozinha.</small>`; $('msg').textContent = 'A bateria parou.'; }
+    else if (st === 'fim') { kMsg.innerHTML = 'Fim da apresentação<small>Se forem tocar de novo, é só começar.</small>'; $('msg').textContent = 'Acabou a apresentação.'; }
+    else if (st === 'procurando') { kMsg.innerHTML = 'Procurando o lugar…<small>Leva uns segundos. Para ir direto, toque na música aí embaixo e aperte Começou! no primeiro toque.</small>'; $('msg').textContent = 'Ouvindo a bateria e procurando em que parte da apresentação ela está.'; }
+    else { kMsg.innerHTML = `Ouvindo…<small>${onde ? 'Combinado: começa em ' + onde + '.' : 'Pode começar a apresentação.'} A letra entra sozinha.</small>`; $('msg').textContent = 'Microfone ligado. Esperando a bateria.'; }
+    if (!ligado) $('musica').textContent = 'Apresentação IMED';
+  }
+}
+requestAnimationFrame(quadro);
+window.__ensaio = { get E() { return E; }, posAgora, tSom };
+})();
+</script>
+</body>
+</html>
