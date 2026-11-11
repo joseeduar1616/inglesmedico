@@ -233,7 +233,7 @@ function letra(p, f) {
 }
 
 /* ---------- tela ---------- */
-const TXT = { desligado: ['Desligado', ''], ouvindo: ['Ouvindo', ''], procurando: ['Procurando', 'meio'], conferindo: ['Conferindo', 'meio'], seguindo: ['Seguindo', 'on'], 'no relógio': ['No relógio', 'meio'], parado: ['Parou', ''], fim: ['Fim', ''] };
+const TXT = { desligado: ['Desligado', ''], ouvindo: ['Ouvindo', ''], procurando: ['Procurando', 'meio'], conferindo: ['Conferindo', 'meio'], entrando: ['Entrou', 'meio'], seguindo: ['Seguindo', 'on'], 'no relógio': ['No relógio', 'meio'], parado: ['Parou', ''], fim: ['Fim', ''] };
 const musicaEm = p => { let m = META.musicas[0]; for (const x of META.musicas) if (x[1] <= p + .05) m = x; return m; };
 function quadro() {
   requestAnimationFrame(quadro);
@@ -253,6 +253,7 @@ function quadro() {
     if (!ligado) { kMsg.innerHTML = 'A letra aparece aqui<small>grande, uma linha de cada vez, com cada sílaba acendendo na hora do toque</small>'; }
     else if (st === 'parado') { kMsg.innerHTML = `Parou<small>Quando a bateria voltar${onde ? ' (' + onde + ')' : ''}, a letra volta sozinha.</small>`; $('msg').textContent = 'A bateria parou.'; }
     else if (st === 'fim') { kMsg.innerHTML = 'Fim da apresentação<small>Se forem tocar de novo, é só começar.</small>'; $('msg').textContent = 'Acabou a apresentação.'; }
+    else if (st === 'entrando') { kMsg.innerHTML = 'Ouvindo a entrada…<small>Em 2 ou 3 segundos eu descubro de qual breque a bateria começou.</small>'; $('msg').textContent = 'A bateria entrou. Descobrindo de onde ela começou.'; }
     else if (st === 'procurando') { kMsg.innerHTML = 'Procurando o lugar…<small>Leva uns segundos. Para ir direto, toque na música aí embaixo e aperte Começou! no primeiro toque.</small>'; $('msg').textContent = 'Ouvindo a bateria e procurando em que parte da apresentação ela está.'; }
     else { kMsg.innerHTML = `Ouvindo…<small>${onde ? 'Combinado: começa em ' + onde + '.' : 'Pode começar a apresentação.'} A letra entra sozinha.</small>`; $('msg').textContent = 'Microfone ligado. Esperando a bateria.'; }
     if (!ligado) $('musica').textContent = 'Apresentação IMED';

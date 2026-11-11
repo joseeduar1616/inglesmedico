@@ -63,7 +63,7 @@
   const P = Seguidor.prototype;
   P.zera = function () {
     Object.assign(this, { nq: 0, lock: null, prov: 0, ult: null, forcado: null, f: 1, cand: null, baixa: 0, jaTravou: false, estado: "ouvindo", conf: 0,
-      alto: 0, med: 0, temSom: false, tMus: 0, tForte: 0, eraForte: true, provLug: [], provOk: false, rev: null, tRev: -1e9, ultSom: 0, alt: false, calado: true, tVolta: null, tBusca: -1e9, tDir: -1e9, fim: false, tap: null });
+      alto: 0, med: 0, temSom: false, tMus: 0, tForte: 0, eraForte: true, provLug: [], provAt: null, provOk: false, rev: null, tRev: -1e9, ultSom: 0, alt: false, calado: true, tVolta: null, tBusca: -1e9, tDir: -1e9, fim: false, tap: null });
   };
   P.agora = function () { return this.nq / FPS; };
   P.pos = function (t) { const L = this.lock; return L ? L.p + (t - L.t) * L.f : null; };
@@ -86,8 +86,8 @@
   P.ativRef = function (p0, p1) { const a = Math.max(0, Math.min(this.nR, Math.round(p0 * FPS))), b = Math.max(a, Math.min(this.nR, Math.round(p1 * FPS))); return b > a ? (this.atv[b] - this.atv[a]) / (b - a) : 0; };
 
   // janela ao vivo: os quadros com ataque dos últimos nW quadros (para comparar depressa com muitos lugares)
-  P.janela = function (nW) {
-    const S = this, n1 = S.nq, n0 = Math.max(0, n1 - nW), idx = [], val = []; let e = 0;
+  P.janela = function (nW, fim) {
+    const S = this, n1 = fim != null ? Math.min(S.nq, fim) : S.nq, n0 = Math.max(0, n1 - nW), idx = [], val = []; let e = 0;
     for (let n = n0; n < n1; n++) { const a = (n % S.cap) * NB, l = S.live; if (l[a] + l[a + 1] + l[a + 2] + l[a + 3] < 24) continue; idx.push(n1 - n); val.push(l[a], l[a + 1], l[a + 2], l[a + 3]); e += l[a] * l[a] + l[a + 1] * l[a + 1] + l[a + 2] * l[a + 2] + l[a + 3] * l[a + 3]; }
     return { idx, val, e, n: n1 - n0 };
   };
@@ -112,8 +112,8 @@
   };
 
   // pulso mais forte dos ataques (a "semicolcheia") nos últimos nW quadros: o maior período com coerência >= 85% da máxima
-  P.pulso = function (nW) {
-    const S = this, n1 = S.nq, n0 = Math.max(0, n1 - nW), o = new Float32Array(n1 - n0);
+  P.pulso = function (nW, fim) {
+    const S = this, n1 = fim != null ? Math.min(S.nq, fim) : S.nq, n0 = Math.max(0, n1 - nW), o = new Float32Array(n1 - n0);
     for (let n = n0; n < n1; n++) { const a = (n % S.cap) * NB; o[n - n0] = S.live[a] + S.live[a + 1] + S.live[a + 2] + S.live[a + 3]; }
     return pulsoDe(o);
   };
@@ -174,17 +174,57 @@
     if (!S.jaTravou && S.forcado == null) L.push(S.primeiroAtaque(0));
     return L;
   };
-  // a bateria (re)começou em tV: entre os lugares prováveis, qual explica melhor o som desde então (e em que andamento)?
-  P.dirigida = function (tV, lugares) {
-    const S = this, nW = Math.min(800, Math.round((S.agora() - tV) * FPS)); if (nW < 150) return null;
-    const J = S.janela(nW), dt = nW / FPS; let best = null;
-    // os lugares vêm em ordem de preferência: um lugar menos provável só ganha se for claramente melhor
-    lugares.forEach((c, k) => { for (let f = 0.62; f <= 1.28; f += 0.02) for (let d = -0.6; d <= 0.6001; d += 0.03) {
-      const s = S.sim(J, c + d + dt * f, f) - 0.03 * Math.abs(f - S.f) - 0.05 * k;
-      if (!best || s > best.c) best = { c: s, p: c + d + dt * f, f, lugar: c };
-    } });
-    if (best) { const b = S.ajuste(J, best.p, best.f, 0.04, 0.01, 0.012, 0.004); b.c = S.sim(J, b.p, b.f); b.lugar = best.lugar; return b; }
-    return null;
+  // todos os lugares onde a bateria pode entrar: os preferidos (sem desconto) e o começo de cada breque e de cada parte
+  // (tanto o instante em que o trecho começa quanto o primeiro toque forte dele, para o caso de a contagem ser em silêncio)
+  P.lugares = function () {
+    const S = this, L = [];
+    const poe = (p, pen) => { if (!L.some(q => Math.abs(q.p - p) < 0.4)) L.push({ p, pen }); };
+    if (S.forcado != null) { poe(S.primeiroAtaque(S.forcado), 0); poe(S.forcado, 0); }
+    if (S.ult) { const i = S.inicioDoTrecho(S.ult.p); poe(S.primeiroAtaque(i), 0); poe(i, 0); poe(S.ult.p, 0.02); }
+    const pen = S.forcado != null ? 0.08 : 0.03;
+    for (const x of S.secs) { poe(S.primeiroAtaque(x), pen); poe(Math.max(0, x), pen); }
+    return L;
+  };
+  // a bateria (re)começou em tV: entre esses lugares, qual explica melhor o som desde então (e em que andamento)?
+  // 1º: compara só os primeiros 2,6 s (rápido, todos os lugares e andamentos); 2º: confere os 6 melhores com tudo o que
+  // já ouviu. `atual`: lugar em que já está apostando (só troca se outro for claramente melhor).
+  P.dirigida = function (tV, lugares, atual, fAtual) {
+    const S = this, n0 = Math.round(tV * FPS), nT = Math.min(800, S.nq - n0); if (nT < 150) return null;
+    const nC = Math.min(nT, 260), Jc = S.janela(nC, n0 + nC), dc = nC / FPS, tops = [];
+    for (const L of lugares) {
+      const bonus = (atual != null && Math.abs(L.p - atual) < 0.4 ? 0.03 : 0) - L.pen; let m = null;
+      for (let f = 0.62; f <= 1.28; f += 0.02) for (let d = -0.5; d <= 0.5001; d += 0.03) {
+        const c = S.sim(Jc, L.p + d + dc * f, f) - 0.03 * Math.abs(f - S.f);
+        if (!m || c > m.c) m = { c, d, f, lugar: L.p, bonus };
+      }
+      if (m) { m.c += bonus; tops.push(m); }
+    }
+    // com mais de 3,5 s ouvidos: compara também a janela maior (até 5 s), nos andamentos que o pulso do ensaio indica para
+    // cada lugar (o começo de alguns breques, como uma contagem, só fica claro depois de alguns segundos)
+    if (nT >= 350 && S.tatum) {
+      const nL = Math.min(nT, 500), JL = S.janela(nL, n0 + nL), dl = nL / FPS, Tl = S.pulso(nL, n0 + nL), passo = 0.05 / dl;
+      lugares.forEach((L, i) => {
+        const m = tops[i], Tr = S.tatum[Math.max(0, Math.min(S.tatum.length - 1, Math.floor(L.p + dl / 2)))];
+        for (const h of HARM) { const f0 = Tr / Tl * h; if (f0 < 0.6 || f0 > 1.3) continue;
+          for (let f = f0 - 0.03; f <= f0 + 0.0301; f += passo) for (let d = -0.5; d <= 0.5001; d += 0.03) {
+            const c = S.sim(JL, L.p + d + dl * f, f) - 0.03 * Math.abs(f - S.f) + m.bonus + 0.02;   // janela maior vale um pouco mais
+            if (c > m.c) { m.c = c; m.d = d; m.f = f; }
+          } }
+      });
+    }
+    tops.sort((a, b) => b.c - a.c);
+    const J = S.janela(nT), dt = nT / FPS; let best = null, rival = 0;
+    const lista = tops.slice(0, 6), mAt = atual != null ? tops.find(m => Math.abs(m.lugar - atual) < 0.4) : null;
+    if (mAt && !lista.includes(mAt)) lista.push(mAt);   // o lugar em que já está apostando é sempre conferido de novo
+    for (const m of lista) {
+      let q = null;
+      if (m === mAt && fAtual) for (let f = fAtual - 0.03; f <= fAtual + 0.0301; f += 0.003) for (let d = -0.3; d <= 0.3001; d += 0.01) { const c = S.sim(J, m.lugar + d + dt * f, f); if (!q || c > q.c) q = { c, p: m.lugar + d + dt * f, f }; }
+      for (let f = m.f - 0.03; f <= m.f + 0.0301; f += 0.003) for (let d = m.d - 0.06; d <= m.d + 0.0601; d += 0.01) { const c = S.sim(J, m.lugar + d + dt * f, f); if (!q || c > q.c) q = { c, p: m.lugar + d + dt * f, f }; }
+      q.lugar = m.lugar; q.bonus = m.bonus; q.tot = q.c + m.bonus;
+      if (!best || q.tot > best.tot) { if (best) rival = Math.max(rival, best.tot); best = q; } else rival = Math.max(rival, q.tot);
+    }
+    if (best) best.margem = best.tot - rival;
+    return best;
   };
   P.trava = function (p, f, prov) {
     const S = this, t = S.agora(); S.lock = { p, t, f, desde: t }; S.prov = prov ? t : 0; S.baixa = 0; S.cand = null; S.jaTravou = true; S.fim = false; S.f = f;
@@ -206,15 +246,23 @@
     if (!S.temSom && S.nq >= 400 && t - S.tMus >= 1) { S.tMus = t; S.pulso(400); if (pulsoDe.coer >= 0.19) { S.temSom = true; S.ultSom = t; S.calado = false; } }
     // toque em "Começou!": confere o lugar exato e o andamento com o som que veio depois do toque
     if (S.tap && t >= S.tap.prox) {
-      const b = S.dirigida(S.tap.t, [S.tap.lugar]);
+      const b = S.dirigida(S.tap.t, [{ p: S.tap.lugar, pen: 0 }], null);
       if (b && b.c > 0.12) { S.lock = { p: b.p, t, f: b.f, desde: S.lock ? S.lock.desde : t, firme: t + 6 }; S.f = b.f; }
       if (t - S.tap.t > 7) { S.tap = null; S.prov = 0; S.forcado = null; S.ult = null; } else S.tap.prox = t + 1.5;
     }
     if (!S.lock) {
       if (S.calado) { S.estado = S.ult ? "parado" : "ouvindo"; S.cand = null; return; }
-      // a bateria voltou do silêncio: aposta já no lugar mais provável e mostra a letra
-      const pr = S.preferidos();
-      if (S.tVolta != null && t - S.tVolta < 1.0 && pr.length) { S.lock = { p: pr[0] + (t - S.tVolta) * S.f, t, f: S.f, desde: S.tVolta }; S.prov = t; S.provOk = false; S.provLug = pr; S.tDir = S.tVolta + 2.4; S.baixa = 0; S.estado = "conferindo"; return; }
+      // a bateria entrou (voltou do silêncio). Com lugar combinado, aposta nele já. Sem combinar, ouve 2,6 s e escolhe,
+      // entre o começo de todos os breques e partes, o que bate com o som (em vez de chutar o primeiro breque).
+      if (S.tVolta != null && t - S.tVolta < 6) {
+        if (S.forcado != null && t - S.tVolta < 1.0) { S.lock = { p: S.primeiroAtaque(S.forcado) + (t - S.tVolta) * S.f, t, f: S.f, desde: S.tVolta }; S.prov = t; S.provOk = false; S.provLug = S.lugares(); S.provAt = S.primeiroAtaque(S.forcado); S.tDir = S.tVolta + 2.4; S.baixa = 0; S.estado = "conferindo"; return; }
+        S.estado = "entrando";
+        if (t - S.tVolta >= 2.6 && t >= S.tDir) {
+          S.tDir = t + 1.2; const lug = S.lugares(), bb = S.dirigida(S.tVolta, lug, null);
+          if (bb && bb.c > 0.25 && bb.margem > 0) { S.lock = { p: bb.p, t, f: bb.f, desde: S.tVolta }; S.f = bb.f; S.prov = t; S.provOk = true; S.jaTravou = true; S.provLug = lug; S.provAt = bb.lugar; S.tDir = t + 1.6; S.baixa = 0; S.estado = "conferindo"; }
+        }
+        return;
+      }
       if (t - S.tBusca < 1.2) return; S.tBusca = t;
       S.alt = !S.alt; const b = S.busca(S.alt), bom = b && b.c >= (b.dica ? 0.2 : 0.26) && b.margem >= (b.dica ? 0.03 : 0.06);
       const c0 = S.cand, conf = bom && c0 && Math.abs(c0.p + (t - c0.t) * c0.f - b.p) < 0.4;
@@ -230,8 +278,8 @@
     }
     // logo depois de voltar do silêncio: confere entre os lugares prováveis qual é o certo e acerta o andamento
     if (S.prov && !S.tap && S.tVolta != null && t >= S.tDir && t - S.tVolta < 9) {
-      S.tDir = t + 1.6; const b = S.dirigida(S.tVolta, S.provLug);
-      if (b && b.c > 0.2) { L.p = b.p; L.t = t; L.f = b.f; S.f = b.f; p = b.p; S.provOk = true; S.jaTravou = true; }
+      S.tDir = t + 1.6; const b = S.dirigida(S.tVolta, S.provLug, S.provAt, S.provOk ? L.f : null);
+      if (b && b.c > 0.2) { L.p = b.p; L.t = t; L.f = b.f; S.f = b.f; p = b.p; S.provOk = true; S.jaTravou = true; S.provAt = b.lugar; }
       else if (!S.provOk && t - S.tVolta > 3.8) { S.lock = null; S.prov = 0; S.tVolta = null; S.temSom = false; S.calado = true; S.tMus = t - 0.5; S.estado = "ouvindo"; return; }   // não era a bateria (ou não é nenhum dos lugares prováveis): volta a esperar uma entrada ou um pulso
     }
     // seguindo: procura o melhor encaixe pertinho do lugar previsto e corrige devagar
