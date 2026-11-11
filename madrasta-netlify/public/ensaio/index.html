@@ -26,6 +26,8 @@ html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font
 .msg{margin:0;font-size:14px;line-height:1.4;color:var(--muted);min-height:1.4em}
 .mic{min-height:64px;border-radius:16px;border:0;background:var(--accent);color:var(--ink);font:800 20px var(--font);font-stretch:110%;cursor:pointer}
 .mic.on{background:var(--panel);color:var(--text);border:1px solid var(--edge);min-height:44px;font-size:15px}
+.modos{display:flex;gap:6px}.modo{flex:1;min-height:42px;border-radius:12px;border:1px solid var(--edge);background:var(--panel);color:var(--muted);font:700 13.5px var(--font);cursor:pointer}.modo[aria-pressed="true"]{background:var(--panel-2);color:var(--text);border-color:var(--accent)}
+.grava{border:1px dashed var(--edge);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
 .nivel{height:5px;border-radius:3px;background:var(--panel-2);overflow:hidden}.nivel i{display:block;height:100%;width:0;background:var(--ok)}
 .letra{position:relative;height:clamp(260px,46vh,440px);border-radius:16px;background:radial-gradient(120% 90% at 50% 45%,var(--panel-2),var(--bg));border:1px solid var(--edge);overflow:hidden}
 .letra.duvida .k-roll{opacity:.55}
@@ -65,6 +67,10 @@ output{font-variant-numeric:tabular-nums;min-width:58px;text-align:center;color:
   <div class="agora"><h1 class="musica" id="musica">Apresentação IMED</h1><span class="info" id="info"></span></div>
   <p class="msg" id="msg" role="status">Ligue o microfone e deixe o celular perto da bateria. Quando ela tocar a apresentação, a letra dos surdos acompanha sozinha.</p>
 
+  <div class="modos" role="group" aria-label="Como a letra anda">
+    <button class="modo" id="mAuto" type="button" aria-pressed="true">🎙 Ouvindo a bateria</button>
+    <button class="modo" id="mMan" type="button" aria-pressed="false">👆 Manual (sem ouvir)</button>
+  </div>
   <button class="mic" id="mic" type="button">🎙 Ligar o microfone</button>
   <div class="nivel" aria-hidden="true"><i id="nivel"></i></div>
 
@@ -73,6 +79,14 @@ output{font-variant-numeric:tabular-nums;min-width:58px;text-align:center;color:
   </section>
 
   <button class="go" id="go" type="button">👆 Começou!</button>
+  <div class="linha" id="manBox" hidden>
+    <button class="btn" id="manPara" type="button">⏸ Parar</button>
+    <span>Andamento</span>
+    <button class="btn sm" id="manMenos" type="button" aria-label="Mais devagar">−</button>
+    <output id="manBpm">130 bpm</output>
+    <button class="btn sm" id="manMais" type="button" aria-label="Mais rápido">+</button>
+    <button class="btn" id="manBate" type="button">🥁 Bater o tempo</button>
+  </div>
 
   <section>
     <p class="eyebrow" style="margin-bottom:6px">De onde a bateria vai começar? (opcional)</p>
@@ -92,7 +106,17 @@ output{font-variant-numeric:tabular-nums;min-width:58px;text-align:center;color:
     <output id="aj">0,00 s</output>
     <button class="btn sm" id="ajMais" type="button" aria-label="Letra mais cedo">+</button>
   </div>
-  <p class="nota">Como funciona: o celular ouve a bateria inteira e compara com a gravação da apresentação, então ele sabe a música toda. Se a bateria parar, a letra para; quando voltar (de onde parou ou do começo do trecho), ela volta. Se você avisar de onde vão começar, ou apertar <b>Começou!</b> no primeiro toque, ele acerta na hora; sem avisar, leva uns 10 segundos para se achar. O som não é gravado nem sai do seu celular.</p>
+  <section class="grava" id="gravaBox">
+    <p class="eyebrow">Não acertou? Me ajude a ajustar</p>
+    <p class="nota">Grave 1 minuto do ensaio por aqui (é o som que o celular está ouvindo) e mande o arquivo para o Claude na conversa, dizendo qual breque a bateria tocou. Com o som de verdade eu acerto o reconhecimento.</p>
+    <div class="linha">
+      <button class="btn" id="gravar" type="button">🔴 Gravar 1 minuto</button>
+      <button class="btn" id="enviar" type="button" hidden>📤 Enviar ou salvar a gravação</button>
+      <a class="btn" id="baixar" hidden style="display:none;align-items:center;text-decoration:none">⬇ Baixar a gravação</a>
+      <span id="gravaSt"></span>
+    </div>
+  </section>
+  <p class="nota">Como funciona: o celular ouve a bateria inteira e compara com a gravação da apresentação, então ele sabe a música toda. Se a bateria parar, a letra para; quando voltar (de onde parou ou do começo do trecho), ela volta. Se você avisar de onde vão começar, ou apertar <b>Começou!</b> no primeiro toque, ele acerta na hora; sem avisar, leva uns 10 segundos para se achar. O som só é gravado se você apertar <b>Gravar 1 minuto</b>, e o arquivo fica com você. No <b>modo manual</b> ele não ouve nada: você aperta Começou! no primeiro toque e acerta o andamento com − + ou batendo o tempo.</p>
 </div>
 
 <script src="seguidor.js"></script>
@@ -163,7 +187,15 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden && li
 
 // segundos de som já ouvidos, no relógio do seguidor
 const tSom = () => amostras / SR + (performance.now() - tChegou) / 1000;
-const posAgora = () => E.lock && ligado ? E.lock.p + (tSom() + LAT + AJ - E.lock.t) * E.lock.f : null;
+// modo manual: a letra anda no relógio a partir do toque em Começou!, no andamento escolhido (não depende do microfone)
+let MAN = ls.get('manual', false), MANF = ls.get('manf', 1), man = null;
+const posMan = () => man ? man.p + (man.parado ? 0 : (performance.now() - man.t) / 1000 * man.f) + AJ * man.f : null;
+const posAgora = () => MAN ? posMan() : E.lock && ligado ? E.lock.p + (tSom() + LAT + AJ - E.lock.t) * E.lock.f : null;
+const fAgora = () => MAN ? (man ? man.f : MANF) : E.lock ? E.lock.f : 1;
+// primeiro toque de verdade (não contagem) a partir de p, e o começo do trecho onde p está
+function primeiroToque(p) { for (const s of LET) for (const l of s.linhas) { if (l.z < p - 0.05) continue; for (const [t, tok] of l.t) if (t >= p - 0.05 && tok !== '.' && !/^[1-9]$/.test(tok)) return t; } return p; }
+function inicioTrecho(p) { let m = 0; for (const s of LET) if (s.linhas[0].a <= p + 0.05) m = s.linhas[0].a; return m; }
+function manAnda(p, f) { man = { p, t: performance.now(), f: f != null ? f : (man ? man.f : MANF), parado: false }; }
 
 /* ---------- ajuda manual ---------- */
 let combinado = null;
@@ -178,9 +210,13 @@ function chips() {
     $('chips').appendChild(b);
   });
 }
-$('go').addEventListener('pointerdown', e => { e.preventDefault(); if (!ligado) { ligar(); return; } motor.cmd('comecou', combinado); });
+$('go').addEventListener('pointerdown', e => {
+  e.preventDefault();
+  if (MAN) { if (!LET) return; const alvo = combinado != null ? combinado : man ? inicioTrecho(posMan()) : 0; manAnda(primeiroToque(alvo) + 0.12 * MANF, MANF); $('manPara').textContent = '⏸ Parar'; try { if (navigator.wakeLock) navigator.wakeLock.request('screen').catch(() => {}); } catch (x) {} return; }
+  if (!ligado) { ligar(); return; } motor.cmd('comecou', combinado);
+});
 function tempoAqui(p) { for (const s of LET) for (const l of s.linhas) if (p >= l.a && p < l.z) { const n = Math.max(1, l.t[l.t.length - 1][2] + 1); return [(l.z - l.a) / n, l.z - l.a]; } return [0.46, 1.85]; }
-const empurra = (k, comp) => () => { const p = posAgora(); if (p == null) return; const [tb, tc] = tempoAqui(p); motor.cmd('empurra', k * (comp ? tc : tb)); };
+const empurra = (k, comp) => () => { const p = posAgora(); if (p == null) return; const [tb, tc] = tempoAqui(p), dp = k * (comp ? tc : tb); if (MAN) man.p += dp; else motor.cmd('empurra', dp); };
 $('eMenos').onclick = empurra(-1, false); $('eMais').onclick = empurra(1, false); $('eMenos4').onclick = empurra(-1, true); $('eMais4').onclick = empurra(1, true);
 const ajShow = () => { $('aj').textContent = (AJ > 0 ? '+' : '') + AJ.toFixed(2).replace('.', ',') + ' s'; ls.set('aj', AJ); };
 $('ajMais').onclick = () => { AJ = Math.min(1, Math.round((AJ + .05) * 100) / 100); ajShow(); };
@@ -233,24 +269,26 @@ function letra(p, f) {
 }
 
 /* ---------- tela ---------- */
-const TXT = { desligado: ['Desligado', ''], ouvindo: ['Ouvindo', ''], procurando: ['Procurando', 'meio'], conferindo: ['Conferindo', 'meio'], entrando: ['Entrou', 'meio'], seguindo: ['Seguindo', 'on'], 'no relógio': ['No relógio', 'meio'], parado: ['Parou', ''], fim: ['Fim', ''] };
+const TXT = { desligado: ['Desligado', ''], ouvindo: ['Ouvindo', ''], procurando: ['Procurando', 'meio'], manual: ['Manual', 'on'], manual0: ['Manual', ''], conferindo: ['Conferindo', 'meio'], entrando: ['Entrou', 'meio'], seguindo: ['Seguindo', 'on'], 'no relógio': ['No relógio', 'meio'], parado: ['Parou', ''], fim: ['Fim', ''] };
 const musicaEm = p => { let m = META.musicas[0]; for (const x of META.musicas) if (x[1] <= p + .05) m = x; return m; };
 function quadro() {
   requestAnimationFrame(quadro);
   if (!META || !LET) return;
-  const st = E.estado, [txt, cls] = TXT[st] || [st, ''], p = posAgora();
+  const st = MAN ? (man ? (man.parado ? 'parado' : 'manual') : 'manual0') : E.estado, [txt, cls] = TXT[st] || [st, ''], p = posAgora();
   $('pillTxt').textContent = txt; $('pill').className = 'pill ' + cls;
   $('nivel').style.width = ligado ? Math.min(100, Math.sqrt(nivelAgora) * 160).toFixed(0) + '%' : '0%';
   if (p != null && p >= 0 && p < META.dur + 1) {
-    const f = E.lock.f, m = musicaEm(p), [tb] = tempoAqui(p);
+    const f = fAgora(), m = musicaEm(p), [tb] = tempoAqui(p);
+    if (MAN) $('manBpm').textContent = Math.round(60 * f / tb) + ' bpm';
     $('musica').textContent = m[0]; $('info').textContent = `${mmss(p)} de ${mmss(META.dur)} · ${Math.round(60 * f / tb)} bpm`;
     kMsg.hidden = true; kRoll.hidden = false; $('letra').classList.toggle('duvida', st === 'conferindo' || st === 'no relógio');
     letra(p, f);
-    $('msg').textContent = st === 'conferindo' ? 'Conferindo se é este o lugar…' : st === 'no relógio' ? 'Não estou ouvindo bem: seguindo no andamento. Use ◀ ▶ se a letra sair do lugar.' : 'Seguindo a bateria.';
+    $('msg').textContent = MAN ? (man.parado ? 'Parado. Aperte Continuar, ou Começou! para voltar ao começo do trecho.' : 'Modo manual: a letra anda no andamento escolhido. Use ◀ ▶ e − + para acertar.') : st === 'conferindo' ? 'Conferindo se é este o lugar…' : st === 'no relógio' ? 'Não estou ouvindo bem: seguindo no andamento. Use ◀ ▶ se a letra sair do lugar.' : 'Seguindo a bateria.';
   } else {
     $('info').textContent = ''; kRoll.hidden = true; kMsg.hidden = false; KA.bq = null; KA.foco = -9; $('letra').classList.remove('duvida');
     const onde = E.forcado != null ? musicaEm(E.forcado)[0] : E.ult != null ? musicaEm(E.ult)[0] : null;
-    if (!ligado) { kMsg.innerHTML = 'A letra aparece aqui<small>grande, uma linha de cada vez, com cada sílaba acendendo na hora do toque</small>'; }
+    if (MAN) { const onde2 = combinado != null ? musicaEm(combinado)[0] : 'Esquenta + Brahma'; kMsg.innerHTML = `Modo manual<small>Aperte Começou! no primeiro toque de ${onde2}. Para começar de outro breque, toque no nome dele aí embaixo.</small>`; $('msg').textContent = 'Modo manual: não uso o microfone. Você dá o começo e o andamento.'; $('musica').textContent = 'Apresentação IMED'; }
+    else if (!ligado) { kMsg.innerHTML = 'A letra aparece aqui<small>grande, uma linha de cada vez, com cada sílaba acendendo na hora do toque</small>'; }
     else if (st === 'parado') { kMsg.innerHTML = `Parou<small>Quando a bateria voltar${onde ? ' (' + onde + ')' : ''}, a letra volta sozinha.</small>`; $('msg').textContent = 'A bateria parou.'; }
     else if (st === 'fim') { kMsg.innerHTML = 'Fim da apresentação<small>Se forem tocar de novo, é só começar.</small>'; $('msg').textContent = 'Acabou a apresentação.'; }
     else if (st === 'entrando') { kMsg.innerHTML = 'Ouvindo a entrada…<small>Em 2 ou 3 segundos eu descubro de qual breque a bateria começou.</small>'; $('msg').textContent = 'A bateria entrou. Descobrindo de onde ela começou.'; }
@@ -260,6 +298,48 @@ function quadro() {
   }
 }
 requestAnimationFrame(quadro);
+
+/* ---------- modo manual ---------- */
+function modo(m) {
+  MAN = m; ls.set('manual', MAN); $('mAuto').setAttribute('aria-pressed', String(!MAN)); $('mMan').setAttribute('aria-pressed', String(MAN));
+  $('mic').hidden = MAN; document.querySelector('.nivel').hidden = MAN; $('manBox').hidden = !MAN; $('gravaBox').hidden = MAN;
+  if (MAN && ligado) desligar(); if (!MAN) man = null;
+}
+$('mAuto').onclick = () => modo(false); $('mMan').onclick = () => modo(true);
+$('manPara').onclick = () => { if (!man) return; if (man.parado) { man.t = performance.now(); man.parado = false; $('manPara').textContent = '⏸ Parar'; } else { man.p = posMan() - AJ * man.f; man.parado = true; $('manPara').textContent = '▶ Continuar'; } };
+function manTempo(f) { MANF = Math.min(1.6, Math.max(0.4, f)); ls.set('manf', MANF); if (man) { if (!man.parado) { man.p = posMan() - AJ * man.f; man.t = performance.now(); } man.f = MANF; } else $('manBpm').textContent = Math.round(130 * MANF) + ' bpm'; }
+$('manMenos').onclick = () => manTempo(MANF / 1.02); $('manMais').onclick = () => manTempo(MANF * 1.02);
+// bater o tempo: 4 toques no pulso da bateria dão o andamento
+let batidas = [];
+$('manBate').addEventListener('pointerdown', e => {
+  e.preventDefault(); const t = performance.now(); if (batidas.length && t - batidas[batidas.length - 1] > 2000) batidas = []; batidas.push(t);
+  $('manBate').textContent = batidas.length < 4 ? `🥁 ${batidas.length} de 4…` : '🥁 Bater o tempo';
+  if (batidas.length >= 4) { const iv = (batidas[batidas.length - 1] - batidas[batidas.length - 4]) / 3000, p = posAgora(), tb = p != null ? tempoAqui(p)[0] : 60 / 130; manTempo(tb / iv); batidas = []; }
+});
+manTempo(MANF); modo(MAN);
+
+/* ---------- gravar um trecho do ensaio para ajuste ---------- */
+let rec = null, pedacos = [], arquivo = null, recT = 0, recTimer = 0;
+$('gravar').onclick = async () => {
+  if (rec) { rec.stop(); return; }
+  if (!ligado) await ligar(); if (!stream) { $('gravaSt').textContent = 'Ligue o microfone primeiro.'; return; }
+  const tipo = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm'].find(t => window.MediaRecorder && MediaRecorder.isTypeSupported(t));
+  if (!tipo) { $('gravaSt').textContent = 'Este navegador não grava por aqui. Use o gravador do celular e me mande o áudio.'; return; }
+  pedacos = []; arquivo = null; $('enviar').hidden = true; $('baixar').hidden = true; $('baixar').style.display = 'none';
+  rec = new MediaRecorder(stream, { mimeType: tipo, audioBitsPerSecond: 128000 });
+  rec.ondataavailable = ev => { if (ev.data && ev.data.size) pedacos.push(ev.data); };
+  rec.onstop = () => {
+    clearInterval(recTimer); rec = null; $('gravar').textContent = '🔴 Gravar 1 minuto';
+    const blob = new Blob(pedacos, { type: tipo }); if (!blob.size) { $('gravaSt').textContent = 'Não gravou nada. Tente de novo.'; return; }
+    arquivo = new File([blob], 'ensaio-' + new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-') + (tipo.includes('mp4') ? '.m4a' : '.webm'), { type: tipo });
+    const a = $('baixar'); a.href = URL.createObjectURL(blob); a.download = arquivo.name;
+    if (navigator.canShare && navigator.canShare({ files: [arquivo] })) $('enviar').hidden = false; else { a.hidden = false; a.style.display = 'inline-flex'; }
+    $('gravaSt').textContent = `Gravado (${Math.round(blob.size / 1024)} KB). Mande o arquivo para o Claude e diga qual breque era.`;
+  };
+  rec.start(1000); recT = Date.now(); $('gravar').textContent = '⏹ Parar a gravação';
+  recTimer = setInterval(() => { const s = Math.round((Date.now() - recT) / 1000); $('gravaSt').textContent = `Gravando… ${s} s`; if (s >= 75 && rec) rec.stop(); }, 500);
+};
+$('enviar').onclick = async () => { try { await navigator.share({ files: [arquivo], title: 'Gravação do ensaio' }); } catch (e) { const a = $('baixar'); a.hidden = false; a.style.display = 'inline-flex'; } };
 window.__ensaio = { get E() { return E; }, posAgora, tSom };
 })();
 </script>
