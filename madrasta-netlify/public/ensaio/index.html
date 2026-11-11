@@ -65,11 +65,12 @@ output{font-variant-numeric:tabular-nums;min-width:58px;text-align:center;color:
   </header>
 
   <div class="agora"><h1 class="musica" id="musica">Apresentação IMED</h1><span class="info" id="info"></span></div>
-  <p class="msg" id="msg" role="status">Ligue o microfone e deixe o celular perto da bateria. Quando ela tocar a apresentação, a letra dos surdos acompanha sozinha.</p>
+  <p class="msg" id="msg" role="status">Ligue o microfone e deixe o celular perto dos surdos. Quando a bateria tocar a apresentação, a letra acompanha sozinha.</p>
 
   <div class="modos" role="group" aria-label="Como a letra anda">
-    <button class="modo" id="mAuto" type="button" aria-pressed="true">🎙 Ouvindo a bateria</button>
-    <button class="modo" id="mMan" type="button" aria-pressed="false">👆 Manual (sem ouvir)</button>
+    <button class="modo" id="mSur" type="button" aria-pressed="true">🥁 Pelos surdos</button>
+    <button class="modo" id="mAuto" type="button" aria-pressed="false">🎙 Bateria inteira</button>
+    <button class="modo" id="mMan" type="button" aria-pressed="false">👆 Manual</button>
   </div>
   <button class="mic" id="mic" type="button">🎙 Ligar o microfone</button>
   <div class="nivel" aria-hidden="true"><i id="nivel"></i></div>
@@ -106,6 +107,17 @@ output{font-variant-numeric:tabular-nums;min-width:58px;text-align:center;color:
     <output id="aj">0,00 s</output>
     <button class="btn sm" id="ajMais" type="button" aria-label="Letra mais cedo">+</button>
   </div>
+  <section class="grava" id="ensinaBox">
+    <p class="eyebrow">Ensinar o som dos surdos (opcional, acerta mais)</p>
+    <p class="nota">Com o resto em silêncio, toque no botão e bata <b>4 vezes, devagar, só naquele surdo</b>. Faça com a 1ª e com a 2ª (a 3ª é opcional). Fica guardado neste celular.</p>
+    <div class="linha">
+      <button class="btn" id="ens0" type="button">Ensinar a 1ª</button>
+      <button class="btn" id="ens1" type="button">Ensinar a 2ª</button>
+      <button class="btn" id="ens2" type="button">Ensinar a 3ª</button>
+      <button class="btn" id="ensZera" type="button">Esquecer</button>
+    </div>
+    <p class="nota" id="ensSt" role="status"></p>
+  </section>
   <section class="grava" id="gravaBox">
     <p class="eyebrow">Não acertou? Me ajude a ajustar</p>
     <p class="nota">Grave 1 minuto do ensaio por aqui (é o som que o celular está ouvindo) e mande o arquivo para o Claude na conversa, dizendo qual breque a bateria tocou. Com o som de verdade eu acerto o reconhecimento.</p>
@@ -116,7 +128,7 @@ output{font-variant-numeric:tabular-nums;min-width:58px;text-align:center;color:
       <span id="gravaSt"></span>
     </div>
   </section>
-  <p class="nota">Como funciona: o celular ouve a bateria inteira e compara com a gravação da apresentação, então ele sabe a música toda. Se a bateria parar, a letra para; quando voltar (de onde parou ou do começo do trecho), ela volta. Se você avisar de onde vão começar, ou apertar <b>Começou!</b> no primeiro toque, ele acerta na hora; sem avisar, leva uns 10 segundos para se achar. O som só é gravado se você apertar <b>Gravar 1 minuto</b>, e o arquivo fica com você. No <b>modo manual</b> ele não ouve nada: você aperta Começou! no primeiro toque e acerta o andamento com − + ou batendo o tempo.</p>
+  <p class="nota">Como funciona: em <b>Pelos surdos</b> o celular ouve só os graves (a primeira, a segunda e a terceira) e compara com o que os surdos tocam na apresentação, então ele sabe a música toda; em <b>Bateria inteira</b> ele compara o som de todos os instrumentos (para o celular longe dos surdos). Se a bateria parar, a letra para; quando voltar (de onde parou ou do começo do trecho), ela volta. Se você avisar de onde vão começar, ou apertar <b>Começou!</b> no primeiro toque, ele acerta na hora; sem avisar, leva uns 10 segundos para se achar. O som só é gravado se você apertar <b>Gravar 1 minuto</b>, e o arquivo fica com você. No <b>modo manual</b> ele não ouve nada: você aperta Começou! no primeiro toque e acerta o andamento com − + ou batendo o tempo.</p>
 </div>
 
 <script src="seguidor.js"></script>
@@ -125,7 +137,7 @@ output{font-variant-numeric:tabular-nums;min-width:58px;text-align:center;color:
 const $ = id => document.getElementById(id);
 const ls = { get(k, d) { try { const v = localStorage.getItem('ensaio.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('ensaio.' + k, JSON.stringify(v)); } catch (e) {} } };
 const mmss = s => { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
-let META = null, LET = null, REF = null, motor = null, E = { estado: 'desligado', lock: null, conf: 0, f: 1, calado: true };
+let META = null, LET = null, REF = null, METAS = null, REFS = null, motor = null, E = { estado: 'desligado', lock: null, conf: 0, f: 1, calado: true };
 let ctx = null, stream = null, amostras = 0, tChegou = 0, SR = 48000, ligado = false, AJ = ls.get('aj', 0);
 const LAT = 0.08;   // atraso típico do microfone + contas, em segundos
 
@@ -133,17 +145,23 @@ const pronto = Promise.all([
   fetch('ref.json').then(r => r.json()).then(d => { META = d; chips(); }),
   fetch('letra.json').then(r => r.json()).then(d => { LET = d; }),
   fetch('ref.bin').then(r => r.arrayBuffer()).then(b => { REF = b; }),
+  fetch('ref-surdos.json').then(r => r.json()).then(d => { METAS = d; }),
+  fetch('ref-surdos.bin').then(r => r.arrayBuffer()).then(b => { REFS = b; }),
 ]).catch(() => { $('msg').textContent = 'Não consegui carregar os dados da apresentação. Confira a internet e recarregue a página.'; });
 
 /* ---------- motor: o seguidor num Worker (ou aqui mesmo, se o navegador não deixar) ---------- */
 function criaMotor() {
-  const ini = { t: 'ini', ref: REF.slice(0), secs: META.secs, dur: META.dur, tatum: META.tatum, sr: SR };
+  // pelos surdos: ouve só os graves e separa 1ª, 2ª e 3ª pelos moldes ensinados (sem moldes, usa só as batidas graves)
+  const tem = k => Array.isArray(MOLDES[k]) && MOLDES[k].length === 75, duas = tem(0) && tem(1);
+  const ini = OUV === 'surdos'
+    ? { t: 'ini', ref: REFS.slice(0), secs: METAS.secs, dur: METAS.dur, tatum: METAS.tatum, sr: SR, surdos: true, moldes: duas ? [MOLDES[0], MOLDES[1], tem(2) ? MOLDES[2] : null] : [], op: { pesos: duas ? [1, 1, tem(2) ? 0.5 : 0, 1] : [0, 0, 0, 1], pulso: 3 } }
+    : { t: 'ini', ref: REF.slice(0), secs: META.secs, dur: META.dur, tatum: META.tatum, sr: SR };
   try {
     const w = new Worker('seguidor.js'); w.onmessage = e => { if (e.data.t === 'estado') E = e.data; };
     w.postMessage(ini);
     return { som: x => w.postMessage({ t: 'som', x }, [x.buffer]), cmd: (nome, arg) => w.postMessage({ t: 'cmd', nome, arg }), fim: () => w.terminate() };
   } catch (e) {
-    const sg = new Seguidor(new Uint8Array(ini.ref), ini.secs, ini.dur, ini.tatum), ou = new Ouvido(SR);
+    const sg = new Seguidor(new Uint8Array(ini.ref), ini.secs, ini.dur, ini.tatum, ini.op), ou = ini.surdos ? new OuvidoSurdos(SR, ini.moldes) : new Ouvido(SR);
     const conta = () => { E = { estado: sg.estado, lock: sg.lock ? { p: sg.lock.p, t: sg.lock.t, f: sg.lock.f } : null, conf: sg.conf, f: sg.f, nq: sg.nq, calado: sg.calado, ult: sg.ult ? sg.ult.p : null, forcado: sg.forcado, fim: sg.fim }; };
     return { som: x => ou.alimenta(x, (a, b, c, d, n) => { sg.quadro(a, b, c, d, n); if (sg.nq % 20 === 0) { sg.passo(); conta(); } }), cmd: (nome, arg) => { sg[nome](arg); conta(); }, fim: () => {} };
   }
@@ -151,7 +169,7 @@ function criaMotor() {
 
 /* ---------- microfone ---------- */
 async function ligar() {
-  await pronto; if (!REF || !META || !LET) return;
+  await pronto; if (!REF || !META || !LET || !REFS || !METAS) return;
   $('msg').textContent = 'Pedindo o microfone…';
   try {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) throw new Error('sem acesso');
@@ -168,6 +186,7 @@ async function ligar() {
     const d = ev.inputBuffer.getChannelData(0), x = new Float32Array(d);
     let s = 0; for (let i = 0; i < x.length; i += 8) s += x[i] * x[i];
     nivelAgora = Math.sqrt(s / (x.length / 8));
+    if (capt) capt.push(new Float32Array(x));
     amostras += x.length; tChegou = performance.now(); motor.som(x);
   };
   src.connect(proc).connect(mudo).connect(ctx.destination);
@@ -181,7 +200,8 @@ function desligar() {
   ctx = stream = motor = null; E = { estado: 'desligado', lock: null, conf: 0, f: 1, calado: true };
   $('mic').classList.remove('on'); $('mic').textContent = '🎙 Ligar o microfone'; $('nivel').style.width = '0%';
 }
-let nivelAgora = 0;
+let nivelAgora = 0, capt = null;
+let OUV = ls.get('ouvido', 'surdos'), MOLDES = ls.get('moldes', [null, null, null]);
 $('mic').onclick = () => ligado ? desligar() : ligar();
 document.addEventListener('visibilitychange', () => { if (!document.hidden && ligado) { try { if (ctx.state !== 'running') ctx.resume(); if (navigator.wakeLock) navigator.wakeLock.request('screen').catch(() => {}); } catch (e) {} } });
 
@@ -300,12 +320,36 @@ function quadro() {
 requestAnimationFrame(quadro);
 
 /* ---------- modo manual ---------- */
-function modo(m) {
-  MAN = m; ls.set('manual', MAN); $('mAuto').setAttribute('aria-pressed', String(!MAN)); $('mMan').setAttribute('aria-pressed', String(MAN));
-  $('mic').hidden = MAN; document.querySelector('.nivel').hidden = MAN; $('manBox').hidden = !MAN; $('gravaBox').hidden = MAN;
+function modo(m, ouv) {
+  const mudou = ouv && ouv !== OUV; if (ouv) { OUV = ouv; ls.set('ouvido', OUV); }
+  MAN = m; ls.set('manual', MAN); $('mSur').setAttribute('aria-pressed', String(!MAN && OUV === 'surdos')); $('mAuto').setAttribute('aria-pressed', String(!MAN && OUV === 'inteira')); $('mMan').setAttribute('aria-pressed', String(MAN));
+  $('mic').hidden = MAN; document.querySelector('.nivel').hidden = MAN; $('manBox').hidden = !MAN; $('gravaBox').hidden = MAN; $('ensinaBox').hidden = MAN || OUV !== 'surdos';
   if (MAN && ligado) desligar(); if (!MAN) man = null;
+  if (!MAN && mudou && ligado) reiniciaMotor();
 }
-$('mAuto').onclick = () => modo(false); $('mMan').onclick = () => modo(true);
+function reiniciaMotor() { if (!ligado) return; try { motor.fim(); } catch (e) {} motor = criaMotor(); amostras = 0; tChegou = performance.now(); E = { estado: 'ouvindo', lock: null, conf: 0, f: 1, calado: true }; }
+$('mSur').onclick = () => modo(false, 'surdos'); $('mAuto').onclick = () => modo(false, 'inteira'); $('mMan').onclick = () => modo(true);
+
+/* ---------- ensinar o som de cada surdo ---------- */
+const NOMES = ['1ª', '2ª', '3ª'];
+function ensShow(txt) {
+  NOMES.forEach((n, k) => { const ok = Array.isArray(MOLDES[k]) && MOLDES[k].length === 75; $('ens' + k).textContent = (ok ? '✓ ' : 'Ensinar a ') + n + (ok && MOLDES[k].hz ? '' : ''); });
+  const t1 = Array.isArray(MOLDES[0]), t2 = Array.isArray(MOLDES[1]);
+  $('ensSt').textContent = txt || (t1 && t2 ? 'Som da 1ª e da 2ª aprendido: o celular separa Po, Pa e To.' : t1 || t2 ? 'Falta ensinar a ' + (t1 ? '2ª' : '1ª') + ' para separar Po de Pa.' : 'Sem ensinar, ele segue só pelas batidas graves (já funciona; ensinando, acerta mais).');
+}
+async function ensina(k) {
+  if (capt) return; if (!ligado) await ligar(); if (!ligado) return;
+  capt = []; let s = 6; ensShow(`Bata 4 vezes só na ${NOMES[k]}, devagar… ${s}`);
+  const tm = setInterval(() => { s--; if (s > 0) { ensShow(`Bata 4 vezes só na ${NOMES[k]}, devagar… ${s}`); return; }
+    clearInterval(tm); const partes = capt; capt = null; const n = partes.reduce((a, x) => a + x.length, 0), x = new Float32Array(n); let o = 0; for (const p of partes) { x.set(p, o); o += p.length; }
+    const r = OuvidoSurdos.aprende(x, SR);
+    if (!r || r.toques < 2) { ensShow(`Não ouvi os toques da ${NOMES[k]}. Tente de novo, mais perto e com o resto em silêncio.`); return; }
+    MOLDES[k] = r.molde; ls.set('moldes', MOLDES); ensShow(`${NOMES[k]} aprendida: ${r.toques} toques, som principal em ${r.hz} Hz.`); reiniciaMotor();
+  }, 1000);
+}
+[0, 1, 2].forEach(k => { $('ens' + k).onclick = () => ensina(k); });
+$('ensZera').onclick = () => { MOLDES = [null, null, null]; ls.set('moldes', MOLDES); ensShow('Esqueci o som dos surdos.'); reiniciaMotor(); };
+ensShow();
 $('manPara').onclick = () => { if (!man) return; if (man.parado) { man.t = performance.now(); man.parado = false; $('manPara').textContent = '⏸ Parar'; } else { man.p = posMan() - AJ * man.f; man.parado = true; $('manPara').textContent = '▶ Continuar'; } };
 function manTempo(f) { MANF = Math.min(1.6, Math.max(0.4, f)); ls.set('manf', MANF); if (man) { if (!man.parado) { man.p = posMan() - AJ * man.f; man.t = performance.now(); } man.f = MANF; } else $('manBpm').textContent = Math.round(130 * MANF) + ' bpm'; }
 $('manMenos').onclick = () => manTempo(MANF / 1.02); $('manMais').onclick = () => manTempo(MANF * 1.02);
@@ -316,7 +360,7 @@ $('manBate').addEventListener('pointerdown', e => {
   $('manBate').textContent = batidas.length < 4 ? `🥁 ${batidas.length} de 4…` : '🥁 Bater o tempo';
   if (batidas.length >= 4) { const iv = (batidas[batidas.length - 1] - batidas[batidas.length - 4]) / 3000, p = posAgora(), tb = p != null ? tempoAqui(p)[0] : 60 / 130; manTempo(tb / iv); batidas = []; }
 });
-manTempo(MANF); modo(MAN);
+manTempo(MANF); modo(MAN, OUV);
 
 /* ---------- gravar um trecho do ensaio para ajuste ---------- */
 let rec = null, pedacos = [], arquivo = null, recT = 0, recTimer = 0;
