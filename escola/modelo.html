@@ -1,0 +1,383 @@
+<title>Escola dos Breques</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap">
+<style>
+/* Layout: apostila de uma coluna para o celular em cima do surdo: escolhe o breque, vê o raio-X (o que repete), treina um pedaço por vez no cartão de treino e marca o passo a passo. */
+:root{
+  --bg:#FBF7EF; --card:#FFFFFF; --ink:#1D1B26; --muted:#6B6878; --line:#E4DED0; --soft:#F2ECDF;
+  --accent:#E4572E; --accent-ink:#FFFFFF; --ok:#1E9E62;
+  --to:#D7263D; --po:#0E9F4F; --pa:#1D6FE0; --bo:#7B2FBF; --e:#8A8794; --cnt:#B07A00;
+  --font:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#14131B; --card:#1E1C28; --ink:#F3F0FA; --muted:#A39FB5; --line:#34313F; --soft:#262331;
+  --accent:#FF7A50; --accent-ink:#1A0E08; --ok:#4BD496;
+  --to:#FF6B7C; --po:#4FD98B; --pa:#6FA8FF; --bo:#C08BFF; --e:#9D99AC; --cnt:#F2C14E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14131B; --card:#1E1C28; --ink:#F3F0FA; --muted:#A39FB5; --line:#34313F; --soft:#262331;
+  --accent:#FF7A50; --accent-ink:#1A0E08; --ok:#4BD496;
+  --to:#FF6B7C; --po:#4FD98B; --pa:#6FA8FF; --bo:#C08BFF; --e:#9D99AC; --cnt:#F2C14E; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px 48px;display:flex;flex-direction:column;gap:18px}
+h1{margin:0;font-size:clamp(28px,8vw,42px);line-height:1;font-weight:900;font-stretch:112%;letter-spacing:-.01em;text-wrap:balance}
+h1 em{font-style:normal;color:var(--accent)}
+h2{margin:0;font-size:20px;font-weight:800;font-stretch:108%;text-wrap:balance}
+h3{margin:0;font-size:15px;font-weight:800}
+p{margin:0}
+.lead{color:var(--muted);max-width:60ch}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;margin-inline:-2px;padding-inline:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:0 13px;border-radius:99px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:700 14px var(--font);cursor:pointer;white-space:nowrap}
+.chip small{font-size:11px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:var(--bg);opacity:.75}
+.chip.feito small{color:var(--ok)}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.fatos{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px}
+.fatos b{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;margin-right:4px}
+.mapa{display:flex;flex-direction:column;gap:6px}
+.mlinha{display:flex;align-items:center;gap:8px}
+.mlinha>span{flex:none;width:52px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.mq{display:flex;flex-wrap:wrap;gap:4px;min-width:0}
+.q{--h:#888;min-width:34px;height:34px;padding:0 4px;border-radius:9px;border:0;background:color-mix(in srgb,var(--h) 22%,var(--card));color:var(--ink);font:800 13px var(--font);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 -3px 0 var(--h)}
+.q.conta{background:var(--soft);box-shadow:none;color:var(--muted)}
+.q.sel{outline:3px solid var(--accent);outline-offset:1px}
+.dicas{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:5px;font-size:14px}
+.treino{position:relative;border-color:var(--accent)}
+.thead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.vez{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px;background:var(--soft);color:var(--muted)}
+.vez.sua{background:var(--accent);color:var(--accent-ink)}
+.palco{display:flex;flex-direction:column;gap:6px;max-height:46vh;overflow-y:auto;border-radius:12px;scrollbar-width:thin}
+.cp{display:grid;grid-template-columns:26px repeat(var(--n,4),minmax(0,1fr));gap:4px;align-items:stretch;border-radius:12px;padding:3px;transition:background .15s}
+.cp.agora{background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.cp .num{font-size:11px;font-weight:800;color:var(--muted);align-self:center;text-align:right;font-variant-numeric:tabular-nums}
+.bt{background:var(--soft);border-radius:9px;padding:6px 2px;display:flex;justify-content:center;align-items:center;gap:.24em;white-space:nowrap;font-weight:900;font-size:var(--fs,22px);font-stretch:88%;line-height:1.1;min-width:0}
+.cp.dif .bt.mud{box-shadow:inset 0 0 0 2px var(--accent)}
+.tk{opacity:.42;transition:opacity .06s,transform .1s;display:inline-block}
+.tk.on{opacity:1}.tk.now{transform:scale(1.22);opacity:1}
+.palco.parado .tk{opacity:1}
+.s-To{color:var(--to)}.s-to{color:var(--to);font-weight:600}.s-Po{color:var(--po)}.s-po{color:var(--po);font-weight:600}.s-Pa{color:var(--pa)}.s-pa{color:var(--pa);font-weight:600}
+.s-Bo{color:var(--bo);text-decoration:underline 2px;text-underline-offset:3px}.s-bo{color:var(--bo);font-weight:600}
+.s-E{color:var(--e);font-style:italic;font-weight:600}.s-cnt{color:var(--cnt)}.s-p{color:var(--line)}
+.tk sup{font-size:.5em}
+.nota{font-size:13px;font-weight:700;padding:6px 10px;border-radius:9px;background:color-mix(in srgb,var(--cnt) 16%,var(--card));color:var(--ink)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.play{flex:1 1 150px;min-height:56px;border-radius:14px;border:0;background:var(--accent);color:var(--accent-ink);font:900 19px var(--font);cursor:pointer}
+.play.on{background:var(--ink);color:var(--bg)}
+.btn{min-height:42px;padding:0 12px;border-radius:11px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:700 13.5px var(--font);cursor:pointer;white-space:nowrap}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn[aria-pressed="false"]{color:var(--muted)}
+.vel{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;flex:1 1 240px;min-width:0}
+.vel input{flex:1;min-width:0;accent-color:var(--accent);height:28px}
+.vel output{min-width:72px;text-align:right;font-variant-numeric:tabular-nums}
+.passos{display:flex;flex-direction:column;gap:14px}
+.grupo{display:flex;flex-direction:column;gap:5px}
+.passo{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.passo.sel{border-color:var(--accent)}
+.passo .ck{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:15px;font-weight:900;color:transparent;background:transparent;cursor:pointer;padding:0}
+.passo.feito .ck{background:var(--ok);border-color:var(--ok);color:#fff}
+.passo b{display:block;font-size:14.5px;font-weight:800}
+.passo span{display:block;font-size:12.5px;color:var(--muted)}
+.passo .ir{font-size:12px;font-weight:800;color:var(--accent)}
+.metodo{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:7px}
+.metodo b{font-weight:800}
+.leg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 12px;font-size:13.5px}
+.leg i{font-style:normal;font-weight:900;font-size:19px;margin-right:6px}
+.aviso{font-size:13px;color:var(--muted)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.tk,.cp{transition:none}}
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <p class="eyebrow">Surdos de marcação · apresentação IMED</p>
+    <h1>Escola dos <em>Breques</em></h1>
+    <p class="lead">Um breque parece enorme, mas é feito de poucos compassos que se repetem. Aqui você aprende um pedaço de cada vez: ouve, fala a letra, repete na sua vez e só depois junta.</p>
+  </header>
+
+  <section aria-label="Escolher o breque" style="display:flex;flex-direction:column;gap:8px">
+    <p class="eyebrow">Qual breque? <span id="ordem" style="text-transform:none;letter-spacing:0;font-weight:600"></span></p>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <section class="card" aria-label="Raio-X do breque">
+    <div><p class="eyebrow">Raio-X</p><h2 id="rxNome">…</h2></div>
+    <div class="fatos" id="fatos"></div>
+    <p class="aviso">Cada quadradinho é um compasso. Mesma letra = compasso igual. Letra com ′ = quase igual (muda um tempo). Toque num quadradinho para treinar só ele.</p>
+    <div class="mapa" id="mapa"></div>
+    <ul class="dicas" id="dicas"></ul>
+  </section>
+
+  <section class="card treino" id="treino" aria-label="Treino">
+    <div class="thead"><div><p class="eyebrow">Treino</p><h2 id="tTit">…</h2></div><span class="vez" id="vez">Parado</span></div>
+    <div class="palco parado" id="palco"></div>
+    <div class="ctl">
+      <button class="play" id="play" type="button">▶ Tocar</button>
+      <button class="btn" id="bEco" type="button" aria-pressed="true" title="Toca uma vez e deixa a sua vez de repetir">Minha vez depois</button>
+      <button class="btn" id="bLoop" type="button" aria-pressed="true">Repetir</button>
+    </div>
+    <div class="ctl">
+      <label class="vel" for="vel">Velocidade <input type="range" id="vel" min="40" max="110" step="5" value="65"><output id="velO">65%</output></label>
+      <button class="btn" id="bVoz" type="button" aria-pressed="true">Voz</button>
+      <button class="btn" id="bSur" type="button" aria-pressed="true">Surdo</button>
+      <button class="btn" id="bCli" type="button" aria-pressed="true">Clique</button>
+    </div>
+    <div class="ctl">
+      <button class="btn" id="bAnt" type="button">◀ Passo anterior</button>
+      <button class="btn" id="bFeito" type="button">✓ Aprendi este</button>
+      <button class="btn" id="bProx" type="button">Próximo passo ▶</button>
+    </div>
+    <p class="aviso" id="tDica"></p>
+  </section>
+
+  <section aria-label="Passo a passo" style="display:flex;flex-direction:column;gap:10px">
+    <div><p class="eyebrow">Passo a passo</p><h2 id="ppTit">…</h2></div>
+    <div class="passos" id="passos"></div>
+  </section>
+
+  <section class="card" aria-label="Como estudar">
+    <div><p class="eyebrow">Método</p><h2>Como estudar sem sofrer</h2></div>
+    <ol class="metodo">
+      <li><b>Fale antes de tocar.</b> Se a boca não fala a letra no tempo, a mão não toca. Cante junto com a voz, sem baqueta.</li>
+      <li><b>Bem devagar.</b> Comece em 60–65%. Só suba quando sair três vezes seguidas sem errar.</li>
+      <li><b>Um compasso por vez.</b> Deixe o “Minha vez depois” ligado: a página toca, você repete em cima do clique.</li>
+      <li><b>Junte aos poucos.</b> Dois compassos, depois a parte, depois do começo até ali. Nunca pule para o breque inteiro.</li>
+      <li><b>Suba de 10 em 10.</b> 65 → 75 → 85 → 100%. Errou duas vezes? Desça 10 e fique mais um pouco.</li>
+      <li><b>Pouco e sempre.</b> Dez minutos por dia rendem mais que uma hora na véspera. Comece sempre revendo o que marcou ontem.</li>
+    </ol>
+    <h3>Como ler a letra</h3>
+    <div class="leg">
+      <span><i class="s-To">To</i>1ª + 2ª juntas</span><span><i class="s-Po">Po</i>só a 1ª</span><span><i class="s-Pa">Pa</i>só a 2ª</span>
+      <span><i class="s-to">to</i>1ª + 2ª mais leve</span><span><i class="s-Bo">Bo</i>abafado</span><span><i class="s-po">ro go</i>1ª leve (rebote)</span>
+      <span><i class="s-pa">ra ga</i>2ª leve (rebote)</span><span><i class="s-E">E ti</i>fala e não toca</span><span><i class="s-cnt">1 2 3</i>contagem, não toca</span>
+    </div>
+  </section>
+</div>
+
+<script>
+const BREQUES = /*DADOS*/;
+(() => {
+const $ = id => document.getElementById(id);
+const ls = { get(k, d) { try { const v = localStorage.getItem('escola.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('escola.' + k, JSON.stringify(v)); } catch (e) {} } };
+const CORES = ['#E4572E', '#1D6FE0', '#0E9F4F', '#B07A00', '#7B2FBF', '#D7263D', '#0FA3B1', '#C2410C', '#4F46E5', '#65A30D', '#DB2777', '#0D9488'];
+
+/* ---------- ler a letra ---------- */
+const HIT = { To: [[0, 1], 1], Pa: [[1], 1], po: [[0], 1], Bo: [[0, 1], 1, 1], bo: [[0, 1], .75], to: [[0, 1], .8], ro: [[0], .6], go: [[0], .6], ra: [[1], .6], ga: [[1], .6] };
+const ALIAS = { TO: 'To', Ti: 'ti', TI: 'ti', Ro: 'ro', RO: 'ro', Go: 'go', Ra: 'ra', Ga: 'ga', pa: 'Pa', PA: 'Pa', Po: 'po', PO: 'po', e: 'E', 'é': 'E', 'ê': 'E' };
+const CLASSE = { To: 's-To', to: 's-to', po: 's-Po', Pa: 's-Pa', Bo: 's-Bo', bo: 's-bo', ro: 's-po', go: 's-po', ra: 's-pa', ga: 's-pa', E: 's-E', ti: 's-E' };
+function tok(t) {
+  if (t === '.' || t === '_') return { tipo: 'p', txt: '·', cls: 's-p', chave: '.' };
+  if (/^[1-9]$/.test(t)) return { tipo: 'c', txt: t, cls: 's-cnt', diz: 'n' + t, chave: '#' };
+  const m = t.match(/^([^\d\[]+)(\d*)(?:\[(\d{1,3})\])?$/) || [t, t, '', ''], cru = m[1], base = ALIAS[cru] || cru, vel = m[3] ? Math.min(100, +m[3]) / 100 : 1;
+  const leve = vel < 1, txt = base === 'po' ? (leve ? 'po' : 'Po') : base === 'Pa' ? (leve ? 'pa' : 'Pa') : cru;
+  if (base === 'E' || base === 'ti') return { tipo: 'f', txt: cru, cls: 's-E', diz: base === 'E' ? 'e' : 'ti', chave: base };
+  const h = HIT[base]; if (!h) return { tipo: 'p', txt: t, cls: 's-p', chave: t };
+  return { tipo: 'h', txt, sup: m[2], cls: leve && base === 'po' ? 's-po' : leve && base === 'Pa' ? 's-pa' : CLASSE[base], drums: h[0], vel: h[1] * vel, abaf: !!h[2], diz: base.toLowerCase(), chave: base + (leve ? '~' : '') };
+}
+function ler(b) {
+  const comp = [], partes = [[]]; let nota = null, vol = 100;
+  for (const cru of b.text.split(/\r?\n/)) {
+    const tr = cru.trim();
+    if (tr.startsWith('#')) { const mv = tr.match(/^#\s*vol(?:ume)?\s*(\d{1,3})/i); if (mv) vol = Math.max(5, Math.min(100, +mv[1])); else if (tr.startsWith('#!')) nota = tr.slice(2).trim(); continue; }
+    const l = cru.replace(/#.*/, '').trim();
+    if (!l) { if (partes[partes.length - 1].length) partes.push([]); continue; }
+    const tempos = l.split(/[\s|]+/).filter(Boolean).slice(0, 12).map(x => x.split('-').map(tok));
+    const c = { i: comp.length, n: comp.length + 1, parte: partes.length - 1, tempos, nota, vol, chaves: tempos.map(t => t.map(k => k.chave).join('-')) };
+    c.chave = c.chaves.join(' '); c.conta = tempos.every(t => t.every(k => k.tipo !== 'h')); nota = null;
+    comp.push(c); partes[partes.length - 1].push(c.i);
+  }
+  while (partes.length && !partes[partes.length - 1].length) partes.pop();
+  // letras: compasso igual = mesma letra; quase igual (um tempo diferente, mesmo tamanho) = letra com ′
+  const tipos = []; let nL = 0;
+  for (const c of comp) {
+    let t = tipos.find(x => x.chave === c.chave);
+    if (!t) {
+      t = { chave: c.chave, comp: [], conta: c.conta, primeiro: c.i };
+      if (!c.conta) {
+        const pai = tipos.find(x => !x.conta && !x.de && comp[x.primeiro].chaves.length === c.chaves.length && comp[x.primeiro].chaves.filter((k, j) => k !== c.chaves[j]).length === 1);
+        if (pai) { t.de = pai; t.muda = comp[pai.primeiro].chaves.findIndex((k, j) => k !== c.chaves[j]); pai.filhos = (pai.filhos || 0) + 1; t.letra = pai.letra + '′'.repeat(Math.min(3, pai.filhos)); t.cor = pai.cor; }
+        else { t.letra = nL < 26 ? String.fromCharCode(65 + nL) : 'A' + (nL - 25); t.cor = CORES[nL % CORES.length]; nL++; }
+      } else t.letra = '1 2';
+      tipos.push(t);
+    }
+    t.comp.push(c.i); c.tipo = t;
+  }
+  return { comp, partes, tipos };
+}
+const DOC = BREQUES.map(b => Object.assign({ b }, ler(b)));
+
+/* ---------- passos de estudo de um breque ---------- */
+function passosDe(D) {
+  const g = []; const visto = new Set();
+  D.partes.forEach((idx, p) => {
+    const itens = [];
+    for (const i of idx) { const c = D.comp[i]; if (c.conta || visto.has(c.tipo)) continue; visto.add(c.tipo);
+      const vezes = c.tipo.comp.length, de = c.tipo.de;
+      itens.push({ id: 'c' + i, comp: [i], t: `Compasso ${c.n} (${c.tipo.letra})`, s: de ? `Igual ao compasso ${D.comp[de.primeiro].n}, só muda o ${c.tipo.muda + 1}º tempo` + (vezes > 1 ? ` · aparece ${vezes} vezes` : '') : vezes > 1 ? `Aparece ${vezes} vezes: nos compassos ${c.tipo.comp.map(j => D.comp[j].n).join(', ')}` : 'Aparece só aqui', dif: de ? c.tipo.muda : -1 }); }
+    if (idx.length > 1 || !itens.length) itens.push({ id: 'p' + p, comp: idx.slice(), t: `Parte ${p + 1} inteira`, s: `Compassos ${D.comp[idx[0]].n} a ${D.comp[idx[idx.length - 1]].n}` + (itens.length ? '' : ' · nada novo, é só juntar') });
+    if (p > 0 && p < D.partes.length - 1) itens.push({ id: 'j' + p, comp: D.partes.slice(0, p + 1).flat(), t: `Do começo até a parte ${p + 1}`, s: `Compassos 1 a ${D.comp[idx[idx.length - 1]].n}, emendando` });
+    g.push({ t: `Parte ${p + 1}`, itens });
+  });
+  g.push({ t: 'Final', itens: [{ id: 'tudo', comp: D.comp.map(c => c.i), t: `${D.b.name} inteiro`, s: `${D.comp.length} compassos, do começo ao fim` }] });
+  return g;
+}
+DOC.forEach(D => { D.grupos = passosDe(D); D.passos = D.grupos.flatMap(g => g.itens); });
+let FEITO = ls.get('feito', {});
+const feitos = D => D.passos.filter(p => (FEITO[D.b.id] || {})[p.id]).length;
+
+/* ---------- som ---------- */
+let ctx = null, saida = null, voz = null;
+function audio() {
+  if (ctx) { if (ctx.state !== 'running') ctx.resume().catch(() => {}); return; }
+  const AC = window.AudioContext || window.webkitAudioContext; ctx = new AC();
+  const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -6; comp.ratio.value = 8; comp.attack.value = .003; comp.release.value = .15; comp.connect(ctx.destination); saida = comp;
+  Promise.all([fetch('voz/silabas.mp3').then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => ctx.decodeAudioData(b, ok, no))), fetch('voz/silabas.json').then(r => r.json())])
+    .then(([buf, meta]) => { voz = { buf, R: meta.R }; }).catch(() => { $('tDica').textContent = 'A voz não carregou; o surdo e o clique funcionam.'; });
+}
+// surdo sintetizado: grave com queda de afinação + harmônicos (para o alto-falante do celular) + estalo da maceta
+function surdo(d, t, vel, abaf) {
+  const f0 = d === 0 ? 62 : 88, dur = abaf ? .11 : d === 0 ? .8 : .5, g = ctx.createGain();
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.9 * vel, t + .004); g.gain.exponentialRampToValueAtTime(.001, t + dur); g.connect(saida);
+  [[1, 1], [2, .5], [3, .32], [4.2, .2]].forEach(([m, a]) => { const o = ctx.createOscillator(), og = ctx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(f0 * m * 1.3, t); o.frequency.exponentialRampToValueAtTime(f0 * m, t + .07); og.gain.value = a; og.gain.setValueAtTime(a, t); og.gain.exponentialRampToValueAtTime(a * (m > 1 ? .05 : .6), t + dur * (m > 1 ? .45 : 1)); o.connect(og).connect(g); o.start(t); o.stop(t + dur + .05); });
+  const n = ctx.createBufferSource(), nb = ctx.createBuffer(1, 1323, ctx.sampleRate), ch = nb.getChannelData(0); for (let i = 0; i < ch.length; i++) ch[i] = (Math.random() * 2 - 1) * (1 - i / ch.length);
+  const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = d === 0 ? 700 : 950; bp.Q.value = .8; const ng = ctx.createGain(); ng.gain.value = .5 * vel; n.buffer = nb; n.connect(bp).connect(ng).connect(saida); n.start(t);
+}
+function clique(t, forte) { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'square'; o.frequency.value = forte ? 1760 : 1320; g.gain.setValueAtTime(forte ? .16 : .1, t); g.gain.exponentialRampToValueAtTime(.001, t + .04); o.connect(g).connect(saida); o.start(t); o.stop(t + .05); }
+let vezVoz = 0;
+function fala(pal, t, cabe, forte) {
+  if (!voz) return; const l = voz.R[pal]; if (!l || !l.length) return;
+  const [a, d] = forte || l.length === 1 ? l[0] : l[1 + (vezVoz++ % (l.length - 1))], esp = Math.max(.07, cabe * .96), rate = Math.min(1.15, Math.max(1, d / esp)), len = Math.min(d / rate, esp);
+  const s = ctx.createBufferSource(), g = ctx.createGain(); s.buffer = voz.buf; s.playbackRate.value = rate; g.gain.setValueAtTime(1.5, t); g.gain.setValueAtTime(1.5, t + Math.max(.005, len - .03)); g.gain.linearRampToValueAtTime(0, t + len); s.connect(g).connect(saida); s.start(t, a, d); s.stop(t + len + .01);
+}
+
+/* ---------- estado e tela ---------- */
+let D = DOC[Math.max(0, DOC.findIndex(x => x.b.id === ls.get('breque', DOC[0].b.id)))], passo = null;
+const OP = Object.assign({ eco: true, loop: true, voz: true, sur: true, cli: true, vel: 65 }, ls.get('op', {}));
+const T = { on: false, evs: [], L: 0, timer: 0, raf: 0 };
+
+function chips() {
+  $('chips').innerHTML = '';
+  DOC.forEach(x => { const b = document.createElement('button'), n = feitos(x), tot = x.passos.length; b.className = 'chip' + (n === tot ? ' feito' : ''); b.type = 'button'; b.setAttribute('aria-pressed', String(x === D));
+    b.innerHTML = `${x.b.name}<small>${n === tot ? '✓' : n + '/' + tot}</small>`; b.onclick = () => { parar(); D = x; ls.set('breque', x.b.id); tudo(); }; $('chips').appendChild(b); });
+  const sel = $('chips').querySelector('[aria-pressed="true"]'); if (sel && sel.scrollIntoView) sel.scrollIntoView({ block: 'nearest', inline: 'center' });
+}
+function raioX() {
+  const c = D.comp, dif = D.tipos.filter(t => !t.conta), base = dif.filter(t => !t.de), cont = c.filter(x => x.conta).length;
+  $('rxNome').textContent = D.b.name;
+  $('fatos').innerHTML = `<span><b>${c.length}</b>compassos</span><span><b>${base.length}</b>para decorar de verdade</span><span><b>${dif.length - base.length}</b>variações</span><span><b>${D.partes.length}</b>partes</span><span><b>${D.b.bpm}</b>bpm</span>`;
+  $('mapa').innerHTML = '';
+  D.partes.forEach((idx, p) => { const l = document.createElement('div'); l.className = 'mlinha'; l.innerHTML = `<span>Parte ${p + 1}</span>`; const q = document.createElement('div'); q.className = 'mq';
+    idx.forEach(i => { const x = c[i], b = document.createElement('button'); b.type = 'button'; b.className = 'q' + (x.conta ? ' conta' : ''); b.dataset.i = i; b.style.setProperty('--h', x.tipo.cor || '#888'); b.textContent = x.conta ? '·' : x.tipo.letra; b.title = `Compasso ${x.n}`; b.setAttribute('aria-label', `Compasso ${x.n}, ${x.conta ? 'contagem' : 'padrão ' + x.tipo.letra}`);
+      b.onclick = () => abrir({ id: null, comp: [i], t: `Compasso ${x.n}` + (x.conta ? ' (contagem)' : ` (${x.tipo.letra})`), s: '', dif: x.tipo.de ? x.tipo.muda : -1 }, true); q.appendChild(b); });
+    l.appendChild(q); $('mapa').appendChild(l); });
+  // dicas tiradas da própria letra
+  const d = [];
+  const rep = base.filter(t => t.comp.length > 1).sort((a, b) => b.comp.length - a.comp.length).slice(0, 3);
+  rep.forEach(t => d.push(`O compasso <b>${t.letra}</b> aparece ${t.comp.length} vezes (compassos ${t.comp.map(j => c[j].n).join(', ')}). Aprendeu um, aprendeu todos.`));
+  const vars = dif.filter(t => t.de).slice(0, 3);
+  vars.forEach(t => d.push(`O compasso ${c[t.primeiro].n} (<b>${t.letra}</b>) é o ${c[t.de.primeiro].n} (<b>${t.de.letra}</b>) trocando só o ${t.muda + 1}º tempo.`));
+  if (cont) d.push(`${cont} compasso${cont > 1 ? 's são' : ' é'} só de contagem (<b class="s-cnt">1 2 3 4</b>): você conta em voz alta e não toca. Use para respirar e se achar.`);
+  if (c.some(x => x.tempos.some(t => t.some(k => k.tipo === 'f')))) d.push(`O <b class="s-E">E</b> é falado e não tocado: ele guarda o lugar do contratempo. Fale o “E” e toque só a sílaba seguinte.`);
+  const rap = c.filter(x => x.tempos.some(t => t.length >= 3)); if (rap.length) d.push(`${rap.length} compasso${rap.length > 1 ? 's têm' : ' tem'} tempos divididos em 3 ou 4 (semicolcheias). Esses você treina bem devagar primeiro.`);
+  const imp = [...new Set(c.filter(x => x.tempos.length > 4 || (x.tempos.length !== 4 && x.i < c.length - 1 && x.tempos.length > 1)).map(x => x.tempos.length))].sort((a, b) => a - b); if (imp.length) d.push(`Atenção: nem todo compasso tem 4 tempos. Há compasso de ${imp.join(' e de ')} tempos.`);
+  if (c[c.length - 1].tempos.length < 4) d.push(`O último compasso é só o toque final (${c[c.length - 1].tempos.length} tempo${c[c.length - 1].tempos.length > 1 ? 's' : ''}).`);
+  c.filter(x => x.nota).forEach(x => d.push(`Anotação do ensaio no compasso ${x.n}: <b>${x.nota}</b>.`));
+  $('dicas').innerHTML = d.map(x => `<li>${x}</li>`).join('');
+}
+function lista() {
+  $('ppTit').textContent = `${D.b.name}: ${feitos(D)} de ${D.passos.length} passos`;
+  $('passos').innerHTML = '';
+  D.grupos.forEach(g => { const box = document.createElement('div'); box.className = 'grupo'; box.innerHTML = `<p class="eyebrow">${g.t}</p>`;
+    g.itens.forEach(p => { const ok = (FEITO[D.b.id] || {})[p.id], r = document.createElement('div'); r.className = 'passo' + (ok ? ' feito' : '') + (passo === p ? ' sel' : ''); r.setAttribute('role', 'button'); r.tabIndex = 0;
+      r.innerHTML = `<button class="ck" type="button" aria-label="${ok ? 'Desmarcar' : 'Marcar como aprendido'}">✓</button><div><b>${p.t}</b><span>${p.s}</span></div><span class="ir">treinar ▶</span>`;
+      r.querySelector('.ck').onclick = e => { e.stopPropagation(); marcar(p, !ok); };
+      r.onclick = () => abrir(p, true); r.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(p, true); } };
+      box.appendChild(r); });
+    $('passos').appendChild(box); });
+}
+function marcar(p, v) { if (!p.id) return; (FEITO[D.b.id] = FEITO[D.b.id] || {})[p.id] = v || undefined; ls.set('feito', FEITO); lista(); chips(); botoes(); }
+function botoes() {
+  const i = D.passos.indexOf(passo), ok = passo && passo.id && (FEITO[D.b.id] || {})[passo.id];
+  $('bAnt').disabled = i <= 0; $('bProx').disabled = i < 0 || i >= D.passos.length - 1; $('bFeito').hidden = !(passo && passo.id); $('bFeito').textContent = ok ? '✓ Aprendido' : '✓ Aprendi este'; $('bFeito').setAttribute('aria-pressed', String(!!ok));
+}
+// monta o cartão de treino com os compassos do passo
+function abrir(p, rola) {
+  parar(); passo = p; $('tTit').textContent = p.t; const palco = $('palco'); palco.innerHTML = ''; T.evs = []; T.linhas = []; let b0 = 0;
+  const muitos = p.comp.length > 1, larg = Math.min(740, innerWidth - 32) - 60;
+  p.comp.forEach(i => {
+    const c = D.comp[i];
+    if (c.nota) { const n = document.createElement('p'); n.className = 'nota'; n.textContent = '✎ ' + c.nota; palco.appendChild(n); }
+    const l = document.createElement('div'); l.className = 'cp' + (p.dif >= 0 ? ' dif' : ''); l.style.setProperty('--n', c.tempos.length); l.innerHTML = `<span class="num">${c.n}</span>`;
+    const maior = Math.max(...c.tempos.map(t => t.reduce((a, k) => a + k.txt.length + (k.sup ? .5 : 0), 0) + (t.length - 1) * .45));
+    l.style.setProperty('--fs', Math.max(12, Math.min(muitos ? 22 : 30, (larg / c.tempos.length - 6) / (maior * .56))) + 'px');
+    c.tempos.forEach((t, k) => { const bt = document.createElement('div'); bt.className = 'bt' + (p.dif === k ? ' mud' : '');
+      t.forEach((x, j) => { const s = document.createElement('span'); s.className = 'tk ' + x.cls; s.textContent = x.txt; if (x.sup) { const sp = document.createElement('sup'); sp.textContent = x.sup; s.appendChild(sp); } bt.appendChild(s);
+        T.evs.push({ b: b0 + k + j / t.length, cabe: 1 / t.length, x, el: s, vol: c.vol / 100, lin: T.linhas.length, tempo: j === 0 }); });
+      l.appendChild(bt); });
+    palco.appendChild(l); T.linhas.push({ el: l, b: b0 }); b0 += c.tempos.length;
+  });
+  T.L = b0; palco.classList.add('parado'); palco.scrollTop = 0;
+  document.querySelectorAll('.q').forEach(q => q.classList.toggle('sel', p.comp.length === 1 && +q.dataset.i === p.comp[0]));
+  const c0 = D.comp[p.comp[0]];
+  $('tDica').textContent = p.dif >= 0 ? `O tempo com contorno é o que muda em relação ao compasso ${D.comp[c0.tipo.de.primeiro].n}.` : p.comp.length === 1 ? 'Fale a letra junto com a voz. Depois toque na sua vez, em cima do clique.' : 'Se travar num compasso, toque no quadradinho dele no raio-X e treine só ele.';
+  lista(); botoes(); velMostra();
+  if (rola) $('treino').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+const spb = () => 60 / (D.b.bpm * OP.vel / 100);
+function velMostra() { $('velO').textContent = `${OP.vel}% · ${Math.round(D.b.bpm * OP.vel / 100)}`; $('vel').value = OP.vel; }
+function ops() { [['bEco', 'eco'], ['bLoop', 'loop'], ['bVoz', 'voz'], ['bSur', 'sur'], ['bCli', 'cli']].forEach(([id, k]) => $(id).setAttribute('aria-pressed', String(!!OP[k]))); ls.set('op', OP); }
+
+/* ---------- tocar ---------- */
+function tocar() {
+  if (!passo) return; audio(); T.on = true; T.s = spb(); T.CL = OP.eco ? T.L * 2 : T.L; T.t0 = ctx.currentTime + .12 + 4 * T.s; T.ci = 0; T.ei = 0; T.bi = -4; T.fim = false;
+  $('play').classList.add('on'); $('play').textContent = '■ Parar'; $('palco').classList.remove('parado');
+  try { if (navigator.wakeLock) navigator.wakeLock.request('screen').catch(() => {}); } catch (e) {}
+  agenda(); T.timer = setInterval(agenda, 25); T.raf = requestAnimationFrame(pinta);
+}
+function agenda() {
+  const ate = ctx.currentTime + .18;
+  // cliques: contagem de entrada sempre; depois, se ligado (e sempre na "sua vez")
+  for (;;) { const t = T.t0 + T.bi * T.s; if (t > ate) break; const c = Math.floor(T.bi / T.CL), x = T.bi - c * T.CL, vez = OP.eco && x >= T.L, ult = !OP.loop && c >= 1;
+    if (ult) break; if (T.bi < 0 || OP.cli || vez) { const xb = vez ? x - T.L : x, forte = T.bi < 0 ? T.bi === -4 : T.linhas.some(l => l.b === xb); clique(t, forte); if (T.bi < 0 && OP.voz) fala('n' + (T.bi + 5), t, T.s, false); }
+    T.bi++; }
+  for (;;) { if (!OP.loop && T.ci >= 1) { T.fim = true; break; } const e = T.evs[T.ei], t = T.t0 + (T.ci * T.CL + e.b) * T.s; if (t > ate) break;
+    const x = e.x; if (x.tipo === 'h' && OP.sur) x.drums.forEach(d => surdo(d, t, x.vel * e.vol, x.abaf));
+    if (OP.voz && x.diz && x.tipo !== 'p') fala(x.diz, t, e.cabe * T.s, x.tipo === 'h' && x.vel >= .95);
+    if (++T.ei >= T.evs.length) { T.ei = 0; T.ci++; } }
+  if (T.fim && ctx.currentTime > T.t0 + T.CL * T.s + .1) parar();
+}
+function pinta() {
+  if (!T.on) return; T.raf = requestAnimationFrame(pinta);
+  const pos = (ctx.currentTime - (ctx.outputLatency || 0) - T.t0) / T.s, vz = $('vez');
+  if (pos < 0) { vz.textContent = 'Contando ' + Math.min(4, Math.floor(pos + 5)); vz.className = 'vez'; return; }
+  const x = pos % T.CL, minha = OP.eco && x >= T.L, xb = minha ? x - T.L : x;
+  vz.textContent = minha ? 'Sua vez!' : OP.eco ? 'Ouça' : 'Tocando'; vz.className = 'vez' + (minha ? ' sua' : '');
+  let lin = 0, agora = null; for (const e of T.evs) { const on = e.b <= xb + .02; if (on !== e.on) { e.on = on; e.el.classList.toggle('on', on); } if (on) { agora = e; lin = e.lin; } }
+  if (agora !== T.agora) { if (T.agora) T.agora.el.classList.remove('now'); T.agora = agora; if (agora) agora.el.classList.add('now'); }
+  if (lin !== T.lin) { T.linhas.forEach((l, i) => l.el.classList.toggle('agora', i === lin)); T.lin = lin; const el = T.linhas[lin].el, pc = $('palco'); if (el.offsetTop < pc.scrollTop || el.offsetTop + el.offsetHeight > pc.scrollTop + pc.clientHeight) pc.scrollTop = el.offsetTop - pc.offsetTop - 8; }
+}
+function parar() {
+  if (!T.on) return; T.on = false; clearInterval(T.timer); cancelAnimationFrame(T.raf); T.lin = -1; T.agora = null;
+  T.evs.forEach(e => { e.on = false; e.el.classList.remove('on', 'now'); }); (T.linhas || []).forEach(l => l.el.classList.remove('agora'));
+  $('play').classList.remove('on'); $('play').textContent = '▶ Tocar'; $('palco').classList.add('parado'); $('vez').textContent = 'Parado'; $('vez').className = 'vez';
+}
+$('play').onclick = () => T.on ? parar() : tocar();
+[['bEco', 'eco'], ['bLoop', 'loop'], ['bVoz', 'voz'], ['bSur', 'sur'], ['bCli', 'cli']].forEach(([id, k]) => { $(id).onclick = () => { OP[k] = !OP[k]; ops(); if (T.on && (k === 'eco' || k === 'loop')) { parar(); tocar(); } }; });
+$('vel').oninput = () => { OP.vel = +$('vel').value; ops(); velMostra(); if (T.on) { parar(); tocar(); } };
+$('bAnt').onclick = () => { const i = D.passos.indexOf(passo); if (i > 0) abrir(D.passos[i - 1]); };
+$('bProx').onclick = () => { const i = D.passos.indexOf(passo); if (i >= 0 && i < D.passos.length - 1) abrir(D.passos[i + 1]); };
+$('bFeito').onclick = () => { if (!passo || !passo.id) return; const ok = (FEITO[D.b.id] || {})[passo.id]; marcar(passo, !ok); };
+
+function tudo() {
+  chips(); raioX();
+  const prox = D.passos.find(p => !(FEITO[D.b.id] || {})[p.id]) || D.passos[0]; abrir(prox, false);
+}
+// sugestão de ordem: do que tem menos coisa para decorar ao que tem mais
+const facil = DOC.map(x => [x.b.name, x.tipos.filter(t => !t.conta && !t.de).length + x.comp.filter(c => c.tempos.some(t => t.length >= 3)).length * .3]).sort((a, b) => a[1] - b[1]);
+$('ordem').textContent = `· para começar pelos mais fáceis: ${facil.slice(0, 4).map(x => x[0]).join(', ')}`;
+ops(); tudo();
+window.__escola = { DOC, T, tocar, parar, abrir };
+})();
+</script>
