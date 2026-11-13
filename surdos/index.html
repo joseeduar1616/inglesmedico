@@ -370,6 +370,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 .k-view { position: relative; flex: 1; overflow: hidden; -webkit-mask: linear-gradient(transparent, #000 14%, #000 86%, transparent); mask: linear-gradient(transparent, #000 14%, #000 86%, transparent); }
 .k-roll { position: absolute; left: 0; right: 0; top: 42%; transition: transform .28s cubic-bezier(.3,.7,.2,1); }
 .k-aj { display: inline-flex; align-items: center; gap: 4px; font: 500 12px var(--f-mono); color: var(--muted); }
+.kara header .k-aj { flex: none; }
 .k-aj button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: #ffffff10; color: var(--fg); font-size: 18px; cursor: pointer; }
 .k-aj output { min-width: 62px; text-align: center; }
 .k-l { display: flex; justify-content: center; align-items: baseline; gap: .45em; white-space: nowrap; padding: .08em 0; font: 800 var(--fs, 72px)/1.08 var(--f-display); transform-origin: 50% 50%; transition: transform .28s cubic-bezier(.3,.7,.2,1), opacity .28s, filter .28s; opacity: 0; transform: scale(.5); filter: blur(2px); }
@@ -384,8 +385,56 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 .k-t.now { transform: scale(1.18) translateY(-.04em); text-shadow: 0 0 .35em currentColor; }
 .k-t.dot { color: var(--muted); }
 .k-msg { position: absolute; left: 0; right: 0; top: 42%; text-align: center; font: 800 clamp(34px, 10vw, 90px)/1.1 var(--f-display); color: var(--brass); transform: translateY(-50%); }
-.kara footer { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-.kara footer .lp { min-height: 52px; font-size: 17px; padding: 0 22px; }
+.kara footer { display: flex; flex-direction: column; gap: 8px; }
+.kara footer .lp { min-height: 50px; font-size: 17px; padding: 0 12px; flex: 1; max-width: 340px; justify-content: center; white-space: nowrap; }
+.k-opts, .k-nav, .k-eu-top { display: flex; justify-content: center; align-items: center; gap: 6px; }
+.k-eu-top { flex-wrap: wrap; }
+.k-chip { min-height: 40px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line); background: #ffffff0d; color: var(--muted); font: 600 14px var(--f-body, inherit); cursor: pointer; white-space: nowrap; }
+.k-chip[aria-pressed="true"] { color: var(--fg); border-color: var(--brass); background: color-mix(in srgb, var(--brass) 18%, transparent); }
+.k-nav > button:not(.lp), .k-bpm button { width: 44px; height: 44px; flex: none; border-radius: 50%; border: 1px solid var(--line); background: #ffffff10; color: var(--fg); font-size: 20px; cursor: pointer; }
+.k-bpm { display: inline-flex; align-items: center; gap: 4px; font: 600 13px var(--f-mono); color: var(--fg); }
+.k-bpm button { width: 36px; height: 36px; }
+.k-bpm output { min-width: 56px; text-align: center; }
+.k-bpm[hidden] { display: none; }
+.k-eu { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+.k-eu[hidden] { display: none; }
+.k-seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.k-seg button { min-height: 38px; padding: 0 13px; border: 0; background: transparent; color: var(--muted); font: 600 14px var(--f-body, inherit); cursor: pointer; }
+.k-seg button[aria-pressed="true"] { background: color-mix(in srgb, var(--brass) 24%, transparent); color: var(--fg); }
+.k-st { display: flex; justify-content: center; align-items: center; gap: 12px; min-height: 22px; }
+#kPts { font: 700 13px var(--f-mono); color: var(--fg); white-space: nowrap; }
+.k-fb { font: 700 13px/22px var(--f-mono); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.k-fb.ok { color: #58d68d; } .k-fb.cedo, .k-fb.tarde { color: #ffc24a; } .k-fb.fora { color: #ff6b6b; }
+.k-pads { display: flex; gap: 10px; height: clamp(110px, 25vh, 230px); }
+.k-pad { position: relative; flex: 1; border-radius: 26px; border: 3px solid color-mix(in srgb, var(--pc) 55%, #000); background: radial-gradient(90% 90% at 50% 35%, color-mix(in srgb, var(--pc) 42%, #14151b), color-mix(in srgb, var(--pc) 12%, #0c0d11)); color: var(--pc); cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; transition: border-color .12s, box-shadow .12s; }
+.k-pad.p1 { --pc: var(--t-po); } .k-pad.p2 { --pc: var(--t-pa); }
+.k-pad[hidden] { display: none; }
+.k-pad b { font: 800 clamp(34px, 9vw, 64px)/1 var(--f-display); pointer-events: none; }
+.k-pad span { font: 600 14px var(--f-mono); color: var(--fg); opacity: .75; pointer-events: none; }
+.k-pad.vez { border-color: var(--pc); box-shadow: 0 0 0 4px color-mix(in srgb, var(--pc) 35%, transparent), 0 0 34px color-mix(in srgb, var(--pc) 45%, transparent); }
+.k-pad.bate { animation: kbate .16s ease-out; }
+.k-pad.v-ok { border-color: #58d68d; } .k-pad.v-cedo, .k-pad.v-tarde { border-color: #ffc24a; } .k-pad.v-fora { border-color: #ff6b6b; }
+@keyframes kbate { 0% { transform: scale(.94); filter: brightness(1.7); } 100% { transform: none; filter: none; } }
+.kara.eu .k-roll, .kara.eu .k-msg { top: 46%; }
+.kara.eu .k-msg { font-size: clamp(26px, 7.5vw, 64px); }
+.k-t.outro { filter: saturate(.25); }
+.k-t.outro.on { opacity: .5; }
+.k-t.ok { text-shadow: 0 0 .3em #58d68d; text-decoration: underline .07em #58d68d; text-underline-offset: .12em; }
+.k-t.miss { opacity: .55 !important; text-decoration: line-through .06em #ff6b6b; }
+@media (max-height: 520px) { .k-pads { height: 92px; } .k-st { display: none; } .kara footer .lp { min-height: 44px; } }
+/* celular deitado: um pad de cada lado da letra, para os dois polegares */
+@media (max-height: 520px) and (orientation: landscape) {
+  .kara.eu { display: grid; grid-template-columns: minmax(120px, 21vw) minmax(0, 1fr) minmax(120px, 21vw); grid-template-rows: auto minmax(0, 1fr) auto auto; column-gap: 10px; row-gap: 6px; }
+  .kara.eu > header, .kara.eu .k-eu-top, .kara.eu > footer { grid-column: 1 / -1; }
+  .kara.eu > .k-view { grid-column: 2; grid-row: 2; }
+  .kara.eu .k-eu, .kara.eu .k-pads { display: contents; }
+  .kara.eu .k-pad.p1 { grid-column: 1; grid-row: 2; } .kara.eu .k-pad.p2 { grid-column: 3; grid-row: 2; }
+  .kara.eu .k-eu-top { grid-row: 3; } .kara.eu > footer { grid-row: 4; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .kara.eu .k-msg { font-size: clamp(20px, 4.2vw, 34px); }
+  .kara header b { font-size: 24px; }
+}
+@media (max-width: 620px) { .kara header { flex-wrap: wrap; row-gap: 2px; } .kara header b { flex: 1; } .kara header #kInfo { order: 9; flex: 1 1 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .kara header .k-aj { flex: none; font-size: 0; } .k-aj output { font-size: 12px; min-width: 52px; } .k-chip { font-size: 13px; padding: 0 10px; } }
+@media (prefers-reduced-motion: reduce) { .k-pad.bate { animation: none; } }
 </style>
 
 <nav class="abas" aria-label="Escolher o simulador"><div>
@@ -397,7 +446,18 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 <div class="kara" id="kara" hidden role="dialog" aria-label="Letra grande">
   <header><b id="kName"></b><span id="kInfo"></span><span class="k-aj" title="Se a letra estiver atrasada, aperte +; adiantada, aperte −">sincronia <button id="kMenos" type="button" aria-label="Letra mais tarde">−</button><output id="kAj">0,00 s</output><button id="kMais" type="button" aria-label="Letra mais cedo">+</button></span><button class="k-x" id="kClose" type="button" aria-label="Fechar a letra grande">×</button></header>
   <div class="k-view"><div class="k-roll" id="kRoll"></div><div class="k-msg" id="kMsg" hidden></div></div>
-  <footer><button class="lp" id="kVoz" type="button" aria-pressed="true">🔊 Com voz</button><button class="lp" id="kPlay" type="button">▶ Tocar breque</button><button class="lp ens-go" id="kGo" type="button" hidden>👆 Começou!</button></footer>
+  <div class="k-eu" id="kEuBox" hidden>
+    <div class="k-eu-top">
+      <span class="k-seg" id="kSou" role="group" aria-label="Qual surdo eu toco"><button type="button" data-sou="1">Sou 1ª</button><button type="button" data-sou="2">Sou 2ª</button><button type="button" data-sou="12">1ª + 2ª</button></span>
+      <button class="k-chip" id="kGuia" type="button" aria-pressed="false" title="Ligado: o app também toca a sua parte, para você ouvir e tocar junto">Guia</button>
+    </div>
+    <div class="k-st"><output id="kPts"></output><span class="k-fb" id="kFb"></span></div>
+    <div class="k-pads" id="kPads"><button class="k-pad p1" type="button" data-d="0" aria-label="Surdo de primeira"><b>1ª</b><span>Po</span></button><button class="k-pad p2" type="button" data-d="1" aria-label="Surdo de segunda"><b>2ª</b><span>Pa</span></button></div>
+  </div>
+  <footer>
+    <div class="k-opts"><button class="k-chip" id="kEu" type="button" aria-pressed="false">🥁 Eu toco</button><button class="k-chip" id="kVoz" type="button" aria-pressed="true">🔊 Voz</button><button class="k-chip" id="kClq" type="button" aria-pressed="false">🔔 Clique</button><button class="k-chip" id="kRep" type="button" aria-pressed="false">🔁 Repetir</button></div>
+    <div class="k-nav"><button id="kAnt" type="button" aria-label="Breque anterior">⏮</button><span class="k-bpm"><button id="kLento" type="button" aria-label="Mais devagar">−</button><output id="kBpm"></output><button id="kRapido" type="button" aria-label="Mais rápido">+</button></span><button class="lp" id="kPlay" type="button">▶ Tocar</button><button class="lp ens-go" id="kGo" type="button" hidden>👆 Começou!</button><button id="kProx" type="button" aria-label="Próximo breque">⏭</button></div>
+  </footer>
 </div>
 <div class="wrap">
   <header>
@@ -438,6 +498,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 
     <div class="bq-tools" id="bqTools">
       <button class="chip" id="kOpen" type="button"><span>🎤 Letra grande</span></button>
+      <button class="chip" id="kOpenEu" type="button"><span>🥁 Eu toco com a letra</span></button>
       <button class="chip" id="bqNew" type="button"><span>+ Novo breque</span></button>
       <button class="chip" id="bqEdit" type="button"><span>Editar</span></button>
       <button class="chip" id="bqDup" type="button"><span>Duplicar</span></button>
@@ -875,7 +936,9 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
     ensureCtx();
     const t = ctx.currentTime;
     flash(i);
-    trigger(i, mute, t, false);
+    let vel = 1;
+    if (K.on && K.eu) { const g = kJudge(i, t); if (g) { mute = mute || g.mute; vel = Math.max(0.4, Math.min(1, g.vel)); } }
+    trigger(i, mute, t, false, vel);
     if (rec.on) recordHit(i, mute, t);
     if (!mute) learnHit(i, t);
   }
@@ -1836,6 +1899,7 @@ To To To-to To-to`;
       if (when >= ctx.currentTime - 0.01) {
         const t = Math.max(when, ctx.currentTime);
         if (e.drums) for (const d of e.drums) {
+          if (K.on && K.eu && !K.guia && K.mine(d)) continue;   // "Eu toco": essa batida é da pessoa
           eng.trigger(d, false, t, "bq", e.vel);
           if (e.mute) eng.stopVoices(d, t + 0.13, 0.035);   // abafado: a mão cala a pele logo a seguir
           setTimeout(() => { if (bq.on) flash(d); }, Math.max(0, (t - ctx.currentTime) * 1000));
@@ -1884,6 +1948,7 @@ To To To-to To-to`;
     bqDraw();
   }
   function stopBreque(natural) {
+    if (natural === true) kEuFim();
     if (natural === true && seq.on && seq.i < BUILTIN.length - 1) {   // sequência: passa para o próximo breque
       seq.i++; bq.on = false; clearInterval(bq.timer);
       selectBreque(BUILTIN[seq.i].id, true);
@@ -2896,7 +2961,91 @@ To To To-to To-to`;
       });
       kRoll.appendChild(l); K.lines.push(l); K.toks.push(tk);
     });
-    kFit();
+    kFit(); kEuAlvos();
+  }
+  // ---------- Eu toco: a pessoa bate nos pads e cada sílaba mostra se acertou ----------
+  // Cada batida esperada (sílaba × surdo da pessoa) é um alvo; o toque casa com o alvo livre mais perto, até 0,15 s.
+  K.eu = false; K.sou = "12"; K.guia = false; K.tg = []; K.gs = []; K.ptr = 0; K.cyc = 0; K.okN = 0; K.missN = 0; K.res = "";
+  try { K.eu = localStorage.getItem("surdos.eu") === "1"; K.sou = localStorage.getItem("surdos.eu.sou") || "12"; K.guia = localStorage.getItem("surdos.eu.guia") === "1"; } catch (e) {}
+  K.mine = d => K.sou === "12" ? d < 2 : K.sou === "1" ? d === 0 : d === 1;
+  const K_W = 0.15, kPads = [...document.querySelectorAll(".k-pad")], kFbEl = $("kFb"), kPtsEl = $("kPts");
+  function kEuAlvos() {
+    K.tg = []; K.gs = []; K.ptr = 0; K.cyc = 0; K.okN = 0; K.missN = 0;
+    const map = new Map();
+    K.toks.forEach(tk => tk.forEach(([b, el]) => { map.set(b.toFixed(4), el); el.classList.remove("ok", "miss", "outro"); }));
+    if (K.eu && K.p === parsed) for (const e of events) {
+      if (!e.drums) continue;
+      const el = map.get(e.beat.toFixed(4)); if (!el) continue;
+      const mine = e.drums.filter(K.mine);
+      if (!mine.length) { el.classList.add("outro"); continue; }
+      const g = { el, beat: e.beat, need: mine.length, got: 0, done: false, lost: false }; K.gs.push(g);
+      for (const d of mine) K.tg.push({ beat: e.beat, d, g, hit: false, mute: e.mute, vel: e.vel });
+    }
+    kPts();
+  }
+  function kPts() { const n = K.gs.filter(g => g.beat >= barBeat(startBar)).length; kPtsEl.textContent = K.eu && n ? `✓ ${K.okN} · ✗ ${K.missN} · de ${n}` : ""; }
+  const kOuve = t => t - (ctx.outputLatency || 0) + K.aj - 0.03;   // o instante que a pessoa estava ouvindo quando encostou no pad
+  const kQuando = g => { const s = spb(), sb = barBeat(startBar); return bq.start + (K.cyc * (totalBeats() - sb) + g.beat - sb) * s; };
+  function kPad(i, v) {
+    const el = kPads[i]; if (!el) return;
+    el.classList.remove("bate", "v-ok", "v-cedo", "v-tarde", "v-fora"); void el.offsetWidth; el.classList.add("bate"); if (v) el.classList.add("v-" + v);
+    clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("v-ok", "v-cedo", "v-tarde", "v-fora"), 420);
+  }
+  function kFb(v, txt) { kFbEl.className = "k-fb " + v; kFbEl.textContent = txt; }
+  function kJudge(i, t) {
+    if (!bq.on || !K.tg.length || K.p !== parsed) { kPad(i, ""); return null; }
+    const th = kOuve(t); let best = null, bd = 9;
+    for (let k = K.ptr; k < K.tg.length; k++) {
+      const g = K.tg[k], dt = th - kQuando(g);
+      if (dt < -0.3) break;
+      if (!g.hit && g.d === i && Math.abs(dt) < Math.abs(bd)) { bd = dt; best = g; }
+    }
+    if (!best || Math.abs(bd) > K_W) { kPad(i, "fora"); if (th > bq.start - 0.2) kFb("fora", "✗ fora de hora"); return null; }
+    best.hit = true; const g = best.g; g.got++;
+    if (g.got >= g.need && !g.done && !g.lost) { g.done = true; g.el.classList.add("ok"); K.okN++; kPts(); }
+    const ms = Math.round(Math.abs(bd) * 1000), v = ms <= 55 ? "ok" : bd < 0 ? "cedo" : "tarde";
+    kPad(i, v); kFb(v, v === "ok" ? "✓ na mosca" : v === "cedo" ? `adiantou ${ms} ms` : `atrasou ${ms} ms`);
+    return best;
+  }
+  // a cada quadro: marca o que passou sem toque, acende o pad da vez e troca de volta quando o breque repete
+  function kEuTick() {
+    if (!K.eu || !bq.on || K.p !== parsed || !K.tg.length) { for (const p of kPads) p.classList.remove("vez"); return; }
+    const s = spb(), sb = barBeat(startBar), span = totalBeats() - sb, th = kOuve(ctx.currentTime);
+    if (bqRepeat.checked) { const c = Math.floor((th - bq.start + 0.1) / (span * s)); if (c > K.cyc) { const r = kEuConta(); kEuAlvos(); K.cyc = c; kFb("", `volta anterior: ${r}`); } }
+    while (K.ptr < K.tg.length) {
+      const g = K.tg[K.ptr];
+      if (g.beat >= sb) {
+        if (th - kQuando(g) <= K_W) break;
+        if (!g.hit && !g.g.done && !g.g.lost) { g.g.lost = true; g.g.el.classList.add("miss"); K.missN++; kPts(); }
+      }
+      K.ptr++;
+    }
+    const vez = [false, false];
+    for (let k = K.ptr; k < K.tg.length; k++) { const g = K.tg[k], dt = kQuando(g) - th; if (dt > 0.14) break; if (!g.hit && dt > -0.05 && g.beat >= sb) vez[g.d] = true; }
+    kPads.forEach((p, i) => p.classList.toggle("vez", !!vez[i]));
+  }
+  function kEuConta() {
+    const sb = barBeat(startBar), gs = K.gs.filter(g => g.beat >= sb), n = gs.length, ok = gs.filter(g => g.done).length, pc = n ? Math.round(100 * ok / n) : 0;
+    return `${ok} de ${n} · ${pc}%`;
+  }
+  function kEuFim() {
+    if (!K.on || !K.eu || !K.gs.length || K.p !== parsed) return;
+    const sb = barBeat(startBar), gs = K.gs.filter(g => g.beat >= sb);
+    for (const g of gs) if (!g.done && !g.lost) { g.lost = true; g.el.classList.add("miss"); K.missN++; }
+    kPts();
+    const n = gs.length, ok = gs.filter(g => g.done).length, pc = n ? Math.round(100 * ok / n) : 0;
+    K.res = `${ok} de ${n} · ${pc}% ${pc >= 90 ? "🔥" : pc >= 70 ? "👏" : "💪"}`;
+    kFb(pc >= 90 ? "ok" : pc >= 70 ? "cedo" : "fora", `${current.name}: ${pc >= 90 ? "dominou!" : pc >= 70 ? "quase lá, mais uma" : "de novo, mais devagar (botão −)"}`);
+  }
+  function kEuUI() {
+    const ens = typeof ENS !== "undefined" && ENS.on, on = K.eu && !ens;
+    kara.classList.toggle("eu", on); $("kEuBox").hidden = !on;
+    $("kEu").setAttribute("aria-pressed", String(K.eu)); $("kEu").hidden = ens;
+    $("kGuia").setAttribute("aria-pressed", String(K.guia)); $("kGuia").textContent = K.guia ? "Guia: app toca junto" : "Guia: só eu toco";
+    for (const b of $("kSou").children) b.setAttribute("aria-pressed", String(b.dataset.sou === K.sou));
+    kPads[0].hidden = K.sou === "2"; kPads[1].hidden = K.sou === "1";
+    if (on && !bq.on && !K.res) kFb("", K.sou === "12" ? "To = os dois juntos" : K.sou === "1" ? "To e Po são seus" : "To e Pa são seus");
+    try { localStorage.setItem("surdos.eu", K.eu ? "1" : "0"); localStorage.setItem("surdos.eu.sou", K.sou); localStorage.setItem("surdos.eu.guia", K.guia ? "1" : "0"); } catch (e) {}
   }
   // cada linha ganha o maior tamanho de letra que cabe na largura
   function kFit() {
@@ -2923,16 +3072,25 @@ To To To-to To-to`;
     if (S.p !== K.p) kBuild(S.p);
     kName.textContent = S.name || "";
     const P = K.p;
-    kPlay.textContent = bq.on ? "■ Parar" : "▶ Tocar breque"; kPlay.hidden = typeof ENS !== "undefined" && ENS.on;
-    kGo.hidden = !(typeof ENS !== "undefined" && ENS.on);
-    const vz = !!voiceSel.value; if (kVoz.dataset.v !== String(vz)) { kVoz.dataset.v = String(vz); kVoz.textContent = vz ? "🔊 Com voz cantando" : "🔇 Sem voz (só a letra)"; kVoz.setAttribute("aria-pressed", String(vz)); kVoz.hidden = typeof ENS !== "undefined" && ENS.on; }
+    const ensOn = typeof ENS !== "undefined" && ENS.on;
+    kPlay.textContent = bq.on ? "■ Parar" : "▶ Tocar"; kPlay.hidden = ensOn;
+    kGo.hidden = !ensOn;
+    const vz = !!voiceSel.value; if (kVoz.dataset.v !== String(vz)) { kVoz.dataset.v = String(vz); kVoz.textContent = vz ? "🔊 Voz" : "🔇 Sem voz"; kVoz.setAttribute("aria-pressed", String(vz)); }
+    const st = `${ensOn}|${metro.checked}|${bqRepeat.checked}|${bpm.value}|${seq.on}`;
+    if (st !== K.st) {
+      K.st = st; kEuUI();
+      for (const id of ["kVoz", "kClq", "kRep", "kAnt", "kProx"]) $(id).hidden = ensOn; document.querySelector(".k-bpm").hidden = ensOn;
+      $("kClq").setAttribute("aria-pressed", String(metro.checked)); $("kRep").setAttribute("aria-pressed", String(bqRepeat.checked)); $("kRep").hidden = ensOn || seq.on;
+      $("kBpm").textContent = `${bpm.value} bpm`;
+    }
+    kEuTick();
     // a linha entra ~0,3 s antes do compasso (para estar no lugar quando ele começa); a sílaba acende 0,06 s antes; mais o ajuste
     let bar = -1, pos = S.pos == null ? null : S.pos + (0.06 + K.aj) / (S.s || 0.5);
     const posL = pos == null ? null : pos + 0.25 / (S.s || 0.5);
     if (posL != null && posL >= 0 && posL < P.total) bar = P.beatBar[Math.floor(posL)];
     else if (posL != null && posL >= P.total) bar = P.bars.length;
     else if (pos == null || pos < 0) bar = -1;
-    const msg = S.count ? String(S.count) : pos == null ? (S.idle ? (startBar ? `Começa no compasso ${startBar + 1}` : "") : S.msg || "") : "";
+    const msg = S.count ? String(S.count) : pos == null ? (S.idle ? (K.eu && K.res ? K.res : startBar ? `Começa no compasso ${startBar + 1}` : K.eu ? "Aperte ▶ e toque junto" : "") : S.msg || "") : "";
     kMsg.hidden = !msg; if (msg) kMsg.textContent = msg;
     let nota = "";
     if (bar >= 0 && bar < P.bars.length && P.notes) for (let j = bar; j >= 0 && P.section[j] === P.section[bar]; j--) if (P.notes[j]) { nota = P.notes[j]; break; }
@@ -2958,10 +3116,11 @@ To To To-to To-to`;
   function kOpen(on) {
     K.on = on; kara.hidden = !on; cancelAnimationFrame(K.raf);
     document.documentElement.style.overflow = on ? "hidden" : "";
-    if (on) { K.p = null; kTick(); try { navigator.wakeLock && navigator.wakeLock.request("screen").then(w => K.wl = w).catch(() => {}); } catch (e) {} }
+    if (on) { K.p = null; K.st = ""; K.res = ""; kTick(); try { navigator.wakeLock && navigator.wakeLock.request("screen").then(w => K.wl = w).catch(() => {}); } catch (e) {} }
     else { try { K.wl && K.wl.release(); } catch (e) {} K.wl = null; }
   }
   $("kOpen").addEventListener("click", () => kOpen(true));
+  $("kOpenEu").addEventListener("click", () => { K.eu = true; ensureCtx(); kOpen(true); });
   $("kClose").addEventListener("click", () => kOpen(false));
   // ajuste fino da sincronia (cada aparelho/caixa de som tem o seu atraso); fica guardado neste aparelho
   try { K.aj = +localStorage.getItem("surdos.letra.aj") || 0; } catch (e) { K.aj = 0; }
@@ -2969,7 +3128,26 @@ To To To-to To-to`;
   $("kMais").addEventListener("click", () => { K.aj = Math.min(1, Math.round((K.aj + 0.05) * 100) / 100); kAjShow(); });
   $("kMenos").addEventListener("click", () => { K.aj = Math.max(-1, Math.round((K.aj - 0.05) * 100) / 100); kAjShow(); });
   kAjShow();
-  kPlay.addEventListener("click", () => toggleBreque());
+  kPlay.addEventListener("click", () => {
+    if (!bq.on) { K.res = ""; if (K.eu) { if (!countIn.checked) { countIn.checked = true; countIn.dispatchEvent(new Event("change", { bubbles: true })); } kEuAlvos(); kFb("", "atenção na contagem…"); } }
+    toggleBreque();
+  });
+  for (const p of kPads) {
+    p.addEventListener("pointerdown", e => { e.preventDefault(); play(+p.dataset.d); });
+    p.addEventListener("contextmenu", e => e.preventDefault());
+    p.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); if (!e.repeat) play(+p.dataset.d); } });
+  }
+  $("kEu").addEventListener("click", () => { K.eu = !K.eu; K.res = ""; ensureCtx(); kEuUI(); kEuAlvos(); kFit(); });
+  $("kGuia").addEventListener("click", () => { K.guia = !K.guia; kEuUI(); });
+  $("kSou").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; K.sou = b.dataset.sou; K.res = ""; kEuUI(); kEuAlvos(); });
+  $("kClq").addEventListener("click", () => { metro.checked = !metro.checked; metro.dispatchEvent(new Event("change", { bubbles: true })); });
+  $("kRep").addEventListener("click", () => { bqRepeat.checked = !bqRepeat.checked; bqRepeat.dispatchEvent(new Event("change", { bubbles: true })); });
+  const kBpmMuda = d => { bpm.value = Math.max(+bpm.min || 40, Math.min(+bpm.max || 240, Math.round((+bpm.value + d) / 5) * 5)); K.res = ""; bpm.dispatchEvent(new Event("input", { bubbles: true })); if (bq.on) kEuAlvos(); };
+  $("kLento").addEventListener("click", () => kBpmMuda(-5));
+  $("kRapido").addEventListener("click", () => kBpmMuda(5));
+  const kVai = d => { const L = allBreques(), i = L.indexOf(current), b = L[(i + d + L.length) % L.length]; K.res = ""; kFb("", ""); selectBreque(b.id); };
+  $("kAnt").addEventListener("click", () => kVai(-1));
+  $("kProx").addEventListener("click", () => kVai(1));
   const kVoz = $("kVoz");
   // com ou sem a voz cantando: só troca a escolha de voz (vale na hora, até no meio do breque)
   kVoz.addEventListener("click", () => {
