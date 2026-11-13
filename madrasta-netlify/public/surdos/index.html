@@ -401,6 +401,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 .k-seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
 .k-seg button { min-height: 38px; padding: 0 13px; border: 0; background: transparent; color: var(--muted); font: 600 14px var(--f-body, inherit); cursor: pointer; }
 .k-seg button[aria-pressed="true"] { background: color-mix(in srgb, var(--brass) 24%, transparent); color: var(--fg); }
+.k-lat { text-align: center; font: 500 11px/1.2 var(--f-mono); color: var(--muted); } .k-lat:empty { display: none; }
 .k-st { display: flex; justify-content: center; align-items: center; gap: 12px; min-height: 22px; }
 #kPts { font: 700 13px var(--f-mono); color: var(--fg); white-space: nowrap; }
 .k-fb { font: 700 13px/22px var(--f-mono); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -449,9 +450,10 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
   <div class="k-eu" id="kEuBox" hidden>
     <div class="k-eu-top">
       <span class="k-seg" id="kSou" role="group" aria-label="Qual surdo eu toco"><button type="button" data-sou="1">Sou 1ª</button><button type="button" data-sou="2">Sou 2ª</button><button type="button" data-sou="12">1ª + 2ª</button></span>
-      <button class="k-chip" id="kGuia" type="button" aria-pressed="false" title="Ligado: o app também toca a sua parte, para você ouvir e tocar junto">Guia</button>
+      <button class="k-chip" id="kGuia" type="button" aria-pressed="false" title="Quem faz o som da sua parte: o seu toque, o seu toque e o app, ou só o app (o toque só conta ponto)">Som</button>
     </div>
     <div class="k-st"><output id="kPts"></output><span class="k-fb" id="kFb"></span></div>
+    <div class="k-lat" id="kLat"></div>
     <div class="k-pads" id="kPads"><button class="k-pad p1" type="button" data-d="0" aria-label="Surdo de primeira"><b>1ª</b><span>Po</span></button><button class="k-pad p2" type="button" data-d="1" aria-label="Surdo de segunda"><b>2ª</b><span>Pa</span></button></div>
   </div>
   <footer>
@@ -712,9 +714,10 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
       }
     }
 
-    function strike(i, t, tag, vel = 1) {
+    function strike(i, t, tag, vel = 1, fast = false) {
       const p = P[i];
-      const end = t + p.A + p.D + p.R;
+      const A = fast ? Math.min(p.A, 0.005) : p.A;   // toque ao vivo: o som sobe já, sem a rampa lenta
+      const end = t + A + p.D + p.R;
       const cut = ac.createGain();
       cut.gain.value = vel;
       cut.connect(busGains[i]);
@@ -726,8 +729,8 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
       body.frequency.setValueAtTime(p.f0 * p.bend, t);
       body.frequency.exponentialRampToValueAtTime(p.f0, t + p.bendT);
       env.gain.setValueAtTime(0.0001, t);
-      env.gain.exponentialRampToValueAtTime(p.peak, t + p.A);               // A: rampa curta, sem estalo
-      env.gain.exponentialRampToValueAtTime(p.peak * p.S, t + p.A + p.D);   // D → S
+      env.gain.exponentialRampToValueAtTime(p.peak, t + A);               // A: rampa curta, sem estalo
+      env.gain.exponentialRampToValueAtTime(p.peak * p.S, t + A + p.D);   // D → S
       env.gain.exponentialRampToValueAtTime(0.0001, end);                   // R: cauda exponencial
       body.connect(env).connect(cut);
       body.start(t); body.stop(end + 0.05);
@@ -740,8 +743,8 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
         ot.frequency.setValueAtTime(p.f0 * 1.59 * p.bend, t);
         ot.frequency.exponentialRampToValueAtTime(p.f0 * 1.59, t + p.bendT);
         oe.gain.setValueAtTime(0.0001, t);
-        oe.gain.exponentialRampToValueAtTime(p.ot, t + p.A);
-        oe.gain.exponentialRampToValueAtTime(0.0001, t + p.A + p.R * 0.5);
+        oe.gain.exponentialRampToValueAtTime(p.ot, t + A);
+        oe.gain.exponentialRampToValueAtTime(0.0001, t + A + p.R * 0.5);
         ot.connect(oe).connect(cut);
         ot.start(t); ot.stop(end + 0.05);
         srcs.push(ot);
@@ -755,8 +758,8 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
           o.frequency.setValueAtTime(p.f0 * mult * p.bend, t);
           o.frequency.exponentialRampToValueAtTime(p.f0 * mult, t + p.bendT);
           oe.gain.setValueAtTime(0.0001, t);
-          oe.gain.exponentialRampToValueAtTime(g * p.pres, t + p.A);
-          oe.gain.exponentialRampToValueAtTime(0.0001, t + p.A + p.R * dec);
+          oe.gain.exponentialRampToValueAtTime(g * p.pres, t + A);
+          oe.gain.exponentialRampToValueAtTime(0.0001, t + A + p.R * dec);
           o.connect(oe).connect(cut);
           o.start(t); o.stop(end + 0.05);
           srcs.push(o);
@@ -771,8 +774,8 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
         o.frequency.setValueAtTime(p.f0 * mult * p.bend, t);
         o.frequency.exponentialRampToValueAtTime(p.f0 * mult, t + p.bendT);
         oe.gain.setValueAtTime(0.0001, t);
-        oe.gain.exponentialRampToValueAtTime(g, t + p.A);
-        oe.gain.exponentialRampToValueAtTime(0.0001, t + p.A + Math.max(0.05, p.R * dec));
+        oe.gain.exponentialRampToValueAtTime(g, t + A);
+        oe.gain.exponentialRampToValueAtTime(0.0001, t + A + Math.max(0.05, p.R * dec));
         o.connect(oe).connect(cut); o.start(t); o.stop(end + 0.05); srcs.push(o);
       });
       if (p.skin) {
@@ -799,10 +802,10 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
     }
 
     // Um toque no instante t do relógio de áudio
-    function trigger(i, mute, t, tag, vel = 1) {
+    function trigger(i, mute, t, tag, vel = 1, fast = false) {
       if (mute) { stopVoices(i, t, 0.03); return; }
-      if (choke.checked) stopVoices(i, t, 0.012);
-      strike(i, t, tag, vel);
+      if (choke.checked) stopVoices(i, t, fast ? 0.006 : 0.012);
+      strike(i, t, tag, vel, fast);
     }
 
     function track(src, t, tag) {
@@ -935,10 +938,11 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
   function play(i, mute) {
     ensureCtx();
     const t = ctx.currentTime;
+    let vel = 1, j = null, mudo = false;
+    if (K.on && K.eu) { j = kJudge(i, t); if (j.g) { mute = mute || j.g.mute; vel = Math.max(0.4, Math.min(1, j.g.vel)); } mudo = K.guia === 2 && bq.on; }
+    if (!mudo) trigger(i, mute, t, false, vel, true);   // primeiro o som; a tela vem depois, para não atrasar a batida
     flash(i);
-    let vel = 1;
-    if (K.on && K.eu) { const g = kJudge(i, t); if (g) { mute = mute || g.mute; vel = Math.max(0.4, Math.min(1, g.vel)); } }
-    trigger(i, mute, t, false, vel);
+    if (j) kMostra(i, j);
     if (rec.on) recordHit(i, mute, t);
     if (!mute) learnHit(i, t);
   }
@@ -2965,8 +2969,8 @@ To To To-to To-to`;
   }
   // ---------- Eu toco: a pessoa bate nos pads e cada sílaba mostra se acertou ----------
   // Cada batida esperada (sílaba × surdo da pessoa) é um alvo; o toque casa com o alvo livre mais perto, até 0,15 s.
-  K.eu = false; K.sou = "12"; K.guia = false; K.tg = []; K.gs = []; K.ptr = 0; K.cyc = 0; K.okN = 0; K.missN = 0; K.res = "";
-  try { K.eu = localStorage.getItem("surdos.eu") === "1"; K.sou = localStorage.getItem("surdos.eu.sou") || "12"; K.guia = localStorage.getItem("surdos.eu.guia") === "1"; } catch (e) {}
+  K.eu = false; K.sou = "12"; K.guia = 0; K.bias = 0; K.cal = []; K.tg = []; K.gs = []; K.ptr = 0; K.cyc = 0; K.okN = 0; K.missN = 0; K.res = "";
+  try { K.eu = localStorage.getItem("surdos.eu") === "1"; K.sou = localStorage.getItem("surdos.eu.sou") || "12"; K.guia = +localStorage.getItem("surdos.eu.guia") || 0; K.bias = +localStorage.getItem("surdos.eu.bias") || 0; } catch (e) {}
   K.mine = d => K.sou === "12" ? d < 2 : K.sou === "1" ? d === 0 : d === 1;
   const K_W = 0.15, kPads = [...document.querySelectorAll(".k-pad")], kFbEl = $("kFb"), kPtsEl = $("kPts");
   function kEuAlvos() {
@@ -2984,7 +2988,24 @@ To To To-to To-to`;
     kPts();
   }
   function kPts() { const n = K.gs.filter(g => g.beat >= barBeat(startBar)).length; kPtsEl.textContent = K.eu && n ? `✓ ${K.okN} · ✗ ${K.missN} · de ${n}` : ""; }
-  const kOuve = t => t - (ctx.outputLatency || 0) + K.aj - 0.03;   // o instante que a pessoa estava ouvindo quando encostou no pad
+  // o instante que a pessoa estava ouvindo quando encostou no pad; K.bias é o atraso deste aparelho, medido pelos próprios toques
+  const kOuve = t => t - (ctx.outputLatency || 0) + K.aj - 0.03 - K.bias;
+  // mede o atraso do aparelho: nos toques isolados (sem vizinho a menos de 0,45 s), a diferença para a batida certa;
+  // se as últimas diferenças concordam entre si, a mediana passa a ser descontada (cada celular e fone atrasa diferente)
+  function kCalibra(i, th) {
+    let best = null, bd = 9; const raw = th + K.bias;
+    for (let k = Math.max(0, K.ptr - 6); k < K.tg.length; k++) { const g = K.tg[k]; if (g.d !== i) continue; const dt = raw - kQuando(g); if (dt < -0.4) break; if (Math.abs(dt - K.bias) < Math.abs(bd - K.bias)) { bd = dt; best = k; } }
+    if (best == null || Math.abs(bd - K.bias) > 0.3) return;
+    const tw = kQuando(K.tg[best]);
+    for (let k = best - 1; k >= 0 && k >= best - 4; k--) if (K.tg[k].d === i && tw - kQuando(K.tg[k]) < 0.36 && K.tg[k].beat !== K.tg[best].beat) return;
+    for (let k = best + 1; k < K.tg.length && k <= best + 4; k++) if (K.tg[k].d === i && kQuando(K.tg[k]) - tw < 0.36 && K.tg[k].beat !== K.tg[best].beat) return;
+    K.cal.push(bd); if (K.cal.length > 20) K.cal.shift();
+    if (K.cal.length < 6) return;
+    const o = [...K.cal].sort((a, b) => a - b), m = o[o.length >> 1], mad = o.map(x => Math.abs(x - m)).sort((a, b) => a - b)[o.length >> 1];
+    if (mad > 0.05) return;
+    K.bias = Math.max(-0.05, Math.min(0.35, K.bias + 0.5 * (m - K.bias)));
+    try { localStorage.setItem("surdos.eu.bias", K.bias.toFixed(3)); } catch (e) {}
+  }
   const kQuando = g => { const s = spb(), sb = barBeat(startBar); return bq.start + (K.cyc * (totalBeats() - sb) + g.beat - sb) * s; };
   function kPad(i, v) {
     const el = kPads[i]; if (!el) return;
@@ -2993,19 +3014,25 @@ To To To-to To-to`;
   }
   function kFb(v, txt) { kFbEl.className = "k-fb " + v; kFbEl.textContent = txt; }
   function kJudge(i, t) {
-    if (!bq.on || !K.tg.length || K.p !== parsed) { kPad(i, ""); return null; }
+    if (!bq.on || !K.tg.length || K.p !== parsed) return { g: null, v: "" };
+    kCalibra(i, kOuve(t));
     const th = kOuve(t); let best = null, bd = 9;
     for (let k = K.ptr; k < K.tg.length; k++) {
       const g = K.tg[k], dt = th - kQuando(g);
       if (dt < -0.3) break;
       if (!g.hit && g.d === i && Math.abs(dt) < Math.abs(bd)) { bd = dt; best = g; }
     }
-    if (!best || Math.abs(bd) > K_W) { kPad(i, "fora"); if (th > bq.start - 0.2) kFb("fora", "✗ fora de hora"); return null; }
+    if (!best || Math.abs(bd) > K_W) return { g: null, v: "fora", txt: th > bq.start - 0.2 ? "✗ fora de hora" : null };
     best.hit = true; const g = best.g; g.got++;
-    if (g.got >= g.need && !g.done && !g.lost) { g.done = true; g.el.classList.add("ok"); K.okN++; kPts(); }
-    const ms = Math.round(Math.abs(bd) * 1000), v = ms <= 55 ? "ok" : bd < 0 ? "cedo" : "tarde";
-    kPad(i, v); kFb(v, v === "ok" ? "✓ na mosca" : v === "cedo" ? `adiantou ${ms} ms` : `atrasou ${ms} ms`);
-    return best;
+    let ok = null;
+    if (g.got >= g.need && !g.done && !g.lost) { g.done = true; K.okN++; ok = g.el; }
+    const ms = Math.round(Math.abs(bd) * 1000), v = ms <= 60 ? "ok" : bd < 0 ? "cedo" : "tarde";
+    return { g: best, v, ok, txt: v === "ok" ? "✓ na mosca" : v === "cedo" ? `adiantou ${ms} ms` : `atrasou ${ms} ms` };
+  }
+  function kMostra(i, j) {
+    kPad(i, j.v);
+    if (j.ok) { j.ok.classList.add("ok"); kPts(); }
+    if (j.txt) kFb(j.v, j.txt);
   }
   // a cada quadro: marca o que passou sem toque, acende o pad da vez e troca de volta quando o breque repete
   function kEuTick() {
@@ -3035,17 +3062,23 @@ To To To-to To-to`;
     kPts();
     const n = gs.length, ok = gs.filter(g => g.done).length, pc = n ? Math.round(100 * ok / n) : 0;
     K.res = `${ok} de ${n} · ${pc}% ${pc >= 90 ? "🔥" : pc >= 70 ? "👏" : "💪"}`;
+    $("kLat").textContent = kLatTxt();
     kFb(pc >= 90 ? "ok" : pc >= 70 ? "cedo" : "fora", `${current.name}: ${pc >= 90 ? "dominou!" : pc >= 70 ? "quase lá, mais uma" : "de novo, mais devagar (botão −)"}`);
+  }
+  function kLatTxt() {
+    const ms = Math.round(1000 * ((ctx && ctx.outputLatency || 0) + 0.03 - K.aj + K.bias));
+    return Math.abs(K.bias) < 0.005 ? "" : `atraso deste aparelho: ${ms} ms, já descontado` + (ms > 120 && K.guia !== 2 ? " · é muito: tire o Bluetooth ou use \"Som: só o app\"" : "");
   }
   function kEuUI() {
     const ens = typeof ENS !== "undefined" && ENS.on, on = K.eu && !ens;
     kara.classList.toggle("eu", on); $("kEuBox").hidden = !on;
     $("kEu").setAttribute("aria-pressed", String(K.eu)); $("kEu").hidden = ens;
-    $("kGuia").setAttribute("aria-pressed", String(K.guia)); $("kGuia").textContent = K.guia ? "Guia: app toca junto" : "Guia: só eu toco";
+    $("kGuia").setAttribute("aria-pressed", String(K.guia > 0)); $("kGuia").textContent = ["Som: meu toque", "Som: meu toque + app", "Som: só o app"][K.guia];
     for (const b of $("kSou").children) b.setAttribute("aria-pressed", String(b.dataset.sou === K.sou));
     kPads[0].hidden = K.sou === "2"; kPads[1].hidden = K.sou === "1";
     if (on && !bq.on && !K.res) kFb("", K.sou === "12" ? "To = os dois juntos" : K.sou === "1" ? "To e Po são seus" : "To e Pa são seus");
-    try { localStorage.setItem("surdos.eu", K.eu ? "1" : "0"); localStorage.setItem("surdos.eu.sou", K.sou); localStorage.setItem("surdos.eu.guia", K.guia ? "1" : "0"); } catch (e) {}
+    $("kLat").textContent = on ? kLatTxt() : "";
+    try { localStorage.setItem("surdos.eu", K.eu ? "1" : "0"); localStorage.setItem("surdos.eu.sou", K.sou); localStorage.setItem("surdos.eu.guia", String(K.guia)); } catch (e) {}
   }
   // cada linha ganha o maior tamanho de letra que cabe na largura
   function kFit() {
@@ -3138,7 +3171,7 @@ To To To-to To-to`;
     p.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); if (!e.repeat) play(+p.dataset.d); } });
   }
   $("kEu").addEventListener("click", () => { K.eu = !K.eu; K.res = ""; ensureCtx(); kEuUI(); kEuAlvos(); kFit(); });
-  $("kGuia").addEventListener("click", () => { K.guia = !K.guia; kEuUI(); });
+  $("kGuia").addEventListener("click", () => { K.guia = (K.guia + 1) % 3; kEuUI(); });
   $("kSou").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; K.sou = b.dataset.sou; K.res = ""; kEuUI(); kEuAlvos(); });
   $("kClq").addEventListener("click", () => { metro.checked = !metro.checked; metro.dispatchEvent(new Event("change", { bubbles: true })); });
   $("kRep").addEventListener("click", () => { bqRepeat.checked = !bqRepeat.checked; bqRepeat.dispatchEvent(new Event("change", { bubbles: true })); });
