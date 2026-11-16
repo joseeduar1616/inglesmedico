@@ -47,6 +47,22 @@ h1 span { color: var(--brass); }
 .stage3d canvas:active { cursor: grabbing; }
 .ov { position: absolute; pointer-events: none; }
 .ov-word { left: 0; right: 0; top: 52px; text-align: center; font-family: var(--f-display); font-weight: 800; font-size: clamp(34px, 6vw, 64px); line-height: 1; letter-spacing: .03em; text-shadow: 0 2px 18px rgba(0,0,0,.7); min-height: 1em; }
+/* letra em karaokê sobre o palco: linha anterior apagada, a atual grande (cada sílaba acende na hora) e a próxima */
+.ov-kara { left: 0; right: 0; top: 44px; height: clamp(118px, 29%, 210px); overflow: hidden; background: linear-gradient(rgba(8,9,12,.62), rgba(8,9,12,.42) 62%, rgba(8,9,12,0)); -webkit-mask: linear-gradient(transparent, #000 16%, #000 80%, transparent); mask: linear-gradient(transparent, #000 16%, #000 80%, transparent); }
+.ov-kara[hidden] { display: none; }
+.kr-roll { position: absolute; left: 8px; right: 8px; top: 50%; transition: transform .26s cubic-bezier(.3,.7,.2,1); }
+.kr-l { display: flex; justify-content: center; align-items: baseline; gap: .42em; white-space: nowrap; padding: .05em 0; font: 800 var(--fs, 48px)/1.1 var(--f-display); letter-spacing: .01em; text-shadow: 0 2px 10px rgba(0,0,0,.9), 0 0 2px #000; transform-origin: 50% 50%; transition: transform .26s cubic-bezier(.3,.7,.2,1), opacity .26s; opacity: 0; transform: scale(.5); }
+.kr-l.cur { opacity: 1; transform: none; } .kr-l.prev { opacity: .32; transform: scale(.5); } .kr-l.next { opacity: .62; transform: scale(.6); } .kr-l.next2 { opacity: .26; transform: scale(.5); }
+.kr-b { display: inline-flex; gap: .1em; }
+.kr-t { display: inline-block; opacity: .4; transition: opacity .08s, transform .12s; }
+.kr-t sup { font-size: .45em; }
+.kr-l.prev .kr-t, .kr-t.on { opacity: 1; } .kr-l.next .kr-t { opacity: .75; }
+.kr-t.now { transform: scale(1.16) translateY(-.04em); text-shadow: 0 0 .35em currentColor, 0 2px 10px rgba(0,0,0,.9); }
+.kr-t.dot { color: var(--muted); } .kr-t.tk-cnt { color: #a9abb5; }
+.kr-msg { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-58%); text-align: center; font: 800 clamp(40px, 9vw, 86px)/1 var(--f-display); color: var(--brass); text-shadow: 0 2px 14px rgba(0,0,0,.9); }
+.kr-msg:empty { display: none; }
+.stage3d.is-fs .ov-kara { top: calc(max(10px, env(safe-area-inset-top, 0px)) + 38px); height: clamp(130px, 30%, 300px); }
+@media (prefers-reduced-motion: reduce) { .kr-roll, .kr-l, .kr-t { transition: none; } }
 .ov-pos { left: 14px; bottom: 12px; font: 500 12px var(--f-mono); color: var(--fg); background: rgba(14,15,18,.7); padding: 5px 9px; border-radius: 6px; font-variant-numeric: tabular-nums; }
 .topbar { position: absolute; left: 10px; right: 10px; top: 10px; display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; }
 .tools, .views { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -83,6 +99,8 @@ body.no-scroll { overflow: hidden; }
   .views::-webkit-scrollbar { display: none; }
   .views button { flex: none; }
   .ov-word { top: 86px; }
+  .ov-kara { top: 78px; height: clamp(112px, 30%, 200px); }
+  .stage3d.is-fs .ov-kara { top: calc(max(10px, env(safe-area-inset-top, 0px)) + 72px); }
 }
 
 .panel { display: flex; flex-direction: column; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--stage-2) 80%, transparent); }
@@ -184,10 +202,12 @@ kbd { font-family: var(--f-mono); font-size: 11px; border: 1px solid var(--line)
 
   <div class="stage3d" id="stage3d">
     <div class="ov ov-word" id="ovWord"></div>
+    <div class="ov ov-kara" id="ovKara" hidden><div class="kr-roll" id="krRoll"></div><div class="kr-msg" id="krMsg"></div></div>
     <div class="topbar">
       <div class="tools">
         <button type="button" id="fsBtn" aria-pressed="false"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1.5 5V1.5H5M9 1.5h3.5V5M12.5 9v3.5H9M5 12.5H1.5V9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span id="fsLbl">Tela cheia</span></button>
         <button type="button" id="mirBtn" aria-pressed="false"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 1.6"/><path d="M5 3.5L1.5 7 5 10.5zM9 3.5L12.5 7 9 10.5z" fill="currentColor"/></svg>Espelho</button>
+        <button type="button" id="karBtn" aria-pressed="true" title="Mostra a letra do breque em karaokê sobre o palco">♪ <span>Letra</span></button>
       </div>
       <div class="views" id="views">
         <button type="button" data-v="frente" class="on">Frente</button>
@@ -1637,6 +1657,75 @@ To To To-to To-to`;
   BUILTIN.forEach(b => bqSel.appendChild(new Option(b.name, b.id)));
   const spb = () => 60 / (bq.on && bq.bpmOv ? bq.bpmOv : +bpm.value);
   const brequeHooks = [];
+
+  // ---------- Letra em karaokê sobre o palco ----------
+  // As mesmas linhas da partitura (uma por compasso); o palco e o vídeo exportado usam a mesma lista de sílabas.
+  const KR = { on: true, p: null, bars: [], lines: [], toks: [], foco: -9, pre: null, nowEl: null, w: 0 };
+  const ovKara = $("ovKara"), krRoll = $("krRoll"), krMsg = $("krMsg"), karBtn = $("karBtn");
+  try { KR.on = localStorage.getItem("surdos3d.letra") !== "0"; } catch (e) {}
+  const KR_COR = { To: "#6ea8ff", Bo: "#6ea8ff", bo: "#6ea8ff", to: "#6ea8ff", Pa: "#3fc1b0", ra: "#3fc1b0", ga: "#3fc1b0", po: "#ff9a4a", ro: "#ff9a4a", go: "#ff9a4a", E: "#ff6b6b", ti: "#ff6b6b" };
+  function krDados() {   // por compasso: tempos, e em cada tempo as sílabas { txt, sup, base, cor, beat }
+    return parsed.bars.map((bar, b) => bar.map((beat, k) => beat.map((tok, j) => {
+      const at = parsed.barStart[b] + k + j / beat.length;
+      if (tok.startsWith("#")) return { txt: tok.slice(1), base: "cnt", cor: "#a9abb5", beat: at };
+      if (!tok) return { txt: "·", base: "dot", cor: "#8d8f98", beat: at };
+      const { base, sup } = tokParts(tok);
+      return { txt: base === "po" ? "Po" : base, sup, base, cor: KR_COR[base] || "#6ea8ff", beat: at };
+    })));
+  }
+  function krBuild() {
+    KR.p = parsed; KR.bars = krDados(); KR.lines = []; KR.toks = []; KR.foco = -9; KR.nowEl = null; krRoll.innerHTML = "";
+    KR.bars.forEach(bar => {
+      const l = document.createElement("div"); l.className = "kr-l"; const tk = [];
+      bar.forEach(beat => {
+        const g = document.createElement("span"); g.className = "kr-b";
+        beat.forEach(x => {
+          const t = document.createElement("span"); t.className = "kr-t " + (x.base === "dot" ? "dot" : "tk-" + x.base);
+          t.textContent = x.txt; if (x.sup) { const sp = document.createElement("sup"); sp.textContent = x.sup; t.appendChild(sp); }
+          g.appendChild(t); tk.push([x.beat, t]);
+        });
+        l.appendChild(g);
+      });
+      krRoll.appendChild(l); KR.lines.push(l); KR.toks.push(tk);
+    });
+    krFit();
+  }
+  function krFit() {   // cada linha com a maior letra que cabe na largura do palco
+    const W = krRoll.clientWidth - 6; KR.w = W; if (W <= 0) return;
+    const big = Math.min(92, Math.max(26, W * 0.115), ovKara.clientHeight * 0.42);   // cabe na faixa acima das cabeças
+    for (const l of KR.lines) { l.style.setProperty("--fs", big + "px"); l.style.width = "max-content"; const w = l.offsetWidth * 1.04; l.style.width = ""; if (w > W) l.style.setProperty("--fs", Math.max(16, big * W / w) + "px"); }
+    KR.foco = -9;
+  }
+  // pos: posição em tempos dentro do breque (null = parado ou na contagem); cnt: número da contagem; b0: compasso onde começa.
+  // Devolve true quando a letra está à mostra (aí a sílaba solta grande não precisa aparecer).
+  function krShow(pos, cnt, b0 = 0, s = spb()) {
+    if (!KR.on) { if (!ovKara.hidden) ovKara.hidden = true; return false; }
+    if (ovKara.hidden) ovKara.hidden = false;
+    if (KR.p !== parsed) krBuild(); else if (krRoll.clientWidth - 6 !== KR.w) krFit();
+    if (krMsg.textContent !== (cnt || "")) krMsg.textContent = cnt || "";
+    const P = parsed, n = KR.lines.length, pre = pos == null;
+    // a linha entra 0,25 s antes do compasso; a sílaba acende 0,06 s antes
+    const p = pre ? null : pos + 0.06 / s, pL = pre ? null : p + 0.25 / s;
+    const bar = pre ? b0 - 1 : pL >= P.total ? n : P.beatBar[Math.max(0, Math.floor(pL))];
+    if (bar !== KR.foco || pre !== KR.pre) {
+      KR.foco = bar; KR.pre = pre;
+      KR.lines.forEach((l, i) => { const d = i - bar; l.className = "kr-l" + (d === 0 && !pre ? " cur" : d === -1 && !pre ? " prev" : d === 1 ? " next" : d === 2 ? " next2" : ""); });
+      const ref = KR.lines[Math.max(0, Math.min(n - 1, bar))];
+      if (ref) { const h = ref.offsetHeight, y = ref.offsetTop + (bar < 0 ? -h : bar >= n ? h : 0) + h / 2; krRoll.style.transform = `translateY(${-y}px)`; }
+      if (KR.nowEl) KR.nowEl.classList.remove("now"); KR.nowEl = null;
+      if (KR.toks[bar]) KR.toks[bar].forEach(([, el]) => el.classList.remove("on"));
+    }
+    if (!pre && bar >= 0 && bar < n) {
+      let now = null;
+      for (const [b, el] of KR.toks[bar]) { const on = b <= p + 0.02; if (on !== el.classList.contains("on")) el.classList.toggle("on", on); if (on) now = el; }
+      if (now !== KR.nowEl) { if (KR.nowEl) KR.nowEl.classList.remove("now"); KR.nowEl = now; if (now) now.classList.add("now"); }
+    }
+    return true;
+  }
+  const krIdle = () => krShow(null, "", startBar);
+  karBtn.setAttribute("aria-pressed", String(KR.on));
+  karBtn.addEventListener("click", () => { KR.on = !KR.on; karBtn.setAttribute("aria-pressed", String(KR.on)); try { localStorage.setItem("surdos3d.letra", KR.on ? "1" : "0"); } catch (e) {} if (KR.on) { if (!bq.on) krIdle(); } else ovKara.hidden = true; });
+  new ResizeObserver(() => { if (KR.on && KR.lines.length && krRoll.clientWidth - 6 !== KR.w) { krFit(); if (!bq.on) krIdle(); } }).observe(ovKara);
   function selectBreque(id) {
     if (lesson.on) endLesson();
     current = BUILTIN.find(b => b.id === id) || BUILTIN[0];
@@ -1644,7 +1733,7 @@ To To To-to To-to`;
     parsed = parseBreque(current.text); events = buildEvents(parsed); startBar = 0;
     bqSel.value = current.id; bpm.value = current.bpm; bpmOut.textContent = fsBpm.textContent = `${bpm.value} bpm`;
     bqTitle.textContent = current.name; bqMeta.textContent = `${parsed.bars.length} compassos · ${current.bpm} bpm`;
-    bqPos.textContent = "Começa no compasso 1"; renderScore();
+    bqPos.textContent = "Começa no compasso 1"; renderScore(); krIdle();
     try { localStorage.setItem("surdos3d.sel", current.id); } catch (e) {}
     brequeHooks.forEach(f => f());
   }
@@ -1668,7 +1757,7 @@ To To To-to To-to`;
         beatCells[parsed.barStart[b] + k] = cell; cells.appendChild(cell);
       });
       row.innerHTML = `<span class="n">${b + 1}</span>`; row.appendChild(cells);
-      const pick = () => { startBar = b; barRows.forEach((r, i) => r.classList.toggle("start", i === b)); bqPos.textContent = `Começa no compasso ${b + 1}`; if (bq.on) { stopBreque(); startBreque(); } };
+      const pick = () => { startBar = b; barRows.forEach((r, i) => r.classList.toggle("start", i === b)); bqPos.textContent = `Começa no compasso ${b + 1}`; if (!bq.on) krIdle(); if (bq.on) { stopBreque(); startBreque(); } };
       row.addEventListener("click", pick); row.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); pick(); } });
       scoreEl.appendChild(row); barRows.push(row);
     });
@@ -1716,11 +1805,12 @@ To To To-to To-to`;
     }
     // sílaba do momento, grande sobre o palco
     let word = "", col = "#8d8f98";
+    const b = bq.sb + (rep() ? ((rel % bq.span) + bq.span) % bq.span : rel);
     if (rel < 0 && bq.cnt) word = String(Math.max(1, Math.min(4, Math.floor(rel + 5))));
-    else {
-      const b = bq.sb + (rep() ? ((rel % bq.span) + bq.span) % bq.span : rel);
+    else if (rel >= 0) {
       for (let k = events.length - 1; k >= 0; k--) { const e = events[k]; if (e.beat <= b + 1e-6) { if (b - e.beat < Math.max(e.slot, 0.35)) { word = e.count ? String(+e.say?.slice(1) || "") : (e.label || ""); col = e.count ? "#6b6e78" : e.rest ? "#ff6b6b" : ({ Pa: "#3fc1b0", po: "#ff9a4a", ro: "#ff9a4a", go: "#ff9a4a", ra: "#3fc1b0", ga: "#3fc1b0" })[e.label] || "#6ea8ff"; } break; } }
     }
+    if (krShow(rel < 0 ? null : b, rel < 0 ? word : "", parsed.beatBar[bq.sb] || 0, s)) word = "";   // com a letra em karaokê, a sílaba solta não aparece
     ovWord.textContent = word; ovWord.style.color = col;
     requestAnimationFrame(bqDraw);
   }
@@ -1751,7 +1841,7 @@ To To To-to To-to`;
     const now = ctx ? ctx.currentTime : 0;
     players.forEach(p => { p.hits = p.hits.filter(h => h.t <= now); });
     if (beatCells[bq.cur]) beatCells[bq.cur].classList.remove("now");
-    bq.cur = -1; ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`;
+    bq.cur = -1; ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`; krIdle();
     $("bqPlay").classList.remove("playing"); $("bqLbl").textContent = "Tocar breque"; $("fsPlayLbl").textContent = "Tocar";
     for (const id of ["bqIcon", "fsIcon"]) $(id).setAttribute("d", "M3 1.5v11l9.5-5.5z");
     bqPos.textContent = `Começa no compasso ${startBar + 1}`;
@@ -1978,6 +2068,7 @@ To To To-to To-to`;
         let word = "", col = "#8d8f98";
         if (rel < 0) { if (scoreNow !== -2) { setPos(null); scoreNow = -2; } lnPos.innerHTML = `Contagem… <b>${pre + rel + 1}</b> · começa no compasso <b>${c.from + 1}</b>`; word = String(pre + rel + 1); }
         else { if (b < c.b1 && b !== scoreNow) setPos(b); if (c.b0 + relF < c.b1) [word, col] = wordAt(c.b0 + relF); }
+        if (krShow(rel < 0 ? null : c.b0 + relF, rel < 0 ? word : "", parsed.beatBar[c.b0] || 0, s)) word = "";
         ovWord.textContent = word; ovWord.style.color = col;
         if (ctx.currentTime < end) L.raf = requestAnimationFrame(tick);
       };
@@ -1986,7 +2077,7 @@ To To To-to To-to`;
       L.timer = setTimeout(() => {
         if (L.runId !== myRun) return;
         L.done = null; cells.forEach(x => x.classList.remove("now"));
-        setPos(null); ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`;
+        setPos(null); ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`; krIdle();
         L.busy = false; L.phase = "idle"; setButtons();
         resolve(true);
       }, (end - ctx.currentTime) * 1000);
@@ -2072,7 +2163,7 @@ To To To-to To-to`;
     L.busy = false; L.phase = "idle";
     lnGrid.querySelectorAll(".now").forEach(x => x.classList.remove("now"));
     setPos(null);
-    if (was && !bq.on) { ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`; }
+    if (was && !bq.on) { ovWord.textContent = ""; ovPos.textContent = `${current.name} · pronto para tocar`; krIdle(); }
     if (was) { lnMsg.className = "ln-msg"; lnMsg.innerHTML = "Parado. Toque em <b>1 · Ouvir</b> ou <b>2 · Tocar</b> para continuar."; }
     setButtons();
   }
@@ -2563,8 +2654,8 @@ To To To-to To-to`;
   }
   function overlay(tv, r) {
     const g = vg, rel = (tv - r.t0) / r.s;
-    const top = g.createLinearGradient(0, 0, 0, 170); top.addColorStop(0, "rgba(10,11,14,.8)"); top.addColorStop(1, "rgba(10,11,14,0)");
-    g.fillStyle = top; g.fillRect(0, 0, VW, 170);
+    const th = KR.on ? 290 : 170, top = g.createLinearGradient(0, 0, 0, th); top.addColorStop(0, "rgba(10,11,14,.8)"); top.addColorStop(KR.on ? 0.7 : 0.5, "rgba(10,11,14,.5)"); top.addColorStop(1, "rgba(10,11,14,0)");
+    g.fillStyle = top; g.fillRect(0, 0, VW, th);
     g.textBaseline = "alphabetic"; g.textAlign = "left"; g.fillStyle = "#ecebe6"; g.font = '800 54px "Big Shoulders Display", Impact, sans-serif';
     g.fillText(current.name.toUpperCase(), 40, 72);
     g.textAlign = "right"; g.fillStyle = "#b9bbc3"; g.font = '500 22px "JetBrains Mono", ui-monospace, monospace';
@@ -2573,6 +2664,21 @@ To To To-to To-to`;
     let word = "", col = "#8d8f98";
     if (rel < 0) { if (countIn.checked && rel >= -4) word = String(Math.max(1, Math.min(4, Math.floor(rel + 5)))); }
     else [word, col] = wordAt(rel);
+    if (KR.on) {
+      // karaokê no vídeo: a linha do compasso (sílabas já cantadas acesas) e a próxima, menor
+      if (KR.p !== parsed) krBuild();
+      const F = '"Big Shoulders Display", Impact, sans-serif', n = KR.bars.length;
+      const p = rel + 0.06 / r.s, pL = p + 0.25 / r.s, bar = rel < 0 ? -1 : pL >= parsed.total ? n : parsed.beatBar[Math.max(0, Math.floor(pL))];
+      const linha = (bi, y, size, cur) => {
+        const beats = KR.bars[bi]; if (!beats) return;
+        const mede = px => { g.font = `800 ${px}px ${F}`; const gap = px * 0.42, sp = px * 0.1; let w = 0; const ws = beats.map(bt => { const x = bt.map(t => g.measureText(t.txt + (t.sup || "")).width); w += x.reduce((a, c) => a + c, 0) + sp * (bt.length - 1); return x; }); return { w: w + gap * (beats.length - 1), ws, gap, sp }; };
+        let m = mede(size); if (m.w > VW - 120) { size *= (VW - 120) / m.w; m = mede(size); }
+        let x = (VW - m.w) / 2; g.textAlign = "left"; g.lineWidth = Math.max(4, size * 0.09); g.strokeStyle = "rgba(10,11,14,.8)"; g.lineJoin = "round";
+        beats.forEach((bt, k) => { bt.forEach((t, j) => { const on = cur && t.beat <= p + 0.02; g.globalAlpha = cur ? (on ? 1 : 0.42) : 0.5; const txt = t.txt + (t.sup || ""); g.strokeText(txt, x, y); g.fillStyle = t.cor; g.fillText(txt, x, y); x += m.ws[k][j] + m.sp; }); x += m.gap - m.sp; });
+        g.globalAlpha = 1;
+      };
+      if (rel < 0) linha(0, 236, 54, false); else { linha(bar, 180, 100, true); linha(bar + 1, 248, 52, false); word = ""; }
+    }
     if (word) {
       g.textAlign = "center"; g.font = '800 104px "Big Shoulders Display", Impact, sans-serif';
       g.lineWidth = 10; g.strokeStyle = "rgba(10,11,14,.75)"; g.strokeText(word, VW / 2, 150);
@@ -2762,12 +2868,13 @@ To To To-to To-to`;
   let last = null; try { last = localStorage.getItem("surdos3d.sel"); } catch (e) {}
   selectBreque(last && BUILTIN.some(b => b.id === last) ? last : "minus");
   ovPos.textContent = `${current.name} · pronto para tocar`;
+  krIdle();
   // dentro do Surdos de Marcação (aba "Surdos em 3D"): ao trocar de aba, tudo para
   window.addEventListener("message", ev => {
     if (ev.data !== "surdos:pausar") return;
     try { if (lesson.on) endLesson(); if (bq.on) stopBreque(); if (L.busy || L.auto) learnStop(); if (ctx && ctx.state === "running") ctx.suspend(); } catch (e) {}
   });
-  window.__s3d = { get ctx() { return ctx; }, L, learnReset, doListen, doPlay, playChunk, learnStop, playLive, loadSil, voxBufs, singLog, get silOk() { return silOk; }, bqVoice, startBreque, stopBreque, evaluate,  renderBrequeAudio, speakable, get pack() { return pack; }, renderer, setArm, buildLesson, lesson, robots, startLesson, endLesson, skipStep, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
+  window.__s3d = { quadroLetra: (tv, sb) => { vg.fillStyle = "#14161b"; vg.fillRect(0, 0, VW, VH); overlay(tv, { t0: 0, s: sb, buffer: { duration: 60 } }); return vcan.toDataURL("image/png"); }, get ctx() { return ctx; }, L, learnReset, doListen, doPlay, playChunk, learnStop, playLive, loadSil, voxBufs, singLog, get silOk() { return silOk; }, bqVoice, startBreque, stopBreque, evaluate,  renderBrequeAudio, speakable, get pack() { return pack; }, renderer, setArm, buildLesson, lesson, robots, startLesson, endLesson, skipStep, players, strikePhase, REST_K, HIP, VIEWS, setView, toggleMirror, enterFs, exitFs, addHit, get bq() { return bq; }, camera, scene, selectBreque };
 
 })();
 </script>
