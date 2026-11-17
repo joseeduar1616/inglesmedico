@@ -150,12 +150,24 @@ const pronto = Promise.all([
 ]).catch(() => { $('msg').textContent = 'Não consegui carregar os dados da apresentação. Confira a internet e recarregue a página.'; });
 
 /* ---------- motor: o seguidor num Worker (ou aqui mesmo, se o navegador não deixar) ---------- */
+// toques ESCRITOS na partitura (instantes na gravação): o seguidor usa para saber onde é contagem (compassos sem toque),
+// em que o silêncio é esperado e a letra continua andando, em vez de achar que a bateria parou
+const ehToque = tok => tok !== '.' && tok !== '_' && !/^[1-9]$/.test(tok) && !/^(E|ti)(\d|\[|$)/.test(tok);
+let TOQ = null;
+function toquesEscritos() { if (!TOQ) { TOQ = []; for (const s of LET) for (const l of s.linhas) for (const [t, tok] of l.t) if (ehToque(tok)) TOQ.push(t); TOQ.sort((a, b) => a - b); } return TOQ; }
+// referência dos surdos sem o que a 1ª e a 2ª tocam na gravação DENTRO das contagens escritas (no ensaio elas ficam
+// caladas ali). A 3ª não está na partitura da marcação: o que ela toca nesses trechos continua valendo.
+function refSurdosSemContagem() {
+  const T = toquesEscritos(), r = new Uint8Array(REFS.slice(0)), n = r.length / 4;
+  for (let i = 1; i < T.length; i++) if (T[i] - T[i - 1] > 1.0) for (let k = Math.round((T[i - 1] + 0.3) * 100), z = Math.min(n, Math.round((T[i] - 0.12) * 100)); k < z; k++) { r[k * 4] = r[k * 4 + 1] = 0; r[k * 4 + 3] = Math.min(r[k * 4 + 3], r[k * 4 + 2]); }
+  return r.buffer;
+}
 function criaMotor() {
   // pelos surdos: ouve só os graves e separa 1ª, 2ª e 3ª pelos moldes ensinados (sem moldes, usa só as batidas graves)
-  const tem = k => Array.isArray(MOLDES[k]) && MOLDES[k].length === 75, duas = tem(0) && tem(1);
+  const tem = k => Array.isArray(MOLDES[k]) && MOLDES[k].length === 75, duas = tem(0) && tem(1), toques = toquesEscritos();
   const ini = OUV === 'surdos'
-    ? { t: 'ini', ref: REFS.slice(0), secs: METAS.secs, dur: METAS.dur, tatum: METAS.tatum, sr: SR, surdos: true, moldes: duas ? [MOLDES[0], MOLDES[1], tem(2) ? MOLDES[2] : null] : [], op: { pesos: duas ? [1, 1, tem(2) ? 0.5 : 0, 1] : [0, 0, 0, 1], pulso: 3 } }
-    : { t: 'ini', ref: REF.slice(0), secs: META.secs, dur: META.dur, tatum: META.tatum, sr: SR };
+    ? { t: 'ini', ref: refSurdosSemContagem(), secs: METAS.secs, dur: METAS.dur, tatum: METAS.tatum, sr: SR, surdos: true, moldes: duas ? [MOLDES[0], MOLDES[1], tem(2) ? MOLDES[2] : null] : [], op: { pesos: duas ? [1, 1, tem(2) ? 0.5 : 0, 1] : [0, 0, 0, 1], pulso: 3, toques } }
+    : { t: 'ini', ref: REF.slice(0), secs: META.secs, dur: META.dur, tatum: META.tatum, sr: SR, op: { toques } };
   try {
     const w = new Worker('seguidor.js'); w.onmessage = e => { if (e.data.t === 'estado') E = e.data; };
     w.postMessage(ini);
@@ -295,15 +307,16 @@ function quadro() {
   requestAnimationFrame(quadro);
   if (!META || !LET) return;
   const st = MAN ? (man ? (man.parado ? 'parado' : 'manual') : 'manual0') : E.estado, [txt, cls] = TXT[st] || [st, ''], p = posAgora();
-  $('pillTxt').textContent = txt; $('pill').className = 'pill ' + cls;
+  const contando = !MAN && E.calado && E.lock && (st === 'seguindo' || st === 'no relógio');   // silêncio numa contagem escrita: a letra segue
+  $('pillTxt').textContent = contando ? 'Contando' : txt; $('pill').className = 'pill ' + cls;
   $('nivel').style.width = ligado ? Math.min(100, Math.sqrt(nivelAgora) * 160).toFixed(0) + '%' : '0%';
   if (p != null && p >= 0 && p < META.dur + 1) {
     const f = fAgora(), m = musicaEm(p), [tb] = tempoAqui(p);
     if (MAN) $('manBpm').textContent = Math.round(60 * f / tb) + ' bpm';
     $('musica').textContent = m[0]; $('info').textContent = `${mmss(p)} de ${mmss(META.dur)} · ${Math.round(60 * f / tb)} bpm`;
-    kMsg.hidden = true; kRoll.hidden = false; $('letra').classList.toggle('duvida', st === 'conferindo' || st === 'no relógio');
+    kMsg.hidden = true; kRoll.hidden = false; $('letra').classList.toggle('duvida', !contando && (st === 'conferindo' || st === 'no relógio'));
     letra(p, f);
-    $('msg').textContent = MAN ? (man.parado ? 'Parado. Aperte Continuar, ou Começou! para voltar ao começo do trecho.' : 'Modo manual: a letra anda no andamento escolhido. Use ◀ ▶ e − + para acertar.') : st === 'conferindo' ? 'Conferindo se é este o lugar…' : st === 'no relógio' ? 'Não estou ouvindo bem: seguindo no andamento. Use ◀ ▶ se a letra sair do lugar.' : 'Seguindo a bateria.';
+    $('msg').textContent = MAN ? (man.parado ? 'Parado. Aperte Continuar, ou Começou! para voltar ao começo do trecho.' : 'Modo manual: a letra anda no andamento escolhido. Use ◀ ▶ e − + para acertar.') : contando ? 'Contagem: os surdos não tocam aqui. A letra segue e volta a encaixar no primeiro toque.' : st === 'conferindo' ? 'Conferindo se é este o lugar…' : st === 'no relógio' ? 'Não estou ouvindo bem: seguindo no andamento. Use ◀ ▶ se a letra sair do lugar.' : 'Seguindo a bateria.';
   } else {
     $('info').textContent = ''; kRoll.hidden = true; kMsg.hidden = false; KA.bq = null; KA.foco = -9; $('letra').classList.remove('duvida');
     const onde = E.forcado != null ? musicaEm(E.forcado)[0] : E.ult != null ? musicaEm(E.ult)[0] : null;

@@ -140,12 +140,15 @@
     S.Rc = new Float32Array(S.nC * NB); S.c1 = new Float64Array((S.nC + 1) * NB); S.c2 = new Float64Array((S.nC + 1) * NB);
     for (let i = 0; i < S.nC; i++) for (let k = 0; k < NB; k++) { const v = Math.max(cr[i * NB + k], i > 0 ? cr[(i - 1) * NB + k] : 0, i + 1 < S.nC ? cr[(i + 1) * NB + k] : 0); S.Rc[i * NB + k] = v; S.c1[(i + 1) * NB + k] = S.c1[i * NB + k] + v; S.c2[(i + 1) * NB + k] = S.c2[i * NB + k] + v * v; }
     S.tatum = tatum || null;
+    // op.toques: instantes (na referência) dos toques ESCRITOS na partitura. Com eles o seguidor sabe onde é contagem
+    // (compassos sem toque): ali o silêncio é esperado, a letra segue no relógio e a volta é no primeiro toque depois.
+    S.toq = op && op.toques && op.toques.length ? Float64Array.from(op.toques).sort() : null;
     S.cap = 1600; S.live = new Uint8Array(S.cap * NB); S.zera();
   }
   const P = Seguidor.prototype;
   P.zera = function () {
     Object.assign(this, { nq: 0, lock: null, prov: 0, ult: null, forcado: null, f: 1, cand: null, baixa: 0, jaTravou: false, estado: "ouvindo", conf: 0,
-      alto: 0, med: 0, temSom: false, tMus: 0, tForte: 0, eraForte: true, provLug: [], provAt: null, provOk: false, rev: null, tRev: -1e9, ultSom: 0, alt: false, calado: true, tVolta: null, tBusca: -1e9, tDir: -1e9, fim: false, tap: null });
+      alto: 0, med: 0, temSom: false, tMus: 0, tForte: 0, eraForte: true, provLug: [], provAt: null, provOk: false, rev: null, tRev: -1e9, ultSom: 0, alt: false, calado: true, tVolta: null, tBusca: -1e9, tDir: -1e9, fim: false, tap: null, dSil: 0, tRe: null, re: null });
   };
   P.agora = function () { return this.nq / FPS; };
   P.pos = function (t) { const L = this.lock; return L ? L.p + (t - L.t) * L.f : null; };
@@ -157,7 +160,7 @@
     S.alto = Math.max(S.alto * 0.99995, niv);
     const t = S.nq / FPS, forte = niv > 0.35 * S.alto && niv > 1e-6, salto = S.nq > 150 && niv > 3 * S.med && niv > 1e-6;
     S.med += (niv - S.med) / 150;
-    if ((forte && !S.eraForte && t - S.tForte > 0.8) || (salto && !S.temSom)) { if (S.calado) S.tVolta = t; S.temSom = true; }   // voltou depois de pelo menos 0,8 s baixo
+    if ((forte && !S.eraForte && t - S.tForte > 0.8) || (salto && !S.temSom)) { if (S.calado) { S.tVolta = t; S.dSil = t - S.ultSom; } S.temSom = true; }   // voltou depois de pelo menos 0,8 s baixo
     if (forte) S.tForte = t; S.eraForte = forte;
     if (forte && S.temSom) { S.ultSom = t; S.calado = false; } else if (!S.temSom || t - S.ultSom > 1.2) S.calado = true;
     S.nq++;
@@ -165,6 +168,16 @@
   P.inicioDoTrecho = function (p) { let s = this.secs[0]; for (const x of this.secs) if (x <= p + 0.05) s = x; return s; };
   // primeiro ataque forte da referência a partir de p (os trechos podem começar com contagem)
   P.primeiroAtaque = function (p) { for (let r = Math.max(0, Math.round(p * FPS) - 5); r < this.nR - 1; r++) if (this.atv[r + 1] - this.atv[r] >= 150) return r / FPS - 0.02; return p; };
+  // partitura: índice do primeiro toque escrito a partir de p; quantos há entre p0 e p1; o primeiro a partir de p
+  P.iToq = function (p) { const T = this.toq; let a = 0, b = T.length; while (a < b) { const m = (a + b) >> 1; if (T[m] < p) a = m + 1; else b = m; } return a; };
+  P.nToques = function (p0, p1) { return p1 > p0 ? this.iToq(p1) - this.iToq(p0) : 0; };
+  P.proxToque = function (p) { const i = this.iToq(p); return i < this.toq.length ? this.toq[i] : null; };
+  // o primeiro toque depois de uma contagem (pausa escrita de pelo menos 1 s) mais perto de p, até `folga` segundos
+  P.voltaDaPausa = function (p, folga) {
+    const T = this.toq; let best = null;
+    for (let i = this.iToq(p - folga); i < T.length && T[i] <= p + folga; i++) if ((i === 0 || T[i] - T[i - 1] >= 1.0) && (best == null || Math.abs(T[i] - p) < Math.abs(best - p))) best = T[i];
+    return best;
+  };
   P.ativRef = function (p0, p1) { const a = Math.max(0, Math.min(this.nR, Math.round(p0 * FPS))), b = Math.max(a, Math.min(this.nR, Math.round(p1 * FPS))); return b > a ? (this.atv[b] - this.atv[a]) / (b - a) : 0; };
 
   // janela ao vivo: os quadros com ataque dos últimos nW quadros (para comparar depressa com muitos lugares)
@@ -252,7 +265,7 @@
   P.preferidos = function () {
     const S = this, L = [];
     if (S.forcado != null) L.push(S.primeiroAtaque(S.forcado));
-    if (S.ult) { L.push(S.primeiroAtaque(S.inicioDoTrecho(S.ult.p))); L.push(S.ult.p); }
+    if (S.ult) { if (S.ult.h1 != null) L.push(S.ult.h1 - 0.02); L.push(S.primeiroAtaque(S.inicioDoTrecho(S.ult.p))); L.push(S.ult.p); }
     if (!S.jaTravou && S.forcado == null) L.push(S.primeiroAtaque(0));
     return L;
   };
@@ -262,7 +275,7 @@
     const S = this, L = [];
     const poe = (p, pen) => { if (!L.some(q => Math.abs(q.p - p) < 0.4)) L.push({ p, pen }); };
     if (S.forcado != null) { poe(S.primeiroAtaque(S.forcado), 0); poe(S.forcado, 0); }
-    if (S.ult) { const i = S.inicioDoTrecho(S.ult.p); poe(S.primeiroAtaque(i), 0); poe(i, 0); poe(S.ult.p, 0.02); }
+    if (S.ult) { if (S.ult.h1 != null) poe(S.ult.h1 - 0.02, 0); const i = S.inicioDoTrecho(S.ult.p); poe(S.primeiroAtaque(i), 0); poe(i, 0); poe(S.ult.p, 0.02); }
     const pen = S.forcado != null ? 0.08 : 0.03;
     for (const x of S.secs) { poe(S.primeiroAtaque(x), pen); poe(Math.max(0, x), pen); }
     return L;
@@ -338,6 +351,8 @@
       // entre o começo de todos os breques e partes, o que bate com o som (em vez de chutar o primeiro breque).
       if (S.tVolta != null && t - S.tVolta < 6) {
         if (S.forcado != null && t - S.tVolta < 1.0) { S.lock = { p: S.primeiroAtaque(S.forcado) + (t - S.tVolta) * S.f, t, f: S.f, desde: S.tVolta }; S.prov = t; S.provOk = false; S.provLug = S.lugares(); S.provAt = S.primeiroAtaque(S.forcado); S.tDir = S.tVolta + 2.4; S.baixa = 0; S.estado = "conferindo"; return; }
+        // parou esperando a volta de uma contagem: a letra entra já no primeiro toque depois dela (e confere em seguida)
+        if (S.forcado == null && S.ult && S.ult.h1 != null && t - S.tVolta < 1.0 && t - S.ult.em < 40) { S.lock = { p: S.ult.h1 - 0.02 + (t - S.tVolta) * S.f, t, f: S.f, desde: S.tVolta }; S.prov = t; S.provOk = false; S.provLug = S.lugares(); S.provAt = S.ult.h1 - 0.02; S.tDir = S.tVolta + 2.4; S.baixa = 0; S.estado = "conferindo"; return; }
         S.estado = "entrando";
         if (t - S.tVolta >= 2.6 && t >= S.tDir) {
           S.tDir = t + 1.2; const lug = S.lugares(), bb = S.dirigida(S.tVolta, lug, null);
@@ -354,9 +369,33 @@
     }
     const L = S.lock; let p = S.pos(t);
     if (p > S.dur + 0.5) { S.lock = null; S.ult = null; S.fim = true; S.estado = "fim"; return; }
-    // parou? ficou em silêncio num trecho em que a referência está tocando
-    if (S.calado && t - S.ultSom > 1.6 && S.ativRef(p - 1.5, p) > 6) {
-      const pPar = S.pos(S.ultSom); S.ult = { p: pPar, em: t }; S.lock = null; S.tap = null; S.estado = "parado"; S.cand = null; S.tVolta = null; return;
+    // parou? Com a partitura: só se já passaram, sem som, pelo menos 2 toques escritos (com uma folga que cresce com o
+    // tamanho da contagem, porque quem conta pode contar um pouco mais devagar). Nas contagens a letra segue no relógio.
+    // Sem a partitura: silêncio num trecho em que a referência está tocando.
+    if (S.calado && t - S.ultSom > 1.6) {
+      const pU = S.pos(S.ultSom); let parou, h1 = null;
+      if (S.toq) { h1 = S.proxToque(pU + 0.3); parou = h1 != null && p - h1 > Math.max(0.9, 0.6 + 0.12 * (h1 - pU)) && S.nToques(h1, p - 0.3) >= 2; if (h1 == null && p - pU > 6) parou = true; }
+      else parou = S.ativRef(p - 1.5, p) > 6;
+      if (parou) { S.ult = { p: pU, em: t, h1: h1 != null && h1 - pU > 1.2 ? h1 : null }; S.lock = null; S.tap = null; S.re = null; S.estado = "parado"; S.cand = null; S.tVolta = null; return; }
+    }
+    // voltou de uma contagem sem ter parado: o som que voltou é o primeiro toque escrito depois dela. Encosta a letra
+    // nele na hora e confere duas vezes (1,3 s e 2,6 s depois) com o que tocou desde a volta.
+    if (S.toq && S.tVolta != null && S.tVolta !== S.tRe && S.tVolta > L.desde + 0.5 && !S.prov && !S.tap) {
+      S.tRe = S.tVolta;
+      if (S.dSil >= 1.2) {
+        const pV = S.pos(S.tVolta), h = S.voltaDaPausa(pV, Math.min(2.0, 0.5 + 0.12 * S.dSil));
+        if (h != null) { const d = h - 0.02 - pV; if (Math.abs(d) > 0.08) { L.p += d; p += d; L.desde = S.tVolta; S.rev = null; } }
+        S.re = { t: S.tVolta, prox: S.tVolta + 1.3, n: 0 }; S.baixa = 0;
+      }
+    }
+    if (S.re && t >= S.re.prox) {
+      const J = S.janela(Math.round((t - S.re.t) * FPS) + 5);
+      if (J.idx.length >= 3) {
+        const pc = S.pos(t), c0 = S.sim(J, pc, L.f); let b = { c: c0, d: 0, f: L.f };
+        for (const k of [1, 0.97, 1.03, 0.94, 1.06]) for (let d = -1.2; d <= 1.2001; d += 0.02) { const c = S.sim(J, pc + d, L.f * k) - 0.02 * Math.abs(d) - 0.01 * Math.abs(k - 1) / 0.06; if (c > b.c) b = { c, d, f: L.f * k }; }
+        if ((b.d !== 0 || b.f !== L.f) && b.c >= c0 + 0.03 && b.c > 0.15) { L.p = pc + b.d; L.t = t; L.f = b.f; p = L.p; if (Math.abs(b.d) > 0.08) L.desde = Math.max(L.desde, S.re.t); }
+      }
+      if (++S.re.n >= 2) S.re = null; else S.re.prox = t + 1.3;
     }
     // logo depois de voltar do silêncio: confere entre os lugares prováveis qual é o certo e acerta o andamento
     if (S.prov && !S.tap && S.tVolta != null && t >= S.tDir && t - S.tVolta < 9) {
